@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        key {
+            keyAlias 'sjqcjstock'
+            keyPassword '12345678'
+            storeFile file('E:/Android/mh2/sjqcjstockApp/stockapp.jks')
+            storePassword '12345678'
+        }
+    }
+    compileSdkVersion 20
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "com.example.sjqcjstock"
+        minSdkVersion 14
+        targetSdkVersion 17
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig  signingConfigs.key
+        }
+        debug{
+            signingConfig  signingConfigs.key
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    dexOptions {
+        incremental true
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    compile files('libs/fastjson-1.1.22-sources.jar')
+    //    compile files('libs/fastjson-1.1.22.jar')
+    //    compile files('libs/httpmime-4.1.2.jar')
+    //    compile files('libs/libammsdk.jar')
+    //    compile files('libs/mta-sdk-1.6.2.jar')
+    //    compile files('libs/open_sdk.jar')
+    //    compile files('libs/universal-image-loader-1.9.3.jar')
+    //    compile files('libs/xUtils-2.6.14.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('libs/MobCommons-2016.0426.1819.jar')
+    //    生成注解的第三方插件包
+    compile 'com.jakewharton:butterknife:8.0.1'
+}

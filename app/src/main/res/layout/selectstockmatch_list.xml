@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/totop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle">
+
+        <include
+            layout="@layout/head_back_reuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="选股比赛"
+            style="@style/top_title" />
+
+        <LinearLayout
+            android:id="@+id/pinkselectstock1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="我来选股"
+                android:textColor="@color/color_ffffff"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <!--  
+    <com.example.stock.userdefined.MyScrollView
+        android:id="@+id/myScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         >
+         -->
+
+    <!--
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+        <LinearLayout
+            android:id="@+id/rankentra2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实时赛况"
+                android:layout_weight="1"
+                style="@style/GreyButtonWithBorder"
+                android:textSize="12dp"
+                android:background="@color/color_B5844C"
+                />
+
+            <Button
+                android:id="@+id/picktodayupranking1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当日涨幅榜"
+                android:layout_weight="1"
+                style="@style/GreyButtonWithBorder"
+                android:textSize="12dp"
+                android:background="@color/color_B5844C"
+                />
+
+            <Button
+                android:id="@+id/pickstockmatchreport1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="赛程报道"
+                android:layout_weight="1"
+                style="@style/GreyButtonWithBorder"
+                android:textSize="12dp"
+                android:background="@color/color_B5844C"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="讨论区"
+                android:layout_weight="1"
+                style="@style/GreyButtonWithBorder"
+                android:textSize="12dp"
+                android:background="@color/color_B5844C"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/rankentra1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+               <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/rankingsentry"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+
+                     />
+
+                <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/rankingsentry"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+
+                     />
+
+                <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/rankingsentry"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+
+                     />
+
+                <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/rankingsentry"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+
+                     />
+
+            </LinearLayout>
+
+     </LinearLayout>
+     -->
+
+    <com.example.sjqcjstock.userdefined.MyScrollView
+        android:id="@+id/myScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+
+        <LinearLayout
+            android:id="@+id/toplay02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+
+                    <!--
+                    <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                   android:src="@mipmap/smalloperation1"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_weight="1"
+                     />
+                      -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/pickstockmatchreport1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+
+                            android:src="@drawable/saichengbaodao1"
+
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="赛程报道" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/pickdiscussarea1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/tallunqu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="讨论区"
+
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/picktodayupranking1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/dangriniugubang" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="当日牛股榜"
+
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+
+                    <!--
+                    <com.example.stock.userdefined.RoundImageView
+                    android:id="@+id/image_id"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                   android:src="@mipmap/smalloperation1"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_weight="1"
+                     />
+                      -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/totalranking1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/zongjifenbang"
+
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="总积分榜" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/weekranking1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/zhoujifenbang2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="周积分榜" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.example.sjqcjstock.userdefined.RoundImageView
+                            android:id="@+id/pickthisweekranking1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/dangzhouniugubang" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="当周牛股榜" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--
+                <LinearLayout
+                        android:id="@+id/rankentra1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        >
+
+
+
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_weight="1"
+                           >
+                               <com.example.stock.userdefined.RoundImageView
+                                    android:id="@+id/totalranking1"
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_marginTop="10dp"
+                                    android:src="@drawable/rankingsentry"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+
+                                     />
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="总积分榜"
+                                   android:layout_gravity="center_horizontal"
+
+                                   />
+
+                       </LinearLayout>
+
+
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_weight="1"
+                           >
+
+
+                        <com.example.stock.userdefined.RoundImageView
+                            android:id="@+id/weekranking1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/rankingsentry"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+
+                             />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周积分榜"
+                            android:layout_gravity="center_horizontal"
+                             />
+
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_weight="1"
+
+                           >
+                            <com.example.stock.userdefined.RoundImageView
+                                android:id="@+id/stubranking1"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:src="@drawable/rankingsentry"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_weight="1"
+                                 />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="短线榜"
+                            android:layout_gravity="center_horizontal"
+
+                             />
+
+                       </LinearLayout>
+
+
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_weight="1"
+                           >
+                            <com.example.stock.userdefined.RoundImageView
+                                android:id="@+id/moodsranking1"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:src="@drawable/rankingsentry"
+                                android:layout_gravity="center_horizontal"
+
+                                 />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="人气榜"
+                            android:layout_gravity="center_horizontal"
+                             />
+
+                       </LinearLayout>
+
+                    </LinearLayout>
+              -->
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#ededed" />
+
+
+            <LinearLayout
+                android:id="@+id/pickfamous"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/color_ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/famousmore1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="名人组实时赛况" />
+
+
+                <!--
+                <Button
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/gracearrow1"
+                    style="@style/GreenButton"
+                    android:layout_gravity="center"
+                    />
+                    -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="更多"
+                    android:textColor="#999999"
+                    android:textSize="14dp" />
+
+                <!--
+                <Button
+                  android:id="@+id/pickbegindate"
+                  android:layout_width="40dp"
+                  android:layout_height="40dp"
+                  android:text="选择开始时间"
+                  style="@style/GreyButtonWithBorder"
+                  android:textSize="12dp"
+                  />
+                  -->
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line" />
+
+
+            <ListView
+                android:id="@+id/famousmanlist"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line" />
+
+
+            <LinearLayout
+                android:id="@+id/pickessence"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/color_ffffff"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/essencemore1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="精英组实时赛况" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="更多"
+                    android:textColor="#999999"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line" />
+
+
+            <ListView
+                android:id="@+id/essencelist"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null"
+                android:visibility="visible" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line" />
+
+
+        </LinearLayout>
+
+    </com.example.sjqcjstock.userdefined.MyScrollView>
+
+</LinearLayout>

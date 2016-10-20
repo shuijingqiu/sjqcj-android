@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_toptitle" >
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                layout="@layout/head_back_reuse" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="写短文"
+                    style="@style/top_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/addshortweibo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="发布"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line" />
+
+        <EditText
+            android:id="@+id/editcommentforweibo1"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_ffffff"
+            android:gravity="top"
+            android:hint="正文"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLength="20000"
+            android:paddingLeft="5dp"
+            android:textColorHint="@color/color_999999"
+            android:textCursorDrawable="@drawable/color_cursor" />
+
+        <EditText
+            android:id="@+id/editcommentforweibo2"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="图片"
+            android:textColorHint="@color/color_999999"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/hideweiboimaid1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 此控件与Callery会经常用到 -->
+
+            <ImageSwitcher
+                android:id="@+id/switcher4"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/color_ffffff"
+                android:visibility="gone" />
+
+            <Gallery
+                android:id="@+id/mygallery2"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:spacing="16dp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/onedelete"
+                style="@style/GreyButtonWithBorder"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/detele1"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line" />
+
+        <RelativeLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ededed"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="visible" >
+
+            <Button
+                android:id="@+id/tolongweibo1"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:background="@color/color_toptitle"
+                android:text="写长文"
+                android:textColor="@color/color_ffffff"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/facelibrary1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/facelibrary1"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/atsb2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/getimgtotakephoto1"
+                android:src="@mipmap/atsbicon1" />
+
+            <ImageView
+                android:id="@+id/getimgtoalbum1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/atsb2"
+                android:src="@mipmap/getimg1" />
+
+            <ImageView
+                android:id="@+id/getimgtotakephoto1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/facelibrary1"
+                android:src="@mipmap/takephoto1" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line"/>
+
+        <GridView
+            android:id="@+id/facegridView1"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/white"
+            android:numColumns="5"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

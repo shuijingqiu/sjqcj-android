@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     >
+
+<RelativeLayout
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dip"
+    android:paddingRight="12dip"
+    >
+    
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       >
+    
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+	      <ImageView
+	        android:id="@+id/friend_image"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+	        android:src="@mipmap/portrait2"
+	        />
+	      
+	      <TextView
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:textSize="12dip"
+      		  android:textColor="#8B4513"
+	          android:text="用户名"
+	          />
+	      
+	      
+       </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        >
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dip"
+        android:textColor="#8B4513"
+        android:text="帖子内容"
+        />
+   
+        <TextView
+        android:id="@+id/detailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="时间"
+        android:textSize="12dip"
+        android:textColor="#8B4513"
+        android:paddingTop="25dp"
+        
+        />
+   </LinearLayout>
+   <!--  
+    <TextView
+        android:id="@+id/friend_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dip"
+        android:textColor="#8B4513"        
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_weight="1"  
+        />
+    -->
+   
+    
+     
+    </LinearLayout>
+    
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_alignParentRight="true"
+       
+       >
+    
+		   <ImageView
+		        android:id="@+id/arrows1"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentRight="true"
+		        android:src="@mipmap/praise6"
+		        
+		        />
+		   
+		   <ImageView
+		        android:id="@+id/arrows2"
+		        android:layout_width="10dp"
+		        android:layout_height="10dp"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentRight="true"
+		        
+		        />
+		   
+		   <ImageView
+		        android:id="@+id/arrows3"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentRight="true"
+		        android:src="@mipmap/comment31"
+		        
+		        />
+          <!--  
+   
+		<Button
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="关注"
+		    style="@style/RedButton"
+		    />
+   
+               -->  
+		
+   </LinearLayout>
+  
+</RelativeLayout>  
+
+
+</LinearLayout>

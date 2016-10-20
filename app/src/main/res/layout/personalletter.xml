@@ -1,0 +1,188 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_toptitle" >
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                layout="@layout/head_back_reuse" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发私信"
+                    style="@style/top_title" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/addweicomment1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line" />
+
+        <EditText
+            android:id="@+id/editcommentforweibo1"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:hint="写评论"
+            android:textColorHint="@color/color_999999" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutgetimg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@color/color_ededed"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/getimgtoalbum1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/getimg1" />
+
+            <ImageView
+                android:id="@+id/ImageView03"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/getimgtotakephoto1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/atsbicon1" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line" />
+
+        <RelativeLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@color/color_ededed"
+            android:padding="10dp"
+            android:visibility="visible" >
+
+            <ImageView
+                android:id="@+id/ImageView04"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/getimg1"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ImageView05"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/atsbicon1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/getimgtoalbum2"
+                android:src="@mipmap/atsbicon1" />
+
+            <ImageView
+                android:id="@+id/getimgtoalbum2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/getimgtotakephoto2"
+                android:src="@mipmap/getimg1"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/getimgtotakephoto2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/facelibrary1"
+                android:src="@mipmap/takephoto1"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/facelibrary1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/facelibrary1"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/facegridView1"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:numColumns="5"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

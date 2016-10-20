@@ -1,0 +1,18 @@
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">   
+    <!-- 杩炴棰滆壊鍊� --><item>   
+          <shape>   
+                <solid android:color="#999999" />   
+          </shape>   
+    </item>   
+    <!-- 涓讳綋鑳屾櫙棰滆壊鍊� -->  
+    <item android:bottom="1dp" android:right="1dp" android:left="1dp" android:top="1dp" >   
+         <shape>   
+               <solid android:color="#ffffff" />  
+                 
+               <padding android:bottom="10dp"  
+                    android:left="10dp"  
+                    android:right="10dp"  
+                    android:top="10dp" />  
+         </shape>       
+    </item>  
+    </layer-list>  

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="NewApi">
+        <ignore path="src\com\example\sjqcjstock\Activity\MainTab.java" />
+        <ignore path="src\com\example\sjqcjstock\Activity\addcommentweiboActivity.java" />
+        <ignore path="src\com\example\sjqcjstock\Activity\forumnotedetailActivity.java" />
+        <ignore path="src\com\example\sjqcjstock\Activity\notedetailActivity.java" />
+    </issue>
+    <issue id="ResourceAsColor">
+        <ignore path="src\com\example\sjqcjstock\richeditor\RichTextEditor.java" />
+    </issue>
+</lint>

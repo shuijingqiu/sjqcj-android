@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@drawable/bg_e03063_c_a" />
+    <item android:state_focused="true" android:drawable="@drawable/bg_e03063_c_a" />
+    <item android:state_pressed="true" android:drawable="@drawable/bg_e03063_c_a" />
+    <item android:state_checked="true" android:drawable="@drawable/bg_e03063_c_a" />
+    <item android:state_enabled="false" android:drawable="@drawable/bg_fdccdb_c_a" />
+    <item android:drawable="@drawable/bg_f8356e_c_a" />
+</selector>

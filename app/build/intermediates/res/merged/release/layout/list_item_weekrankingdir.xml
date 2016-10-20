@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_ffffff"
+     >
+
+<RelativeLayout
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+     >
+     
+    
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="第"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp"
+	        />
+    
+	    <TextView
+	        android:id="@+id/weekly"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="11"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp"
+	        />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="周"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp"
+	        />
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/pickfamousweekscore1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        
+        >
+  	 <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"      
+        android:text="名人组"
+        android:textColor="#7898CE"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+         />
+   
+    </LinearLayout>
+
+    
+    
+     <LinearLayout
+        android:id="@+id/picksesenceweekscore1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        
+        >
+  	 <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"      
+        android:text="精英组" 
+        android:textColor="#7898CE"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        />
+   
+    </LinearLayout>
+    
+</RelativeLayout>
+
+</LinearLayout>

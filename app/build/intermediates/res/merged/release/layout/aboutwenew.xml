@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_toptitle" >
+
+                <include
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    layout="@layout/head_back_reuse" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="关于我们"
+                    style="@style/top_title"/>
+
+                <LinearLayout
+                    android:id="@+id/share1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/collect1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/share1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/aboutourtext1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:text="       水晶球财经网是一个为投资者服务的大型财经社交网络，已经汇聚了一大批全国财经名人和证券牛人，每日出炉大量独具价值的财经资讯、原创证券分析以及实战操作记录，已成为全国广大证券投资者每日操作的重要指南和交流平台。"
+                    android:textSize="16dp" />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="       水晶球财经网----中国最有价值的财经社区交流平台! 精华都在这里！"
+                    android:textSize="16dp"
+                    android:textIsSelectable="true"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/tv_wb_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="       水晶球财经网新浪微博：http://weibo.com/sjqcj"
+                    android:textSize="16dp"
+                    android:textIsSelectable="true"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="       水晶球财经网微信公众号：sjqcjw"
+                    android:textSize="16dp"
+                    android:textIsSelectable="true"
+                    />
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/tdcode"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系方式："
+                    android:textSize="16sp"
+                    android:textIsSelectable="true"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱：sjqcjw@163.com "
+                    android:textSize="16dp"
+                    android:textIsSelectable="true"
+                    />
+
+
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:id="@+id/tv_qq_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QQ： 1912736167"
+                    android:textSize="16dp"
+                    android:textIsSelectable="true"
+                    />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址：四川省成都市锦江区东大街"
+                    android:textIsSelectable="true"
+                    android:textSize="16dp"
+                    />
+
+                <TextView
+                    android:layout_marginTop="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Copyright ©2014 sjqcj.com All Rights Reserved."
+                    android:textIsSelectable="true"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/color_text2"
+                    android:textSize="16dp"
+                    />
+
+                <TextView
+                    android:layout_marginTop="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="四川水晶球网信息科技有限公司"
+                    android:textIsSelectable="true"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/color_text2"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"
+                    />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.sjqcjstock.view.stocks.MACandleStickChart
+        android:id="@+id/day_map_k"
+        android:layout_width="fill_parent"
+        android:layout_height="160dip" />
+
+    <com.example.sjqcjstock.view.stocks.StickChart
+        android:id="@+id/day_stick_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="100dip"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

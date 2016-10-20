@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/adduser1"
+        android:title="添加用户"
+        android:showAsAction="always"
+        android:icon="@drawable/adduser1"
+        />
+    
+    
+    
+</menu>

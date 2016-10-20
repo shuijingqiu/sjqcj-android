@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle">
+
+        <include
+            layout="@layout/head_back_reuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            style="@style/top_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="联系人" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/pickessence"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/searchfriends"
+            style="@style/EditText"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="9"
+            android:background="@drawable/rounded_edittext"
+            android:focusable="false"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:hint="搜索"
+            android:paddingLeft="13dp" />
+
+
+        <Button
+            android:id="@+id/bt_search"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/selector_bt_background"
+            android:textColor="@color/white"
+            android:text="搜索" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pickessence1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_D5E1E3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="我的好友"
+            android:textColor="#E51C23" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line" />
+
+    <com.example.sjqcjstock.view.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_head" />
+        <!-- 支持所有实现Pullable接口的View -->
+
+        <com.example.sjqcjstock.view.PullableListView
+            android:id="@+id/atfrientlist2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/load_more" />
+
+    </com.example.sjqcjstock.view.PullToRefreshLayout>
+
+    <include layout="@layout/progress" />
+</LinearLayout>

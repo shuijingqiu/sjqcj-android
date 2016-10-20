@@ -1,0 +1,381 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_toptitle" >
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                layout="@layout/head_back_reuse" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="基本信息"
+                style="@style/top_title" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/pickselectheadimg1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_ffffff"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="头像："
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/imgportrait"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/portrait2" />
+
+            <Button
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:id="@+id/pickusername1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_ffffff"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="昵称："
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/editname1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:textColor="#a5adac"
+                android:textSize="14dp" />
+
+            <Button
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:id="@+id/pickselectsex1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_ffffff"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="性别："
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/sexcontent1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:textColor="#a5adac"
+                android:textSize="12dp" />
+
+            <Button
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:id="@+id/pickpersonalintro1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_ffffff"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="个人简介："
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/userinfo1"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:maxLength="18"
+                android:textColor="#a5adac"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/selectsexs1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ededed"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@id/totop"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/color_ffffff" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkcancelselectsex1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="取消"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/pinkconfirmselectsex1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="确定"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/selectmansex1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/color_ffffff" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkselectstock1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="男"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/selectwomansex1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/color_ffffff" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkselectstock2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="女"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/selectheadimg1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ededed"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/takephotofromalbum1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/whitelinearlayout" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkselectstock3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="相册"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/takephotofromcameia1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/whitelinearlayout" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkselectstock4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="拍照"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/cancelselectheadimg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/whitelinearlayout" >
+
+                    <LinearLayout
+                        android:id="@+id/pinkselectstock5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" >
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="取消"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

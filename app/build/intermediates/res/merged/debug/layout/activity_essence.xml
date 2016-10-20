@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle">
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/head_back_reuse"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="精华"
+            style="@style/top_title"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/linear_jd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_jd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="焦点"
+                    android:textColor="@color/color_toptitle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="大盘" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_gg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_gg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个股" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_mj"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_mj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="名家" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_nc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_nc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内参" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_ld"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/text_ld"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="论道" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear_fs"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" >
+                <TextView
+                    android:id="@+id/text_fs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="浮生" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_line"
+            android:layout_width="50dp"
+            android:layout_height="1dp"
+            android:contentDescription="@string/app_name"
+            android:src="@color/color_toptitle" />
+
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gray_line"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

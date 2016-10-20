@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/updateNickname_rl_title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改用户名"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/updateNickname_tv_des"
+        android:layout_below="@id/updateNickname_rl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="用户名重复，需要修改一下："
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/updateNickname_et_input_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/updateNickname_tv_des"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:textSize="16sp"
+        android:background="@drawable/shape"
+        android:ems="10"
+        android:hint="请输入昵称：" >
+
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/updateNickname_et_input_nickname"
+        android:background="@color/color_toptitle"
+        android:text="确认"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>
