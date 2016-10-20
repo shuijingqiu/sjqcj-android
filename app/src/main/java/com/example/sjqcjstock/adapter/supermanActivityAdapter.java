@@ -164,10 +164,18 @@ public class supermanActivityAdapter extends BaseAdapter {
             }
         });
 
-        ImageView vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
         String isVip = listData.get(position).get(
                 "isVip") + "";
-        ViewUtil.setUpVip(isVip, vipImg);
+        ImageView vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
+        // 这里是个坑  如果返回为1就代表是加V用户
+        if ("1".equals(isVip))
+        {
+            ImageLoader.getInstance().displayImage("http://www.sjqcj.com/addons/theme/stv1/_static/image/usergroup/v_07.png",
+                    vipImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+            vipImg.setVisibility(View.VISIBLE);
+        }else{
+            vipImg.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
