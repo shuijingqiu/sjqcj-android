@@ -654,7 +654,7 @@ public class forumnotedetailActivity extends Activity implements
                     }
 
                     if (!((CheckBox) view.findViewById(R.id.sang_agreement_ck)).isChecked()) {
-                        CustomToast.makeText(getApplicationContext(), "请阅读付费阅读及打赏协议", Toast.LENGTH_LONG).show();
+                        CustomToast.makeText(getApplicationContext(), "请阅读《付费阅读协议》", Toast.LENGTH_LONG).show();
                         return;
                     }
 
