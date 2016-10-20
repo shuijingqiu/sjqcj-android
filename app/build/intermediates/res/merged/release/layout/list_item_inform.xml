@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     >
+<!--  
+<RelativeLayout
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dip"
+    android:paddingRight="12dip"
+    >  
+</RelativeLayout>  
+-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+        <TextView
+            android:id="@+id/informtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="标题标题标题"
+            android:textColor="#101010"
+            android:textSize="15dp"
+            />
+        
+        
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" 
+                android:layout_gravity="right"
+                >
+				<TextView
+				    android:id="@+id/create_time1"
+					android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015-10-15 15:32"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="#C6CBCC"
+                    android:textSize="12dp"
+                    />
+				<!--  
+	              android:layout_marginLeft="18dp"
+				-->
+				
+				<ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="阅读"
+				    android:layout_gravity="center"
+				    android:textColor="@color/color_000000"
+				    android:textSize="17dp"
+				    android:visibility="gone"                    
+                     />
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                     />
+                <TextView
+				    android:id="@+id/digg_count1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="11"
+				    android:layout_gravity="center"
+				    android:textColor="#E93F33"
+				    android:textSize="12dp"
+				    android:visibility="gone"
+				    />
+				<ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                     />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="评论"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_000000"
+                    android:textSize="17dp"
+                    android:visibility="gone"
+                     />
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                     />
+                <TextView
+				    android:id="@+id/comment_count1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="11"
+				    android:layout_gravity="center"
+				    android:textColor="#E93F33"
+				    android:textSize="12dp"
+				    android:visibility="gone"
+				    />
+            </LinearLayout>
+        
+        
+    </LinearLayout>    
+
+</RelativeLayout>

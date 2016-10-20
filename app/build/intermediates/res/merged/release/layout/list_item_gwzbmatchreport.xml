@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     >
+<!--  
+<RelativeLayout
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dip"
+    android:paddingRight="12dip"
+    >  
+</RelativeLayout>  
+-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+        <TextView
+            android:id="@+id/course_titlestr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="水晶球赛况报道水晶球赛况报道水晶球赛况报道水晶球赛况报道"
+            android:textColor="@color/color_000000"
+            android:textSize="15dp"
+            />
+        
+        
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" 
+                android:layout_gravity="right"
+                >
+				<TextView
+				    android:id="@+id/create_timestr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015-10-15 15:32"
+					android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_999999"
+                    android:textSize="15dp"
+                    />
+				<!--  
+	              android:layout_marginLeft="18dp"
+				-->
+                <TextView
+				    android:id="@+id/digg_count1"
+				    android:layout_width="10dp"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center"
+				    android:textColor="#E93F33"
+				    android:textSize="12dp"
+				    />
+				<ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                     />
+                <!-- 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="评论"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_000000"
+                    android:textSize="17dp"
+                     />
+                      -->
+                      
+                      <!-- 
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/comment3"
+                    android:layout_gravity="center"
+                    
+                    />     
+                     
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                     />
+                <TextView
+				    android:id="@+id/comment_count1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="8"
+				    android:layout_gravity="center"
+				    android:textColor="@color/color_999999"
+				    android:textSize="20dp"
+				    />
+				    
+				     -->
+            </LinearLayout>
+        
+        
+    </LinearLayout>    
+
+</RelativeLayout>

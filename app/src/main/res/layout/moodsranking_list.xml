@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle"
+        >
+        
+        <ImageView
+            android:id="@+id/goback1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="全部"
+            android:background="@mipmap/back2"
+            style="@style/GreyButtonWithBorder"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="人气榜" 
+            android:textSize="25dp"
+            />
+        
+    </RelativeLayout>
+    
+      <!--
+    <com.example.sjqcjstock.xlist.XListView
+        android:id="@+id/famouslist2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+      -->
+      
+       <ListView
+        android:id="@+id/moodsrankinglist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>

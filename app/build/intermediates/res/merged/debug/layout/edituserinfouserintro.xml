@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/color_ffffff">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:background="@color/color_toptitle"
+			>
+
+			<include
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				layout="@layout/head_back_reuse"
+				android:layout_centerVertical="true"
+				/>
+
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="修改简介"
+					style="@style/top_title"/>
+
+				<!--
+                <TextView
+                    android:id="@+id/weiboauthorname1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="楼主名"
+                    android:textSize="30px"
+                     />
+                       -->
+
+
+			</LinearLayout>
+			<!--
+           <ImageView
+               android:id="@+id/addforum1"
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentTop="true"
+               android:src="@mipmap/addnote1" />
+
+           <ImageView
+               android:id="@+id/search1"
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_alignParentTop="true"
+               android:layout_toLeftOf="@+id/addforum1"
+               android:src="@mipmap/select3" />
+               -->
+
+
+			<LinearLayout
+				android:id="@+id/edituserintro1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:orientation="vertical"
+				>
+				<TextView
+					android:layout_width="40dp"
+					android:layout_height="40dp"
+					android:gravity="center"
+					android:textSize="14dp"
+					android:text="保存"
+					android:textColor="@color/color_ffffff"
+					android:layout_marginRight="10dp"
+					/>
+
+			</LinearLayout>
+
+		</RelativeLayout>
+
+
+		<EditText
+			android:id="@+id/editintro1"
+			android:layout_width="match_parent"
+			android:layout_height="300dp"
+			android:padding="10dp"
+			style="@style/EditText"
+			android:gravity="top"
+			android:layout_weight="1"
+			android:background="@color/color_ffffff"
+			/>
+
+		<!--
+        android:textColorHint="@color/color_999999"
+        -->
+
+	</LinearLayout>
+</RelativeLayout>

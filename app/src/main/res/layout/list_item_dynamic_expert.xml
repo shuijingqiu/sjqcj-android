@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:id="@+id/head_name_rl"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/head_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/portrait2" />
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/head_iv"
+                android:text="姓名显示"
+                android:textColor="@color/color_text1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_tv"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/head_iv"
+                android:text="2016-08-16"
+                android:textColor="@color/color_text2"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="胜率"
+                android:textColor="@color/color_text2" />
+
+            <TextView
+                android:id="@+id/winning_probability_tv"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="80%"
+                android:textColor="@color/red"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/total_yield_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="总收益率"
+                android:textColor="@color/color_text2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="12dp"
+                android:text="70%"
+                android:textColor="@color/red"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/name_code_tv"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="天府股份 (610010)"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/business_tv"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/return_rate_tv"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:text="买入"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/return_rate_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/return_rate_value_tv"
+            android:layout_centerVertical="true"
+            android:text="收益率"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/return_rate_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/to_buy_tv"
+            android:text="29.88%"
+            android:textColor="@color/red"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/to_buy_tv"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/buttonstyle7"
+            android:gravity="center"
+            android:text="跟买"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line" />
+
+</LinearLayout>

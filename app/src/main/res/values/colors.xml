@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color>
+ <!-- 象牙色 -->
+    <!-- 桃色 -->
+
+    <color name="red">#FF0000</color>
+
+    <!-- 主页头部 -->
+
+    <!--全透明-->
+    <!--主色调带透明-->
+    <!--主色调-->
+    <!--灰色字体颜色1最深-->
+    <color name="color_333333">#333333</color>
+    <!--灰色字体颜色2次深-->
+    <color name="color_666666">#666666</color>
+    <!--灰色字体颜色3次浅-->
+    <color name="color_999999">#999999</color>
+    <!--灰色线条颜色-->
+    <color name="gray_line">#edededed</color>
+    <!--灰色字体颜色3次浅-->
+    <color name="color_fafafa">#fafafa</color>
+    <!--个人信息界面字体颜色-->
+    <!--灰色按钮-->
+    <color name="color_dddddd">#dddddd</color>
+    <!--暗灰色-->
+    <color name="color_bfa9a9a9">#a9a9a9</color>
+    <!--浅灰色-->
+    <color name="color_efefef">#efefef</color>
+    <!-- 红灰色 -->
+    <!--灰色按钮点击效果-->
+    <!--红色按钮点击效果-->
+    <!--带白色边框红色按钮点击效果-->
+    <!--带白色边框红色按钮点击效果-->
+    <!--背景灰色-->
+    <color name="color_ededed">#F4F4F4</color>
+    <!-- 个人中心灰 -->
+    <!-- 个人中心菜单灰 -->
+    <!--纯白-->
+    <color name="color_ffffff">#ffffff</color>
+    <!-- 黑色灰 -->
+    <!--纯黑-->
+    <color name="color_000000">#000000</color>
+    <!-- 浅蓝色 -->
+    <color name="color_D5E1E3">#D5E1E3</color>
+    
+    
+    <!-- 浅绿色（价格用） -->
+    <color name="color_1bc07d">#1bc07d</color>
+    <!--亮蓝色-->
+    <!-- 绿色 -->
+    <color name="color_03FD05">#03FD05</color>
+
+    <!--深红色-->
+    <color name="color_A71B47">#A71B47</color>
+
+    <!-- 浅红色（价格用） -->
+    <color name="color_ef3e3e">#ef3e3e</color>
+    <!-- 橙色 -->
+
+
+    <!-- 浅浅灰 -->
+
+    <!-- 标题蓝色 -->
+    <color name="color_1E6BCF">#1E6BCF</color>
+    <!--纯白-->
+    <!--排行榜第二-->
+    <!--排行榜第三-->
+    <!--男性年龄背景-->
+    <!--女性年龄背景-->
+    <!--筛选Menu文字颜色-->
+    <color name="color_157efb">#157efb</color>
+    <!--绿色按钮颜色-->
+    <!--绿色按钮点击颜色-->
+    <!--活动状态值-进行中-->
+    <!-- 关注按钮红 -->
+    <color name="color_EB5B3B">#FF3A3B</color>
+        <!-- 顶部标题的背景色  #4471BC-->
+    <color name="color_toptitle">#4471BC</color>
+    <color name="color_F0F0F0">#F0F0F0</color>
+    <!-- 水晶币打赏颜色 -->
+    <color name="color_B58441">#B58441</color>
+    <!--文章内容字体颜色-->
+    <color name="color_article">#444444</color>
+    <!--各种个数的字体颜色-->
+    <color name="color_count">#B8B8B8</color>
+
+
+    <!--各种列表字体黑色-->
+    <color name="color_text1">#333333</color>
+    <!--各种列表字体灰色-->
+    <color name="color_text2">#969696</color>
+    <!--买卖 按钮背景色-->
+    <color name="color_5471ef">#5471ef</color>
+
+
+</resources>

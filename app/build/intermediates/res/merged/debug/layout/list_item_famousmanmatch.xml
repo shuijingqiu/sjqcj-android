@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+     >
+
+    <RelativeLayout
+    android:id="@+id/relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:background="@color/color_ffffff">
+    
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:background="@color/color_ffffff">
+    
+       
+   <ImageView
+        android:id="@+id/user_image1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/portrait2"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        />
+    
+    <LinearLayout
+        android:id="@+id/pickfamousmanname1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        >
+       <TextView
+        android:id="@+id/famousmanname1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dip"
+        android:textColor="@color/color_000000"
+        android:text="姓名"
+        />
+   
+       <!-- 
+        <TextView
+        android:id="@+id/detailcomment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="介绍介绍介绍介绍介绍介绍"
+        android:textSize="12dip"
+        android:textColor="@color/color_999999"
+        android:paddingTop="10dp"
+        android:ellipsize="end"
+       	android:maxLines="1"
+       	android:maxLength="10"
+       	android:singleLine="false"
+        
+        />
+        
+         -->
+   </LinearLayout>
+   <!--  
+    <TextView
+        android:id="@+id/friend_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dip"
+        android:textColor="#8B4513"        
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_weight="1"  
+        />
+    -->
+   
+    
+     
+    </LinearLayout>
+    
+   
+   <LinearLayout
+       
+       android:id="@+id/linear02"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_toLeftOf="@+id/linear01"
+       
+       >
+    
+       
+    	 <TextView
+             android:id="@+id/weekly"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@style/RedButton"
+             android:text="6"
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:focusable="false"
+             android:textColor="#E04635"
+             android:background="@color/color_ffffff"
+             android:layout_marginTop="10dp"
+             android:layout_gravity="center"
+             />
+     
+         <TextView
+             android:id="@+id/attentionuser1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@style/RedButton"
+             android:text="参与周数  "
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:layout_marginTop="5dp"
+             android:focusable="false"
+             android:textColor="@color/color_999999"
+             android:background="@color/color_ffffff"
+             />
+   </LinearLayout>
+    
+   <LinearLayout
+       
+       android:id="@+id/linear01"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_toLeftOf="@+id/linear03"
+       >
+    
+       
+     
+     
+         <TextView
+             android:id="@+id/weekscore1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="6"
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:focusable="false"
+             android:textColor="#E04635"
+             android:background="@color/color_ffffff"
+             android:layout_marginTop="10dp"
+             android:layout_gravity="center"
+             />
+     
+         <TextView
+             android:id="@+id/attentionuser2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@style/RedButton"
+             android:text="周积分"
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:layout_marginTop="5dp"
+             android:focusable="false"
+             android:textColor="@color/color_999999"
+             android:background="@color/color_ffffff"
+             />
+   </LinearLayout>
+   
+   
+   <LinearLayout
+       
+       android:id="@+id/linear03"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_alignParentRight="true"
+       android:layout_marginRight="10dp"
+       >
+    
+       
+     
+     
+         <TextView
+             android:id="@+id/totalscore1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="6"
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:focusable="false"
+             android:textColor="#E04635"
+             android:background="@color/color_ffffff"
+             android:layout_marginTop="10dp"
+             android:layout_gravity="center"
+             />
+     
+         <TextView
+             android:id="@+id/attentionuser3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@style/RedButton"
+             android:text="总积分"
+             android:textSize="15dp"
+             android:paddingLeft="5dp"
+             android:paddingRight="5dp"
+             android:layout_marginTop="5dp"
+             android:focusable="false"
+             android:textColor="@color/color_999999"
+             android:background="@color/color_ffffff"
+             />
+   </LinearLayout>
+  
+</RelativeLayout> 
+
+
+
+	
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/line"
+       />
+   
+   
+   
+   <RelativeLayout
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+     >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/color_ffffff"
+        
+         >
+
+        
+    
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           >
+		       <TextView
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="股票"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+				   android:textColor="@color/color_text1"
+		           />
+		       
+		         
+		       <TextView
+		           android:id="@+id/stockname1"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="中泰桥梁"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           
+		           />
+		       
+		       <TextView
+		           android:id="@+id/stockname2"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="新南洋"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           
+		           />
+    
+       
+       </LinearLayout>
+       
+       
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           
+           >
+		       <TextView
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="最新价"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+				   android:textColor="@color/color_text1"
+		           />
+		       
+		         
+		       <TextView
+		           android:id="@+id/stockprice1"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="13.00"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+    
+       		   <TextView
+       		       android:id="@+id/stockprice2"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="14.00"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+    
+       </LinearLayout>
+       
+       
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           
+           >
+		       <TextView
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="周涨幅"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+				   android:textColor="@color/color_text1"
+		           />
+		       
+		         
+		       <TextView
+		           android:id="@+id/uprange1"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="7.86%"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+		       
+		       <TextView
+		           android:id="@+id/uprange2"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="5.42%"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+    
+       
+       </LinearLayout>
+     
+       
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           
+           >
+		       <TextView
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="周最高涨幅"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+				   android:textColor="@color/color_text1"
+		           />
+		       
+		         
+		       <TextView
+		           android:id="@+id/maxuprange1"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="7.86%"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+		       
+		       <TextView
+		           android:id="@+id/maxuprange2"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="5.42%"
+		           android:padding="5dp"
+		           android:layout_gravity="center"
+		           />
+    
+       
+       </LinearLayout>
+
+   </LinearLayout>
+    
+    
+
+   
+
+    
+
+</RelativeLayout>
+
+    <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="3dp"
+       android:background="@drawable/line"
+       />
+    	<!-- 
+    
+	<ImageView
+       android:layout_width="3dp"
+       android:layout_height="3dp"
+       />
+        -->
+</LinearLayout>

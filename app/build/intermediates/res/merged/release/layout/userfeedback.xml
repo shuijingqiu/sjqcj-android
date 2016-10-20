@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/color_ededed"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle"
+        >
+        
+        <ImageView
+            android:id="@+id/goback6"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="全部"
+            android:background="@mipmap/back2"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="意见反馈" 
+            android:textSize="25dp"
+            />
+        
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎你反馈意见和问题，这将是我们产品的动力 (200z字以内)"
+            />
+      
+        <EditText
+            android:id="@+id/editfeedback1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            style="@style/EditText"
+            />
+        
+        
+        
+        
+    </LinearLayout>   
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line"
+        android:layout_marginTop="10dp"
+        />
+    
+    <Button
+        android:id="@+id/addfeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        style="@style/RedButton"
+        />
+    
+    
+</LinearLayout>
