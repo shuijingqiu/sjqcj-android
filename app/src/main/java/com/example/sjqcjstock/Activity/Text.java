@@ -1,5 +1,9 @@
 package com.example.sjqcjstock.Activity;
 
+import com.example.sjqcjstock.netutil.HttpUtil;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,22 +23,38 @@ public class Text {
 //        System.out.println(str);
 //        System.out.println("Hello World!");
 
-        String str = "你的房间就是你的 https://a5242.com/abd/d/aa.png 不和爱人争对错,生命状态 http://t.cn/RVLWazx 不 http://a.b.c.com 和爱人争对错，不和朋友争高低。http://t.cn/RVLWazJ你好这是网页";
-//        Pattern pattern = Pattern.compile("(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&amp;%\\$\\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$");
+//        String str = "你的房间就是你的 https://a5242.com/abd/d/aa.png 不和爱人争对错,生命状态 http://t.cn/RVLWazx 不 http://a.b.c.com 和爱人争对错，不和朋友争高低。http://t.cn/RVLWazJ你好这是网页";
+////        Pattern pattern = Pattern.compile("(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&amp;%\\$\\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$");
+//
+//        String sstr = str.replaceAll("[\\u4e00-\\u9fa5]", " ");
+//
+//        System.out.println("ur1l:" + sstr);
+//
+//        Pattern pattern = Pattern.compile("(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?");
+//        Matcher matcher = pattern.matcher(str);
+//        String url = "";
+//        while (matcher.find()) {
+//            url = matcher.group();
+//            System.out.println("url:" + url);
+//            str = str.replace(url, "<a href = \"" + url + "\">" + url + "</a>");
+//        }
+////       str = Utils.replaceWebUrl(str);
+//        System.out.println("url:" + str);
 
-        String sstr = str.replaceAll("[\\u4e00-\\u9fa5]", " ");
+//        System.out.println(HttpUtil.restHttpGet("http://192.168.2.107/orders"));
+//        System.out.println("160503".substring(4)+"     ");
+        String str ="160503";
+        System.out.println(str.substring(2,4)+"   -*+");
+    }
 
-        System.out.println("ur1l:" + sstr);
-
-        Pattern pattern = Pattern.compile("(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?");
-        Matcher matcher = pattern.matcher(str);
-        String url = "";
-        while (matcher.find()) {
-            url = matcher.group();
-            System.out.println("url:" + url);
-            str = str.replace(url, "<a href = \"" + url + "\">" + url + "</a>");
+    public static Boolean isDayOne(String date) {
+        int days = Integer.valueOf(date.substring(4, 1));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        if (days > day) {
+            return true;
         }
-//       str = Utils.replaceWebUrl(str);
-        System.out.println("url:" + str);
+        return false;
     }
 }

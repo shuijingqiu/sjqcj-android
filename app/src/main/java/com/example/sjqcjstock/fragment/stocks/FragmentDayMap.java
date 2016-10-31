@@ -81,6 +81,25 @@ public class FragmentDayMap extends Fragment {
     // 当前的最新数据
     private String strKmap = "";
 
+    public FragmentDayMap() {
+
+    }
+//    public static final FragmentDayMap newInstance(int code, String strKmap)
+//    {
+//        FragmentDayMap fragment = new FragmentDayMap();
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("pid",pid);
+//        bundle.putString("message", message);
+//        fragment.setArguments(bundle);
+//
+//        return fragment ;
+//    }
+
+    /**
+     * （这种写法转屏的时候会出现问题：最后要改）
+     * @param code
+     * @param strKmap
+     */
     public FragmentDayMap(String code, String strKmap) {
         this.code = code;
         this.strKmap = strKmap;
@@ -130,8 +149,10 @@ public class FragmentDayMap extends Fragment {
             public void run() {
                 // 获取16年该股票的数据
                 String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/sz" + code + ".js");
-                resolveData(strData);
-                processData();
+                if (!"".equals(strData.trim())){
+                    resolveData(strData);
+                    processData();
+                }
             }
         });
         thread.start();
@@ -387,10 +408,12 @@ public class FragmentDayMap extends Fragment {
             if (open == 0 && isGetDate) {
                 // 重新加载上一年的数据
                 year = Utils.getYearFormat(year);
-                dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(Constants.loadMessage);
-                dialog.setCancelable(false);
-                dialog.show();
+
+//                dialog = new ProgressDialog(getActivity());
+//                dialog.setMessage(Constants.loadMessage);
+//                dialog.setCancelable(false);
+//                dialog.show();
+
                 isGetDate = false;
                 initData();
                 return;

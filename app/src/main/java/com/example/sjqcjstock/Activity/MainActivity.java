@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ExitApplication.getInstance().addActivity(this);
+
         initView();
         loadData();
     }
@@ -163,13 +164,11 @@ public class MainActivity extends FragmentActivity {
                 } else {
                     messageCountTv.setVisibility(View.VISIBLE);
                 }
-
                 // 以后要替换成下面那个的
                 if (fragmentMessage != null) {
                     // 重新设置我的页面的消息条数
                     fragmentMessage.showMessage();
                 }
-
 //                if (fragmentMy != null) {
 //                    // 重新设置我的页面的消息条数
 //                    fragmentMy.setMessageCount();
@@ -208,31 +207,32 @@ public class MainActivity extends FragmentActivity {
                 }
                 break;
             case R.id.main_match:
-                if (currentShowFragment != fragmentMessage) {
-                    if (fragmentMessage == null) {
-                        fragmentMessage = new FragmentMessage();
-                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentMessage).commit();
-                        currentShowFragment = fragmentMessage;
-                    } else {
-                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentMessage).commit();
-                        currentShowFragment = fragmentMessage;
-                    }
-                    // 重新获取消息数进行显示
-                    loadData();
-                }
-                break;
 
-//                if (currentShowFragment != fragmentAnalogHome) {
-//                    if (fragmentAnalogHome == null) {
-//                        fragmentAnalogHome = new FragmentAnalogHome();
-//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentAnalogHome).commit();
-//                        currentShowFragment = fragmentAnalogHome;
+//                if (currentShowFragment != fragmentMessage) {
+//                    if (fragmentMessage == null) {
+//                        fragmentMessage = new FragmentMessage();
+//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentMessage).commit();
+//                        currentShowFragment = fragmentMessage;
 //                    } else {
-//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentAnalogHome).commit();
-//                        currentShowFragment = fragmentAnalogHome;
+//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentMessage).commit();
+//                        currentShowFragment = fragmentMessage;
 //                    }
+//                    // 重新获取消息数进行显示
+//                    loadData();
 //                }
 //                break;
+
+                if (currentShowFragment != fragmentAnalogHome) {
+                    if (fragmentAnalogHome == null) {
+                        fragmentAnalogHome = new FragmentAnalogHome();
+                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentAnalogHome).commit();
+                        currentShowFragment = fragmentAnalogHome;
+                    } else {
+                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentAnalogHome).commit();
+                        currentShowFragment = fragmentAnalogHome;
+                    }
+                }
+                break;
 
             case R.id.main_inform:
                 if (currentShowFragment != fragmentInform) {

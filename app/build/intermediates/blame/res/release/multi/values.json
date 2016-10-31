@@ -835,8 +835,8 @@
                     "startLine": 85,
                     "startColumn": 4,
                     "startOffset": 8340,
-                    "endColumn": 49,
-                    "endOffset": 8385
+                    "endColumn": 46,
+                    "endOffset": 8382
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml",
@@ -844,8 +844,8 @@
                         "startLine": 37,
                         "startColumn": 4,
                         "startOffset": 1681,
-                        "endColumn": 49,
-                        "endOffset": 1726
+                        "endColumn": 46,
+                        "endOffset": 1723
                     }
                 }
             },
@@ -853,9 +853,9 @@
                 "to": {
                     "startLine": 86,
                     "startColumn": 4,
-                    "startOffset": 8390,
+                    "startOffset": 8387,
                     "endColumn": 42,
-                    "endOffset": 8428
+                    "endOffset": 8425
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -865,9 +865,9 @@
                 "to": {
                     "startLine": 87,
                     "startColumn": 4,
-                    "startOffset": 8433,
+                    "startOffset": 8430,
                     "endColumn": 38,
-                    "endOffset": 8467
+                    "endOffset": 8464
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -877,9 +877,9 @@
                 "to": {
                     "startLine": 88,
                     "startColumn": 4,
-                    "startOffset": 8472,
+                    "startOffset": 8469,
                     "endColumn": 91,
-                    "endOffset": 8559
+                    "endOffset": 8556
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\auth_strings.xml"
@@ -889,9 +889,9 @@
                 "to": {
                     "startLine": 89,
                     "startColumn": 4,
-                    "startOffset": 8564,
+                    "startOffset": 8561,
                     "endColumn": 87,
-                    "endOffset": 8647
+                    "endOffset": 8644
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\auth_strings.xml"
@@ -901,9 +901,9 @@
                 "to": {
                     "startLine": 90,
                     "startColumn": 4,
-                    "startOffset": 8652,
+                    "startOffset": 8649,
                     "endColumn": 43,
-                    "endOffset": 8691
+                    "endOffset": 8688
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -913,9 +913,9 @@
                 "to": {
                     "startLine": 91,
                     "startColumn": 4,
-                    "startOffset": 8696,
+                    "startOffset": 8693,
                     "endColumn": 45,
-                    "endOffset": 8737
+                    "endOffset": 8734
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -925,9 +925,9 @@
                 "to": {
                     "startLine": 92,
                     "startColumn": 4,
-                    "startOffset": 8742,
+                    "startOffset": 8739,
                     "endColumn": 42,
-                    "endOffset": 8780
+                    "endOffset": 8777
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -937,9 +937,9 @@
                 "to": {
                     "startLine": 93,
                     "startColumn": 4,
-                    "startOffset": 8785,
+                    "startOffset": 8782,
                     "endColumn": 156,
-                    "endOffset": 8937
+                    "endOffset": 8934
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -949,9 +949,9 @@
                 "to": {
                     "startLine": 94,
                     "startColumn": 4,
-                    "startOffset": 8942,
+                    "startOffset": 8939,
                     "endColumn": 144,
-                    "endOffset": 9082
+                    "endOffset": 9079
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -961,9 +961,9 @@
                 "to": {
                     "startLine": 95,
                     "startColumn": 4,
-                    "startOffset": 9087,
+                    "startOffset": 9084,
                     "endColumn": 108,
-                    "endOffset": 9191
+                    "endOffset": 9188
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -973,9 +973,9 @@
                 "to": {
                     "startLine": 96,
                     "startColumn": 4,
-                    "startOffset": 9196,
+                    "startOffset": 9193,
                     "endColumn": 231,
-                    "endOffset": 9423
+                    "endOffset": 9420
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -985,9 +985,9 @@
                 "to": {
                     "startLine": 97,
                     "startColumn": 4,
-                    "startOffset": 9428,
+                    "startOffset": 9425,
                     "endColumn": 125,
-                    "endOffset": 9549
+                    "endOffset": 9546
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -997,9 +997,9 @@
                 "to": {
                     "startLine": 98,
                     "startColumn": 4,
-                    "startOffset": 9554,
+                    "startOffset": 9551,
                     "endColumn": 180,
-                    "endOffset": 9730
+                    "endOffset": 9727
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1009,9 +1009,9 @@
                 "to": {
                     "startLine": 99,
                     "startColumn": 4,
-                    "startOffset": 9735,
+                    "startOffset": 9732,
                     "endColumn": 124,
-                    "endOffset": 9855
+                    "endOffset": 9852
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1021,9 +1021,9 @@
                 "to": {
                     "startLine": 100,
                     "startColumn": 4,
-                    "startOffset": 9860,
+                    "startOffset": 9857,
                     "endColumn": 138,
-                    "endOffset": 9994
+                    "endOffset": 9991
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1033,9 +1033,9 @@
                 "to": {
                     "startLine": 101,
                     "startColumn": 4,
-                    "startOffset": 9999,
+                    "startOffset": 9996,
                     "endColumn": 123,
-                    "endOffset": 10118
+                    "endOffset": 10115
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1045,9 +1045,9 @@
                 "to": {
                     "startLine": 102,
                     "startColumn": 4,
-                    "startOffset": 10123,
+                    "startOffset": 10120,
                     "endColumn": 212,
-                    "endOffset": 10331
+                    "endOffset": 10328
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1057,9 +1057,9 @@
                 "to": {
                     "startLine": 103,
                     "startColumn": 4,
-                    "startOffset": 10336,
+                    "startOffset": 10333,
                     "endColumn": 214,
-                    "endOffset": 10546
+                    "endOffset": 10543
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1069,9 +1069,9 @@
                 "to": {
                     "startLine": 104,
                     "startColumn": 4,
-                    "startOffset": 10551,
+                    "startOffset": 10548,
                     "endColumn": 122,
-                    "endOffset": 10669
+                    "endOffset": 10666
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1081,9 +1081,9 @@
                 "to": {
                     "startLine": 105,
                     "startColumn": 4,
-                    "startOffset": 10674,
+                    "startOffset": 10671,
                     "endColumn": 164,
-                    "endOffset": 10834
+                    "endOffset": 10831
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1093,9 +1093,9 @@
                 "to": {
                     "startLine": 106,
                     "startColumn": 4,
-                    "startOffset": 10839,
+                    "startOffset": 10836,
                     "endColumn": 93,
-                    "endOffset": 10928
+                    "endOffset": 10925
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1105,9 +1105,9 @@
                 "to": {
                     "startLine": 107,
                     "startColumn": 4,
-                    "startOffset": 10933,
+                    "startOffset": 10930,
                     "endColumn": 136,
-                    "endOffset": 11065
+                    "endOffset": 11062
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1117,9 +1117,9 @@
                 "to": {
                     "startLine": 108,
                     "startColumn": 4,
-                    "startOffset": 11070,
+                    "startOffset": 11067,
                     "endColumn": 140,
-                    "endOffset": 11206
+                    "endOffset": 11203
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1129,9 +1129,9 @@
                 "to": {
                     "startLine": 109,
                     "startColumn": 4,
-                    "startOffset": 11211,
+                    "startOffset": 11208,
                     "endColumn": 89,
-                    "endOffset": 11296
+                    "endOffset": 11293
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1141,9 +1141,9 @@
                 "to": {
                     "startLine": 110,
                     "startColumn": 4,
-                    "startOffset": 11301,
+                    "startOffset": 11298,
                     "endColumn": 147,
-                    "endOffset": 11444
+                    "endOffset": 11441
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1153,9 +1153,9 @@
                 "to": {
                     "startLine": 111,
                     "startColumn": 4,
-                    "startOffset": 11449,
+                    "startOffset": 11446,
                     "endColumn": 102,
-                    "endOffset": 11547
+                    "endOffset": 11544
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1165,9 +1165,9 @@
                 "to": {
                     "startLine": 112,
                     "startColumn": 4,
-                    "startOffset": 11552,
+                    "startOffset": 11549,
                     "endColumn": 150,
-                    "endOffset": 11698
+                    "endOffset": 11695
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1177,9 +1177,9 @@
                 "to": {
                     "startLine": 113,
                     "startColumn": 4,
-                    "startOffset": 11703,
+                    "startOffset": 11700,
                     "endColumn": 91,
-                    "endOffset": 11790
+                    "endOffset": 11787
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1189,9 +1189,9 @@
                 "to": {
                     "startLine": 114,
                     "startColumn": 4,
-                    "startOffset": 11795,
+                    "startOffset": 11792,
                     "endColumn": 110,
-                    "endOffset": 11901
+                    "endOffset": 11898
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1201,9 +1201,9 @@
                 "to": {
                     "startLine": 115,
                     "startColumn": 4,
-                    "startOffset": 11906,
+                    "startOffset": 11903,
                     "endColumn": 218,
-                    "endOffset": 12120
+                    "endOffset": 12117
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1213,9 +1213,9 @@
                 "to": {
                     "startLine": 116,
                     "startColumn": 4,
-                    "startOffset": 12125,
+                    "startOffset": 12122,
                     "endColumn": 94,
-                    "endOffset": 12215
+                    "endOffset": 12212
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1225,9 +1225,9 @@
                 "to": {
                     "startLine": 117,
                     "startColumn": 4,
-                    "startOffset": 12220,
+                    "startOffset": 12217,
                     "endColumn": 104,
-                    "endOffset": 12320
+                    "endOffset": 12317
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1237,9 +1237,9 @@
                 "to": {
                     "startLine": 118,
                     "startColumn": 4,
-                    "startOffset": 12325,
+                    "startOffset": 12322,
                     "endColumn": 180,
-                    "endOffset": 12501
+                    "endOffset": 12498
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1249,9 +1249,9 @@
                 "to": {
                     "startLine": 119,
                     "startColumn": 4,
-                    "startOffset": 12506,
+                    "startOffset": 12503,
                     "endColumn": 124,
-                    "endOffset": 12626
+                    "endOffset": 12623
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1261,9 +1261,9 @@
                 "to": {
                     "startLine": 120,
                     "startColumn": 4,
-                    "startOffset": 12631,
+                    "startOffset": 12628,
                     "endColumn": 174,
-                    "endOffset": 12801
+                    "endOffset": 12798
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1273,9 +1273,9 @@
                 "to": {
                     "startLine": 121,
                     "startColumn": 4,
-                    "startOffset": 12806,
+                    "startOffset": 12803,
                     "endColumn": 104,
-                    "endOffset": 12906
+                    "endOffset": 12903
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1285,9 +1285,9 @@
                 "to": {
                     "startLine": 122,
                     "startColumn": 4,
-                    "startOffset": 12911,
+                    "startOffset": 12908,
                     "endColumn": 62,
-                    "endOffset": 12969
+                    "endOffset": 12966
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\values\\common_strings.xml"
@@ -1297,9 +1297,9 @@
                 "to": {
                     "startLine": 123,
                     "startColumn": 4,
-                    "startOffset": 12974,
+                    "startOffset": 12971,
                     "endColumn": 48,
-                    "endOffset": 13018
+                    "endOffset": 13015
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1309,9 +1309,9 @@
                 "to": {
                     "startLine": 124,
                     "startColumn": 4,
-                    "startOffset": 13023,
+                    "startOffset": 13020,
                     "endColumn": 56,
-                    "endOffset": 13075
+                    "endOffset": 13072
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1321,9 +1321,9 @@
                 "to": {
                     "startLine": 125,
                     "startColumn": 4,
-                    "startOffset": 13080,
+                    "startOffset": 13077,
                     "endColumn": 42,
-                    "endOffset": 13118
+                    "endOffset": 13115
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1333,9 +1333,9 @@
                 "to": {
                     "startLine": 126,
                     "startColumn": 4,
-                    "startOffset": 13123,
+                    "startOffset": 13120,
                     "endColumn": 45,
-                    "endOffset": 13164
+                    "endOffset": 13161
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1345,9 +1345,9 @@
                 "to": {
                     "startLine": 127,
                     "startColumn": 4,
-                    "startOffset": 13169,
+                    "startOffset": 13166,
                     "endColumn": 49,
-                    "endOffset": 13214
+                    "endOffset": 13211
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\rc_strings.xml"
@@ -1357,9 +1357,9 @@
                 "to": {
                     "startLine": 128,
                     "startColumn": 4,
-                    "startOffset": 13219,
+                    "startOffset": 13216,
                     "endColumn": 71,
-                    "endOffset": 13286
+                    "endOffset": 13283
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1369,9 +1369,9 @@
                 "to": {
                     "startLine": 129,
                     "startColumn": 4,
-                    "startOffset": 13291,
+                    "startOffset": 13288,
                     "endColumn": 75,
-                    "endOffset": 13362
+                    "endOffset": 13359
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1381,9 +1381,9 @@
                 "to": {
                     "startLine": 130,
                     "startColumn": 4,
-                    "startOffset": 13367,
+                    "startOffset": 13364,
                     "endColumn": 37,
-                    "endOffset": 13400
+                    "endOffset": 13397
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1393,9 +1393,9 @@
                 "to": {
                     "startLine": 131,
                     "startColumn": 4,
-                    "startOffset": 13405,
+                    "startOffset": 13402,
                     "endColumn": 79,
-                    "endOffset": 13480
+                    "endOffset": 13477
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1405,9 +1405,9 @@
                 "to": {
                     "startLine": 132,
                     "startColumn": 4,
-                    "startOffset": 13485,
+                    "startOffset": 13482,
                     "endColumn": 66,
-                    "endOffset": 13547
+                    "endOffset": 13544
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1417,9 +1417,9 @@
                 "to": {
                     "startLine": 133,
                     "startColumn": 4,
-                    "startOffset": 13552,
+                    "startOffset": 13549,
                     "endColumn": 48,
-                    "endOffset": 13596
+                    "endOffset": 13593
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1429,9 +1429,9 @@
                 "to": {
                     "startLine": 134,
                     "startColumn": 4,
-                    "startOffset": 13601,
+                    "startOffset": 13598,
                     "endColumn": 49,
-                    "endOffset": 13646
+                    "endOffset": 13643
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1441,9 +1441,9 @@
                 "to": {
                     "startLine": 135,
                     "startColumn": 4,
-                    "startOffset": 13651,
+                    "startOffset": 13648,
                     "endColumn": 57,
-                    "endOffset": 13704
+                    "endOffset": 13701
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1453,9 +1453,9 @@
                 "to": {
                     "startLine": 136,
                     "startColumn": 4,
-                    "startOffset": 13709,
+                    "startOffset": 13706,
                     "endColumn": 53,
-                    "endOffset": 13758
+                    "endOffset": 13755
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1465,9 +1465,9 @@
                 "to": {
                     "startLine": 137,
                     "startColumn": 4,
-                    "startOffset": 13763,
+                    "startOffset": 13760,
                     "endColumn": 45,
-                    "endOffset": 13804
+                    "endOffset": 13801
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1477,9 +1477,9 @@
                 "to": {
                     "startLine": 138,
                     "startColumn": 4,
-                    "startOffset": 13809,
+                    "startOffset": 13806,
                     "endColumn": 48,
-                    "endOffset": 13853
+                    "endOffset": 13850
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1489,9 +1489,9 @@
                 "to": {
                     "startLine": 139,
                     "startColumn": 4,
-                    "startOffset": 13858,
+                    "startOffset": 13855,
                     "endColumn": 46,
-                    "endOffset": 13900
+                    "endOffset": 13897
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1501,9 +1501,9 @@
                 "to": {
                     "startLine": 140,
                     "startColumn": 4,
-                    "startOffset": 13905,
+                    "startOffset": 13902,
                     "endColumn": 50,
-                    "endOffset": 13951
+                    "endOffset": 13948
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1513,9 +1513,9 @@
                 "to": {
                     "startLine": 141,
                     "startColumn": 4,
-                    "startOffset": 13956,
+                    "startOffset": 13953,
                     "endColumn": 53,
-                    "endOffset": 14005
+                    "endOffset": 14002
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1525,9 +1525,9 @@
                 "to": {
                     "startLine": 142,
                     "startColumn": 4,
-                    "startOffset": 14010,
+                    "startOffset": 14007,
                     "endColumn": 58,
-                    "endOffset": 14064
+                    "endOffset": 14061
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1537,9 +1537,9 @@
                 "to": {
                     "startLine": 143,
                     "startColumn": 4,
-                    "startOffset": 14069,
+                    "startOffset": 14066,
                     "endColumn": 44,
-                    "endOffset": 14109
+                    "endOffset": 14106
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1549,9 +1549,9 @@
                 "to": {
                     "startLine": 144,
                     "startColumn": 4,
-                    "startOffset": 14114,
+                    "startOffset": 14111,
                     "endColumn": 41,
-                    "endOffset": 14151
+                    "endOffset": 14148
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1561,9 +1561,9 @@
                 "to": {
                     "startLine": 145,
                     "startColumn": 4,
-                    "startOffset": 14156,
+                    "startOffset": 14153,
                     "endColumn": 54,
-                    "endOffset": 14206
+                    "endOffset": 14203
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1573,9 +1573,9 @@
                 "to": {
                     "startLine": 146,
                     "startColumn": 4,
-                    "startOffset": 14211,
+                    "startOffset": 14208,
                     "endColumn": 61,
-                    "endOffset": 14268
+                    "endOffset": 14265
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -1585,9 +1585,9 @@
                 "to": {
                     "startLine": 147,
                     "startColumn": 4,
-                    "startOffset": 14273,
+                    "startOffset": 14270,
                     "endColumn": 45,
-                    "endOffset": 14314
+                    "endOffset": 14311
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1597,9 +1597,9 @@
                 "to": {
                     "startLine": 148,
                     "startColumn": 4,
-                    "startOffset": 14319,
+                    "startOffset": 14316,
                     "endColumn": 86,
-                    "endOffset": 14401
+                    "endOffset": 14398
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1609,9 +1609,9 @@
                 "to": {
                     "startLine": 149,
                     "startColumn": 4,
-                    "startOffset": 14406,
+                    "startOffset": 14403,
                     "endColumn": 48,
-                    "endOffset": 14450
+                    "endOffset": 14447
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1621,9 +1621,9 @@
                 "to": {
                     "startLine": 150,
                     "startColumn": 4,
-                    "startOffset": 14455,
+                    "startOffset": 14452,
                     "endColumn": 92,
-                    "endOffset": 14543
+                    "endOffset": 14540
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1633,9 +1633,9 @@
                 "to": {
                     "startLine": 151,
                     "startColumn": 4,
-                    "startOffset": 14548,
+                    "startOffset": 14545,
                     "endColumn": 45,
-                    "endOffset": 14589
+                    "endOffset": 14586
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1645,9 +1645,9 @@
                 "to": {
                     "startLine": 152,
                     "startColumn": 4,
-                    "startOffset": 14594,
+                    "startOffset": 14591,
                     "endColumn": 42,
-                    "endOffset": 14632
+                    "endOffset": 14629
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1657,9 +1657,9 @@
                 "to": {
                     "startLine": 153,
                     "startColumn": 4,
-                    "startOffset": 14637,
+                    "startOffset": 14634,
                     "endColumn": 48,
-                    "endOffset": 14681
+                    "endOffset": 14678
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1669,9 +1669,9 @@
                 "to": {
                     "startLine": 154,
                     "startColumn": 4,
-                    "startOffset": 14686,
+                    "startOffset": 14683,
                     "endColumn": 41,
-                    "endOffset": 14723
+                    "endOffset": 14720
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1681,9 +1681,9 @@
                 "to": {
                     "startLine": 155,
                     "startColumn": 4,
-                    "startOffset": 14728,
+                    "startOffset": 14725,
                     "endColumn": 46,
-                    "endOffset": 14770
+                    "endOffset": 14767
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1693,9 +1693,9 @@
                 "to": {
                     "startLine": 156,
                     "startColumn": 4,
-                    "startOffset": 14775,
+                    "startOffset": 14772,
                     "endColumn": 50,
-                    "endOffset": 14821
+                    "endOffset": 14818
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1705,9 +1705,9 @@
                 "to": {
                     "startLine": 157,
                     "startColumn": 4,
-                    "startOffset": 14826,
+                    "startOffset": 14823,
                     "endColumn": 69,
-                    "endOffset": 14891
+                    "endOffset": 14888
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1717,9 +1717,9 @@
                 "to": {
                     "startLine": 158,
                     "startColumn": 4,
-                    "startOffset": 14896,
+                    "startOffset": 14893,
                     "endColumn": 108,
-                    "endOffset": 15000
+                    "endOffset": 14997
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1729,9 +1729,9 @@
                 "to": {
                     "startLine": 159,
                     "startColumn": 4,
-                    "startOffset": 15005,
+                    "startOffset": 15002,
                     "endColumn": 46,
-                    "endOffset": 15047
+                    "endOffset": 15044
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1741,9 +1741,9 @@
                 "to": {
                     "startLine": 160,
                     "startColumn": 4,
-                    "startOffset": 15052,
+                    "startOffset": 15049,
                     "endColumn": 54,
-                    "endOffset": 15102
+                    "endOffset": 15099
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1753,9 +1753,9 @@
                 "to": {
                     "startLine": 161,
                     "startColumn": 4,
-                    "startOffset": 15107,
+                    "startOffset": 15104,
                     "endColumn": 102,
-                    "endOffset": 15205
+                    "endOffset": 15202
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1765,9 +1765,9 @@
                 "to": {
                     "startLine": 162,
                     "startColumn": 4,
-                    "startOffset": 15210,
+                    "startOffset": 15207,
                     "endColumn": 51,
-                    "endOffset": 15257
+                    "endOffset": 15254
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1777,9 +1777,9 @@
                 "to": {
                     "startLine": 163,
                     "startColumn": 4,
-                    "startOffset": 15262,
+                    "startOffset": 15259,
                     "endColumn": 52,
-                    "endOffset": 15310
+                    "endOffset": 15307
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1789,9 +1789,9 @@
                 "to": {
                     "startLine": 164,
                     "startColumn": 4,
-                    "startOffset": 15315,
+                    "startOffset": 15312,
                     "endColumn": 103,
-                    "endOffset": 15414
+                    "endOffset": 15411
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1801,9 +1801,9 @@
                 "to": {
                     "startLine": 165,
                     "startColumn": 4,
-                    "startOffset": 15419,
+                    "startOffset": 15416,
                     "endColumn": 83,
-                    "endOffset": 15498
+                    "endOffset": 15495
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1813,10 +1813,10 @@
                 "to": {
                     "startLine": 166,
                     "startColumn": 4,
-                    "startOffset": 15503,
+                    "startOffset": 15500,
                     "endLine": 231,
                     "endColumn": 9,
-                    "endOffset": 17383
+                    "endOffset": 17380
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_instapaper_strings.xml"
@@ -1826,9 +1826,9 @@
                 "to": {
                     "startLine": 232,
                     "startColumn": 4,
-                    "startOffset": 17388,
+                    "startOffset": 17385,
                     "endColumn": 54,
-                    "endOffset": 17438
+                    "endOffset": 17435
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1838,9 +1838,9 @@
                 "to": {
                     "startLine": 233,
                     "startColumn": 4,
-                    "startOffset": 17443,
+                    "startOffset": 17440,
                     "endColumn": 52,
-                    "endOffset": 17491
+                    "endOffset": 17488
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1850,9 +1850,9 @@
                 "to": {
                     "startLine": 234,
                     "startColumn": 4,
-                    "startOffset": 17496,
+                    "startOffset": 17493,
                     "endColumn": 52,
-                    "endOffset": 17544
+                    "endOffset": 17541
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1862,9 +1862,9 @@
                 "to": {
                     "startLine": 235,
                     "startColumn": 4,
-                    "startOffset": 17549,
+                    "startOffset": 17546,
                     "endColumn": 57,
-                    "endOffset": 17602
+                    "endOffset": 17599
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1874,9 +1874,9 @@
                 "to": {
                     "startLine": 236,
                     "startColumn": 4,
-                    "startOffset": 17607,
+                    "startOffset": 17604,
                     "endColumn": 50,
-                    "endOffset": 17653
+                    "endOffset": 17650
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1886,9 +1886,9 @@
                 "to": {
                     "startLine": 237,
                     "startColumn": 4,
-                    "startOffset": 17658,
+                    "startOffset": 17655,
                     "endColumn": 43,
-                    "endOffset": 17697
+                    "endOffset": 17694
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1898,9 +1898,9 @@
                 "to": {
                     "startLine": 238,
                     "startColumn": 4,
-                    "startOffset": 17702,
+                    "startOffset": 17699,
                     "endColumn": 54,
-                    "endOffset": 17752
+                    "endOffset": 17749
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1910,9 +1910,9 @@
                 "to": {
                     "startLine": 239,
                     "startColumn": 4,
-                    "startOffset": 17757,
+                    "startOffset": 17754,
                     "endColumn": 104,
-                    "endOffset": 17857
+                    "endOffset": 17854
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1922,9 +1922,9 @@
                 "to": {
                     "startLine": 240,
                     "startColumn": 4,
-                    "startOffset": 17862,
+                    "startOffset": 17859,
                     "endColumn": 52,
-                    "endOffset": 17910
+                    "endOffset": 17907
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1934,9 +1934,9 @@
                 "to": {
                     "startLine": 241,
                     "startColumn": 4,
-                    "startOffset": 17915,
+                    "startOffset": 17912,
                     "endColumn": 101,
-                    "endOffset": 18012
+                    "endOffset": 18009
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1946,9 +1946,9 @@
                 "to": {
                     "startLine": 242,
                     "startColumn": 4,
-                    "startOffset": 18017,
+                    "startOffset": 18014,
                     "endColumn": 43,
-                    "endOffset": 18056
+                    "endOffset": 18053
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1958,9 +1958,9 @@
                 "to": {
                     "startLine": 243,
                     "startColumn": 4,
-                    "startOffset": 18061,
+                    "startOffset": 18058,
                     "endColumn": 85,
-                    "endOffset": 18142
+                    "endOffset": 18139
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1970,9 +1970,9 @@
                 "to": {
                     "startLine": 244,
                     "startColumn": 4,
-                    "startOffset": 18147,
+                    "startOffset": 18144,
                     "endColumn": 52,
-                    "endOffset": 18195
+                    "endOffset": 18192
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1982,9 +1982,9 @@
                 "to": {
                     "startLine": 245,
                     "startColumn": 4,
-                    "startOffset": 18200,
+                    "startOffset": 18197,
                     "endColumn": 42,
-                    "endOffset": 18238
+                    "endOffset": 18235
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -1994,9 +1994,9 @@
                 "to": {
                     "startLine": 246,
                     "startColumn": 4,
-                    "startOffset": 18243,
+                    "startOffset": 18240,
                     "endColumn": 86,
-                    "endOffset": 18325
+                    "endOffset": 18322
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2006,9 +2006,9 @@
                 "to": {
                     "startLine": 247,
                     "startColumn": 4,
-                    "startOffset": 18330,
+                    "startOffset": 18327,
                     "endColumn": 44,
-                    "endOffset": 18370
+                    "endOffset": 18367
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2018,9 +2018,9 @@
                 "to": {
                     "startLine": 248,
                     "startColumn": 4,
-                    "startOffset": 18375,
+                    "startOffset": 18372,
                     "endColumn": 43,
-                    "endOffset": 18414
+                    "endOffset": 18411
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2030,9 +2030,9 @@
                 "to": {
                     "startLine": 249,
                     "startColumn": 4,
-                    "startOffset": 18419,
+                    "startOffset": 18416,
                     "endColumn": 59,
-                    "endOffset": 18474
+                    "endOffset": 18471
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2042,9 +2042,9 @@
                 "to": {
                     "startLine": 250,
                     "startColumn": 4,
-                    "startOffset": 18479,
+                    "startOffset": 18476,
                     "endColumn": 54,
-                    "endOffset": 18529
+                    "endOffset": 18526
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2054,9 +2054,9 @@
                 "to": {
                     "startLine": 251,
                     "startColumn": 4,
-                    "startOffset": 18534,
+                    "startOffset": 18531,
                     "endColumn": 46,
-                    "endOffset": 18576
+                    "endOffset": 18573
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2066,9 +2066,9 @@
                 "to": {
                     "startLine": 252,
                     "startColumn": 4,
-                    "startOffset": 18581,
+                    "startOffset": 18578,
                     "endColumn": 47,
-                    "endOffset": 18624
+                    "endOffset": 18621
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2078,9 +2078,9 @@
                 "to": {
                     "startLine": 253,
                     "startColumn": 4,
-                    "startOffset": 18629,
+                    "startOffset": 18626,
                     "endColumn": 49,
-                    "endOffset": 18674
+                    "endOffset": 18671
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2090,9 +2090,9 @@
                 "to": {
                     "startLine": 254,
                     "startColumn": 4,
-                    "startOffset": 18679,
+                    "startOffset": 18676,
                     "endColumn": 53,
-                    "endOffset": 18728
+                    "endOffset": 18725
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2102,9 +2102,9 @@
                 "to": {
                     "startLine": 255,
                     "startColumn": 4,
-                    "startOffset": 18733,
+                    "startOffset": 18730,
                     "endColumn": 57,
-                    "endOffset": 18786
+                    "endOffset": 18783
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2114,9 +2114,9 @@
                 "to": {
                     "startLine": 256,
                     "startColumn": 4,
-                    "startOffset": 18791,
+                    "startOffset": 18788,
                     "endColumn": 52,
-                    "endOffset": 18839
+                    "endOffset": 18836
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2126,9 +2126,9 @@
                 "to": {
                     "startLine": 257,
                     "startColumn": 4,
-                    "startOffset": 18844,
+                    "startOffset": 18841,
                     "endColumn": 60,
-                    "endOffset": 18900
+                    "endOffset": 18897
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2138,9 +2138,9 @@
                 "to": {
                     "startLine": 258,
                     "startColumn": 4,
-                    "startOffset": 18905,
+                    "startOffset": 18902,
                     "endColumn": 45,
-                    "endOffset": 18946
+                    "endOffset": 18943
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2150,9 +2150,9 @@
                 "to": {
                     "startLine": 259,
                     "startColumn": 4,
-                    "startOffset": 18951,
+                    "startOffset": 18948,
                     "endColumn": 57,
-                    "endOffset": 19004
+                    "endOffset": 19001
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2162,9 +2162,9 @@
                 "to": {
                     "startLine": 260,
                     "startColumn": 4,
-                    "startOffset": 19009,
+                    "startOffset": 19006,
                     "endColumn": 57,
-                    "endOffset": 19062
+                    "endOffset": 19059
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2174,9 +2174,9 @@
                 "to": {
                     "startLine": 261,
                     "startColumn": 4,
-                    "startOffset": 19067,
+                    "startOffset": 19064,
                     "endColumn": 54,
-                    "endOffset": 19117
+                    "endOffset": 19114
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2186,9 +2186,9 @@
                 "to": {
                     "startLine": 262,
                     "startColumn": 4,
-                    "startOffset": 19122,
+                    "startOffset": 19119,
                     "endColumn": 56,
-                    "endOffset": 19174
+                    "endOffset": 19171
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_oks_strings.xml"
@@ -2198,9 +2198,9 @@
                 "to": {
                     "startLine": 263,
                     "startColumn": 4,
-                    "startOffset": 19179,
+                    "startOffset": 19176,
                     "endColumn": 52,
-                    "endOffset": 19227
+                    "endOffset": 19224
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2210,9 +2210,9 @@
                 "to": {
                     "startLine": 264,
                     "startColumn": 4,
-                    "startOffset": 19232,
+                    "startOffset": 19229,
                     "endColumn": 103,
-                    "endOffset": 19331
+                    "endOffset": 19328
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2222,9 +2222,9 @@
                 "to": {
                     "startLine": 265,
                     "startColumn": 4,
-                    "startOffset": 19336,
+                    "startOffset": 19333,
                     "endColumn": 46,
-                    "endOffset": 19378
+                    "endOffset": 19375
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2234,9 +2234,9 @@
                 "to": {
                     "startLine": 266,
                     "startColumn": 4,
-                    "startOffset": 19383,
+                    "startOffset": 19380,
                     "endColumn": 38,
-                    "endOffset": 19417
+                    "endOffset": 19414
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2246,9 +2246,9 @@
                 "to": {
                     "startLine": 267,
                     "startColumn": 4,
-                    "startOffset": 19422,
+                    "startOffset": 19419,
                     "endColumn": 83,
-                    "endOffset": 19501
+                    "endOffset": 19498
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2258,9 +2258,9 @@
                 "to": {
                     "startLine": 268,
                     "startColumn": 4,
-                    "startOffset": 19506,
+                    "startOffset": 19503,
                     "endColumn": 43,
-                    "endOffset": 19545
+                    "endOffset": 19542
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2270,9 +2270,9 @@
                 "to": {
                     "startLine": 269,
                     "startColumn": 4,
-                    "startOffset": 19550,
+                    "startOffset": 19547,
                     "endColumn": 43,
-                    "endOffset": 19589
+                    "endOffset": 19586
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2282,9 +2282,9 @@
                 "to": {
                     "startLine": 270,
                     "startColumn": 4,
-                    "startOffset": 19594,
+                    "startOffset": 19591,
                     "endColumn": 60,
-                    "endOffset": 19650
+                    "endOffset": 19647
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2294,9 +2294,9 @@
                 "to": {
                     "startLine": 271,
                     "startColumn": 4,
-                    "startOffset": 19655,
+                    "startOffset": 19652,
                     "endColumn": 55,
-                    "endOffset": 19706
+                    "endOffset": 19703
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2306,9 +2306,9 @@
                 "to": {
                     "startLine": 272,
                     "startColumn": 4,
-                    "startOffset": 19711,
+                    "startOffset": 19708,
                     "endColumn": 50,
-                    "endOffset": 19757
+                    "endOffset": 19754
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2318,9 +2318,9 @@
                 "to": {
                     "startLine": 273,
                     "startColumn": 4,
-                    "startOffset": 19762,
+                    "startOffset": 19759,
                     "endColumn": 55,
-                    "endOffset": 19813
+                    "endOffset": 19810
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2330,9 +2330,9 @@
                 "to": {
                     "startLine": 274,
                     "startColumn": 4,
-                    "startOffset": 19818,
+                    "startOffset": 19815,
                     "endColumn": 63,
-                    "endOffset": 19877
+                    "endOffset": 19874
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2342,9 +2342,9 @@
                 "to": {
                     "startLine": 275,
                     "startColumn": 4,
-                    "startOffset": 19882,
+                    "startOffset": 19879,
                     "endColumn": 48,
-                    "endOffset": 19926
+                    "endOffset": 19923
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2354,9 +2354,9 @@
                 "to": {
                     "startLine": 276,
                     "startColumn": 4,
-                    "startOffset": 19931,
+                    "startOffset": 19928,
                     "endColumn": 47,
-                    "endOffset": 19974
+                    "endOffset": 19971
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2366,9 +2366,9 @@
                 "to": {
                     "startLine": 277,
                     "startColumn": 4,
-                    "startOffset": 19979,
+                    "startOffset": 19976,
                     "endColumn": 51,
-                    "endOffset": 20026
+                    "endOffset": 20023
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2378,9 +2378,9 @@
                 "to": {
                     "startLine": 278,
                     "startColumn": 4,
-                    "startOffset": 20031,
+                    "startOffset": 20028,
                     "endColumn": 53,
-                    "endOffset": 20080
+                    "endOffset": 20077
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2390,9 +2390,9 @@
                 "to": {
                     "startLine": 279,
                     "startColumn": 4,
-                    "startOffset": 20085,
+                    "startOffset": 20082,
                     "endColumn": 50,
-                    "endOffset": 20131
+                    "endOffset": 20128
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2402,9 +2402,9 @@
                 "to": {
                     "startLine": 280,
                     "startColumn": 4,
-                    "startOffset": 20136,
+                    "startOffset": 20133,
                     "endColumn": 46,
-                    "endOffset": 20178
+                    "endOffset": 20175
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2414,9 +2414,9 @@
                 "to": {
                     "startLine": 281,
                     "startColumn": 4,
-                    "startOffset": 20183,
+                    "startOffset": 20180,
                     "endColumn": 48,
-                    "endOffset": 20227
+                    "endOffset": 20224
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2426,9 +2426,9 @@
                 "to": {
                     "startLine": 282,
                     "startColumn": 4,
-                    "startOffset": 20232,
+                    "startOffset": 20229,
                     "endColumn": 59,
-                    "endOffset": 20287
+                    "endOffset": 20284
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2438,9 +2438,9 @@
                 "to": {
                     "startLine": 283,
                     "startColumn": 4,
-                    "startOffset": 20292,
+                    "startOffset": 20289,
                     "endColumn": 45,
-                    "endOffset": 20333
+                    "endOffset": 20330
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2450,9 +2450,9 @@
                 "to": {
                     "startLine": 284,
                     "startColumn": 4,
-                    "startOffset": 20338,
+                    "startOffset": 20335,
                     "endColumn": 59,
-                    "endOffset": 20393
+                    "endOffset": 20390
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2462,9 +2462,9 @@
                 "to": {
                     "startLine": 285,
                     "startColumn": 4,
-                    "startOffset": 20398,
+                    "startOffset": 20395,
                     "endColumn": 44,
-                    "endOffset": 20438
+                    "endOffset": 20435
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2474,9 +2474,9 @@
                 "to": {
                     "startLine": 286,
                     "startColumn": 4,
-                    "startOffset": 20443,
+                    "startOffset": 20440,
                     "endColumn": 86,
-                    "endOffset": 20525
+                    "endOffset": 20522
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2486,9 +2486,9 @@
                 "to": {
                     "startLine": 287,
                     "startColumn": 4,
-                    "startOffset": 20530,
+                    "startOffset": 20527,
                     "endColumn": 52,
-                    "endOffset": 20578
+                    "endOffset": 20575
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2498,9 +2498,9 @@
                 "to": {
                     "startLine": 288,
                     "startColumn": 4,
-                    "startOffset": 20583,
+                    "startOffset": 20580,
                     "endColumn": 52,
-                    "endOffset": 20631
+                    "endOffset": 20628
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2510,9 +2510,9 @@
                 "to": {
                     "startLine": 289,
                     "startColumn": 4,
-                    "startOffset": 20636,
+                    "startOffset": 20633,
                     "endColumn": 59,
-                    "endOffset": 20691
+                    "endOffset": 20688
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2522,9 +2522,9 @@
                 "to": {
                     "startLine": 290,
                     "startColumn": 4,
-                    "startOffset": 20696,
+                    "startOffset": 20693,
                     "endColumn": 58,
-                    "endOffset": 20750
+                    "endOffset": 20747
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2534,9 +2534,9 @@
                 "to": {
                     "startLine": 291,
                     "startColumn": 4,
-                    "startOffset": 20755,
+                    "startOffset": 20752,
                     "endColumn": 50,
-                    "endOffset": 20801
+                    "endOffset": 20798
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2546,9 +2546,9 @@
                 "to": {
                     "startLine": 292,
                     "startColumn": 4,
-                    "startOffset": 20806,
+                    "startOffset": 20803,
                     "endColumn": 98,
-                    "endOffset": 20900
+                    "endOffset": 20897
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2558,9 +2558,9 @@
                 "to": {
                     "startLine": 293,
                     "startColumn": 4,
-                    "startOffset": 20905,
+                    "startOffset": 20902,
                     "endColumn": 41,
-                    "endOffset": 20942
+                    "endOffset": 20939
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2570,9 +2570,9 @@
                 "to": {
                     "startLine": 294,
                     "startColumn": 4,
-                    "startOffset": 20947,
+                    "startOffset": 20944,
                     "endColumn": 83,
-                    "endOffset": 21026
+                    "endOffset": 21023
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2582,9 +2582,9 @@
                 "to": {
                     "startLine": 295,
                     "startColumn": 4,
-                    "startOffset": 21031,
+                    "startOffset": 21028,
                     "endColumn": 51,
-                    "endOffset": 21078
+                    "endOffset": 21075
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2594,9 +2594,9 @@
                 "to": {
                     "startLine": 296,
                     "startColumn": 4,
-                    "startOffset": 21083,
+                    "startOffset": 21080,
                     "endColumn": 45,
-                    "endOffset": 21124
+                    "endOffset": 21121
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\ssdk_strings.xml"
@@ -2606,9 +2606,9 @@
                 "to": {
                     "startLine": 297,
                     "startColumn": 4,
-                    "startOffset": 21129,
+                    "startOffset": 21126,
                     "endColumn": 47,
-                    "endOffset": 21172
+                    "endOffset": 21169
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\strings.xml"
@@ -2618,10 +2618,10 @@
                 "to": {
                     "startLine": 298,
                     "startColumn": 4,
-                    "startOffset": 21177,
+                    "startOffset": 21174,
                     "endLine": 301,
                     "endColumn": 12,
-                    "endOffset": 21403
+                    "endOffset": 21400
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2631,10 +2631,10 @@
                 "to": {
                     "startLine": 302,
                     "startColumn": 4,
-                    "startOffset": 21408,
+                    "startOffset": 21405,
                     "endLine": 307,
                     "endColumn": 12,
-                    "endOffset": 21806
+                    "endOffset": 21803
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2644,10 +2644,10 @@
                 "to": {
                     "startLine": 308,
                     "startColumn": 4,
-                    "startOffset": 21811,
+                    "startOffset": 21808,
                     "endLine": 314,
                     "endColumn": 12,
-                    "endOffset": 22097
+                    "endOffset": 22094
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2657,10 +2657,10 @@
                 "to": {
                     "startLine": 315,
                     "startColumn": 4,
-                    "startOffset": 22102,
+                    "startOffset": 22099,
                     "endLine": 319,
                     "endColumn": 12,
-                    "endOffset": 22394
+                    "endOffset": 22391
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2670,10 +2670,10 @@
                 "to": {
                     "startLine": 320,
                     "startColumn": 4,
-                    "startOffset": 22399,
+                    "startOffset": 22396,
                     "endLine": 326,
                     "endColumn": 12,
-                    "endOffset": 22764
+                    "endOffset": 22761
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2683,10 +2683,10 @@
                 "to": {
                     "startLine": 327,
                     "startColumn": 4,
-                    "startOffset": 22769,
+                    "startOffset": 22766,
                     "endLine": 332,
                     "endColumn": 12,
-                    "endOffset": 23074
+                    "endOffset": 23071
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2696,10 +2696,10 @@
                 "to": {
                     "startLine": 333,
                     "startColumn": 4,
-                    "startOffset": 23079,
+                    "startOffset": 23076,
                     "endLine": 338,
                     "endColumn": 12,
-                    "endOffset": 23399
+                    "endOffset": 23396
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2709,10 +2709,10 @@
                 "to": {
                     "startLine": 339,
                     "startColumn": 4,
-                    "startOffset": 23404,
+                    "startOffset": 23401,
                     "endLine": 344,
                     "endColumn": 12,
-                    "endOffset": 23707
+                    "endOffset": 23704
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2722,10 +2722,10 @@
                 "to": {
                     "startLine": 345,
                     "startColumn": 4,
-                    "startOffset": 23712,
+                    "startOffset": 23709,
                     "endLine": 347,
                     "endColumn": 12,
-                    "endOffset": 23867
+                    "endOffset": 23864
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2735,10 +2735,10 @@
                 "to": {
                     "startLine": 348,
                     "startColumn": 4,
-                    "startOffset": 23872,
+                    "startOffset": 23869,
                     "endLine": 353,
                     "endColumn": 12,
-                    "endOffset": 24145
+                    "endOffset": 24142
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2748,10 +2748,10 @@
                 "to": {
                     "startLine": 354,
                     "startColumn": 4,
-                    "startOffset": 24150,
+                    "startOffset": 24147,
                     "endLine": 362,
                     "endColumn": 12,
-                    "endOffset": 24574
+                    "endOffset": 24571
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2761,10 +2761,10 @@
                 "to": {
                     "startLine": 363,
                     "startColumn": 4,
-                    "startOffset": 24579,
+                    "startOffset": 24576,
                     "endLine": 367,
                     "endColumn": 12,
-                    "endOffset": 24797
+                    "endOffset": 24794
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2774,10 +2774,10 @@
                 "to": {
                     "startLine": 368,
                     "startColumn": 4,
-                    "startOffset": 24802,
+                    "startOffset": 24799,
                     "endLine": 374,
                     "endColumn": 12,
-                    "endOffset": 25118
+                    "endOffset": 25115
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2787,10 +2787,10 @@
                 "to": {
                     "startLine": 375,
                     "startColumn": 4,
-                    "startOffset": 25123,
+                    "startOffset": 25120,
                     "endLine": 384,
                     "endColumn": 9,
-                    "endOffset": 25577
+                    "endOffset": 25574
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2800,10 +2800,10 @@
                 "to": {
                     "startLine": 385,
                     "startColumn": 4,
-                    "startOffset": 25582,
+                    "startOffset": 25579,
                     "endLine": 390,
                     "endColumn": 9,
-                    "endOffset": 25827
+                    "endOffset": 25824
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2813,10 +2813,10 @@
                 "to": {
                     "startLine": 391,
                     "startColumn": 4,
-                    "startOffset": 25832,
+                    "startOffset": 25829,
                     "endLine": 395,
                     "endColumn": 9,
-                    "endOffset": 26026
+                    "endOffset": 26023
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2826,10 +2826,10 @@
                 "to": {
                     "startLine": 396,
                     "startColumn": 4,
-                    "startOffset": 26031,
+                    "startOffset": 26028,
                     "endLine": 399,
                     "endColumn": 12,
-                    "endOffset": 26183
+                    "endOffset": 26180
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2839,10 +2839,10 @@
                 "to": {
                     "startLine": 400,
                     "startColumn": 4,
-                    "startOffset": 26188,
+                    "startOffset": 26185,
                     "endLine": 403,
                     "endColumn": 12,
-                    "endOffset": 26340
+                    "endOffset": 26337
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2852,10 +2852,10 @@
                 "to": {
                     "startLine": 404,
                     "startColumn": 4,
-                    "startOffset": 26345,
+                    "startOffset": 26342,
                     "endLine": 407,
                     "endColumn": 12,
-                    "endOffset": 26500
+                    "endOffset": 26497
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2865,10 +2865,10 @@
                 "to": {
                     "startLine": 408,
                     "startColumn": 4,
-                    "startOffset": 26505,
+                    "startOffset": 26502,
                     "endLine": 413,
                     "endColumn": 12,
-                    "endOffset": 26810
+                    "endOffset": 26807
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2878,10 +2878,10 @@
                 "to": {
                     "startLine": 414,
                     "startColumn": 4,
-                    "startOffset": 26815,
+                    "startOffset": 26812,
                     "endLine": 417,
                     "endColumn": 12,
-                    "endOffset": 26956
+                    "endOffset": 26953
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2891,10 +2891,10 @@
                 "to": {
                     "startLine": 418,
                     "startColumn": 4,
-                    "startOffset": 26961,
+                    "startOffset": 26958,
                     "endLine": 424,
                     "endColumn": 12,
-                    "endOffset": 27279
+                    "endOffset": 27276
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"
@@ -2904,10 +2904,10 @@
                 "to": {
                     "startLine": 425,
                     "startColumn": 4,
-                    "startOffset": 27284,
+                    "startOffset": 27281,
                     "endLine": 430,
                     "endColumn": 12,
-                    "endOffset": 27546
+                    "endOffset": 27543
                 },
                 "from": {
                     "file": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\values\\styles.xml"

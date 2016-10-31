@@ -8,7 +8,7 @@ ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.x
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:5:5-30
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:5:5-32
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 	android:versionCode

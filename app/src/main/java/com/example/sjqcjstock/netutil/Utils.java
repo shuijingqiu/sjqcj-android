@@ -339,6 +339,21 @@ public class Utils {
     }
 
     /**
+     * 换算卖入手数 新浪股价接口用（先除以100然后保留整数）
+     * 格式化保留两位小数
+     */
+    public static String getNumberSharesHq(String str) {
+        if (str == null || str == "") {
+            return "";
+        }
+        double DStr = Double.valueOf(str)/100;
+        String format = "#########";
+        DecimalFormat df = new DecimalFormat(format);
+        str = df.format(DStr);
+        return str;
+    }
+
+    /**
      * 格式化传入的时间
      *
      * @return
@@ -436,13 +451,13 @@ public class Utils {
     }
 
     /**
-     * 判断当前是否当月数据
-     * date 当最后第一个日期
+     * 判断時間是否是是否当月数据
+     * date 最后第一个日期
      *
      * @return
      */
     public static Boolean isDayOne(String date) {
-        int days = Integer.valueOf(date.substring(4, 2));
+        int days = Integer.valueOf(date.substring(2, 4));
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -487,5 +502,23 @@ public class Utils {
 //        }
 //        return str;
 //    }
+
+    /**
+     * 判断并且返回股票的全部代码编码
+     * @param code
+     * @return
+     */
+    public static String judgeSharesCode(String code){
+        if (code == null || code.length()!=6){
+            return code;
+        }
+        String firstStr = code.substring(0,1);
+        if("0".equals(firstStr)){
+            code = "sz"+code;
+        }else if ("6".equals(firstStr)){
+            code = "sh"+code;
+        }
+        return code;
+    }
 
 }

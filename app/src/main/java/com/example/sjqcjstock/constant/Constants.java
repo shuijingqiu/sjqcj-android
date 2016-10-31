@@ -43,7 +43,8 @@ public class Constants {
     public static String shuijinbiCount = "";
 
     // 服务器路径
-    public static String Url = "http://www.sjqcj.com/index.php";
+//    public static String Url = "http://www.sjqcj.com/index.php";
+    public static String Url = "http://192.168.2.199/index.php";
     // 分享的前半段路径
     public static String shareArticle = Url + "?app=public&mod=Profile&act=sharemeager&feed_id=";
     // 股吧页面打赏微博的ListView列表接口
@@ -87,6 +88,9 @@ public class Constants {
 
     // 各种消息条数的实体类
     public static UnreadCount unreadCountInfo;
+
+    // 当前模拟炒股的剩余金额(默认值要该)
+    public static double totalAmount = 100000;
 
 //	// 图片加载化的一些共通设置
 //	public static DisplayImageOptions options=new DisplayImageOptions.Builder().

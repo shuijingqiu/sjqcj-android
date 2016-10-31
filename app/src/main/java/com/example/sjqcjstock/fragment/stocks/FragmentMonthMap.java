@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -302,6 +303,7 @@ public class FragmentMonthMap extends Fragment {
                     type = 1;
                 }
                 volume = Float.valueOf(Utils.getNumberFormatW(strS[5]));
+                Log.e("mh123:",time+"  *-");
                 // 判断当前是否是星期一
                 if (Utils.isDayOne(time)) {
                     // K线图数据的添加

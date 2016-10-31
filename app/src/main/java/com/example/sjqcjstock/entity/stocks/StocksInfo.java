@@ -1,5 +1,7 @@
 package com.example.sjqcjstock.entity.stocks;
 
+import java.util.HashMap;
+
 /**
  * 每只股票的详细信息
  * Created by Administrator on 2016/8/5.
@@ -95,6 +97,22 @@ public class StocksInfo {
      * 流通市值
      */
     private String circulationarketValue;
+
+    /**
+     * 涨停价
+     */
+    private String highLimit;
+
+    /**
+     * 跌停价
+     */
+    private String priceLimit;
+
+    /**
+     * 买卖价格和数量
+     */
+    private HashMap<String,String> buySellMap;
+
 
     public String getHighsLowsThan() {
         return highsLowsThan;
@@ -240,5 +258,27 @@ public class StocksInfo {
         this.openPrice = openPrice;
     }
 
+    public String getHighLimit() {
+        return highLimit;
+    }
 
+    public void setHighLimit(String highLimit) {
+        this.highLimit = highLimit;
+    }
+
+    public String getPriceLimit() {
+        return priceLimit;
+    }
+
+    public void setPriceLimit(String priceLimit) {
+        this.priceLimit = priceLimit;
+    }
+
+    public HashMap<String, String> getBuySellMap() {
+        return buySellMap;
+    }
+
+    public void setBuySellMap(HashMap<String, String> buySellMap) {
+        this.buySellMap = buySellMap;
+    }
 }

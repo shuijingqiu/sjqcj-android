@@ -1,6 +1,7 @@
 package com.example.sjqcjstock.wxapi;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -76,14 +77,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-
                 if (ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX == resp.getType()) {
                     CustomToast.makeText(context, "分享成功", Toast.LENGTH_LONG).show();
                     break;
                 }
-
                 code = ((SendAuth.Resp) resp).code;
-
                 // 将code发送至微信服务器，根据code返回 openid、access_token
                 new SendInfoTask()
                         .execute(new TaskParams(
@@ -93,6 +91,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 new String[]{"secret", Constants.App_Secret},
                                 new String[]{"code", code},
                                 new String[]{"grant_type", "authorization_code"}));
+
             case BaseResp.ErrCode.ERR_USER_CANCEL:
 
                 break;

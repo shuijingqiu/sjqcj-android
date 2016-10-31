@@ -27,6 +27,7 @@
             android:text="名称："/>
 
         <TextView
+            android:id="@+id/dialog_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -48,6 +49,7 @@
             android:text="代码："/>
 
         <TextView
+            android:id="@+id/dialog_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -69,6 +71,7 @@
             android:text="价格："/>
 
         <TextView
+            android:id="@+id/dialog_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -90,6 +93,7 @@
             android:text="数量："/>
 
         <TextView
+            android:id="@+id/dialog_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"

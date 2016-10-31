@@ -7,11 +7,16 @@ import android.util.Log;
 
 import com.mob.tools.network.SSLSocketFactoryEx;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -19,6 +24,7 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -39,7 +45,9 @@ import java.net.NetworkInterface;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyStore;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 public class HttpUtil {
 
@@ -249,8 +257,8 @@ public class HttpUtil {
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-//        Log.e("mh-URl:-", "+" + tp.getUrl());
-//        Log.e("mh-Params:-", "+" + tp.getEncodeParams());
+        Log.e("mh-URl:-", "+" + tp.getUrl());
+        Log.e("mh-Params:-", "+" + tp.getEncodeParams());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
             // POST GET
@@ -266,7 +274,7 @@ public class HttpUtil {
             if ("".equals(resstr)) {
                 resstr = null;
             }
-//            Log.e("mh-resstr:-", "+" + resstr);
+            Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
             resstr = null;
             e.printStackTrace();
@@ -404,8 +412,11 @@ public class HttpUtil {
     public static String getIntentData(String url) {
         String strDta = "";
         try {
+            Log.e("mhresult-url-123- ", url);
             URL uri = new URL(url);//注意，这里的URL地址必须为网络地址，
             URLConnection ucon = uri.openConnection();
+            ucon.setConnectTimeout(1000);// 设置连接主机超时
+            ucon.setReadTimeout(1000);// 设置从主机读取数据超时
             InputStream is = ucon.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis, "GBK"));
@@ -414,12 +425,119 @@ public class HttpUtil {
                 result.append((char) reader.read());
             }
             strDta = result.toString();
-            Log.e("mhresult--- ", strDta);
+            Log.e("mhresult--123- ", strDta+"-");
             reader.close();
         } catch (Exception e) {
             Log.e("mh", e.getMessage());
         }
         return strDta;
+    }
+
+    /**
+     * Rest 的get获取http数据的方式
+     * @return
+     */
+    public static String restHttpGet(String url){
+        //创建一个http客户端
+        HttpClient client = getNewHttpClient();
+        //创建一个GET请求
+        HttpGet httpGet=new HttpGet(url);
+        String resstr = "";
+        try{
+            //向服务器发送请求并获取服务器返回的结果
+            HttpResponse response=client.execute(httpGet);
+            //返回的结果可能放到InputStream，http Header中等。
+            InputStream inputStream=response.getEntity().getContent();
+            resstr = changeInputStream2((inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("mh123:",e.getMessage());
+            return "";
+        }
+        return resstr;
+    }
+
+    /**
+     * Rest 的Post获取http数据的方式
+     * @return
+     */
+    public static String restHttpPost(String url){
+        //创建一个http客户端
+        HttpClient client = getNewHttpClient();
+        //创建一个POST请求
+        HttpPost httpPost=new HttpPost(url);
+        String resstr = "";
+        try{
+            final List dataList = new ArrayList();
+            dataList.add(new BasicNameValuePair("uid", "62"));
+            dataList.add(new BasicNameValuePair("cost", "6000000"));
+            dataList.add(new BasicNameValuePair("stockCode", "6000020"));
+            HttpEntity entity = new UrlEncodedFormEntity(dataList, "UTF-8");
+            httpPost.setEntity(entity);
+
+            //向服务器发送请求并获取服务器返回的结果
+            HttpResponse response=client.execute(httpPost);
+            //返回的结果可能放到InputStream，http Header中等。
+            InputStream inputStream=response.getEntity().getContent();
+            resstr = changeInputStream2((inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("mh123:",e.getMessage());
+            return "";
+        }
+        return resstr;
+    }
+
+    /**
+     * Rest 的Put获取http数据的方式
+     * @return
+     */
+    public static String restHttpPut(String url){
+        //创建一个http客户端
+        HttpClient client = getNewHttpClient();
+        //创建一个GET请求
+        HttpPut httpPut=new HttpPut(url);
+        String resstr = "";
+        try{
+            //组装数据放到HttpEntity中发送到服务器
+            final List dataList = new ArrayList();
+            dataList.add(new BasicNameValuePair("cost", "6000003"));
+            HttpEntity entity = new UrlEncodedFormEntity(dataList, "UTF-8");
+            httpPut.setEntity(entity);
+            //向服务器发送请求并获取服务器返回的结果
+            HttpResponse response=client.execute(httpPut);
+            //返回的结果可能放到InputStream，http Header中等。
+            InputStream inputStream=response.getEntity().getContent();
+            resstr = changeInputStream2((inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("mh123:",e.getMessage());
+            return "";
+        }
+        return resstr;
+    }
+
+    /**
+     * Rest 的Delete获取http数据的方式
+     * @return
+     */
+    public static String restHttpDelete(String url){
+        //创建一个http客户端
+        HttpClient client = getNewHttpClient();
+        //创建一个GET请求
+        HttpDelete  httpDelete=new HttpDelete(url);
+        String resstr = "";
+        try{
+            //向服务器发送请求并获取服务器返回的结果
+            HttpResponse response=client.execute(httpDelete);
+            //返回的结果可能放到InputStream，http Header中等。
+            InputStream inputStream=response.getEntity().getContent();
+            resstr = changeInputStream2((inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+        return resstr;
     }
 
 }

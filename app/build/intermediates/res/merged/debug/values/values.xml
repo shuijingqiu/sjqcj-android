@@ -83,7 +83,7 @@
     <item name="rc_title_layout" type="id"/>
     <integer name="google_play_services_version">8115000</integer>
     <string name="action_settings">Settings</string>
-    <string name="agreement">《付费阅读及打赏协议》</string>
+    <string name="agreement">《付费阅读协议》</string>
     <string name="app_name">水晶球财经</string>
     <string name="app_tip">提示</string>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>

@@ -1,10 +1,10 @@
 package com.example.sjqcjstock.Activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,13 +63,8 @@ public class loginActivity extends Activity {
     private ImageView qqthirdlogin1;
     private ImageView weixinlogin1;
 
-    // 第三方登录用的实例
-//	private IUiListener listener;
-//	private IUiListener userInfoListener; // 获取用户信息监听器
-
     // 获取qq的openid信息
     private String reponsestr;
-
     public static String mAppid;
     public static QQAuth mQQAuth;
     private UserInfo mInfo;
@@ -80,6 +75,8 @@ public class loginActivity extends Activity {
     private String access_tokenstr;
     private String openidstr;
     private String nicknamestr;
+    // 网络请求提示
+    private ProgressDialog dialog;
 
     @Override
     protected void onStart() {
@@ -136,16 +133,24 @@ public class loginActivity extends Activity {
                             e.printStackTrace();
                         }
                     }
-                } else if (msg.what == 1) {
-
                 }
             }
 
         };
     }
 
-    private void initView() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog != null){
+            dialog.dismiss();
+        }
+    }
 
+    private void initView() {
+        dialog = new ProgressDialog(loginActivity.this);
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(false);
         qqthirdlogin1 = (ImageView) findViewById(R.id.qqthirdlogin1);
         weixinlogin1 = (ImageView) findViewById(R.id.weixinlogin1);
         login = (Button) findViewById(R.id.login);
@@ -154,7 +159,6 @@ public class loginActivity extends Activity {
         register2 = (LinearLayout) findViewById(R.id.register2);
         fillpassword1 = (EditText) findViewById(R.id.fillpassword1);
         fillphone1 = (EditText) findViewById(R.id.fillphone1);
-
     }
 
     private void initData() {
@@ -193,7 +197,6 @@ public class loginActivity extends Activity {
     }
 
     class userRegister_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
             userRegister();
@@ -210,12 +213,12 @@ public class loginActivity extends Activity {
         public void onClick(View arg0) {
             commonUserLogin();
         }
-
         private void commonUserLogin() {
             //防止暴力点击
             if (Utils.isFastDoubleClick()) {
                 return;
             }
+            dialog.show();
             // 防止二次第三方的影响
             Constants.isDefault = true;
             new SendInfoTaskForCommonUserLogin().execute(new TaskParams(
@@ -228,10 +231,9 @@ public class loginActivity extends Activity {
     }
 
     class weixinlogin1_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
+            dialog.show();
             final SendAuth.Req req = new SendAuth.Req();
             req.scope = "snsapi_userinfo";
             req.state = "wechat_sdk_demo_test";
@@ -248,6 +250,7 @@ public class loginActivity extends Activity {
     }
 
     private void onClickLogin() {
+        dialog.show();
         if (!mQQAuth.isSessionValid()) {
             IUiListener listener = new BaseUiListener() {
                 @Override
@@ -289,24 +292,20 @@ public class loginActivity extends Activity {
                     msg.obj = response;
                     msg.what = 0;
                     mHandler.sendMessage(msg);
-                    new Thread() {
-
-                        @Override
-                        public void run() {
-                            JSONObject json = (JSONObject) response;
-                            if (json.has("figureurl")) {
-                                Bitmap bitmap = null;
-                                try {
-                                } catch (Exception e) {
-
-                                }
-                                Message msg = new Message();
-                                msg.obj = bitmap;
-                                msg.what = 1;
-                                mHandler.sendMessage(msg);
-                            }
-                        }
-                    }.start();
+//没用啊
+//                    new Thread() {
+//                        @Override
+//                        public void run() {
+//                            JSONObject json = (JSONObject) response;
+//                            if (json.has("figureurl")) {
+//                                Bitmap bitmap = null;
+//                                Message msg = new Message();
+//                                msg.obj = bitmap;
+//                                msg.what = 1;
+//                                mHandler.sendMessage(msg);
+//                            }
+//                        }
+//                    }.start();
                 }
 
                 @Override
@@ -406,6 +405,9 @@ public class loginActivity extends Activity {
                         Constants.setStaticuname(unamestr);
                         Constants.setStaticpasswordstr(fillpassword1.getText().toString());
 
+                        if (dialog != null){
+                            dialog.dismiss();
+                        }
                         if (Integer.parseInt(statusstr) == 1) {
                             Intent intent = new Intent(loginActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -477,6 +479,9 @@ public class loginActivity extends Activity {
                             Constants.setStaticmyuidstr(midstr);
                             Constants.setStatictokeystr(openidstr);
                             Constants.setStaticLoginType("qq");
+                            if (dialog != null){
+                                dialog.dismiss();
+                            }
                             Intent intent = new Intent(loginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -520,10 +525,11 @@ public class loginActivity extends Activity {
                     String datastr = map.get("data") + "";
                     List<Map<String, Object>> datastrlists = JsonTools
                             .listKeyMaps("[" + datastr + "]");
-
                     // 昵称有重名，跳转到昵称设置界面
                     if ("0".equals(statusstr)) {
-
+                        if (dialog != null){
+                            dialog.dismiss();
+                        }
                         Intent intent = new Intent(loginActivity.this, UpdateNicknameActivity.class);
                         intent.putExtra("email", openidstr.substring(0, 9) + "@qq.com");
                         intent.putExtra("password", openidstr.substring(0, 9));
@@ -531,7 +537,6 @@ public class loginActivity extends Activity {
                         intent.putExtra("tokey", openidstr);
                         intent.putExtra("access_token", access_tokenstr);
                         startActivity(intent);
-
                         // 昵称没有重名，则直接跳转主界面
                     } else {
                         for (Map<String, Object> datastrmap : datastrlists) {
@@ -565,6 +570,9 @@ public class loginActivity extends Activity {
                             Constants.setStaticLoginType("qq");
                             // 设置密码
                             Constants.isDefault = false;
+                            if (dialog != null){
+                                dialog.dismiss();
+                            }
                             // 已经绑定qq，直接跳转到主界面
                             Intent intent = new Intent(loginActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -593,12 +601,10 @@ public class loginActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     @Override
     protected void onNewIntent(Intent intent) {
         // TODO Auto-generated method stub
         super.onNewIntent(intent);
         finish();
     }
-
 }

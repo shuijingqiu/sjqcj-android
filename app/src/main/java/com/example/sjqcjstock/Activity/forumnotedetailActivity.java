@@ -468,7 +468,6 @@ public class forumnotedetailActivity extends Activity implements
             intent.putExtra("uid", uidstr);
             startActivity(intent);
         }
-
     }
 
     /**
@@ -932,6 +931,13 @@ public class forumnotedetailActivity extends Activity implements
                                     feedtitle.setVisibility(View.GONE);
                                     // 修改说明语句
                                     rewardExplain.setText("本文是付费文章，您已阅读");
+                                    // 禁止复制
+                                    wv_ad_tv.setOnLongClickListener(new View.OnLongClickListener(){
+                                        @Override
+                                        public boolean onLongClick(View v) {
+                                            return true;
+                                        }
+                                    });
                                 }
                             } else {
                                 wv_ad_tv.setVisibility(View.VISIBLE);
@@ -1396,6 +1402,13 @@ public class forumnotedetailActivity extends Activity implements
                     wv_ad_tv.setVisibility(View.VISIBLE);
                     coment.setVisibility(View.GONE);
                     feedtitle.setVisibility(View.GONE);
+                    // 禁止复制
+                    wv_ad_tv.setOnLongClickListener(new View.OnLongClickListener(){
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
                     // 修改说明语句
                     rewardExplain.setText("本文是付费文章，您已阅读");
                 } else {
@@ -1458,4 +1471,15 @@ public class forumnotedetailActivity extends Activity implements
             }
         }
     }
+
+    /**
+     * 编辑文章的跳转方法
+     * @param v
+     */
+    public void editArticle(View v){
+
+
+
+    }
+
 }
