@@ -26,6 +26,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
@@ -117,15 +118,17 @@ public class HttpUtil {
      * 将从服务器获取的IO流转化成json字符串   高性能
      */
     public static String changeInputStream2(InputStream inputStream) {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder jsonbuilder = new StringBuilder();
-        String jsonString = "";
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         //获得字节叔祖写入流，准备往内存里面写数据
         //ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
         //int len=0;
         //byte[] data=new byte[1024];
-
+        BufferedReader bufferedReader = null;
+        StringBuilder jsonbuilder = null;
         try {
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream ,"UTF-8"));
+            jsonbuilder = new StringBuilder();
+            String jsonString = "";
             //通过inputStream 将从服务器获取的输出流,
             //再将输出流通过outputStream写入到内存当中
 
@@ -414,21 +417,23 @@ public class HttpUtil {
         try {
             Log.e("mhresult-url-123- ", url);
             URL uri = new URL(url);//注意，这里的URL地址必须为网络地址，
-            URLConnection ucon = uri.openConnection();
-            ucon.setConnectTimeout(1000);// 设置连接主机超时
-            ucon.setReadTimeout(1000);// 设置从主机读取数据超时
+            HttpURLConnection ucon = (HttpURLConnection) uri.openConnection();
+            ucon.setConnectTimeout(2000);// 设置连接主机超时
+            ucon.setReadTimeout(2000);// 设置从主机读取数据超时
             InputStream is = ucon.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(bis, "GBK"));
-            StringBuffer result = new StringBuffer();
-            while (reader.ready()) {
-                result.append((char) reader.read());
+//            strDta = changeInputStream2(is);
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is ,"GBK"));
+            StringBuilder jsonbuilder = new StringBuilder();
+            while ((strDta = bufferedReader.readLine()) != null) {
+                //outputStream.write(data,0,len);
+                jsonbuilder.append(strDta);
             }
-            strDta = result.toString();
-            Log.e("mhresult--123- ", strDta+"-");
-            reader.close();
+            strDta = jsonbuilder.toString();
+            Log.e("mhresult--12- ", strDta+"-");
+//            reader.close();
         } catch (Exception e) {
-            Log.e("mh", e.getMessage());
+            Log.e("mh", e.toString());
         }
         return strDta;
     }
@@ -440,8 +445,13 @@ public class HttpUtil {
     public static String restHttpGet(String url){
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
+        // 请求超时
+        client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
+        // 读取超时
+        client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         //创建一个GET请求
         HttpGet httpGet=new HttpGet(url);
+        Log.e("mh123url:",url + "---");
         String resstr = "";
         try{
             //向服务器发送请求并获取服务器返回的结果
@@ -449,6 +459,7 @@ public class HttpUtil {
             //返回的结果可能放到InputStream，http Header中等。
             InputStream inputStream=response.getEntity().getContent();
             resstr = changeInputStream2((inputStream));
+            Log.e("mh123:",resstr + "---");
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("mh123:",e.getMessage());
@@ -461,20 +472,16 @@ public class HttpUtil {
      * Rest 的Post获取http数据的方式
      * @return
      */
-    public static String restHttpPost(String url){
+    public static String restHttpPost(String url,List listData){
+        Log.e("mhUrlpost:",url);
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         //创建一个POST请求
         HttpPost httpPost=new HttpPost(url);
         String resstr = "";
         try{
-            final List dataList = new ArrayList();
-            dataList.add(new BasicNameValuePair("uid", "62"));
-            dataList.add(new BasicNameValuePair("cost", "6000000"));
-            dataList.add(new BasicNameValuePair("stockCode", "6000020"));
-            HttpEntity entity = new UrlEncodedFormEntity(dataList, "UTF-8");
+            HttpEntity entity = new UrlEncodedFormEntity(listData, "UTF-8");
             httpPost.setEntity(entity);
-
             //向服务器发送请求并获取服务器返回的结果
             HttpResponse response=client.execute(httpPost);
             //返回的结果可能放到InputStream，http Header中等。
@@ -492,16 +499,13 @@ public class HttpUtil {
      * Rest 的Put获取http数据的方式
      * @return
      */
-    public static String restHttpPut(String url){
+    public static String restHttpPut(String url,List dataList){
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         //创建一个GET请求
         HttpPut httpPut=new HttpPut(url);
         String resstr = "";
         try{
-            //组装数据放到HttpEntity中发送到服务器
-            final List dataList = new ArrayList();
-            dataList.add(new BasicNameValuePair("cost", "6000003"));
             HttpEntity entity = new UrlEncodedFormEntity(dataList, "UTF-8");
             httpPut.setEntity(entity);
             //向服务器发送请求并获取服务器返回的结果

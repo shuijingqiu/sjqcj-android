@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
 
 import java.util.ArrayList;

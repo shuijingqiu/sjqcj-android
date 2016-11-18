@@ -58,15 +58,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="65dp"
                         android:background="@color/color_toptitle"
+                        android:padding="10dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="11dp"
                             android:layout_weight="1">
 
                             <TextView
@@ -92,7 +91,7 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="11dp"
+                            android:layout_marginTop="-14dp"
                             android:layout_weight="1">
 
                             <TextView
@@ -142,7 +141,6 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
                         android:background="@color/gray_line" />
 
                     <LinearLayout
@@ -159,6 +157,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/total_assets_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1003256.25"
@@ -186,6 +185,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/available_funds_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="189256.25"
@@ -213,6 +213,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/day_break_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="+8989.00"
@@ -315,12 +316,42 @@
                         android:src="@color/color_toptitle" />
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/line" />
                 <LinearLayout
                     android:id="@+id/transaction_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/entrust_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/entrust_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:text="当前委托(0)" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/line" />
+
+                        <com.example.sjqcjstock.view.SoListView
+                            android:id="@+id/entrust_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@null"
+                            android:listSelector="@android:color/transparent" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -337,7 +368,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="持仓(4)" />
+                            android:text="持仓(0)" />
 
                         <TextView
                             android:id="@+id/market_tv"
@@ -351,6 +382,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:text="852436.25" />
 

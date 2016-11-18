@@ -3,6 +3,7 @@ package com.example.sjqcjstock.netutil;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 查询调用处理股票数据信息
@@ -119,6 +120,7 @@ public class sharesUtil {
 
         // 获取该股票当天的分时数据(腾讯接口)
         String str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + code);
+//        String str = HttpUtil.restHttpGet("http://qt.gtimg.cn/q=" + code);
         // 增长类型
         String increaseType = "1";
         StocksInfo stocksInfo = null;
@@ -185,9 +187,12 @@ public class sharesUtil {
      * @return 股票信息的实体类
      */
     private StocksInfo processOrderDataXL(String code){
-// 获取该股票当天的分时数据(腾讯接口)
+        // 获取该股票当天的分时数据(新浪接口)
         String str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + code);
-
+        // 判断返回数据是否为空
+        if ("".equals(str.trim())) {
+            return null;
+        }
         // 增长类型
         String increaseType = "1";
         StocksInfo stocksInfo = null;
@@ -209,7 +214,6 @@ public class sharesUtil {
         Double priceZ = Double.valueOf(sharesMinute[2]);
         // 当前价格
         Double priceD = Double.valueOf(sharesMinute[3]);
-
         // 股票名称
         stocksInfo.setName(sharesMinute[0]);
         // 股票代码
@@ -252,5 +256,70 @@ public class sharesUtil {
         buySellMap.put("increaseType", increaseType);
         stocksInfo.setBuySellMap(buySellMap);
         return stocksInfo;
+    }
+
+    /**
+     * 根据传入的股票代码获取所有的股票信息
+     * @param codes
+     * @return
+     */
+    public static Map<String,Map> getsharess(String codes){
+        Map<String,Map> mapShares = new HashMap<String, Map>();
+        Map<String,String> map = null;
+        String[] shares;
+        String[] sharesMinute;
+        // 0 为涨 1为跌
+        String type = "0";
+        // 腾讯接口
+        String str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + codes);
+        if (str.length()<30){
+            // 新浪接口
+            str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + codes);
+            shares = str.split(";");
+            for (String sharesStr:shares){
+                if (sharesStr.length() > 40){
+                    // 分割股票详细信息
+                    sharesMinute = sharesStr.split(",");
+                    // 当前价格
+                    String spotPrice = sharesMinute[3];
+                    if (Double.valueOf(spotPrice) == 0){
+                        spotPrice = sharesMinute[2];
+                    }
+                    if(Double.valueOf(sharesMinute[2]) > Double.valueOf(spotPrice)){
+                        type = "1";
+                    }else{
+                        type = "0";
+                    }
+                    map = new HashMap<String, String>();
+                    String code = sharesMinute[0].substring(13,19);
+                    map.put("price",spotPrice);
+                    map.put("type",type);
+                    mapShares.put(code,map);
+                }
+            }
+        }else{
+            // 处理腾讯返回的数据
+            // 分割不同的股票
+            shares = str.split(";");
+            for (String sharesStr:shares){
+                // 分割股票详细信息
+                sharesMinute = sharesStr.split("~");
+                // 当前价格
+                String spotPrice = sharesMinute[3];
+                if (Double.valueOf(spotPrice) == 0){
+                    spotPrice = sharesMinute[4];
+                }
+                if(Double.valueOf(sharesMinute[31]) >= 0){
+                    type = "0";
+                }else{
+                    type = "1";
+                }
+                map = new HashMap<String, String>();
+                map.put("price",spotPrice);
+                map.put("type",type);
+                mapShares.put(sharesMinute[2],map);
+            }
+        }
+        return mapShares;
     }
 }

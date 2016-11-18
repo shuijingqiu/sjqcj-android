@@ -112,7 +112,7 @@ public class TransactionDetailActivity extends Activity {
      */
     public void sellClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "1");
+        intent.putExtra("type", "2");
         intent.putExtra("code", "0000001");
         startActivity(intent);
     }
@@ -124,7 +124,7 @@ public class TransactionDetailActivity extends Activity {
      */
     public void buyClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "0");
+        intent.putExtra("type", "1");
         intent.putExtra("code", "0000001");
         startActivity(intent);
     }

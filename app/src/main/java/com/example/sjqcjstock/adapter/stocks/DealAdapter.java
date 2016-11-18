@@ -8,7 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.Order;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +21,21 @@ import java.util.List;
 public class DealAdapter extends BaseAdapter {
 
     // 加载用的数据
-    private List<StocksInfo> listData;
+    private List<Order> listData;
     private Context context;
+    // 交易价格
+    private String priceStr;
+    // 交易金额
+    private String numberStr;
 
     public DealAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<Order> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<Order>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -69,9 +74,22 @@ public class DealAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.nameCode.setText(listData.get(position).getName());
-        // 没写完
-
+        holder.nameCode.setText(listData.get(position).getStock_name());
+        priceStr = listData.get(position).getPrice();
+        numberStr = listData.get(position).getNumber();
+        holder.price.setText(priceStr);
+        holder.number.setText(numberStr);
+        holder.time.setText(listData.get(position).getTime());
+        holder.money.setText(Utils.getNumberFormat2(Double.valueOf(priceStr)*Double.valueOf(numberStr)+""));
+        holder.cost.setText(listData.get(position).getFee());
+        // 1代表买入2代表卖出
+        if("1".equals(listData.get(position).getType())){
+             holder.type.setText("买入");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
+        }else{
+            holder.type.setText("卖出");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_5471ef));
+        }
         return convertView;
     }
 

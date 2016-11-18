@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -295,10 +296,10 @@ public class FragmentAllWeibo extends Fragment {
                             List<Map<String, Object>> api_sourcestrlists = JsonTools.listKeyMaps("[" + api_sourcestr + "]");
                             for (Map<String, Object> api_sourcestrmap : api_sourcestrlists) {
 
-                                source_user_infostr = api_sourcestrmap.get("source_user_info").toString();
-                                source_contentstr = api_sourcestrmap.get("source_content").toString();
+                                source_user_infostr = api_sourcestrmap.get("source_user_info")+"";
+                                source_contentstr = api_sourcestrmap.get("source_content")+"";
 
-                                source_feed_idstr = api_sourcestrmap.get("feed_id").toString();
+                                source_feed_idstr = api_sourcestrmap.get("feed_id")+"";
                                 source_contentstr = source_contentstr.replace("<feed-titlestyle='display:none'>", "fontsing1");
                                 source_contentstr = source_contentstr.replace("<feed-title style='display:none'>", "fontsing1");
                                 source_contentstr = source_contentstr.replace("</feed-title>", "fontsing2");

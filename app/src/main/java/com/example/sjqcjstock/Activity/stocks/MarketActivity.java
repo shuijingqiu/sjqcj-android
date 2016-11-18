@@ -91,7 +91,7 @@ public class MarketActivity extends Activity {
      */
     public void mairuClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "0");
+        intent.putExtra("type", "1");
         startActivity(intent);
     }
 
@@ -102,7 +102,7 @@ public class MarketActivity extends Activity {
      */
     public void maichuClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "1");
+        intent.putExtra("type", "2");
         startActivity(intent);
     }
 

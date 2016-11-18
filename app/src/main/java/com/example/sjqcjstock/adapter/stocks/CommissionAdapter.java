@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,19 @@ import java.util.List;
  */
 public class CommissionAdapter extends BaseAdapter {
 
-    private List<StocksInfo> listData;
+    private List<Order> listData;
     private Context context;
+    // 订单实体类
+    private Order order;
 
     public CommissionAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<Order> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<Order>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -68,8 +70,30 @@ public class CommissionAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.nameCode.setText(listData.get(position).getName());
-        // 没写完
+        order = listData.get(position);
+        holder.nameCode.setText(order.getStock_name()+"("+order.getStock()+")");
+        holder.commissionNumber.setText(order.getNumber());
+        holder.number.setText(order.getNumber());
+        holder.price.setText(order.getPrice());
+        holder.time.setText(order.getTime());
+
+        // 1代表买入2代表卖出
+        if("1".equals(order.getType())){
+            holder.type.setText("买入");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
+        }else{
+            holder.type.setText("卖出");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_5471ef));
+        }
+
+        //0代表待成交 1代表成交  2代表撤单
+        String status = order.getStatus();
+        if ("0".equals(status)) {
+            holder.state.setText("已报");
+        }else if("2".equals(status)){
+            holder.state.setText("撤单");
+        }
+
 
         return convertView;
     }

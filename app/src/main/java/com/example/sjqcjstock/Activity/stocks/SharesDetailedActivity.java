@@ -512,7 +512,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      */
     public void purchaseClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "0");
+        intent.putExtra("type", "1");
         startActivity(intent);
     }
 

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -881,6 +882,9 @@ public class forumnotedetailActivity extends Activity implements
                                 titelStr = unamestr + ":";
                             }
 
+
+
+
                             // 将时间戳转换成date
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date curDate = new Date(Long.parseLong(publish_timestr) * 1000); // 获取当前时间
@@ -963,7 +967,6 @@ public class forumnotedetailActivity extends Activity implements
                             if (contentUrl != null) {
                                 contentstr = Utils.replaceWebUrl(contentUrl, contentstr);
                             }
-
                             wv_ad_tv.loadDataWithBaseURL(null, contentstr, "text/html", "utf-8", null);
 
                             wv_ad_tv.setWebChromeClient(new WebChromeClient() {
@@ -1471,15 +1474,15 @@ public class forumnotedetailActivity extends Activity implements
             }
         }
     }
-
-    /**
-     * 编辑文章的跳转方法
-     * @param v
-     */
-    public void editArticle(View v){
-
-
-
-    }
+//
+//    /**
+//     * 编辑文章的跳转方法
+//     * @param v
+//     */
+//    public void editArticle(View v){
+//
+//
+//
+//    }
 
 }

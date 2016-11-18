@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.netutil;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -217,6 +218,19 @@ public class Utils {
      */
     public static String getNumberFormat1(String str) {
         String format = "#########.##";
+        if (str == null || "".equals(str) || "null".equals(str)) {
+            return "0";
+        }
+        double DStr = Double.valueOf(str);
+        DecimalFormat df = new DecimalFormat(format);
+        return df.format(DStr);
+    }
+
+    /**
+     * 格式化小數
+     */
+    public static String getNumberFormat2(String str) {
+        String format = "########0.00";
         if (str == null || "".equals(str) || "null".equals(str)) {
             return "0";
         }
@@ -478,9 +492,11 @@ public class Utils {
         if (strList == null) {
             return str;
         }
+        Log.e("mh1234",str);
         for (String url : strList) {
             str = str.replace(url, "<a href = \"" + url + "\">网址</a>");
         }
+        Log.e("mh12345",str);
         return str;
     }
 

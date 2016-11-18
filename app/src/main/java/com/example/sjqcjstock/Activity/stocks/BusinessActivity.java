@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
@@ -23,6 +24,14 @@ import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
+import com.example.sjqcjstock.view.CustomToast;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 买卖页面的Activity
@@ -70,19 +79,22 @@ public class BusinessActivity extends Activity {
     private TextView numberBuy3;
     private TextView numberBuy4;
     private TextView numberBuy5;
-    // 买卖类型
-    private String type = "0";
+    // 买卖类型(1代表买入 2代表卖出)
+    private String type = "2";
     // 股票输入代码
     private String code = "";
     // 股票获取处理后的信息
     private StocksInfo  stocksInfo = null;
     // 当前价格
     private String spotPrice = "0";
-    // 当前可买的股票数量
-    private String businessNumber = "";
+    // 当前可卖买的股票数量
+    private String businessNumber = "0";
     // 网络请求提示
     private ProgressDialog dialog;
-
+    // 调用买卖接口返回的数据
+    private String resstr = "";
+    // 确认的弹框
+    private AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +103,11 @@ public class BusinessActivity extends Activity {
         ExitApplication.getInstance().addActivity(this);
         type = getIntent().getStringExtra("type");
         findView();
+        code = getIntent().getStringExtra("code");
+        businessNumber = getIntent().getStringExtra("number");
+        if (code !=null && !"".equals(code)){
+            codeEt.setText(code);
+        }
     }
 
     /**
@@ -139,7 +156,7 @@ public class BusinessActivity extends Activity {
         numberBuy3 = (TextView) findViewById(R.id.number_buy_3);
         numberBuy4 = (TextView) findViewById(R.id.number_buy_4);
         numberBuy5 = (TextView) findViewById(R.id.number_buy_5);
-        if ("1".equals(type)) {
+        if ("2".equals(type)) {
             titleName.setText("模拟盘-卖出");
             ((Button) findViewById(R.id.confirm_business)).setText("卖出");
             ((Button) findViewById(R.id.confirm_business1)).setText("市场卖出");
@@ -154,15 +171,35 @@ public class BusinessActivity extends Activity {
         codeEt.addTextChangedListener(watcher);
     }
 
+//    /**
+//     * 开线程获取当前股票信息
+//     */
+//    private void getData(){
+//        dialog.show();
+//        // 开线程获取股票数据信息
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 调用接口获取股票当前行情数据
+//                stocksInfo = new sharesUtil().processOrderData(code);
+//                handler.sendEmptyMessage(0);
+//            }
+//        }).start();
+//    }
     /**
      * 增加价格的方法
      *
      * @param view
      */
     public void priceRaise(View view) {
-        if (Double.valueOf(spotPrice)>0){
-            spotPrice = Utils.getNumberFormat1((Float.valueOf(spotPrice)+0.01) + "");
-            priceEt.setText(spotPrice);
+        if(stocksInfo!=null){
+            if (Double.valueOf(spotPrice)>0){
+                spotPrice = Utils.getNumberFormat2((Float.valueOf(spotPrice)+0.01) + "");
+                if(Double.valueOf(spotPrice) > Double.valueOf(stocksInfo.getHighLimit())){
+                    spotPrice = stocksInfo.getHighLimit();
+                }
+                priceEt.setText(spotPrice);
+            }
         }
     }
 
@@ -172,9 +209,14 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void priceReduce(View view) {
-        if (Double.valueOf(spotPrice)>0){
-            spotPrice = Utils.getNumberFormat1((Float.valueOf(spotPrice)-0.01) + "");
-            priceEt.setText(spotPrice);
+        if(stocksInfo!=null){
+            if (Double.valueOf(spotPrice)>0){
+                spotPrice = Utils.getNumberFormat2((Float.valueOf(spotPrice)-0.01) + "");
+                if(Double.valueOf(stocksInfo.getPriceLimit())>Double.valueOf(spotPrice)){
+                    spotPrice = stocksInfo.getPriceLimit();
+                }
+                priceEt.setText(spotPrice);
+            }
         }
     }
 
@@ -184,7 +226,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void numberQuarter(View view) {
-        numberEt.setText(Integer.valueOf(businessNumber)/4+"");
+        numberEt.setText(Integer.valueOf(businessNumber)/4/100*100+"");
     }
 
     /**
@@ -193,7 +235,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void numberAhalf(View view) {
-        numberEt.setText(Integer.valueOf(businessNumber)/2+"");
+        numberEt.setText(Integer.valueOf(businessNumber)/2/100*100+"");
     }
 
     /**
@@ -212,9 +254,39 @@ public class BusinessActivity extends Activity {
      */
     public void confirmBusiness(View view) {
         String number = numberEt.getText().toString();
-        if (Double.valueOf(spotPrice)>0 && !"".equals(number) && Double.valueOf(number)>0){
-            showDialog("0");
+        // 当前输入的价格
+        spotPrice = priceEt.getText().toString();
+        if ("".equals(spotPrice)){
+            CustomToast.makeText(getApplicationContext(), "请输入正确价格", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
+        if ("".equals(number)){
+            CustomToast.makeText(getApplicationContext(), "请输交易数量", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        if(Integer.valueOf(number)%100 != 0){
+            CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
+                    .show();
+            number = Integer.valueOf(number)/100+"00";
+            numberEt.setText(number);
+            return;
+        }
+        if(Integer.valueOf(number) > Double.valueOf(businessNumber)){
+            numberEt.setText(businessNumber);
+        }
+        // 判断输入价格是否小于跌停价格
+        if(Double.valueOf(stocksInfo.getPriceLimit())>Double.valueOf(spotPrice)){
+            spotPrice = stocksInfo.getPriceLimit();
+            priceEt.setText(spotPrice);
+        }
+        // 判断输入价格是否大于涨停价格
+        if(Double.valueOf(spotPrice) > Double.valueOf(stocksInfo.getHighLimit())){
+            spotPrice = stocksInfo.getHighLimit();
+            priceEt.setText(spotPrice);
+        }
+        showDialog("2");
     }
 
     /**
@@ -224,15 +296,32 @@ public class BusinessActivity extends Activity {
      */
     public void confirmBusiness1(View view) {
         String number = numberEt.getText().toString();
-        if (Double.valueOf(spotPrice)>0 && !"".equals(number) && Double.valueOf(number)>0){
-            showDialog("1");
+        // 当前输入的价格
+        String spotPriceStr = priceEt.getText().toString();
+        if ("".equals(spotPriceStr)){
+            CustomToast.makeText(getApplicationContext(), "请输入正确价格", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
+        if ("".equals(number)){
+            CustomToast.makeText(getApplicationContext(), "请输交易数量", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        if(Integer.valueOf(number)%100 != 0){
+            CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
+                    .show();
+            number = Integer.valueOf(number)/100+"00";
+            numberEt.setText(number);
+            return;
+        }
+        showDialog("1");
     }
 
     /**
      * 弹出显示确认的dialog
      */
-    private void showDialog(String str) {
+    private void showDialog(final String str) {
         View viewDialog = LayoutInflater.from(this).inflate(R.layout.dialog_business, null);
         TextView dialogTitle = (TextView) viewDialog.findViewById(R.id.dialog_title);
         Button dialogConfirm = (Button) viewDialog.findViewById(R.id.dialog_confirm);
@@ -240,16 +329,23 @@ public class BusinessActivity extends Activity {
         TextView codeTv = (TextView) viewDialog.findViewById(R.id.dialog_code);
         TextView priceTv = (TextView) viewDialog.findViewById(R.id.dialog_price);
         TextView numberTv = (TextView) viewDialog.findViewById(R.id.dialog_number);
+        // 购买数量
+        final String number = numberEt.getText().toString();
+        // 买卖价格
+        String priceStr = "";
         nameTv.setText(stocksInfo.getName());
         codeTv.setText(stocksInfo.getCode());
-        numberTv.setText(numberEt.getText().toString());
+        numberTv.setText(number);
         if ("1".equals(str)){
             // 市场价格买入
-            priceTv.setText(stocksInfo.getSpotPrice());
+            priceStr = "0";
+            priceTv.setText("--");
         }else{
-            priceTv.setText(spotPrice);
+            priceStr = spotPrice;
+            priceTv.setText(priceStr);
         }
-        if ("1".equals(type)) {
+        final String price = priceStr;
+        if ("2".equals(type)) {
             dialogTitle.setText("委托卖出确认");
             dialogConfirm.setText("确认卖出");
         } else {
@@ -257,12 +353,39 @@ public class BusinessActivity extends Activity {
             dialogConfirm.setText("确认买入");
         }
 
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).setView(viewDialog).show();
+        alertDialog = new AlertDialog.Builder(this).setView(viewDialog).show();
         alertDialog.setCancelable(false);
         // 确认买卖
         dialogConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
+                // 开线程获取股票数据信息
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List dataList = new ArrayList();
+                        // 用户ID
+//                        dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                        dataList.add(new BasicNameValuePair("uid", "200"));
+                        // 股票代码
+                        dataList.add(new BasicNameValuePair("stock", stocksInfo.getCode()));
+                        // 购买金额
+                        dataList.add(new BasicNameValuePair("price", price));
+                        // 购买数量（必选大于100）
+                        dataList.add(new BasicNameValuePair("number", number));
+                        // 购买的方式（1代表买入 2代表卖出）
+                        dataList.add(new BasicNameValuePair("type", type));
+                        // 账户的类型 （账户扩展字段，目前只有1个）
+                        dataList.add(new BasicNameValuePair("sorts", "1"));
+                        // 是否市价买入 （1代表市价买入 2代表下单买入）
+                        dataList.add(new BasicNameValuePair("isMarket", str));
+                        // 调用接口发送买卖数据到后台
+                        resstr = HttpUtil.restHttpPost(Constants.moUrl+"/orders",dataList);
+                        handler.sendEmptyMessage(1);
+                    }
+                }).start();
+
 
             }
         });
@@ -320,8 +443,10 @@ public class BusinessActivity extends Activity {
                         // 当前价格
                         spotPrice = stocksInfo.getSpotPrice();
                         priceEt.setText(spotPrice);
-                        businessNumber = Constants.totalAmount/Double.valueOf(spotPrice)+"";
-                        businessNumber = (int)(Double.valueOf(businessNumber)/100*100)+"";
+                        if ("1".equals(type)) {
+                            businessNumber = Constants.totalAmount / Double.valueOf(spotPrice) + "";
+                            businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
+                        }
                         businessNumberTv.setText(businessNumber);
                         nameTv.setText(stocksInfo.getName());
                         priceLimitTv.setText("跌停 " + stocksInfo.getPriceLimit());
@@ -396,6 +521,29 @@ public class BusinessActivity extends Activity {
                     dialog.dismiss();
                     break;
                 case 1:
+                    Log.e("返回值mh",resstr);
+                    if(!"".equals(resstr.trim())){
+                        try {
+                            JSONObject jsonObject = new JSONObject(resstr);
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                            if("success".equals(jsonObject.getString("status"))){
+                                dialog.dismiss();
+                                // （如果购买成功关闭当前页面）关闭当前页面
+                                if(alertDialog !=null )
+                                {
+                                    alertDialog.dismiss();
+                                }
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(alertDialog !=null )
+                    {
+                        alertDialog.dismiss();
+                    }
+                    dialog.dismiss();
                     break;
             }
         }

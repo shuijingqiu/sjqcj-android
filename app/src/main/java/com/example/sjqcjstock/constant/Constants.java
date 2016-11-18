@@ -43,8 +43,11 @@ public class Constants {
     public static String shuijinbiCount = "";
 
     // 服务器路径
-//    public static String Url = "http://www.sjqcj.com/index.php";
-    public static String Url = "http://192.168.2.199/index.php";
+    public static String Url = "http://www.sjqcj.com/index.php";
+    public static String moUrl = "https://moni.sjqcj.com";
+//    public static String moUrl = "http://192.168.2.105";
+//    public static String Url = "http://192.168.2.105/index.php";
+//    public static String Url = "http://192.168.2.199/index.php";
     // 分享的前半段路径
     public static String shareArticle = Url + "?app=public&mod=Profile&act=sharemeager&feed_id=";
     // 股吧页面打赏微博的ListView列表接口

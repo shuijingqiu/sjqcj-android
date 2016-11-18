@@ -174,22 +174,16 @@ public class usermycommonnoteAdapter extends BaseAdapter {
                                 // TODO Auto-generated method stub
 
                                 new SendInfoTaskdeleteweibo().execute(new TaskParams(Constants.Url + "?app=public&mod=AppFeedList&act=AppremoveFeed",
-                                                //new String[] { "login_email", "1061550505@qq.com" },
-                                                //new String[] { "login_password", "12345678" },
-                                                //new String[] { "P", "1" },
-                                                //new String[] { "feed_id", weiboidstr}
-                                                new String[]{"mid", Constants.staticmyuidstr},
-                                                new String[]{"login_password", Constants.staticpasswordstr},
-                                                new String[]{"tokey", Constants.statictokeystr},
-
-                                                new String[]{"feed_id", (String) listData.get(position).get("feed_id")}
-
-
+                                            //new String[] { "login_email", "1061550505@qq.com" },
+                                            //new String[] { "login_password", "12345678" },
+                                            //new String[] { "P", "1" },
+                                            //new String[] { "feed_id", weiboidstr}
+                                            new String[]{"mid", Constants.staticmyuidstr},
+                                            new String[]{"login_password", Constants.staticpasswordstr},
+                                            new String[]{"tokey", Constants.statictokeystr},
+                                            new String[]{"feed_id", (String) listData.get(position).get("feed_id")}
                                         )
-
                                 );
-
-
                             }
                         })
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {

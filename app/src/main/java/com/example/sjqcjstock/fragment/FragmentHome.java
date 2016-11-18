@@ -668,10 +668,8 @@ public class FragmentHome extends Fragment {
                             introstr = supermanlists.get(i).get("intro")
                                     .toString();
                         }
-                        String uidstr = supermanlists.get(i).get("uid")
-                                .toString();
-                        String unamestr = supermanlists.get(i).get("uname")
-                                .toString();
+                        String uidstr = supermanlists.get(i).get("uid")+"";
+                        String unamestr = supermanlists.get(i).get("uname")+"";
 
                         String save_pathstr = supermanlists.get(i)
                                 .get("save_path").toString();

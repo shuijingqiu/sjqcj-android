@@ -95,7 +95,7 @@ public class FragmentTransactionList extends Fragment {
         stocks = new StocksInfo();
         stocks.setName("测试用的11");
         listStocks.add(stocks);
-        listAdapter.setlistData(listStocks);
+//        listAdapter.setlistData(listStocks);
 
         ViewUtil.setListViewHeightBasedOnChildren(listView);
         // 滚动到顶部

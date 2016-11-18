@@ -2,6 +2,7 @@ package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,8 @@ import android.widget.TextView;
 import com.example.sjqcjstock.Activity.stocks.BusinessActivity;
 import com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.PositionEntity;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 public class MyDealAccountAdapter extends BaseAdapter {
 
-    private List<StocksInfo> listData;
+    private List<PositionEntity> listData;
     private Context context;
 
     public MyDealAccountAdapter(Context context) {
@@ -30,9 +32,9 @@ public class MyDealAccountAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<PositionEntity> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<PositionEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -73,8 +75,44 @@ public class MyDealAccountAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.name_code.setText(listData.get(position).getName() + "  " + listData.get(position).getCode());
+        final PositionEntity positionEntity = listData.get(position);
+        final String stock =  positionEntity.getStock();
+        holder.name_code.setText(positionEntity.getStock_name() + "  " + stock);
 
+        //成本价
+        String costPrice = positionEntity.getCost_price();
+        holder.averageCost.setText(costPrice);
+        // 持仓数量
+        int positionValue = Integer.valueOf(positionEntity.getAvailable_number())+Integer.valueOf(positionEntity.getFreeze_number());
+        holder.positionNumber.setText(positionValue+"");
+        // 可卖数量
+        holder.canBuyQuantity.setText(positionEntity.getAvailable_number());
+        // 现价
+        String price = positionEntity.getLatest_price();
+        Log.e("mh123",price+"--");
+        // 如果最新市价不为空那么就计算盈利和最新市价
+        if(!"".equals(price.trim())){
+            // 现价
+            holder.presentPrice.setText(price);
+            if ("0".equals(positionEntity.getIsType())){
+                holder.presentPrice.setTextColor(holder.presentPrice.getResources().getColor(R.color.color_ef3e3e));
+            }else{
+                holder.presentPrice.setTextColor(holder.presentPrice.getResources().getColor(R.color.color_1bc07d));
+            }
+            // 最新市价
+            String latestMarketPriceStr = Double.valueOf(price) * positionValue + "";
+            holder.latestMarketPrice.setText(Utils.getNumberFormat1(latestMarketPriceStr));
+            // 收益
+            String profitStr = (Double.valueOf(latestMarketPriceStr) - positionValue * Double.valueOf(costPrice))/Double.valueOf(latestMarketPriceStr) + "";
+            holder.profit.setText(Utils.getNumberFormat2(profitStr)+"%");
+            if (Double.valueOf(profitStr)>=0){
+                holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));
+            }else{
+                holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_1bc07d));
+            }
+        }
+        // 可卖数量
+        final String number = positionEntity.getAvailable_number();
         holder.transactionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +124,8 @@ public class MyDealAccountAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BusinessActivity.class);
-                intent.putExtra("type", "0");
-                intent.putExtra("code", "000001");
+                intent.putExtra("type", "1");
+                intent.putExtra("code",  stock);
                 context.startActivity(intent);
             }
         });
@@ -95,8 +133,9 @@ public class MyDealAccountAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BusinessActivity.class);
-                intent.putExtra("type", "1");
-                intent.putExtra("code", "000001");
+                intent.putExtra("type", "2");
+                intent.putExtra("code",  stock);
+                intent.putExtra("number",  number);
                 context.startActivity(intent);
             }
         });
@@ -115,13 +154,13 @@ public class MyDealAccountAdapter extends BaseAdapter {
         TextView averageCost;
         // 持仓数量
         TextView positionNumber;
-        // 可买数量
+        // 可卖数量
         TextView canBuyQuantity;
         // 成交明细
         TextView transactionDetail;
-        // 可买数量
+        // 买入
         TextView purchase;
-        // 可买数量
+        // 卖出
         TextView sellOut;
     }
 }

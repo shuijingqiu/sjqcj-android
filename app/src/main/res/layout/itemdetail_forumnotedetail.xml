@@ -392,16 +392,6 @@
                                     android:layout_gravity="center"
                                     android:textColor="#a5adac" />
 
-                                <TextView
-                                    android:id="@+id/edit_article_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:onClick="editArticle"
-                                    android:clickable="true"
-                                    android:text="编辑"
-                                    android:textColor="@color/color_toptitle" />
-
                         </LinearLayout>
 
                         <LinearLayout
