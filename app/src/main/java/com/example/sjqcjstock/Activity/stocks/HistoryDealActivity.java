@@ -143,7 +143,7 @@ public class HistoryDealActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/200&type=trans&p="+page+"&stime="+startDate+"&etime="+endDate);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=trans&p="+page+"&stime="+startDate+"&etime="+endDate);
                 handler.sendEmptyMessage(0);
             }
         }).start();

@@ -28,6 +28,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/my_match_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -48,11 +49,11 @@
 
         <TextView
             android:id="@+id/my_profit_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/red"
-            android:text="9.92%"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/red"
-            android:text="1923"/>
+            android:text=""/>
 
     </LinearLayout>
 

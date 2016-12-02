@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,14 +10,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
+import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.fragment.stocks.FragmentDayMap;
 import com.example.sjqcjstock.fragment.stocks.FragmentMonthMap;
@@ -26,6 +30,10 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.stocks.NoScrollViewPager;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +63,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     private LinearLayout llMinute, llDay, llWeek, llMonth;
     private ImageView img_line;
 
+    // 自选的按钮
+    private TextView optionalValueTv;
     // 当前价格
     private TextView price;
     // 当前涨幅价格
@@ -101,7 +111,6 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 当前视图宽度
      **/
     private Integer viewPagerW = 0;
-
     // 需要加载的行情数据
     private StocksInfo stocksInfo;
     // 定时器
@@ -110,6 +119,18 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     private FragmentDayMap dayMap = null;
     private FragmentWeekMap weekMap = null;
     private FragmentMonthMap monthMap = null;
+    // 调用添加自选接口返回的数据
+    private String resstr = "";
+    // 调用删除自选接口返回的数据
+    private String delstr = "";
+    // 调用是否是自选股接口返回的数据
+    private String isOptionalStr="";
+    // 是否是已自选股
+    private boolean isRn = false;
+    // 网络请求提示
+    private ProgressDialog dialog;
+    // 自选股的ID
+    private String optionalId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +156,10 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 控件绑定
      */
     private void findView() {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(true);
+        dialog.show();
         /**
          * 返回按钮的事件绑定
          */
@@ -144,6 +169,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                 finish();
             }
         });
+        // 自选股的列表
+        optionalValueTv = (TextView) findViewById(R.id.optional_value_tv);
         // 股票标题
         ((TextView) findViewById(R.id.title_name)).setText(titleName + "(" + code + ")");
         // 当前价格
@@ -207,26 +234,32 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 获取整理数据
      */
     private void initData() {
+        // 开线程判断当前古朴是否是自选股
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                isOptionalStr = HttpUtil.restHttpGet(Constants.moUrl+"/user/isOptional&uid="+Constants.staticmyuidstr+"&stock="+code);
+                handler.sendEmptyMessage(3);
+            }
+        }).start();
         stocksInfo = new StocksInfo();
-
         // 开线程获取网络数据
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 获取该股票当天的分时数据
-                String strData = HttpUtil.getIntentData("http://qt.gtimg.cn/q=sz" + code);
+                String strData = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + Utils.judgeSharesCode(code));
                 processData(strData);
                 handler.sendEmptyMessage(0);
             }
         }).start();
-
         timer = new Timer();
         // 开定时器获取数据
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 // 获取该股票当天的分时数据
-                String strData = HttpUtil.getIntentData("http://qt.gtimg.cn/q=sz" + code);
+                String strData = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + Utils.judgeSharesCode(code));
                 processData(strData);
                 handler.sendEmptyMessage(1);
             }
@@ -247,11 +280,55 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                     setInformation();
                     // 加载K线图
                     initFragment(stocksInfo.getZuoShou());
+                    dialog.dismiss();
                     break;
                 case 1:
                     setInformation();
                     timeMap.updateBuySell(buySellMap);
 //                    dayMap.udpateKmap(strK);
+                    break;
+                case 2:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstr);
+                        if ("success".equals(jsonObject.getString("status"))){
+                            isRn = true;
+                            optionalValueTv.setText("-自选");
+                            optionalId = jsonObject.getString("data");
+                            Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 3:
+                    try {
+                        JSONObject jsonObject = new JSONObject(isOptionalStr);
+                        if ("success".equals(jsonObject.getString("status"))){
+                            optionalValueTv.setText("-自选");
+                            optionalId = jsonObject.getString("data");
+                            isRn = true;
+                        }else{
+                            optionalValueTv.setText("+自选");
+                            isRn = false;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 4:
+                    try {
+                        JSONObject jsonObject = new JSONObject(delstr);
+                        Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                        if ("success".equals(jsonObject.getString("status"))){
+                            optionalValueTv.setText("+自选");
+                            isRn = false;
+                        }
+                        optionalId = "";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
@@ -512,7 +589,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      */
     public void purchaseClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "1");
+        intent.putExtra("type","1");
+        intent.putExtra("code",code);
         startActivity(intent);
     }
 
@@ -520,6 +598,33 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 加入自选股
      */
     public void optionalClick(View view) {
-
+        // 开线程添加或删除自选股
+        if (isRn){
+            if (optionalId == null || "".equals(optionalId.trim())) return;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List listData = new ArrayList();
+                    listData.add(new BasicNameValuePair("stock", code));
+                    listData.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                    // 调用接口获取用户获取自选股
+                    delstr = HttpUtil.restHttpDelete(Constants.moUrl+"/users/"+optionalId+"&uid="+Constants.staticmyuidstr);
+                    Log.e("mh123","---"+optionalId);
+                    handler.sendEmptyMessage(4);
+                }
+            }).start();
+        }else{
+            // 调用接口添加自选股
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List listData = new ArrayList();
+                    listData.add(new BasicNameValuePair("stock", code));
+                    listData.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                    resstr = HttpUtil.restHttpPost(Constants.moUrl+"/users",listData);
+                    handler.sendEmptyMessage(2);
+                }
+            }).start();
+        }
     }
 }

@@ -92,9 +92,6 @@ public class Constants {
     // 各种消息条数的实体类
     public static UnreadCount unreadCountInfo;
 
-    // 当前模拟炒股的剩余金额(默认值要该)
-    public static double totalAmount = 100000;
-
 //	// 图片加载化的一些共通设置
 //	public static DisplayImageOptions options=new DisplayImageOptions.Builder().
 //		cacheInMemory().cacheOnDisc().

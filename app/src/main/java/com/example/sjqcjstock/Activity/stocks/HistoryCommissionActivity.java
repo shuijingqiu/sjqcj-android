@@ -65,7 +65,6 @@ public class HistoryCommissionActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_history_commission);
         ExitApplication.getInstance().addActivity(this);
-
         Calendar now = Calendar.getInstance();
         endYear = startYear = now.get(Calendar.YEAR);
         endMonth  = now.get(Calendar.MONTH) + 1;
@@ -73,7 +72,6 @@ public class HistoryCommissionActivity extends Activity {
         endDay = startDay = now.get(Calendar.DAY_OF_MONTH);
         endDate = Utils.getStringDate(endYear, endMonth, endDay);
         startDate = Utils.getStringDate(endYear, startMonth, endDay);
-
         findView();
         dialog.show();
         getData();
@@ -146,7 +144,7 @@ public class HistoryCommissionActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/200&type=historical&p="+page+"&stime="+startDate+"&etime="+endDate);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=historical&p="+page+"&stime="+startDate+"&etime="+endDate);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -165,6 +163,7 @@ public class HistoryCommissionActivity extends Activity {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                             return;
                         }
                         ArrayList<Order> orderList = (ArrayList<Order>) JSON.parseArray(jsonObject.getString("data"),Order.class);

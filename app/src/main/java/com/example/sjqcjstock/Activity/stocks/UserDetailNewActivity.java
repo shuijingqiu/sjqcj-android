@@ -55,7 +55,7 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
     private TextView userintro1;
     private TextView following_count2;
     private TextView follower_count2;
-    private TextView weibo_count1;
+//    private TextView weibo_count1;
     private Button personalletter3;
     private LinearLayout myattentionuserlist1;
     private LinearLayout myfansuserlist1;
@@ -126,7 +126,7 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
         usersex1 = (ImageView) findViewById(R.id.usersex1);
         userintro1 = (TextView) findViewById(R.id.userintro1);
         following_count2 = (TextView) findViewById(R.id.following_count2);
-        weibo_count1 = (TextView) findViewById(R.id.weibo_count1);
+//        weibo_count1 = (TextView) findViewById(R.id.weibo_count1);
         follower_count2 = (TextView) findViewById(R.id.follower_count2);
         personalletter3 = (Button) findViewById(R.id.personalletter3);
         myattentionuserlist1 = (LinearLayout) findViewById(R.id.myattentionuserlist1);
@@ -282,7 +282,6 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
                         for (Map<String, Object> Userdatamap : Userdatastrlists) {
                             String following_countstr;
                             String follower_countstr;
-                            String weibo_countstr;
 //                            String weibo_countstr;
                             if (Userdatamap.get("following_count") == null) {
                                 following_countstr = "0";
@@ -295,13 +294,12 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
                             } else {
                                 follower_countstr = Userdatamap.get("follower_count") + "";
                             }
-//
-                            if (Userdatamap.get("weibo_count") == null) {
-                                weibo_countstr = "0";
-                            } else {
-                                weibo_countstr = Userdatamap.get("weibo_count")+"";
-                            }
-                            weibo_count1.setText(weibo_countstr);
+//                            if (Userdatamap.get("weibo_count") == null) {
+//                                weibo_countstr = "0";
+//                            } else {
+//                                weibo_countstr = Userdatamap.get("weibo_count")+"";
+//                            }
+//                            weibo_count1.setText(weibo_countstr);
                             following_count2.setText(following_countstr);
                             follower_count2.setText(follower_countstr);
                         }
@@ -433,14 +431,13 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
         FragmentStock stock = new FragmentStock();
         mDatas.add(microBlog);
         // 以后要要的
-//        mDatas.add(transaction);
-//        mDatas.add(stock);
+        mDatas.add(transaction);
+        mDatas.add(stock);
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
                 return mDatas == null ? 0 : mDatas.size();
             }
-
             @Override
             public Fragment getItem(int position) {
                 return mDatas.get(position);

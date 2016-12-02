@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -14,18 +15,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.adapter.SearchAdapter;
+import com.example.sjqcjstock.adapter.stocks.StocksAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.view.CustomToast;
-import com.example.sjqcjstock.view.PullToRefreshLayout;
+import com.example.sjqcjstock.view.SoListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,18 +38,29 @@ import java.util.Map;
 
 public class SearchActivity extends Activity {
 
-    private LinearLayout goback1;
     // 获取控件
     private EditText et_searchFriend;
     private Button bt_search;
     private int page = 1;
     private String inputstr;
     // 列表数据存储
-    private ListView lv_searchResult;
-    private com.example.sjqcjstock.adapter.SearchAdapter searchAdapter;
+//    private ListView lv_searchResult;
+    // 加载用户的adapter
+    private SearchAdapter searchAdapter;
+    // 加载股票的adapter
+    private StocksAdapter stocksAdapter;
+    // 保存搜索的用户
     private ArrayList<HashMap<String, Object>> listatfrientData;
+    // 保存搜索的股票
+    private ArrayList<HashMap<String, Object>> listStocks;
     // 上下拉刷新控件
-    private PullToRefreshLayout ptrl;
+//    private PullToRefreshLayout ptrl;
+    // 股票列表
+    private LinearLayout stocksLl;
+    private LinearLayout userLl;
+    private SoListView stosksList;
+    // 牛人列表
+    private SoListView userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,32 +74,46 @@ public class SearchActivity extends Activity {
     }
 
     private void initView() {
-        goback1 = (LinearLayout) findViewById(R.id.goback1);
-        goback1.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.goback1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        stocksLl = (LinearLayout) findViewById(R.id.stocks_ll);
+        stosksList = (SoListView) findViewById(R.id.stocks_list);
+        userList = (SoListView) findViewById(R.id.user_list);
+        userLl = (LinearLayout) findViewById(R.id.user_ll);
         et_searchFriend = (EditText) findViewById(R.id.et_searchFriend);
         et_searchFriend.setOnClickListener(new et_searchFriend_listener());
-        // 用户集合
-        lv_searchResult = (ListView) findViewById(R.id.lv_searchResult);
-        lv_searchResult.setOnItemClickListener(new OnItemClickListener() {
+//         用户集合
+//        lv_searchResult = (ListView) findViewById(R.id.lv_searchResult);
+//        lv_searchResult.setOnItemClickListener(new OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//                                    long arg3) {
+//                try {
+//                    Intent intent = new Intent();
+//                    Bundle unameBundle = new Bundle();
+//                    unameBundle.putString("unamestr", (String) listatfrientData.get(arg2 - 1).get("unamestr"));
+//                    intent.putExtras(unameBundle);
+//                    setResult(4, intent);
+//                    finish();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
+        stosksList.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                try {
-                    Intent intent = new Intent();
-                    Bundle unameBundle = new Bundle();
-                    unameBundle.putString("unamestr", (String) listatfrientData.get(arg2 - 1).get("unamestr"));
-                    intent.putExtras(unameBundle);
-                    setResult(4, intent);
-                    finish();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SearchActivity.this, SharesDetailedActivity.class);
+                intent.putExtra("name", listStocks.get(position).get("name")+"");
+                intent.putExtra("code", listStocks.get(position).get("code")+"");
+                startActivity(intent);
             }
         });
 
@@ -93,48 +122,29 @@ public class SearchActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(bt_search.getWindowToken(), 0);
-
                 inputstr = et_searchFriend.getText() + "";
                 listatfrientData.clear();
+                listStocks.clear();
                 // 请求用户列表数据
                 new SendInfoTaskalluser().execute(new TaskParams(
                         Constants.Url + "?app=public&mod=AppFeedList&act=usersearch",
-                        //new String[] { "mid",Constants.staticmyuidstr },
-                        //new String[] { "type", "at" },
                         new String[]{"key", inputstr},
                         new String[]{"p", String.valueOf(page)}
                 ));
+                // 开线程调用股票查询接口
+                new SearchStocks().execute(new TaskParams("http://suggest3.sinajs.cn/suggest/type=111&key="+inputstr+"&name=suggestdata_1477116944882"));
             }
         });
+
         // 存储数据的数组列表
         listatfrientData = new ArrayList<HashMap<String, Object>>(200);
-
-        searchAdapter = new com.example.sjqcjstock.adapter.SearchAdapter(
-                SearchActivity.this, SearchActivity.this);
-        lv_searchResult.setAdapter(searchAdapter);
-        ptrl = ((PullToRefreshLayout) findViewById(
-                R.id.refresh_view));
-        // 添加上下拉刷新事件
-        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            // 下来刷新
-            @Override
-            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                //清空列表重载数据
-                listatfrientData.clear();
-                page = 1;
-                geneItems();
-            }
-
-            // 下拉加载
-            @Override
-            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                page++;
-                geneItems();
-            }
-        });
+        listStocks = new ArrayList<HashMap<String, Object>>(200);
+        searchAdapter = new SearchAdapter(SearchActivity.this, SearchActivity.this);
+        userList.setAdapter(searchAdapter);
+        stocksAdapter = new StocksAdapter(SearchActivity.this);
+        stosksList.setAdapter(stocksAdapter);
     }
 
     // 回调
@@ -164,8 +174,8 @@ public class SearchActivity extends Activity {
             // TODO Auto-generated method stub
             if (result == null) {
                 CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
             } else {
                 super.onPostExecute(result);
                 result = result.replace("\n ", "");
@@ -178,6 +188,12 @@ public class SearchActivity extends Activity {
 
                     } else {
                         String datastr = map.get("data") + "";
+                        if (datastr.length() < 10){
+                            userLl.setVisibility(View.GONE);
+                            return;
+                        }
+                        userLl.setVisibility(View.VISIBLE);
+
                         List<Map<String, Object>> datastrlists = JsonTools
                                 .listKeyMaps(datastr);
 
@@ -196,17 +212,49 @@ public class SearchActivity extends Activity {
                     }
                 }
                 searchAdapter.setlistData(listatfrientData);
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                ViewUtil.setListViewHeightBasedOnChildren(userList);
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         }
     }
 
-    private void geneItems() {
-        new SendInfoTaskalluser().execute(new TaskParams(
-                Constants.Url + "?app=public&mod=AppFeedList&act=usersearch",
-                new String[]{"key", inputstr},
-                new String[]{"p", String.valueOf(page)}
-        ));
+    private class SearchStocks extends AsyncTask<TaskParams, Void, String>{
+
+        @Override
+        protected String doInBackground(TaskParams... params) {
+            TaskParams tp = params[0];
+            return HttpUtil.getIntentData(tp.getUrl());
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            result = result.substring(result.indexOf("\"")+1);
+            if (result.length() < 10){
+                stocksLl.setVisibility(View.GONE);
+                return;
+            }
+            stocksLl.setVisibility(View.VISIBLE);
+            String[] strs = result.split(";");
+            HashMap<String, Object> map3;
+            for (String str:strs){
+                map3 = new HashMap<String, Object>();
+                String[] strlist = str.split(",");
+                map3.put("code",strlist[0]);
+                map3.put("name",strlist[4]);
+                listStocks.add(map3);
+            }
+            stocksAdapter.setlistData(listStocks);
+            ViewUtil.setListViewHeightBasedOnChildren(stosksList);
+        }
     }
+
+//    private void geneItems() {
+//        new SendInfoTaskalluser().execute(new TaskParams(
+//                Constants.Url + "?app=public&mod=AppFeedList&act=usersearch",
+//                new String[]{"key", inputstr},
+//                new String[]{"p", String.valueOf(page)}
+//        ));
+//    }
 }

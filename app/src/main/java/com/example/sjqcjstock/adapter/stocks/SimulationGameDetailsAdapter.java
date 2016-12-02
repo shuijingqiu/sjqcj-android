@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.MatchEntity;
+import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Md5Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,8 @@ import java.util.List;
 public class SimulationGameDetailsAdapter extends BaseAdapter {
 
     // 加载用的数据
-    private List<StocksInfo> listData;
+    private List<MatchEntity> listData;
+    private MatchEntity matchEntity;
     private Context context;
 
     public SimulationGameDetailsAdapter(Context context) {
@@ -29,9 +33,9 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<MatchEntity> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<MatchEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -68,9 +72,34 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.ranking.setText(position + 1 + "");
-        holder.name.setText(listData.get(position).getName());
-        // 没写完
+        matchEntity = listData.get(position);
+
+        String ranking = matchEntity.getRanking();
+        holder.ranking.setText("");
+        if ("1".equals(ranking)){
+            holder.ranking.setBackgroundResource(R.mipmap.rank1);
+        }else if ("2".equals(ranking)){
+            holder.ranking.setBackgroundResource(R.mipmap.rank2);
+        }else if ("3".equals(ranking)){
+            holder.ranking.setBackgroundResource(R.mipmap.rank3);
+        }else{
+            holder.ranking.setText(ranking);
+            holder.ranking.setBackgroundResource(R.mipmap.nullimg);
+        }
+
+        holder.name.setText(matchEntity.getUser_name());
+        // 周收益率
+        String totalRate = matchEntity.getTotal_rate();
+        if (Double.valueOf(totalRate)>=0){
+            holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));
+        }else{
+            holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_1bc07d));
+        }
+        holder.profit.setText(totalRate+"%");
+
+        ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
+                        .getMd5(matchEntity.getUid())),
+                holder.headImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
 
         return convertView;
     }
@@ -78,7 +107,7 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
     static class ViewHolder {
         // 排名图像
         ImageView rankingImg;
-        // 排名字体
+        // 排名
         TextView ranking;
         // 头像图像
         ImageView headImg;

@@ -148,7 +148,7 @@ public class FragmentDayMap extends Fragment {
             @Override
             public void run() {
                 // 获取16年该股票的数据
-                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/sz" + code + ".js");
+                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/" + Utils.judgeSharesCode(code) + ".js");
                 if (!"".equals(strData.trim())){
                     resolveData(strData);
                     processData();

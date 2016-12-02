@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.PositionEntity;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.OptionalEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class StockAdapter extends BaseAdapter {
 
-    private List<StocksInfo> listData;
+    private List<OptionalEntity> listData;
     private Context context;
 
     public StockAdapter(Context context) {
@@ -28,9 +27,9 @@ public class StockAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<OptionalEntity> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<OptionalEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -66,9 +65,12 @@ public class StockAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.name.setText(listData.get(position).getName());
-        holder.code.setText(listData.get(position).getCode());
-
+        OptionalEntity optionalEntity = listData.get(position);
+        holder.name.setText(optionalEntity.getStock_name());
+        holder.code.setText(optionalEntity.getStock());
+        holder.price.setText(optionalEntity.getPrice());
+        holder.rose.setText(optionalEntity.getRising());
+        holder.number.setText(optionalEntity.getFollow());
         return convertView;
     }
 

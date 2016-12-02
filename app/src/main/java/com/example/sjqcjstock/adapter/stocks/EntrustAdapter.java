@@ -3,6 +3,7 @@ package com.example.sjqcjstock.adapter.stocks;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 
@@ -73,8 +75,18 @@ public class EntrustAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        PositionEntity positionEntity = listData.get(position);
+        final PositionEntity positionEntity = listData.get(position);
         holder.name_code.setText(positionEntity.getStock_name() + "  " + positionEntity.getStock());
+        holder.name_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inten = new Intent();
+                inten.putExtra("name", positionEntity.getStock_name());
+                inten.putExtra("code", positionEntity.getStock());
+                inten.setClass(context, SharesDetailedActivity.class);
+                context.startActivity(inten);
+            }
+        });
         // 单号的id
         final String entrustId = positionEntity.getId();
         // 撤单的单机时间

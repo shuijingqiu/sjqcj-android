@@ -117,7 +117,7 @@ public class DayDealActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/200&type=deal&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=deal&p="+page);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -136,6 +136,7 @@ public class DayDealActivity extends Activity {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                             return;
                         }
                         ArrayList<Order> orderList = (ArrayList<Order>) JSON.parseArray(jsonObject.getString("data"),Order.class);

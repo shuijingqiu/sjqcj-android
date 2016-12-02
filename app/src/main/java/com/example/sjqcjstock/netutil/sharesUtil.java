@@ -270,29 +270,40 @@ public class sharesUtil {
         String[] sharesMinute;
         // 0 为涨 1为跌
         String type = "0";
+        // 当前价格
+        String spotPrice = "0";
+        // 涨跌幅
+        String rising = "0";
         // 腾讯接口
         String str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + codes);
         if (str.length()<30){
             // 新浪接口
             str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + codes);
             shares = str.split(";");
+            String code = "";
+            Double closingPrice = 0.0;
             for (String sharesStr:shares){
                 if (sharesStr.length() > 40){
                     // 分割股票详细信息
                     sharesMinute = sharesStr.split(",");
                     // 当前价格
-                    String spotPrice = sharesMinute[3];
+                    spotPrice = sharesMinute[3];
+                    // 昨日收盘价
+                    closingPrice  = Double.valueOf(sharesMinute[2]);
+                    // 当前涨幅
+                    rising = Utils.getNumberFormat2((Double.valueOf(spotPrice)-closingPrice)/closingPrice+"");
                     if (Double.valueOf(spotPrice) == 0){
                         spotPrice = sharesMinute[2];
                     }
-                    if(Double.valueOf(sharesMinute[2]) > Double.valueOf(spotPrice)){
+                    if(closingPrice >= 0){
                         type = "1";
                     }else{
                         type = "0";
                     }
                     map = new HashMap<String, String>();
-                    String code = sharesMinute[0].substring(13,19);
+                    code = sharesMinute[0].substring(13,19);
                     map.put("price",spotPrice);
+                    map.put("rising",rising);
                     map.put("type",type);
                     mapShares.put(code,map);
                 }
@@ -305,7 +316,9 @@ public class sharesUtil {
                 // 分割股票详细信息
                 sharesMinute = sharesStr.split("~");
                 // 当前价格
-                String spotPrice = sharesMinute[3];
+                spotPrice = sharesMinute[3];
+                // 当前涨幅
+                rising = sharesMinute[32];
                 if (Double.valueOf(spotPrice) == 0){
                     spotPrice = sharesMinute[4];
                 }
@@ -316,6 +329,7 @@ public class sharesUtil {
                 }
                 map = new HashMap<String, String>();
                 map.put("price",spotPrice);
+                map.put("rising",rising);
                 map.put("type",type);
                 mapShares.put(sharesMinute[2],map);
             }

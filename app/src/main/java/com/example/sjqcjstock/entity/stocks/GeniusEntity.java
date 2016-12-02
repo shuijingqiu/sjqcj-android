@@ -1,36 +1,31 @@
 package com.example.sjqcjstock.entity.stocks;
 
 /**
- * 订单相关信息的实体类
- * Created by Administrator on 2016/11/11.
+ * 牛人动态的实体类
+ * Created by Administrator on 2016/11/28.
  */
-public class Order {
-    //
+public class GeniusEntity {
+
     private String id;
-    // 用户id
     private String uid;
     // 股票代码
     private String stock;
-    // 指定的购买价格
+    // 价格
     private String price;
-    // 购买数量
-    private String number;
     // 时间
     private String time;
-    // 购买类型 1为买入 2为卖出
+    // 1代表买入  2代表卖出
     private String type;
-    // 未成交  0代表带成交  1代表成交  2代表撤单
-    private String status;
-    // 手续费
-    private String fee;
-    // 股票名字
-    private String stock_name;
-    // 剩余可用资金
-    private String available_funds;
     // 股票名称
-    private String status_name;
+    private String stock_name;
     //
+    private String sorts;
+    // 用户名
     private String username;
+    // 总盈利率
+    private String total_rate;
+    // 股票当前盈利率
+    private String ratio;
 
     public String getId() {
         return id;
@@ -64,14 +59,6 @@ public class Order {
         this.price = price;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getTime() {
         return time;
     }
@@ -88,14 +75,6 @@ public class Order {
         this.type = type;
     }
 
-    public String getFee() {
-        return fee;
-    }
-
-    public void setFee(String fee) {
-        this.fee = fee;
-    }
-
     public String getStock_name() {
         return stock_name;
     }
@@ -104,20 +83,12 @@ public class Order {
         this.stock_name = stock_name;
     }
 
-    public String getAvailable_funds() {
-        return available_funds;
+    public String getSorts() {
+        return sorts;
     }
 
-    public void setAvailable_funds(String available_funds) {
-        this.available_funds = available_funds;
-    }
-
-    public String getStatus_name() {
-        return status_name;
-    }
-
-    public void setStatus_name(String status_name) {
-        this.status_name = status_name;
+    public void setSorts(String sorts) {
+        this.sorts = sorts;
     }
 
     public String getUsername() {
@@ -128,11 +99,19 @@ public class Order {
         this.username = username;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTotal_rate() {
+        return total_rate;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTotal_rate(String total_rate) {
+        this.total_rate = total_rate;
+    }
+
+    public String getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(String ratio) {
+        this.ratio = ratio;
     }
 }

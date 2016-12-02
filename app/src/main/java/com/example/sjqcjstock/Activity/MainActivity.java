@@ -46,8 +46,9 @@ public class MainActivity extends FragmentActivity {
     private FragmentMy fragmentMy;
     private FragmentManager manager;
     private FragmentTransaction fragmentTransaction;
-    // 未读消息条数
-    private TextView messageCountTv;
+    private RadioGroup main_tabBar;
+//    // 未读消息条数
+//    private TextView messageCountTv;
 
 
     @Override
@@ -56,7 +57,6 @@ public class MainActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ExitApplication.getInstance().addActivity(this);
-
         initView();
         loadData();
     }
@@ -67,27 +67,27 @@ public class MainActivity extends FragmentActivity {
         // 以后要要的
         if (Constants.unreadCountInfo != null) {
             // 返回主框架页面重新设置未读消息条数
-            int total = Constants.unreadCountInfo.getData().getUnread_total();
-            String totalStr = total + "";
-            if (total > 99) {
-                totalStr = "99+";
-            }
-//            messageCountTv.setText(totalStr);
-            if (totalStr.equals("0")) {
-                messageCountTv.setVisibility(View.GONE);
-            } else {
-                messageCountTv.setVisibility(View.VISIBLE);
-            }
-//            if(fragmentMy != null){
-//                // 重新设置我的页面的消息条数
-//                fragmentMy.setMessageCount();
+//            int total = Constants.unreadCountInfo.getData().getUnread_total();
+//            String totalStr = total + "";
+//            if (total > 99) {
+//                totalStr = "99+";
 //            }
+//            messageCountTv.setText(totalStr);
+//            if (totalStr.equals("0")) {
+//                messageCountTv.setVisibility(View.GONE);
+//            } else {
+//                messageCountTv.setVisibility(View.VISIBLE);
+//            }
+            if(fragmentMy != null){
+                // 重新设置我的页面的消息条数
+                fragmentMy.setMessageCount();
+            }
         }
     }
 
     //初始时默认显示的界面
     private void defaultShowFragment() {
-        fragmentHome = new FragmentHome();
+        fragmentHome = new FragmentHome(this);
         currentShowFragment = fragmentHome;
         ChangeFragmentHelper helper = new ChangeFragmentHelper();
         helper.setTargetFragment(fragmentHome);
@@ -96,8 +96,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
-        messageCountTv = (TextView) findViewById(R.id.message_count_tv);
-        RadioGroup main_tabBar = ((RadioGroup) findViewById(R.id.main_tabBar));
+        main_tabBar = ((RadioGroup) findViewById(R.id.main_tabBar));
         manager = getSupportFragmentManager();
         fragmentTransaction = manager.beginTransaction();
 
@@ -133,9 +132,7 @@ public class MainActivity extends FragmentActivity {
     // 获取全局所用数据
     private void loadData() {
         // 加载未读消息体的一些信息
-        new UnreadCountData().execute(new TaskParams(Constants.unreadCount + "&uid=" + Constants.staticmyuidstr
-        ));
-
+        new UnreadCountData().execute(new TaskParams(Constants.unreadCount + "&uid=" + Constants.staticmyuidstr));
     }
 
     // 获取未读消息条数信息
@@ -152,18 +149,18 @@ public class MainActivity extends FragmentActivity {
                 CustomToast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
             } else {
                 Constants.unreadCountInfo = JSON.parseObject(result, UnreadCount.class);
-                //以后要要的
-                int total = Constants.unreadCountInfo.getData().getUnread_total();
-                String totalStr = total + "";
-                if (total > 99) {
-                    totalStr = "99+";
-                }
-//                messageCountTv.setText(totalStr);
-                if (totalStr.equals("0")) {
-                    messageCountTv.setVisibility(View.GONE);
-                } else {
-                    messageCountTv.setVisibility(View.VISIBLE);
-                }
+//                //以后要要的
+//                int total = Constants.unreadCountInfo.getData().getUnread_total();
+//                String totalStr = total + "";
+//                if (total > 99) {
+//                    totalStr = "99+";
+//                }
+////                messageCountTv.setText(totalStr);
+//                if (totalStr.equals("0")) {
+//                    messageCountTv.setVisibility(View.GONE);
+//                } else {
+//                    messageCountTv.setVisibility(View.VISIBLE);
+//                }
                 // 以后要替换成下面那个的
                 if (fragmentMessage != null) {
                     // 重新设置我的页面的消息条数
@@ -183,7 +180,7 @@ public class MainActivity extends FragmentActivity {
             case R.id.main_home:
                 if (currentShowFragment != fragmentHome) {
                     if (fragmentHome == null) {
-                        fragmentHome = new FragmentHome();
+                        fragmentHome = new FragmentHome(this);
                         getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentHome).commit();
                         currentShowFragment = fragmentHome;
                     } else {
@@ -207,7 +204,6 @@ public class MainActivity extends FragmentActivity {
                 }
                 break;
             case R.id.main_match:
-
 //                if (currentShowFragment != fragmentMessage) {
 //                    if (fragmentMessage == null) {
 //                        fragmentMessage = new FragmentMessage();
@@ -257,8 +253,8 @@ public class MainActivity extends FragmentActivity {
                         getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentMy).commit();
                         currentShowFragment = fragmentMy;
                         // 以后要要的
-//                        // 重新获取消息数进行显示
-//                        loadData();
+                        // 重新获取消息数进行显示
+                        loadData();
                     }
                 }
                 break;
@@ -266,34 +262,26 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void changeFragment(ChangeFragmentHelper helper) {
-
         //获取需要跳转的Fragment
         Fragment targetFragment = helper.getTargetFragment();
-
         //获取是否清空回退栈
         boolean clearStackBack = helper.isClearStackBack();
-
         //获取是否加入回退栈
         String targetFragmentTag = helper.getTargetFragmentTag();
-
         //获取Bundle
         Bundle bundle = helper.getBundle();
-
         //是否给Fragment传值
         if (bundle != null) {
             targetFragment.setArguments(bundle);
         }
-
         if (targetFragment != null) {
             //将目标Fragment添加到容器中
             fragmentTransaction.replace(R.id.main_container, targetFragment);
         }
-
         //是否添加到回退栈
         if (targetFragmentTag != null) {
             fragmentTransaction.addToBackStack(targetFragmentTag);
         }
-
         //是否清空回退栈
         if (clearStackBack) {
             manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -335,6 +323,14 @@ public class MainActivity extends FragmentActivity {
             finish();
             ExitApplication.getInstance().exit();
         }
+    }
+
+    /**
+     * 调用股票的按钮事件
+     */
+    public void clickStocks(){
+        main_tabBar.check(R.id.main_match);
+        radioGruopClick(null,R.id.main_match);
     }
 }
 

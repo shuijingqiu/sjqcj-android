@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.Activity.stocks.BusinessActivity;
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
@@ -77,8 +78,18 @@ public class MyDealAccountAdapter extends BaseAdapter {
         }
         final PositionEntity positionEntity = listData.get(position);
         final String stock =  positionEntity.getStock();
+        final String name =  positionEntity.getStock_name();
         holder.name_code.setText(positionEntity.getStock_name() + "  " + stock);
-
+        holder.name_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inten = new Intent();
+                inten.putExtra("name", positionEntity.getStock_name());
+                inten.putExtra("code", positionEntity.getStock());
+                inten.setClass(context, SharesDetailedActivity.class);
+                context.startActivity(inten);
+            }
+        });
         //成本价
         String costPrice = positionEntity.getCost_price();
         holder.averageCost.setText(costPrice);
@@ -89,7 +100,6 @@ public class MyDealAccountAdapter extends BaseAdapter {
         holder.canBuyQuantity.setText(positionEntity.getAvailable_number());
         // 现价
         String price = positionEntity.getLatest_price();
-        Log.e("mh123",price+"--");
         // 如果最新市价不为空那么就计算盈利和最新市价
         if(!"".equals(price.trim())){
             // 现价
@@ -117,6 +127,8 @@ public class MyDealAccountAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TransactionDetailActivity.class);
+                intent.putExtra("code",stock);
+                intent.putExtra("name",name);
                 context.startActivity(intent);
             }
         });

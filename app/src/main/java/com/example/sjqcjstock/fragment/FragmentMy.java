@@ -103,7 +103,7 @@ public class FragmentMy extends Fragment {
         // 缓存类
         mCache = ACache.get(getActivity());
         initView(view);
-        // setMessageCount(); // 以后要要的暂时不要
+         setMessageCount();
         return view;
     }
 

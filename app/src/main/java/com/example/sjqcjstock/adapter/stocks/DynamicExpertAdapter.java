@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.example.sjqcjstock.Activity.stocks.BusinessActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.GeniusEntity;
+import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Md5Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ import java.util.List;
 public class DynamicExpertAdapter extends BaseAdapter {
 
     // 加载用的数据
-    private List<StocksInfo> listData;
+    private List<GeniusEntity> listData;
     private Context context;
 
     public DynamicExpertAdapter(Context context) {
@@ -33,9 +36,9 @@ public class DynamicExpertAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<GeniusEntity> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<GeniusEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -66,15 +69,16 @@ public class DynamicExpertAdapter extends BaseAdapter {
             holder.head = (ImageView) convertView.findViewById(R.id.head_iv);
             holder.time = (TextView) convertView.findViewById(R.id.time_tv);
             holder.name = (TextView) convertView.findViewById(R.id.name_tv);
-            holder.winningProbability = (TextView) convertView.findViewById(R.id.winning_probability_tv);
             holder.totalYield = (TextView) convertView.findViewById(R.id.total_yield_tv);
             holder.nameCode = (TextView) convertView.findViewById(R.id.name_code_tv);
             holder.toBuy = (TextView) convertView.findViewById(R.id.to_buy_tv);
-
+            holder.type = (TextView) convertView.findViewById(R.id.business_tv);
+            holder.returnRate = (TextView) convertView.findViewById(R.id.return_rate_value_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        final GeniusEntity geniusEntity = listData.get(position);
         // 跳转到跟人中心
         holder.headNameRl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +86,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 Intent intent = new Intent(context.getApplicationContext(),
                         UserDetailNewActivity.class);
                 // 要修改的
-                intent.putExtra("uid", "26364");
+                intent.putExtra("uid",geniusEntity.getUid());
                 intent.putExtra("type", "1");
                 context.startActivity(intent);
             }
@@ -95,12 +99,28 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 Intent intent = new Intent(context.getApplicationContext(),
                         BusinessActivity.class);
                 // 要修改的
-                intent.putExtra("type", "0");
+                intent.putExtra("type", "1");
+                intent.putExtra("code", geniusEntity.getStock());
+                intent.putExtra("name", geniusEntity.getStock_name());
                 context.startActivity(intent);
             }
         });
-        holder.name.setText(listData.get(position).getName());
-        // 没写完
+        holder.name.setText(geniusEntity.getUsername());
+        holder.time.setText(geniusEntity.getTime().substring(0,10));
+        holder.totalYield.setText(geniusEntity.getTotal_rate()+"%");
+        holder.nameCode.setText(geniusEntity.getStock_name()+"("+geniusEntity.getStock()+")");
+        holder.returnRate.setText(geniusEntity.getRatio()+"%");
+        // 1代表买入2代表卖出
+        if("1".equals(geniusEntity.getType())){
+            holder.type.setText("买入");
+            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
+        }else{
+            holder.type.setText("卖出");
+            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_5471ef));
+        }
+        ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
+                        .getMd5(geniusEntity.getUid())),
+                holder.head, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
 
         return convertView;
     }
@@ -114,13 +134,15 @@ public class DynamicExpertAdapter extends BaseAdapter {
         TextView time;
         // 名称
         TextView name;
-        // 胜率
-        TextView winningProbability;
         // 总收益率
         TextView totalYield;
         // 股票名称和代码
         TextView nameCode;
         // 跟买
         TextView toBuy;
+        // 买卖类型
+        TextView type;
+        // 股票当前盈利率
+        TextView returnRate;
     }
 }

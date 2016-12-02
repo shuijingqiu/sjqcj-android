@@ -528,6 +528,7 @@
                 android:background="@drawable/line"/>
             
         <TextView
+            android:id="@+id/optional_value_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

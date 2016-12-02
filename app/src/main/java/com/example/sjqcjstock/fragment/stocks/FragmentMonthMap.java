@@ -111,7 +111,7 @@ public class FragmentMonthMap extends Fragment {
             @Override
             public void run() {
                 // 获取16年该股票的数据
-                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/monthly/sz" + code + ".js");
+                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/monthly/" + Utils.judgeSharesCode(code) + ".js");
                 resolveData(strData);
                 processData();
                 handler.sendEmptyMessage(0);

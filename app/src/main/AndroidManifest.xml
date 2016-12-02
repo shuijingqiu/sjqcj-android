@@ -334,7 +334,7 @@
             android:name=".Activity.stocks.TransactionDetailActivity"
             android:label="当前持仓成交明细页面" />
         <activity
-            android:name=".Activity.stocks.ExpertLists"
+            android:name=".Activity.stocks.ExpertListsActivity"
             android:label="模拟排行榜" />
         <activity
             android:name=".Activity.stocks.SimulationGameActivity"

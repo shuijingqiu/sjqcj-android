@@ -111,7 +111,8 @@ public class LineChart extends GridChart {
      */
     protected void drawLines(Canvas canvas) {
         //  两点间的距离
-        float lineLength = ((super.getWidth() - super.getAxisMarginLeft() - super.getAxisMarginRight()) / (this.getMaxPointNum() + 2));
+//        float lineLength = ((super.getWidth() - super.getAxisMarginLeft() - super.getAxisMarginRight()) / (this.getMaxPointNum() + 2));
+        float lineLength = ((super.getWidth() - super.getAxisMarginLeft() - super.getAxisMarginRight()) / (this.getMaxPointNum()));
         // 起始点的X
         float startX;
         //起始点的Y
@@ -165,8 +166,7 @@ public class LineChart extends GridChart {
                         startX = startX + lineLength;
                         //最后一段也连线
                         if (j == linedatas.size() - 1) {
-                            path.lineTo(startX, valueY);
-
+//                            path.lineTo(startX, valueY); mh 看看要不要
                             // 先画背景颜色
                             if (!line.isBackger()) {
                                 Path paths = new Path();

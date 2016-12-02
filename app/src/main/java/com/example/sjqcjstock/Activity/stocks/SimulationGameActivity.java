@@ -1,18 +1,29 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.SimulationGameAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
+import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,8 +37,16 @@ public class SimulationGameActivity extends Activity {
     private PullToRefreshLayout ptrl;
     // 加载的ListView
     private ListView listView;
+    // 加载比赛列表的数据
+    private ArrayList<MatchEntity> matchLists;
     // 显示加载的Adapter
     private SimulationGameAdapter sgAdapter;
+    // 获取比赛返回的数据
+    private String matchStr = "";
+    // 分页的页码
+    private int page = 1;
+    // 网络请求提示
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +55,7 @@ public class SimulationGameActivity extends Activity {
         setContentView(R.layout.activity_simulation_game);
         ExitApplication.getInstance().addActivity(this);
         findView();
+        dialog.show();
         initData();
     }
 
@@ -43,7 +63,10 @@ public class SimulationGameActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(true);
+        dialog.show();
         /**
          * 返回按钮的事件绑定
          */
@@ -62,6 +85,8 @@ public class SimulationGameActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
                 Intent intent = new Intent();
+                intent.putExtra("id",matchLists.get(arg2).getId());
+                intent.putExtra("name",matchLists.get(arg2).getName());
                 intent.setClass(SimulationGameActivity.this, SimulationGameDetailsActivity.class);
                 startActivity(intent);
             }
@@ -74,6 +99,8 @@ public class SimulationGameActivity extends Activity {
             // 下来刷新
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+                page = 1;
+                initData();
                 // 千万别忘了告诉控件刷新完毕了哦！
                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -81,6 +108,8 @@ public class SimulationGameActivity extends Activity {
             // 下拉加载
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                page += 1;
+                initData();
                 // 千万别忘了告诉控件刷新完毕了哦！
                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -92,48 +121,44 @@ public class SimulationGameActivity extends Activity {
      * 数据的获取
      */
     private void initData() {
-
-        ArrayList<StocksInfo> listStocks = new ArrayList<StocksInfo>();
-        StocksInfo stocks = new StocksInfo();
-        stocks.setName("测试用的1");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的2");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的3");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的4");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的5");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的6");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的7");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的8");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的9");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的10");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的11");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的12");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的13");
-        listStocks.add(stocks);
-        sgAdapter.setlistData(listStocks);
-
+        // 开线程获取比赛列表
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                matchStr = HttpUtil.restHttpGet(Constants.moUrl+"/match/index&np="+page);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
+
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(matchStr);
+                        if ("failed".equals(jsonObject.getString("status"))){
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                        }else{
+                            ArrayList<MatchEntity> matchList = (ArrayList<MatchEntity>) JSON.parseArray(jsonObject.getString("data"),MatchEntity.class);
+                            if(page == 1){
+                                matchLists = matchList;
+                            }else{
+                                matchLists.addAll(matchList);
+                            }
+                            sgAdapter.setlistData(matchLists);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismiss();
+                    break;
+            }
+        }
+    };
 }

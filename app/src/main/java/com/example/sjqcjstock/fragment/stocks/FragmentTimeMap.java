@@ -138,7 +138,7 @@ public class FragmentTimeMap extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/minute/sz" + code + ".js");
+                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/minute/" + Utils.judgeSharesCode(code) + ".js");
                 processData(strData);
                 handler.sendEmptyMessage(0);
             }

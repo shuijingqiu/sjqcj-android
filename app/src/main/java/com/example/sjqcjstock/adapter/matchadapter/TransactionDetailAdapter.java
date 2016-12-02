@@ -1,4 +1,4 @@
-package com.example.sjqcjstock.adapter.stocks;
+package com.example.sjqcjstock.adapter.matchadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class TransactionDetailAdapter extends BaseAdapter {
 
     // 加载用的数据
-    private List<StocksInfo> listData;
+    private List<Order> listData;
     private Context context;
 
     public TransactionDetailAdapter(Context context) {
@@ -28,9 +28,9 @@ public class TransactionDetailAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<StocksInfo> listData) {
+    public void setlistData(ArrayList<Order> listData) {
         if (listData != null) {
-            this.listData = (List<StocksInfo>) listData.clone();
+            this.listData = (List<Order>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -68,8 +68,11 @@ public class TransactionDetailAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.transactionPrice.setText(listData.get(position).getName());
-        // 没写完
+        holder.time.setText(listData.get(position).getTime());
+        holder.transactionPrice.setText(listData.get(position).getPrice());
+        holder.transactionsNumber.setText(listData.get(position).getNumber());
+        holder.transactionAmount.setText(listData.get(position).getNumber());
+
 
         return convertView;
     }

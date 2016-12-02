@@ -41,7 +41,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:layout_width="0dp"
                 android:layout_weight="9"
-                android:hint="请输入关键字"
+                android:hint="搜索股票/牛人"
                 android:focusable="false"
                 android:paddingLeft="8dp"
                 android:layout_height="40dp"
@@ -62,32 +62,70 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="相关搜索："
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            />
-
-        <com.example.sjqcjstock.view.PullToRefreshLayout
-            android:id="@+id/refresh_view"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <include layout="@layout/refresh_head" />
-            <!-- 支持所有实现Pullable接口的View -->
+            android:layout_height="1dp"
+            android:background="@color/gray_line"/>
 
-            <com.example.sjqcjstock.view.PullableListView
-                android:id="@+id/lv_searchResult"
+        <com.example.sjqcjstock.userdefined.MyScrollView
+            android:id="@+id/myScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <include layout="@layout/load_more" />
+                <LinearLayout
+                    android:id="@+id/stocks_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
 
-        </com.example.sjqcjstock.view.PullToRefreshLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="股票"
+                        android:padding="10dp"
+                        android:layout_marginTop="8dp"
+                        android:textSize="16sp"
+                        android:background="@color/gray_line"/>
 
-        <include layout="@layout/progress" />
+                    <com.example.sjqcjstock.view.SoListView
+                        android:id="@+id/stocks_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/user_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="牛人"
+                        android:background="@color/gray_line"
+                        android:padding="10dp"
+                        android:layout_marginTop="8dp"
+                        android:textSize="16sp"/>
+
+                    <com.example.sjqcjstock.view.SoListView
+                        android:id="@+id/user_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.example.sjqcjstock.userdefined.MyScrollView>
 
     </LinearLayout>
 

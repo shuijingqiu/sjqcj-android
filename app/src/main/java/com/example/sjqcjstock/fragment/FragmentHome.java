@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.sjqcjstock.Activity.EssenceListActivty;
+import com.example.sjqcjstock.Activity.MainActivity;
 import com.example.sjqcjstock.Activity.advertUrlActivity;
 import com.example.sjqcjstock.Activity.forumnotedetailActivity;
 import com.example.sjqcjstock.Activity.gwzhmatchActivity;
@@ -62,15 +63,13 @@ public class FragmentHome extends Fragment {
     private LinearLayout pickessence;
     private LinearLayout pickhotstock;
     private LinearLayout picksuperman;
-    private RoundImageView pickgwzbmatch1;
+    private LinearLayout pickgwzbmatch1;
     private RelativeLayout rl_refresh_layout;
-    private RoundImageView pickselectstockmatch1;
-    private RoundImageView picktosesencelist1;
-    private RoundImageView picktosupermanlist1;
+    private LinearLayout pickselectstockmatch1;
+    private LinearLayout picktosesencelist1;
+    private LinearLayout picktosupermanlist1;
     private LinearLayout picktodayupranking1;
     private LinearLayout pickthisweekupranking1;
-    //    private Button totop;
-//    private Button tobuttom;
     private MyScrollView myScrollView;
     // 定义List集合容器
     private essenceAdapter essencelistAdapter;
@@ -110,6 +109,10 @@ public class FragmentHome extends Fragment {
     // 缓存滚动的图片用
     private String globalSwfStr = "";
 
+    private MainActivity mainActivity;
+    public FragmentHome(MainActivity mainActivity){
+        this.mainActivity = mainActivity;
+    }
     public void test(ArrayList<HashMap<String, String>> listData) {
         listsupermanData = listData;
         supermanAdapter.notifyDataSetChanged();
@@ -203,10 +206,10 @@ public class FragmentHome extends Fragment {
         pickessence = (LinearLayout) view.findViewById(R.id.pickessence);
         pickhotstock = (LinearLayout) view.findViewById(R.id.pickhotstock);
         picksuperman = (LinearLayout) view.findViewById(R.id.picksuperman);
-        pickgwzbmatch1 = (RoundImageView) view.findViewById(R.id.pickgwzbmatch1);
-        pickselectstockmatch1 = (RoundImageView) view.findViewById(R.id.pickselectstockmatch1);
-        picktosesencelist1 = (RoundImageView) view.findViewById(R.id.picktosesencelist1);
-        picktosupermanlist1 = (RoundImageView) view.findViewById(R.id.picktosupermanlist1);
+        pickgwzbmatch1 = (LinearLayout) view.findViewById(R.id.pickgwzbmatch1);
+        pickselectstockmatch1 = (LinearLayout) view.findViewById(R.id.pickselectstockmatch1);
+        picktosesencelist1 = (LinearLayout) view.findViewById(R.id.picktosesencelist1);
+        picktosupermanlist1 = (LinearLayout) view.findViewById(R.id.picktosupermanlist1);
         picktodayupranking1 = (LinearLayout) view.findViewById(R.id.picktodayupranking1);
         pickthisweekupranking1 = (LinearLayout) view.findViewById(R.id.pickthisweekupranking1);
         myScrollView = (MyScrollView) view.findViewById(R.id.myScrollView);
@@ -443,9 +446,9 @@ public class FragmentHome extends Fragment {
     class picktosesencelist1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            Intent intent = new Intent(getActivity(), EssenceListActivty.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity(), EssenceListActivty.class);
+//            startActivity(intent);
+            mainActivity.clickStocks();
         }
     }
 
@@ -539,7 +542,6 @@ public class FragmentHome extends Fragment {
                             break;
                         }
                     }
-
                 }
                 thisweekuprankingAdapter.setlistData(listthisweekuprankingData);
                 ViewUtil.setListViewHeightBasedOnChildren(thisweekupranking);
@@ -781,7 +783,6 @@ public class FragmentHome extends Fragment {
                     appindexList = (ArrayList<HashMap<String, String>>) listessenceData.clone();
                 }
             }
-
             dialog.dismiss();
             rl_refresh_layout.setVisibility(View.GONE);
         }
@@ -795,9 +796,7 @@ public class FragmentHome extends Fragment {
         public void onClick(View arg0) {
             Intent intent = new Intent(getActivity(), EssenceListActivty.class);
             startActivity(intent);
-
         }
-
     }
 
     // 进入热门股列表
@@ -810,9 +809,7 @@ public class FragmentHome extends Fragment {
             Intent intent = new Intent(getActivity(),
                     hotstocklistActivity.class);
             startActivity(intent);
-
         }
-
     }
 
     // 进入牛人列表

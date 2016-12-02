@@ -529,10 +529,10 @@ public class Utils {
             return code;
         }
         String firstStr = code.substring(0,1);
-        if("0".equals(firstStr)){
-            code = "sz"+code;
-        }else if ("6".equals(firstStr)){
+        if ("6".equals(firstStr)){
             code = "sh"+code;
+        } else {
+            code = "sz"+code;
         }
         return code;
     }

@@ -4,28 +4,35 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.Activity.advertUrlActivity;
-import com.example.sjqcjstock.Activity.stocks.ExpertLists;
+import com.example.sjqcjstock.Activity.stocks.ExpertListsActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.DynamicExpertAdapter;
+import com.example.sjqcjstock.constant.ACache;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.ADInfo;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
+import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.userdefined.MyScrollView;
+import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.CycleViewPager;
 import com.example.sjqcjstock.view.SoListView;
 
@@ -48,22 +55,27 @@ public class FragmentAnalogHome extends Fragment {
     private List<ADInfo> infos = new ArrayList<ADInfo>();
     // 图片的加载
     private List<ImageView> views = new ArrayList<ImageView>();
-
     // 股票的List
     private SoListView listView;
     // 行情List的Adapter
     private DynamicExpertAdapter listAdapter;
     // 滚动控件
     private MyScrollView myScrollView;
-    // 需要加载的行情数据
-    private ArrayList<StocksInfo> listInfo;
+    // 需要加载的牛人动态数据
+    private ArrayList<GeniusEntity> geniusList;
     // 网络请求提示
     private ProgressDialog dialog;
+    // 牛人动态返回的数据
+    private String resstr;
+    // 缓存用的类
+    private ACache mCache;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_analog_home, null);
+        // 缓存类
+        mCache = ACache.get(getActivity());
         findView(view);
         initData();
         return view;
@@ -92,9 +104,8 @@ public class FragmentAnalogHome extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent inten = new Intent();
-                inten.putExtra("code", "300497");
-                inten.putExtra("name", "福祥股份");
-                inten.putExtra("openF", "139.00");
+                inten.putExtra("code", geniusList.get(position).getStock());
+                inten.putExtra("name", geniusList.get(position).getStock_name());
                 inten.setClass(getActivity(), SharesDetailedActivity.class);
                 startActivity(inten);
             }
@@ -108,7 +119,7 @@ public class FragmentAnalogHome extends Fragment {
             public void onClick(View v) {
                 Intent inten = new Intent();
                 inten.putExtra("type", 0);
-                inten.setClass(getActivity(), ExpertLists.class);
+                inten.setClass(getActivity(), ExpertListsActivity.class);
                 startActivity(inten);
             }
         });
@@ -119,10 +130,11 @@ public class FragmentAnalogHome extends Fragment {
         view.findViewById(R.id.rqnr_ll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inten = new Intent();
-                inten.putExtra("type", 1);
-                inten.setClass(getActivity(), ExpertLists.class);
-                startActivity(inten);
+//                Intent inten = new Intent();
+//                inten.putExtra("type", 1);
+//                inten.setClass(getActivity(), ExpertListsActivity.class);
+//                startActivity(inten);
+                Toast.makeText(getActivity(), "功能完善中，敬请期待！", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -134,7 +146,7 @@ public class FragmentAnalogHome extends Fragment {
             public void onClick(View v) {
                 Intent inten = new Intent();
                 inten.putExtra("type", 2);
-                inten.setClass(getActivity(), ExpertLists.class);
+                inten.setClass(getActivity(), ExpertListsActivity.class);
                 startActivity(inten);
             }
         });
@@ -147,7 +159,7 @@ public class FragmentAnalogHome extends Fragment {
             public void onClick(View v) {
                 Intent inten = new Intent();
                 inten.putExtra("type", 3);
-                inten.setClass(getActivity(), ExpertLists.class);
+                inten.setClass(getActivity(), ExpertListsActivity.class);
                 startActivity(inten);
             }
         });
@@ -179,45 +191,31 @@ public class FragmentAnalogHome extends Fragment {
      * 数据的加载
      */
     private void initData() {
-
         // 开线程获取广告图片
         SendImageLoder taskSl = new SendImageLoder();
         taskSl.execute(new TaskParams(Constants.globalSwf));
-
-        ArrayList<StocksInfo> listStocks = new ArrayList<StocksInfo>();
-        StocksInfo stocks = new StocksInfo();
-        stocks.setName("测试用的1");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的2");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的3");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的4");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的5");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的6");
-        listStocks.add(stocks);
-        stocks = new StocksInfo();
-        stocks.setName("测试用的7");
-        listStocks.add(stocks);
-        listAdapter.setlistData(listStocks);
-        ViewUtil.setListViewHeightBasedOnChildren(listView);
-        // 滚动到顶部
-        myScrollView.scrollTo(0, 0);
-        dialog.dismiss();
+        String data = mCache.getAsString("orders");
+        if (data != null){
+            geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(data,GeniusEntity.class);
+            if (geniusList != null && geniusList.size()>0) {
+                listAdapter.setlistData(geniusList);
+                dialog.dismiss();
+            }
+        }
+        // 开线程获牛人动态数据
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders");
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
     /**
      * 广告图片的一些加载适配
      */
     private void setImageLoader() {
-
         // 将最后一个ImageView添加进来
         views.add(ImageUtil.getImageView(this.getActivity(), infos.get(infos.size() - 1).getUrl()));
         for (int i = 0; i < infos.size(); i++) {
@@ -290,6 +288,41 @@ public class FragmentAnalogHome extends Fragment {
                 Intent intent = new Intent(getActivity(), advertUrlActivity.class);
                 intent.putExtra("url", info.getContent());
                 startActivity(intent);
+            }
+        }
+    };
+
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstr);
+                        if ("failed".equals(jsonObject.getString("status"))){
+                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                            return;
+                        }
+                        String data = jsonObject.getString("data");
+                        // 牛人动态做缓存
+                        mCache.put("orders", data);
+                        geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
+                        listAdapter.setlistData(geniusList);
+                        ViewUtil.setListViewHeightBasedOnChildren(listView);
+                        // 滚动到顶部
+                        myScrollView.scrollTo(0, 0);
+                        dialog.dismiss();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismiss();
+                    break;
             }
         }
     };

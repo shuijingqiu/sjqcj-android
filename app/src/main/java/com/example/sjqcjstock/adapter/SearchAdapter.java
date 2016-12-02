@@ -23,7 +23,6 @@ public class SearchAdapter extends BaseAdapter {
     private SearchActivity searchActivity;
     private ArrayList<HashMap<String, Object>> listData;
 
-
     public SearchAdapter(Context context, SearchActivity searchActivity) {
         super();
         this.context = context;
@@ -61,25 +60,20 @@ public class SearchAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_myattentionuser, null);
         }
+            ImageView image = (ImageView) convertView.findViewById(R.id.user_image);
+            //ImageLoader根据图片的url加载数据
+            ImageLoader.getInstance().displayImage((String) listData.get(position).get("avatar_middlestr"), image,
+                    ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+            TextView username = (TextView) convertView.findViewById(R.id.username);
+            username.setText((String) listData.get(position).get("unamestr"));
+            RelativeLayout relat1 = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
+            relat1.setOnClickListener(new OnClickListener() {
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.user_image);
-        //ImageLoader根据图片的url加载数据
-        ImageLoader.getInstance().displayImage((String) listData.get(position).get("avatar_middlestr"), image,
-                ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-
-        TextView username = (TextView) convertView.findViewById(R.id.username);
-        username.setText((String) listData.get(position).get("unamestr"));
-
-        RelativeLayout relat1 = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
-
-        relat1.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                searchActivity.searchcallback((String) listData.get(position).get("uid"));
-            }
-        });
-
+                @Override
+                public void onClick(View arg0) {
+                    searchActivity.searchcallback((String) listData.get(position).get("uid"));
+                }
+            });
         return convertView;
     }
 }

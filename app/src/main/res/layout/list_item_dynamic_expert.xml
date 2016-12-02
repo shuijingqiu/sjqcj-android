@@ -55,28 +55,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="胜率"
-                android:textColor="@color/color_text2" />
-
-            <TextView
-                android:id="@+id/winning_probability_tv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="80%"
-                android:textColor="@color/red"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/total_yield_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:text="总收益率"
                 android:textColor="@color/color_text2" />
 
             <TextView
+                android:id="@+id/total_yield_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -103,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="天府股份 (610010)"
+            android:textColor="@color/color_toptitle"
             android:textSize="16sp" />
 
         <TextView

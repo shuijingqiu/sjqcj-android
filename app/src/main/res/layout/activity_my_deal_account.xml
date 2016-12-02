@@ -25,6 +25,15 @@
             android:gravity="center"
             android:text="个人账户" />
 
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:src="@mipmap/select3" />
+
     </RelativeLayout>
 
     <com.example.sjqcjstock.view.PullToRefreshLayout
@@ -60,28 +69,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
                         android:background="@color/color_toptitle"
-                        android:padding="10dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
                             android:layout_weight="1">
 
                             <TextView
-                                android:id="@+id/net_worth_tv"
+                                android:id="@+id/total_assets_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="净值"
+                                android:text="总资产"
                                 android:textColor="@color/white" />
 
                             <TextView
-                                android:id="@+id/net_worth_value_tv"
+                                android:id="@+id/total_assets_value_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@+id/net_worth_tv"
+                                android:layout_toRightOf="@+id/total_assets_tv"
                                 android:text="1.0310"
                                 android:textColor="@color/white"
                                 android:textSize="30dp" />
@@ -91,7 +100,6 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-14dp"
                             android:layout_weight="1">
 
                             <TextView
@@ -157,34 +165,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/total_assets_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1003256.25"
-                                android:textColor="@color/white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="总资产"
-                                android:textColor="@color/white" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="@color/gray_line" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
                                 android:id="@+id/available_funds_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -224,6 +204,35 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:text="当日盈亏"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="40dp"
+                            android:background="@color/gray_line" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/position_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10.25%"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/position_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="仓位"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -277,9 +286,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:onClick="transactionClick"
                             android:clickable="true"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:onClick="transactionClick">
 
                             <TextView
                                 android:id="@+id/text_transaction"
@@ -293,10 +302,10 @@
                             android:id="@+id/linear_my_stock"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:onClick="stockClick"
-                            android:clickable="true"
                             android:layout_weight="1"
-                            android:gravity="center">
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:onClick="stockClick">
 
                             <TextView
                                 android:id="@+id/text_my_stock"
@@ -311,15 +320,18 @@
                     <ImageView
                         android:id="@+id/img_line"
                         android:layout_width="192dp"
+                        android:layout_marginTop="2dp"
                         android:layout_height="1dp"
                         android:contentDescription="@string/app_name"
                         android:src="@color/color_toptitle" />
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@drawable/line" />
+
                 <LinearLayout
                     android:id="@+id/transaction_ll"
                     android:layout_width="match_parent"
@@ -336,9 +348,10 @@
                             android:id="@+id/entrust_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="10dp"
                             android:layout_marginLeft="10dp"
+                            android:padding="10dp"
                             android:text="当前委托(0)" />
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -364,7 +377,7 @@
                         android:padding="10dp">
 
                         <TextView
-                            android:id="@+id/position_tv"
+                            android:id="@+id/positions_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -384,7 +397,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:text="852436.25" />
+                            android:text="0.00" />
 
                     </RelativeLayout>
 
@@ -414,25 +427,23 @@
                         android:layout_height="wrap_content"
                         android:background="@color/gray_line"
                         android:orientation="horizontal"
-                        android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingLeft="20dp">
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="10dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="名称代码"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:layout_weight="1"
                             android:text="最新价"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />
@@ -440,17 +451,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
                             android:layout_weight="1"
+                            android:gravity="center_horizontal"
                             android:text="涨跌幅"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:layout_weight="1"
                             android:text="推荐数"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />

@@ -43,7 +43,7 @@ public class SpotEntity {
     /**
      * <p>点的显示类型(0:普通；1：圆形；2：三角形；3：菱形；4：正方形 ；5：细点)</p>
      */
-    private int spotType;
+    private int spotType = 0;
 
     /**
      * <p>点的半径大小</p>

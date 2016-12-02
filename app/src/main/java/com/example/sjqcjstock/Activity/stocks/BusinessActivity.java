@@ -95,6 +95,11 @@ public class BusinessActivity extends Activity {
     private String resstr = "";
     // 确认的弹框
     private AlertDialog alertDialog;
+    // 调用接口获取用户的交易排名信息
+    private String xxstr = "";
+    // 可用资金
+    private double totalAmount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +108,7 @@ public class BusinessActivity extends Activity {
         ExitApplication.getInstance().addActivity(this);
         type = getIntent().getStringExtra("type");
         findView();
+        getData();
         code = getIntent().getStringExtra("code");
         businessNumber = getIntent().getStringExtra("number");
         if (code !=null && !"".equals(code)){
@@ -171,21 +177,20 @@ public class BusinessActivity extends Activity {
         codeEt.addTextChangedListener(watcher);
     }
 
-//    /**
-//     * 开线程获取当前股票信息
-//     */
-//    private void getData(){
-//        dialog.show();
-//        // 开线程获取股票数据信息
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                // 调用接口获取股票当前行情数据
-//                stocksInfo = new sharesUtil().processOrderData(code);
-//                handler.sendEmptyMessage(0);
-//            }
-//        }).start();
-//    }
+    /**
+     * 开线程获取当前股票信息
+     */
+    private void getData(){
+        // 开线程获取用户账户信息和总盈利排名
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 调用接口获取用户账户信息和总盈利排名
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr);
+                handler.sendEmptyMessage(2);
+            }
+        }).start();
+    }
     /**
      * 增加价格的方法
      *
@@ -226,6 +231,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void numberQuarter(View view) {
+        if (businessNumber == null) return;
         numberEt.setText(Integer.valueOf(businessNumber)/4/100*100+"");
     }
 
@@ -235,6 +241,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void numberAhalf(View view) {
+        if (businessNumber == null) return;
         numberEt.setText(Integer.valueOf(businessNumber)/2/100*100+"");
     }
 
@@ -244,6 +251,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void numberAll(View view) {
+        if (businessNumber == null) return;
         numberEt.setText(businessNumber);
     }
 
@@ -265,6 +273,10 @@ public class BusinessActivity extends Activity {
             CustomToast.makeText(getApplicationContext(), "请输交易数量", Toast.LENGTH_SHORT)
                     .show();
             return;
+        }
+        if(Integer.valueOf(number) < 100){
+            numberEt.setText("100");
+            number = "100";
         }
         if(Integer.valueOf(number)%100 != 0){
             CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
@@ -307,6 +319,10 @@ public class BusinessActivity extends Activity {
             CustomToast.makeText(getApplicationContext(), "请输交易数量", Toast.LENGTH_SHORT)
                     .show();
             return;
+        }
+        if(Integer.valueOf(number) < 100){
+            numberEt.setText("100");
+            number = "100";
         }
         if(Integer.valueOf(number)%100 != 0){
             CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
@@ -366,8 +382,7 @@ public class BusinessActivity extends Activity {
                     public void run() {
                         List dataList = new ArrayList();
                         // 用户ID
-//                        dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
-                        dataList.add(new BasicNameValuePair("uid", "200"));
+                        dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
                         // 股票代码
                         dataList.add(new BasicNameValuePair("stock", stocksInfo.getCode()));
                         // 购买金额
@@ -444,7 +459,7 @@ public class BusinessActivity extends Activity {
                         spotPrice = stocksInfo.getSpotPrice();
                         priceEt.setText(spotPrice);
                         if ("1".equals(type)) {
-                            businessNumber = Constants.totalAmount / Double.valueOf(spotPrice) + "";
+                            businessNumber = totalAmount / Double.valueOf(spotPrice) + "";
                             businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
                         }
                         businessNumberTv.setText(businessNumber);
@@ -488,35 +503,7 @@ public class BusinessActivity extends Activity {
                         priceSell4.setTextColor(color);
                         priceSell5.setTextColor(color);
                     }else{
-
-                        // 当前价格
-                        spotPrice = "0";
-                        priceEt.setText("");
-                        businessNumber = "0";
-                        businessNumberTv.setText("");
-                        nameTv.setText("");
-                        priceLimitTv.setText("跌停 0");
-                        priceAmexTv.setText("涨停 0");
-                        priceSell1.setText("0");
-                        numberSell1.setText("0");
-                        priceSell2.setText("0");
-                        numberSell2.setText("0");
-                        priceSell3.setText("0");
-                        numberSell3.setText("0");
-                        priceSell4.setText("0");
-                        numberSell4.setText("0");
-                        priceSell5.setText("0");
-                        numberSell5.setText("0");
-                        priceBuy1.setText("0");
-                        numberBuy1.setText("0");
-                        priceBuy2.setText("0");
-                        numberBuy2.setText("0");
-                        priceBuy3.setText("0");
-                        numberBuy3.setText("0");
-                        priceBuy4.setText("0");
-                        numberBuy4.setText("0");
-                        priceBuy5.setText("0");
-                        numberBuy5.setText("0");
+                        clerData();
                     }
                     dialog.dismiss();
                     break;
@@ -528,12 +515,13 @@ public class BusinessActivity extends Activity {
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             if("success".equals(jsonObject.getString("status"))){
                                 dialog.dismiss();
-                                // （如果购买成功关闭当前页面）关闭当前页面
                                 if(alertDialog !=null )
                                 {
                                     alertDialog.dismiss();
                                 }
-                                finish();
+                                // （如果购买成功清空数据）
+//                                finish();
+                                clerData();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -545,7 +533,60 @@ public class BusinessActivity extends Activity {
                     }
                     dialog.dismiss();
                     break;
+                case 2:
+                    try {
+                        JSONObject jsonObject = new JSONObject(xxstr);
+                        if ("failed".equals(jsonObject.getString("status"))){
+                            Toast.makeText(BusinessActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                            return;
+                        }else{
+                            JSONObject jsonData = new JSONObject(jsonObject.getString("data"));
+                            totalAmount = jsonData.getDouble("available_funds");
+                            if ("1".equals(type) && Double.valueOf(spotPrice)>0) {
+                                businessNumber = totalAmount / Double.valueOf(spotPrice) + "";
+                                businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
+                                businessNumberTv.setText(businessNumber);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
+
+    /**
+     * 清空还原数据
+     */
+    private void clerData(){
+        // 当前价格
+        spotPrice = "0";
+        priceEt.setText("");
+        businessNumber = "0";
+        businessNumberTv.setText("");
+        nameTv.setText("");
+        priceLimitTv.setText("跌停 0");
+        priceAmexTv.setText("涨停 0");
+        priceSell1.setText("0");
+        numberSell1.setText("0");
+        priceSell2.setText("0");
+        numberSell2.setText("0");
+        priceSell3.setText("0");
+        numberSell3.setText("0");
+        priceSell4.setText("0");
+        numberSell4.setText("0");
+        priceSell5.setText("0");
+        numberSell5.setText("0");
+        priceBuy1.setText("0");
+        numberBuy1.setText("0");
+        priceBuy2.setText("0");
+        numberBuy2.setText("0");
+        priceBuy3.setText("0");
+        numberBuy3.setText("0");
+        priceBuy4.setText("0");
+        numberBuy4.setText("0");
+        priceBuy5.setText("0");
+        numberBuy5.setText("0");
+    }
 }
