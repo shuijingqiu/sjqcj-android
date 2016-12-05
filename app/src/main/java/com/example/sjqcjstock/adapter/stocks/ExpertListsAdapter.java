@@ -96,7 +96,6 @@ public class ExpertListsAdapter extends BaseAdapter {
             holder.ranking.setText(rownum);
             holder.ranking.setBackgroundResource(R.mipmap.nullimg);
         }
-
         if(type == 0){
             // 常胜牛人
             holder.averageIncome.setText("周平均收益 "+totalProfitEntity.getWeek_avg_profit_rate()+"%");

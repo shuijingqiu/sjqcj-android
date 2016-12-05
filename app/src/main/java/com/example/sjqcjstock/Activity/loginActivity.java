@@ -292,20 +292,6 @@ public class loginActivity extends Activity {
                     msg.obj = response;
                     msg.what = 0;
                     mHandler.sendMessage(msg);
-//没用啊
-//                    new Thread() {
-//                        @Override
-//                        public void run() {
-//                            JSONObject json = (JSONObject) response;
-//                            if (json.has("figureurl")) {
-//                                Bitmap bitmap = null;
-//                                Message msg = new Message();
-//                                msg.obj = bitmap;
-//                                msg.what = 1;
-//                                mHandler.sendMessage(msg);
-//                            }
-//                        }
-//                    }.start();
                 }
 
                 @Override
@@ -371,6 +357,8 @@ public class loginActivity extends Activity {
                         String unamestr;
                         String infostr = map.get("info") + "";
                         String uidstr = map.get("uid") + "";
+                        // 获取登陆Token
+                        String apptoken = map.get("token") + "";
 
                         if (map.get("name") == null) {
                             unamestr = "";
@@ -384,6 +372,7 @@ public class loginActivity extends Activity {
                         editor.putString("userid", uidstr);
                         editor.putString("login_email", fillphone1.getText().toString());
                         editor.putString("login_password", fillpassword1.getText().toString());
+                        editor.putString("apptoken", apptoken);
                         editor.commit();
 
                         //已经登陆系统
@@ -393,6 +382,7 @@ public class loginActivity extends Activity {
                         editorIsLogin.putString("uidstr", uidstr);
                         editorIsLogin.putString("unamestr", unamestr);
                         editorIsLogin.putString("loginPwd", fillpassword1.getText().toString());
+                        editorIsLogin.putString("apptoken", apptoken);
                         editorIsLogin.commit();
 
                         Constants.setStaticmyuidstr("");
@@ -404,6 +394,7 @@ public class loginActivity extends Activity {
                         Constants.setStaticmyuidstr(uidstr);
                         Constants.setStaticuname(unamestr);
                         Constants.setStaticpasswordstr(fillpassword1.getText().toString());
+                        Constants.apptoken = apptoken;
 
                         if (dialog != null){
                             dialog.dismiss();

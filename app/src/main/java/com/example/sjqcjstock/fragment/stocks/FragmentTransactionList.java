@@ -98,7 +98,12 @@ public class FragmentTransactionList extends Fragment {
     private List<String> ytitle;
     // X轴标题
     private List<String> xtitle;
+    // 查看的用户ID
+    private String uidstr = "";
 
+    public FragmentTransactionList(String uidstr){
+        this.uidstr = uidstr;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,14 +112,6 @@ public class FragmentTransactionList extends Fragment {
         initData();
         return view;
     }
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        // 滚动到顶部
-//        myScrollView.scrollTo(0, 0);
-//        myScrollView.smoothScrollTo(0, 0);
-//    }
 
     private void findView(View view) {
         assetsChart = (LineChart) view.findViewById(R.id.assets_chart);
@@ -169,7 +166,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+Constants.staticmyuidstr+"&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&p="+page);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -178,7 +175,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr);
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+uidstr);
                 handler.sendEmptyMessage(2);
             }
         }).start();
@@ -187,7 +184,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                chartstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getTimeChart&uid="+Constants.staticmyuidstr);
+                chartstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getTimeChart&uid="+uidstr);
                 handler.sendEmptyMessage(3);
             }
         }).start();

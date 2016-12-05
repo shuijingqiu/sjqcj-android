@@ -8,6 +8,8 @@ public class MatchEntity {
     private String id;
     // 比赛名称
     private String name;
+    // 图片
+    private String image;
     //类型  1周赛  2月赛
     private String type;
     // 开始日期
@@ -19,6 +21,7 @@ public class MatchEntity {
     // 1 进行中 3已结束
     private String status;
     private String status_name;
+
 
     // 用户id
     private String uid;
@@ -43,6 +46,14 @@ public class MatchEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getType() {

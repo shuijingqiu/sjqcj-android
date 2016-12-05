@@ -46,6 +46,8 @@ import java.util.Map;
  * @author Administrator
  */
 public class UserDetailNewActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+    // 上面显示的标题
+    private TextView titleName;
     // 获取uid
     private String uidstr;
     // 获取控件
@@ -71,7 +73,7 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
     private String list_idstr;
 
 
-    // 七个滑动页面
+    // 三个滑动页面
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mDatas;
@@ -112,6 +114,7 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
     }
 
     private void initView() {
+        titleName = (TextView) findViewById(R.id.title_name);
         // 获取自己的id信息
         myuid = getSharedPreferences("userinfo", MODE_PRIVATE).getString("userid", "");
         // 获取intent的数据
@@ -119,8 +122,10 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
         if (myuid.equals(uidstr)) {
             findViewById(R.id.private_letter_follow_ll).setVisibility(View.GONE);
             findViewById(R.id.line_iv).setVisibility(View.GONE);
+            titleName.setText("我的主页");
+        }else{
+            titleName.setText("他的主页");
         }
-
         username2 = (TextView) findViewById(R.id.username2);
         headimg2 = (ImageView) findViewById(R.id.headimg2);
         usersex1 = (ImageView) findViewById(R.id.usersex1);
@@ -427,8 +432,8 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
      */
     private void initFragment() {
         FragmentMicroBlog microBlog = new FragmentMicroBlog(uidstr);
-        FragmentTransactionList transaction = new FragmentTransactionList();
-        FragmentStock stock = new FragmentStock();
+        FragmentTransactionList transaction = new FragmentTransactionList(uidstr);
+        FragmentStock stock = new FragmentStock(uidstr);
         mDatas.add(microBlog);
         // 以后要要的
         mDatas.add(transaction);
@@ -445,7 +450,13 @@ public class UserDetailNewActivity extends FragmentActivity implements ViewPager
         };
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
-        mViewPager.setCurrentItem(0);
+        // 如果是从模拟炒股过来的就加载交易反之就加载微博
+        String type = getIntent().getStringExtra("type");
+        if ( type != null && "1".equals(type)){
+            mViewPager.setCurrentItem(1);
+        }else{
+            mViewPager.setCurrentItem(0);
+        }
 
     }
 

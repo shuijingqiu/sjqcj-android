@@ -89,9 +89,11 @@ public class CommissionAdapter extends BaseAdapter {
         //0代表待成交 1代表成交  2代表撤单
         String status = order.getStatus();
         if ("0".equals(status)) {
-            holder.state.setText("已报");
+            holder.state.setText("待成交");
         }else if("2".equals(status)){
             holder.state.setText("撤单");
+        }else{
+            holder.state.setText("交易成功");
         }
 
 

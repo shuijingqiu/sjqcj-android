@@ -68,8 +68,20 @@ public class StockAdapter extends BaseAdapter {
         OptionalEntity optionalEntity = listData.get(position);
         holder.name.setText(optionalEntity.getStock_name());
         holder.code.setText(optionalEntity.getStock());
+        if (optionalEntity.getRising()==null){
+            return convertView;
+        }
         holder.price.setText(optionalEntity.getPrice());
-        holder.rose.setText(optionalEntity.getRising());
+        double rose = Double.valueOf(optionalEntity.getRising());
+        holder.rose.setText(rose+"%");
+        if (rose < 0){
+            holder.rose.setTextColor(holder.rose.getResources().getColor(R.color.color_1bc07d));
+            holder.price.setTextColor(holder.price.getResources().getColor(R.color.color_1bc07d));
+        }else{
+            holder.rose.setTextColor(holder.rose.getResources().getColor(R.color.color_ef3e3e));
+            holder.price.setTextColor(holder.price.getResources().getColor(R.color.color_ef3e3e));
+        }
+
         holder.number.setText(optionalEntity.getFollow());
         return convertView;
     }

@@ -21,6 +21,11 @@
                 android:layout_height="40dp"
                 android:src="@mipmap/portrait2" />
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/head_frame" />
+
             <TextView
                 android:id="@+id/name_tv"
                 android:layout_width="wrap_content"
@@ -56,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="总收益率"
+                android:textSize="12sp"
                 android:textColor="@color/color_text2" />
 
             <TextView
@@ -67,7 +73,7 @@
                 android:layout_marginRight="12dp"
                 android:text="70%"
                 android:textColor="@color/red"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -87,36 +93,37 @@
             android:layout_centerVertical="true"
             android:text="天府股份 (610010)"
             android:textColor="@color/color_toptitle"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/business_tv"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/return_rate_tv"
+            android:layout_toRightOf="@+id/name_code_tv"
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:text="买入"
+            android:text="买"
+            android:textSize="16sp"
             android:textColor="@color/red" />
 
         <TextView
             android:id="@+id/return_rate_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/return_rate_value_tv"
+            android:layout_toRightOf="@+id/business_tv"
             android:layout_centerVertical="true"
             android:text="收益率"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/return_rate_value_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/to_buy_tv"
+            android:layout_toRightOf="@+id/return_rate_tv"
             android:text="29.88%"
             android:textColor="@color/red"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/to_buy_tv"

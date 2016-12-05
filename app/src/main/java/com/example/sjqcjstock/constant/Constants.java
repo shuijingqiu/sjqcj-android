@@ -33,6 +33,8 @@ public class Constants {
     //微信或qqtokey
     public static String statictokeystr = "";
     public static String staticLoginType = "";
+    // apptoken
+    public static String apptoken = "";
     // 判断第三方登录的时候是否修改过密码
     public static Boolean isDefault = true;
 

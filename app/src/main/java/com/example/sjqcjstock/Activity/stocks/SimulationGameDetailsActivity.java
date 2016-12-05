@@ -2,11 +2,13 @@ package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -96,7 +98,15 @@ public class SimulationGameDetailsActivity extends Activity {
         myProfitTv = (TextView) findViewById(R.id.my_profit_tv);
         rankingTv = (TextView) findViewById(R.id.ranking_tv);
         myMatchLl = (LinearLayout) findViewById(R.id.my_match_ll);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SimulationGameDetailsActivity.this,
+                        UserDetailNewActivity.class);
+                intent.putExtra("uid", matchLists.get(position).getUid());
+                intent.putExtra("type","1");
+            }
+        });
         ptrl = ((PullToRefreshLayout) findViewById(
                 R.id.refresh_view));
         // 添加上下拉刷新事件

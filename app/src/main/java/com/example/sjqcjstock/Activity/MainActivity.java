@@ -27,6 +27,7 @@ import com.example.sjqcjstock.fragment.stocks.FragmentAnalogHome;
 import com.example.sjqcjstock.helper.ChangeFragmentHelper;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
 import java.util.Timer;
@@ -332,5 +333,46 @@ public class MainActivity extends FragmentActivity {
         main_tabBar.check(R.id.main_match);
         radioGruopClick(null,R.id.main_match);
     }
+
+    /**
+     * 定时获取token(根据账号密码or第三方的token)
+     */
+    private void obtainToken(){
+        String url = "";
+        url = Constants.Url + "?app=public&mod=Passport&act=AppLogin";
+
+        final String urlStr = url;
+        Timer timer = new Timer();
+        // 开定时器获取数据
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                new SendInfoTaskForCommonUserLogin().execute(new TaskParams(
+                        urlStr
+                ));
+            }
+        };
+        timer.schedule(task, 30000, 30000); // 30000s后执行task,经过30s再次执行
+    }
+
+
+    //普通用户登录
+    private class SendInfoTaskForCommonUserLogin extends AsyncTask<TaskParams, Void, String> {
+
+        @Override
+        protected String doInBackground(TaskParams... params) {
+            return HttpUtil.doInBackground(params);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result == null) {
+                CustomToast.makeText(getApplicationContext(), "获取token出错", Toast.LENGTH_LONG).show();
+            } else {
+
+            }
+        }
+    }
+
 }
 

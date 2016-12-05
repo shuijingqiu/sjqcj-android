@@ -10,17 +10,10 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/ranking_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/usereditlist"
-            android:visibility="gone"/>
-
         <TextView
             android:id="@+id/ranking_tv"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="1"/>

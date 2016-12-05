@@ -62,6 +62,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     private TextView textMinute, textDay, textWeek, textMonth;
     private LinearLayout llMinute, llDay, llWeek, llMonth;
     private ImageView img_line;
+    // 背景的linerLayout
+    private LinearLayout titleBageLl;
 
     // 自选的按钮
     private TextView optionalValueTv;
@@ -208,6 +210,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         // 获取颜色
         select_color = getResources().getColor(R.color.color_toptitle);
         unselect_color = getResources().getColor(R.color.color_000000);
+        titleBageLl = (LinearLayout) findViewById(R.id.title_bage_ll);
 
         textMinute = (TextView) findViewById(R.id.text_minute);
         textDay = (TextView) findViewById(R.id.text_day);
@@ -343,13 +346,15 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         Double highsLows = Double.valueOf(stocksInfo.getHighsLows());
         priceRise.setText(highsLows + "");
         if (highsLows > 0) {
-            price.setTextColor(Color.RED);
-            riseAndFall.setTextColor(Color.RED);
-            priceRise.setTextColor(Color.RED);
+//            price.setTextColor(Color.RED);
+//            riseAndFall.setTextColor(Color.RED);
+//            priceRise.setTextColor(Color.RED);
+            titleBageLl.setBackgroundColor(Color.rgb(233, 47, 68));
         } else {
-            price.setTextColor(Color.rgb(139, 195, 74));
-            riseAndFall.setTextColor(Color.rgb(139, 195, 74));
-            priceRise.setTextColor(Color.rgb(139, 195, 74));
+            titleBageLl.setBackgroundColor(Color.rgb(33, 179, 77));
+//            price.setTextColor(Color.rgb(139, 195, 74));
+//            riseAndFall.setTextColor(Color.rgb(139, 195, 74));
+//            priceRise.setTextColor(Color.rgb(139, 195, 74));
         }
 
         openPrice.setText(stocksInfo.getOpenPrice());
@@ -522,15 +527,19 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         switch (mViewPager.getCurrentItem()) {
             case 0:
                 textMinute.setTextColor(select_color);
+                llMinute.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case 1:
                 textDay.setTextColor(select_color);
+                llDay.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case 2:
                 textWeek.setTextColor(select_color);
+                llWeek.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case 3:
                 textMonth.setTextColor(select_color);
+                llMonth.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
         }
     }
@@ -559,15 +568,19 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             switch (v.getId()) {
                 case R.id.linear_minute:
                     textMinute.setTextColor(select_color);
+                    llMinute.setBackgroundColor(getResources().getColor(R.color.white));
                     break;
                 case R.id.linear_day:
                     textDay.setTextColor(select_color);
+                    llDay.setBackgroundColor(getResources().getColor(R.color.white));
                     break;
                 case R.id.linear_week:
                     textWeek.setTextColor(select_color);
+                    llWeek.setBackgroundColor(getResources().getColor(R.color.white));
                     break;
                 case R.id.linear_month:
                     textMonth.setTextColor(select_color);
+                    llMonth.setBackgroundColor(getResources().getColor(R.color.white));
                     break;
             }
             mViewPager.setCurrentItem(index);
@@ -582,6 +595,11 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         textDay.setTextColor(unselect_color);
         textWeek.setTextColor(unselect_color);
         textMonth.setTextColor(unselect_color);
+        int color = getResources().getColor(R.color.transparent);
+        llMinute.setBackgroundColor(color);
+        llDay.setBackgroundColor(color);
+        llWeek.setBackgroundColor(color);
+        llMonth.setBackgroundColor(color);
     }
 
     /**

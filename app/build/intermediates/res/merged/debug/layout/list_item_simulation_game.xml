@@ -83,11 +83,13 @@
                 android:textColor="@color/color_text1"
                 android:text="已参加"/>
 
-            <Button
+            <TextView
                 android:id="@+id/join_but"
-                style="@style/arrow_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:clickable="false"
+                android:textColor="@color/color_toptitle"
+                android:text="参加"
                 android:visibility="gone"/>
 
         </RelativeLayout>

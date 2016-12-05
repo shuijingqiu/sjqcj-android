@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -47,6 +48,10 @@ public class SimulationGameActivity extends Activity {
     private int page = 1;
     // 网络请求提示
     private ProgressDialog dialog;
+    // 请求数据的路径
+    private String url;
+    // 请求标题
+    private TextView titleName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,13 @@ public class SimulationGameActivity extends Activity {
         dialog.setMessage(Constants.loadMessage);
         dialog.setCancelable(true);
         dialog.show();
+        titleName = (TextView) findViewById(R.id.title_name);
+        if (getIntent().getStringExtra("type") != null){
+            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr+"&joined=1";
+        }else{
+            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr;
+            titleName.setText("模拟比赛");
+        }
         /**
          * 返回按钮的事件绑定
          */
@@ -76,7 +88,7 @@ public class SimulationGameActivity extends Activity {
                 finish();
             }
         });
-        sgAdapter = new SimulationGameAdapter(this);
+        sgAdapter = new SimulationGameAdapter(this,this);
         listView = (ListView) findViewById(
                 R.id.list_view);
         listView.setAdapter(sgAdapter);
@@ -125,10 +137,18 @@ public class SimulationGameActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                matchStr = HttpUtil.restHttpGet(Constants.moUrl+"/match/index&np="+page);
+                matchStr = HttpUtil.restHttpGet(url + "&np="+page);
                 handler.sendEmptyMessage(0);
             }
         }).start();
+    }
+
+    /**
+     * 参加比赛后刷新页面
+     */
+    public void refreshPage(){
+        page = 1;
+        initData();
     }
 
     /**
@@ -152,6 +172,7 @@ public class SimulationGameActivity extends Activity {
                                 matchLists.addAll(matchList);
                             }
                             sgAdapter.setlistData(matchLists);
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

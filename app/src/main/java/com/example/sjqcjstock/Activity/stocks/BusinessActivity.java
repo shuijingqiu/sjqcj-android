@@ -165,12 +165,12 @@ public class BusinessActivity extends Activity {
         if ("2".equals(type)) {
             titleName.setText("模拟盘-卖出");
             ((Button) findViewById(R.id.confirm_business)).setText("卖出");
-            ((Button) findViewById(R.id.confirm_business1)).setText("市场卖出");
+            ((Button) findViewById(R.id.confirm_business1)).setText("市价卖出");
             businessNumberTv1.setText("可卖");
         } else {
             titleName.setText("模拟盘-买入");
             ((Button) findViewById(R.id.confirm_business)).setText("买入");
-            ((Button) findViewById(R.id.confirm_business1)).setText("市场买入");
+            ((Button) findViewById(R.id.confirm_business1)).setText("市价买入");
             businessNumberTv1.setText("可买");
         }
         // 监听股票代码输入状态
@@ -302,7 +302,7 @@ public class BusinessActivity extends Activity {
     }
 
     /**
-     * 市场价的买卖方法
+     * 市价的买卖方法
      *
      * @param view
      */

@@ -13,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Md5Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,12 +40,12 @@ public class SimulationGameAdapter extends BaseAdapter {
     private Context context;
     // 调用接口参加比赛返回的数据
     private String resstr = "";
-    // 参加的数组下标
-    private int positionStr = 0;
+    private SimulationGameActivity simulationGameActivity;
 
-    public SimulationGameAdapter(Context context) {
+    public SimulationGameAdapter(Context context,SimulationGameActivity simulationGameActivity) {
         super();
         this.context = context;
+        this.simulationGameActivity = simulationGameActivity;
     }
 
     public void setlistData(ArrayList<MatchEntity> listData) {
@@ -68,7 +73,6 @@ public class SimulationGameAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater mInflater = LayoutInflater.from(context);
-        positionStr = position;
         final ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_simulation_game, null);
@@ -79,13 +83,15 @@ public class SimulationGameAdapter extends BaseAdapter {
             holder.ranking = (TextView) convertView.findViewById(R.id.ranking_tv);
             holder.rankingValue = (TextView) convertView.findViewById(R.id.ranking_value_tv);
             holder.joinTv = (TextView) convertView.findViewById(R.id.join_tv);
-            holder.joinBut = (Button) convertView.findViewById(R.id.join_but);
-
+            holder.joinBut = (TextView) convertView.findViewById(R.id.join_but);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final MatchEntity matchEntity = listData.get(position);
+
+        ImageLoader.getInstance().displayImage(matchEntity.getImage(),
+                holder.titleImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
         holder.title.setText(matchEntity.getName());
         holder.time.setText(matchEntity.getStart_date()+"至"+matchEntity.getEnd_date());
         if ("1".equals(matchEntity.getStatus())){
@@ -107,13 +113,13 @@ public class SimulationGameAdapter extends BaseAdapter {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        List dataList = new ArrayList();
+                        // 用户ID
+                        dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                        dataList.add(new BasicNameValuePair("id", matchEntity.getId()));
                         // 调用接口参加比赛
-                        resstr = HttpUtil.restHttpGet(Constants.moUrl+"/match/join&uid="+Constants.staticmyuidstr+"&id="+matchEntity.getId());
-                        Bundle b = new Bundle();
-                        b.putInt("position", positionStr);
-                        Message msg = handler.obtainMessage();
-                        msg.setData(b);
-                        msg.sendToTarget();
+                        resstr = HttpUtil.restHttpPost(Constants.moUrl+"/match/join",dataList);
+                        handler.sendEmptyMessage(0);
                     }
                 }).start();
             }
@@ -133,7 +139,7 @@ public class SimulationGameAdapter extends BaseAdapter {
         // 参加
         TextView joinTv;
         // 参加Button
-        Button joinBut;
+        TextView joinBut;
     }
 
     /**
@@ -143,14 +149,11 @@ public class SimulationGameAdapter extends BaseAdapter {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Bundle b = msg.getData();
-            int position = b.getInt("position");
             try {
                 JSONObject jsonObject = new JSONObject(resstr);
                 Toast.makeText(context, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                 if ("success".equals(jsonObject.getString("status"))) {
-                    listData.get(position).setStatus("1");
-                    notifyDataSetChanged();
+                    simulationGameActivity.refreshPage();
                     return;
                 }
             } catch (JSONException e) {

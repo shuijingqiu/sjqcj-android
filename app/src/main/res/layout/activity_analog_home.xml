@@ -22,6 +22,15 @@
             android:gravity="center"
             android:text="模拟炒股" />
 
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:src="@mipmap/select3" />
+
     </RelativeLayout>
 
     <com.example.sjqcjstock.userdefined.MyScrollView

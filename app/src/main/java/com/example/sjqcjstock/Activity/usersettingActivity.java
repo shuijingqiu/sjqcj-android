@@ -21,7 +21,6 @@ public class usersettingActivity extends Activity {
     //获得控件
     private LinearLayout pickaboutmy;
     private LinearLayout pickmodifypassword2;
-    private LinearLayout pickaccountbound1;
     private LinearLayout pickfeedback1;
     private LinearLayout goback1;
     private LinearLayout pickexitapp1;
@@ -54,7 +53,6 @@ public class usersettingActivity extends Activity {
         // TODO Auto-generated method stub
         pickaboutmy = (LinearLayout) findViewById(R.id.pickaboutmy);
         pickmodifypassword2 = (LinearLayout) findViewById(R.id.pickmodifypassword2);
-        pickaccountbound1 = (LinearLayout) findViewById(R.id.pickaccountbound1);
         pickfeedback1 = (LinearLayout) findViewById(R.id.pickfeedback1);
         goback1 = (LinearLayout) findViewById(R.id.goback1);
         pickexitapp1 = (LinearLayout) findViewById(R.id.pickexitapp1);
@@ -63,7 +61,6 @@ public class usersettingActivity extends Activity {
         pickaboutmy.setOnClickListener(new pickaboutmy_listener());
         pickmodifypassword2.setOnClickListener(new pickmodifypassword2_listener());
         goback1.setOnClickListener(new goback1_listener());
-        pickaccountbound1.setOnClickListener(new pickaccountbound1_listener());
         pickfeedback1.setOnClickListener(new pickfeedback1_listener());
         pickexitapp1.setOnClickListener(new pickexitapp1_listener());
         picktemporaryexitapp1.setOnClickListener(new picktemporaryexitapp1_listener());
@@ -146,6 +143,18 @@ public class usersettingActivity extends Activity {
         }
     }
 
+    /**
+     * 用户基本设置
+     */
+    public void userSetUp(View view){
+            Intent intent = new Intent(usersettingActivity.this, userinfoeditActivitynew.class);
+            intent.putExtra("unamestr", getIntent().getStringExtra("unamestr"));
+            intent.putExtra("sexstr", getIntent().getStringExtra("sexstr"));
+            intent.putExtra("introstr", getIntent().getStringExtra("introstr"));
+            intent.putExtra("avatar_middlestr", getIntent().getStringExtra("avatar_middlestr"));
+            startActivity(intent);
+    }
+
 
     //关于我们按钮
     class pickaboutmy_listener implements OnClickListener {
@@ -176,9 +185,10 @@ public class usersettingActivity extends Activity {
         }
     }
 
-    //修改密码
+    /**
+     * 账号绑定
+     */
     class pickaccountbound1_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
             // TODO Auto-generated method stub

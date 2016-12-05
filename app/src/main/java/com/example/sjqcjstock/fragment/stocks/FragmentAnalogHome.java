@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.SearchActivity;
 import com.example.sjqcjstock.Activity.advertUrlActivity;
 import com.example.sjqcjstock.Activity.stocks.ExpertListsActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
@@ -108,6 +109,15 @@ public class FragmentAnalogHome extends Fragment {
                 inten.putExtra("name", geniusList.get(position).getStock_name());
                 inten.setClass(getActivity(), SharesDetailedActivity.class);
                 startActivity(inten);
+            }
+        });
+
+        // 跳转到检索页面
+        view.findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -89,8 +89,8 @@ public class ExpertListsActivity extends Activity {
                                     long arg3) {
                 Intent intent = new Intent(ExpertListsActivity.this,
                         UserDetailNewActivity.class);
-                // 要修改的
                 intent.putExtra("uid", totalProfitList.get(arg2).getUid());
+                intent.putExtra("type","1");
                 startActivity(intent);
             }
         });

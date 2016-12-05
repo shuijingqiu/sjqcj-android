@@ -28,9 +28,11 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/title_bage_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:background="#E92F44"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,6 +45,7 @@
                 android:id="@+id/price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:layout_marginTop="8dp"
                 android:textSize="30sp"
                 android:text="8.30" />
@@ -58,12 +61,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
                     android:text="-2.24" />
 
                 <TextView
                     android:id="@+id/rise_and_fall_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:text="-3.18%" />
@@ -88,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="今开"
-                    android:textColor="@color/color_text2"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -96,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="69.00"
-                    android:textColor="@color/color_text1"
+                    android:textColor="@color/white"
                     android:layout_marginTop="2dp"
                     android:textSize="14sp" />
 
@@ -104,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="成交量"
-                    android:textColor="@color/color_text2"
+                    android:textColor="@color/white"
                     android:layout_marginTop="2dp"
                     android:textSize="14sp" />
 
@@ -114,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:text="29.1万"
                     android:layout_marginTop="2dp"
-                    android:textColor="@color/color_text1"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -129,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="昨收"
-                    android:textColor="@color/color_text2"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -137,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="70.49"
-                    android:textColor="@color/color_text1"
+                    android:textColor="@color/white"
                     android:layout_marginTop="2dp"
                     android:textSize="14sp" />
 
@@ -146,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="换手"
-                    android:textColor="@color/color_text2"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
@@ -155,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="15.52%"
-                    android:textColor="@color/color_text1"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -167,8 +172,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -421,12 +425,14 @@
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:baselineAligned="false"
+            android:background="@color/gray_line"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/linear_minute"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:layout_weight="1"
                 android:gravity="center">
 

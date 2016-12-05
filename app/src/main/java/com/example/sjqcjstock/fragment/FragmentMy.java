@@ -27,8 +27,7 @@ import com.example.sjqcjstock.Activity.mynoteslistActivity;
 import com.example.sjqcjstock.Activity.mysubscribeActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
-import com.example.sjqcjstock.Activity.userinfoeditActivity;
-import com.example.sjqcjstock.Activity.userinfoeditActivitynew;
+import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.usersettingActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.ACache;
@@ -49,12 +48,10 @@ import java.util.Map;
 public class FragmentMy extends Fragment {
 
     // 获取控件
-    private Button pickuserinfoedit;
     private RelativeLayout pickuserinfoedit2;
     private LinearLayout pickcollect2;
 
     private LinearLayout picksetting;
-    private LinearLayout picksetting2;
     private LinearLayout pickaboutmy1;
 
     private TextView following_count1;
@@ -157,7 +154,6 @@ public class FragmentMy extends Fragment {
     }
 
     private void initView(View view) {
-        pickuserinfoedit = (Button) view.findViewById(R.id.pickuserinfoedit);
         // 关注微博
         ll_myAttention = (LinearLayout) view.findViewById(R.id.ll_myAttention);
         // 我的收藏
@@ -166,7 +162,6 @@ public class FragmentMy extends Fragment {
         myattention1 = (LinearLayout) view.findViewById(R.id.myattention1);
         mybyattention1 = (LinearLayout) view.findViewById(R.id.mybyattention1);
         pickuserinfoedit2 = (RelativeLayout) view.findViewById(R.id.pickuserinfoedit2);
-        picksetting2 = (LinearLayout) view.findViewById(R.id.picksetting2);
         pickaboutmy1 = (LinearLayout) view.findViewById(R.id.pickaboutmy1);
         myweibo1 = (LinearLayout) view.findViewById(R.id.myweibo1);
         pickshuijinqiu1 = (LinearLayout) view.findViewById(R.id.pickshuijinqiu1);
@@ -190,13 +185,11 @@ public class FragmentMy extends Fragment {
         weibo_count1.setText("0");
 
         ll_myAttention.setOnClickListener(new ll_myAttention_listener());
-        pickuserinfoedit.setOnClickListener(new pickuserinfoedit_listener());
         pickuserinfoedit2.setOnClickListener(new pickuserinfoedit2_listener());
         pickcollect2.setOnClickListener(new pickcollect2_listener());
         picksetting.setOnClickListener(new picksetting_listener());
         myattention1.setOnClickListener(new myattention1_listener());
         mybyattention1.setOnClickListener(new mybyattention1_listener());
-        picksetting2.setOnClickListener(new picksetting2_listener());
         pickaboutmy1.setOnClickListener(new pickaboutmy1_listener());
         pickaddweibo1.setOnClickListener(new pickaddweibo1_listener());
         myweibo1.setOnClickListener(new myweibo1_listener());
@@ -220,6 +213,7 @@ public class FragmentMy extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SimulationGameActivity.class);
+                intent.putExtra("type","0");
                 startActivity(intent);
             }
         });
@@ -303,27 +297,15 @@ public class FragmentMy extends Fragment {
         }
     }
 
-    class picksetting2_listener implements OnClickListener {
-
-        @Override
-        public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            Intent intent = new Intent(getActivity(), usersettingActivity.class);
-            startActivity(intent);
-        }
-
-    }
-
     class pickuserinfoedit2_listener implements OnClickListener {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            Intent intent = new Intent(getActivity(), userinfoeditActivitynew.class);
-            intent.putExtra("unamestr", unamestr);
-            intent.putExtra("sexstr", sexstr);
-            intent.putExtra("introstr", introstr);
-            intent.putExtra("avatar_middlestr", avatar_middlestr);
+            Intent intent = new Intent(getActivity().getApplicationContext(),
+                    UserDetailNewActivity.class);
+            // 要修改的
+            intent.putExtra("uid",Constants.staticmyuidstr);
+            intent.putExtra("type", "1");
             startActivity(intent);
         }
     }
@@ -354,19 +336,19 @@ public class FragmentMy extends Fragment {
         }
     }
 
-
-    class pickuserinfoedit_listener implements OnClickListener {
-
-        @Override
-        public void onClick(View arg0) {
-            Intent intent = new Intent(getActivity(), userinfoeditActivity.class);
-            intent.putExtra("unamestr", unamestr);
-            intent.putExtra("sexstr", sexstr);
-            intent.putExtra("introstr", userintro1.getText().toString());
-            intent.putExtra("avatar_middlestr", avatar_middlestr);
-            startActivity(intent);
-        }
-    }
+//
+//    class pickuserinfoedit_listener implements OnClickListener {
+//
+//        @Override
+//        public void onClick(View arg0) {
+//            Intent intent = new Intent(getActivity(), userinfoeditActivity.class);
+//            intent.putExtra("unamestr", unamestr);
+//            intent.putExtra("sexstr", sexstr);
+//            intent.putExtra("introstr", userintro1.getText().toString());
+//            intent.putExtra("avatar_middlestr", avatar_middlestr);
+//            startActivity(intent);
+//        }
+//    }
 
 //	class picknote2_listener implements OnClickListener {
 //
@@ -423,8 +405,11 @@ public class FragmentMy extends Fragment {
         public void onClick(View arg0) {
             // TODO Auto-generated method stub
             Intent intent = new Intent(getActivity(), usersettingActivity.class);
+            intent.putExtra("unamestr", unamestr);
+            intent.putExtra("sexstr", sexstr);
+            intent.putExtra("introstr", introstr);
+            intent.putExtra("avatar_middlestr", avatar_middlestr);
             startActivity(intent);
-
         }
 
     }

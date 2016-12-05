@@ -62,7 +62,6 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_simulation_game_details, null);
             holder = new ViewHolder();
-            holder.rankingImg = (ImageView) convertView.findViewById(R.id.ranking_iv);
             holder.ranking = (TextView) convertView.findViewById(R.id.ranking_tv);
             holder.headImg = (ImageView) convertView.findViewById(R.id.head_img_iv);
             holder.name = (TextView) convertView.findViewById(R.id.name_tv);
@@ -105,8 +104,6 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        // 排名图像
-        ImageView rankingImg;
         // 排名
         TextView ranking;
         // 头像图像

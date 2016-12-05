@@ -258,7 +258,7 @@
                     android:background="@drawable/buttonstyle7"
                     android:textColor="@color/white"
                     android:layout_marginLeft="10dp"
-                    android:text="市场卖出"
+                    android:text="市价卖出"
                     android:onClick="confirmBusiness1"/>
 
             </LinearLayout>

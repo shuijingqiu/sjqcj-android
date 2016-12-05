@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.fragment.stocks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,10 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.StockAdapter;
 import com.example.sjqcjstock.constant.Constants;
@@ -36,15 +40,18 @@ public class FragmentStock extends Fragment {
     private ListView stockListView;
     // 自选股的List Adapter
     private StockAdapter stockAdapter;
-    // 需要加载自选股的行情数据
-    private ArrayList<StocksInfo> listInfo;
     // 调用自选股的数据
     private String resstr = "";
     // 自选股股票最新信息的Map
     private Map<String,Map> mapZxgStr;
     // 自选股的的数据
     private ArrayList<OptionalEntity> optionalArrayList = null;
+    // 查看的用户ID
+    private String uidstr = "";
 
+    public FragmentStock(String uidstr){
+        this.uidstr = uidstr;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock, container, false);
@@ -63,6 +70,16 @@ public class FragmentStock extends Fragment {
         stockListView = (ListView) view.findViewById(
                 R.id.stock_list);
         stockListView.setAdapter(stockAdapter);
+        stockListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent inten = new Intent();
+                inten.putExtra("name", optionalArrayList.get(position).getStock_name());
+                inten.putExtra("code", optionalArrayList.get(position).getStock());
+                inten.setClass(getActivity(), SharesDetailedActivity.class);
+                startActivity(inten);
+            }
+        });
     }
 
     /**
@@ -74,7 +91,7 @@ public class FragmentStock extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户获取自选股
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+Constants.staticmyuidstr);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+uidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();
