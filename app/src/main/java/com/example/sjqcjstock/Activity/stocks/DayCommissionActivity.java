@@ -119,7 +119,7 @@ public class DayCommissionActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=entrust&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&type=entrust&p="+page+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();

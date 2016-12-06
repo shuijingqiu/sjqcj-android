@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * 自选股列表页面
+ * 自选股列表页面 不要的
  * Created by Administrator on 2016/8/19.
  */
 public class FragmentStock extends Fragment {
@@ -91,7 +91,7 @@ public class FragmentStock extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户获取自选股
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+uidstr);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+uidstr+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(0);
             }
         }).start();

@@ -117,7 +117,7 @@ public class DayDealActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=deal&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&type=deal&p="+page+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();

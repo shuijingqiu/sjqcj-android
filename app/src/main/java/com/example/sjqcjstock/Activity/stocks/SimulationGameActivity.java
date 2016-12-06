@@ -74,9 +74,9 @@ public class SimulationGameActivity extends Activity {
         dialog.show();
         titleName = (TextView) findViewById(R.id.title_name);
         if (getIntent().getStringExtra("type") != null){
-            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr+"&joined=1";
+            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr+"&joined=1"+"&token="+Constants.apptoken;
         }else{
-            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr;
+            url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken;
             titleName.setText("模拟比赛");
         }
         /**

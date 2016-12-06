@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <com.example.sjqcjstock.userdefined.MyScrollView
-        android:id="@+id/myScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:descendantFocusability="beforeDescendants"
             android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +35,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="+0.84%"
+                        android:text="0%"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
@@ -85,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="第100000名"
+                        android:text="0"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
@@ -121,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="9.01%"
+                        android:text="0%"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
@@ -203,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="+54.40%"
+                        android:text="0%"
                         android:textColor="@color/red" />
 
                     <TextView
@@ -211,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="1543993.03元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
@@ -219,7 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="1470159.00元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
@@ -227,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="72.73%"
+                        android:text="0%"
                         android:textColor="@color/color_text1" />
 
                 </LinearLayout>
@@ -280,7 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="+54.40%"
+                        android:text="0%"
                         android:textColor="@color/red" />
 
                     <TextView
@@ -288,7 +274,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="72834.03元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
@@ -296,7 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="95.22%"
+                        android:text="0%"
                         android:textColor="@color/color_text1" />
 
                     <TextView
@@ -304,7 +290,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="2016-03-07"
                         android:textColor="@color/color_text1" />
 
                 </LinearLayout>
@@ -312,12 +297,13 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/position_count_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/gray_line"
                 android:padding="10dp"
-                android:text="当前持仓" />
+                android:text="当前持仓(0)" />
 
             <com.example.sjqcjstock.view.SoListView
                 android:id="@+id/list_view"
@@ -327,8 +313,5 @@
                 android:divider="@null"
                 android:listSelector="@android:color/transparent" />
 
-        </LinearLayout>
-
-    </com.example.sjqcjstock.userdefined.MyScrollView>
 
 </LinearLayout>

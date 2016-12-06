@@ -241,7 +241,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         new Thread(new Runnable() {
             @Override
             public void run() {
-                isOptionalStr = HttpUtil.restHttpGet(Constants.moUrl+"/user/isOptional&uid="+Constants.staticmyuidstr+"&stock="+code);
+                isOptionalStr = HttpUtil.restHttpGet(Constants.moUrl+"/user/isOptional&uid="+Constants.staticmyuidstr+"&stock="+code+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(3);
             }
         }).start();
@@ -424,7 +424,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             // 内盘
             stocksInfo.setInvol(sharesMinute[8]);
             // 市盈率
-            stocksInfo.setPERatio(sharesMinute[39]);
+            stocksInfo.setPERatio(sharesMinute[39]+"%");
             // 最低
             stocksInfo.setMinimum(sharesMinute[34]);
             // 外盘
@@ -622,11 +622,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    List listData = new ArrayList();
-                    listData.add(new BasicNameValuePair("stock", code));
-                    listData.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
                     // 调用接口获取用户获取自选股
-                    delstr = HttpUtil.restHttpDelete(Constants.moUrl+"/users/"+optionalId+"&uid="+Constants.staticmyuidstr);
+                    delstr = HttpUtil.restHttpDelete(Constants.moUrl+"/users/"+optionalId+"&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken);
                     Log.e("mh123","---"+optionalId);
                     handler.sendEmptyMessage(4);
                 }
@@ -639,6 +636,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                     List listData = new ArrayList();
                     listData.add(new BasicNameValuePair("stock", code));
                     listData.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                    listData.add(new BasicNameValuePair("token", Constants.apptoken));
                     resstr = HttpUtil.restHttpPost(Constants.moUrl+"/users",listData);
                     handler.sendEmptyMessage(2);
                 }

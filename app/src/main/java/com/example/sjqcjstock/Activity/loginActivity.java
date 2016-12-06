@@ -419,8 +419,6 @@ public class loginActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-
             if (result == null) {
                 CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG)
                         .show();

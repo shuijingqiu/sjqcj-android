@@ -94,6 +94,7 @@ public class SimulationGameAdapter extends BaseAdapter {
                 holder.titleImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
         holder.title.setText(matchEntity.getName());
         holder.time.setText(matchEntity.getStart_date()+"至"+matchEntity.getEnd_date());
+        holder.ranking.setText(matchEntity.getRanking());
         if ("1".equals(matchEntity.getStatus())){
             if ("0".equals(matchEntity.getJoined())){
                 holder.joinTv.setVisibility(View.GONE);
@@ -101,10 +102,10 @@ public class SimulationGameAdapter extends BaseAdapter {
             }else{
                 holder.joinTv.setVisibility(View.VISIBLE);
                 holder.joinBut.setVisibility(View.GONE);
-                holder.joinTv.setText("已参加");
+                holder.joinTv.setBackgroundResource(R.mipmap.ycj);
             }
         }else{
-            holder.joinTv.setText("已结束");
+            holder.joinTv.setBackgroundResource(R.mipmap.yjs);
         }
         holder.joinBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +118,7 @@ public class SimulationGameAdapter extends BaseAdapter {
                         // 用户ID
                         dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
                         dataList.add(new BasicNameValuePair("id", matchEntity.getId()));
+                        dataList.add(new BasicNameValuePair("token", Constants.apptoken));
                         // 调用接口参加比赛
                         resstr = HttpUtil.restHttpPost(Constants.moUrl+"/match/join",dataList);
                         handler.sendEmptyMessage(0);

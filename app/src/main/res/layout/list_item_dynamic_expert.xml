@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:id="@+id/head_name_rl"
-            android:layout_width="140dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/head_iv"
-                android:text="姓名显示"
                 android:textColor="@color/color_text1"
                 android:textSize="14sp" />
 
@@ -44,7 +43,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/head_iv"
-                android:text="2016-08-16"
                 android:textColor="@color/color_text2"
                 android:textSize="12sp" />
 
@@ -61,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="总收益率"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textColor="@color/color_text2" />
 
             <TextView
@@ -71,9 +69,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="12dp"
-                android:text="70%"
                 android:textColor="@color/red"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -84,14 +81,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/name_code_tv"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="天府股份 (610010)"
             android:textColor="@color/color_toptitle"
             android:textSize="14sp" />
 
@@ -103,7 +99,7 @@
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:text="买"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/red" />
 
         <TextView
@@ -113,7 +109,7 @@
             android:layout_toRightOf="@+id/business_tv"
             android:layout_centerVertical="true"
             android:text="收益率"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/return_rate_value_tv"
@@ -121,9 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/return_rate_tv"
-            android:text="29.88%"
             android:textColor="@color/red"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/to_buy_tv"
@@ -137,7 +132,7 @@
             android:gravity="center"
             android:text="跟买"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

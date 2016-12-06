@@ -186,7 +186,7 @@ public class BusinessActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr);
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(2);
             }
         }).start();
@@ -396,12 +396,10 @@ public class BusinessActivity extends Activity {
                         // 是否市价买入 （1代表市价买入 2代表下单买入）
                         dataList.add(new BasicNameValuePair("isMarket", str));
                         // 调用接口发送买卖数据到后台
-                        resstr = HttpUtil.restHttpPost(Constants.moUrl+"/orders",dataList);
+                        resstr = HttpUtil.restHttpPost(Constants.moUrl+"/orders&token="+Constants.apptoken,dataList);
                         handler.sendEmptyMessage(1);
                     }
                 }).start();
-
-
             }
         });
         // 取消买卖
@@ -521,6 +519,8 @@ public class BusinessActivity extends Activity {
                                 }
                                 // （如果购买成功清空数据）
 //                                finish();
+                                // 设置买卖成功 用于个人账户刷新
+                                Constants.isBuy = true;
                                 clerData();
                             }
                         } catch (JSONException e) {
@@ -588,5 +588,7 @@ public class BusinessActivity extends Activity {
         numberBuy4.setText("0");
         priceBuy5.setText("0");
         numberBuy5.setText("0");
+        codeEt.setText("");
+        numberEt.setText("");
     }
 }

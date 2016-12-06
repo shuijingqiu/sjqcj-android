@@ -139,7 +139,7 @@ public class SimulationGameDetailsActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                matchStr = HttpUtil.restHttpGet(Constants.moUrl+"/match/detail&id="+matchId+"&uid="+Constants.staticmyuidstr+"&np="+page+"&limit="+50);
+                matchStr = HttpUtil.restHttpGet(Constants.moUrl+"/match/detail&id="+matchId+"&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&np="+page+"&limit="+50);
                 handler.sendEmptyMessage(0);
             }
         }).start();

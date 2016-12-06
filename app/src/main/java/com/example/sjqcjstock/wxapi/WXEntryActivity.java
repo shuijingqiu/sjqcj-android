@@ -165,7 +165,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         protected void onPostExecute(String result) {
             // TODO Auto-generated method stub
             if (result == null) {
-                CustomToast.makeText(getApplicationContext(), "网络超时或用户名密码错误", Toast.LENGTH_LONG)
+                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG)
                         .show();
             } else {
                 // 解析json字符串获得List<Map<String,Object>>
@@ -178,10 +178,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     String datastr = map.get("data").toString();
                     List<Map<String, Object>> datastrlists = JsonTools
                             .listKeyMaps("[" + datastr + "]");
-
                     //未绑定
                     if ("0".equals(statusstr)) {
-
                         // qq账户与水晶球账户进行绑定
                         new SendInfoTaskForNickName()
                                 .execute(new TaskParams(

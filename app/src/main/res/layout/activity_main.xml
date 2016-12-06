@@ -99,21 +99,21 @@
 
     <!--</LinearLayout>-->
 
-    <!--<TextView-->
-        <!--android:id="@+id/message_count_tv"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:gravity="center"-->
-        <!--android:textSize="10sp"-->
-        <!--android:paddingLeft="2dp"-->
-        <!--android:paddingRight="2dp"-->
-        <!--android:background="@drawable/bg_round_textview"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:layout_alignTop="@+id/main_tabBar"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:visibility="gone"/>-->
+    <TextView
+        android:id="@+id/message_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:background="@drawable/bg_round_textview"
+        android:textColor="@color/white"
+        android:layout_alignTop="@+id/main_tabBar"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -141,7 +141,7 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getStockInfo&uid="+Constants.staticmyuidstr+"&stock="+code+"&stime="+startDate+"&etime="+endDate);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getStockInfo&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&stock="+code+"&stime="+startDate+"&etime="+endDate);
                 handler.sendEmptyMessage(0);
             }
         }).start();

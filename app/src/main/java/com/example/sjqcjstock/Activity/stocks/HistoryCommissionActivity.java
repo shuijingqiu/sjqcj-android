@@ -144,7 +144,7 @@ public class HistoryCommissionActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&type=historical&p="+page+"&stime="+startDate+"&etime="+endDate);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders/"+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&type=historical&p="+page+"&stime="+startDate+"&etime="+endDate+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();

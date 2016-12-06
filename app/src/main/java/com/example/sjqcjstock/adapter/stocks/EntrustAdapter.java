@@ -14,6 +14,7 @@ import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,7 @@ public class EntrustAdapter extends BaseAdapter {
 
             String frozenFundPirce = Double.valueOf(price) * Double.valueOf(number)+Double.valueOf(positionEntity.getFee())+"";
             holder.frozenFundTv.setText("冻结资金");
-            holder.frozenFund.setText(frozenFundPirce);
+            holder.frozenFund.setText(Utils.getNumberFormat2(frozenFundPirce));
         }else{
             holder.type.setText("卖出");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_5471ef));

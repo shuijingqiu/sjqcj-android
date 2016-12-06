@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +31,9 @@ import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,8 +52,8 @@ public class MainActivity extends FragmentActivity {
     private FragmentManager manager;
     private FragmentTransaction fragmentTransaction;
     private RadioGroup main_tabBar;
-//    // 未读消息条数
-//    private TextView messageCountTv;
+    // 未读消息条数
+    private TextView messageCountTv;
 
 
     @Override
@@ -60,6 +64,8 @@ public class MainActivity extends FragmentActivity {
         ExitApplication.getInstance().addActivity(this);
         initView();
         loadData();
+        // 开定时器获取接口
+        obtainToken();
     }
 
     @Override
@@ -67,18 +73,18 @@ public class MainActivity extends FragmentActivity {
         super.onResume();
         // 以后要要的
         if (Constants.unreadCountInfo != null) {
-            // 返回主框架页面重新设置未读消息条数
-//            int total = Constants.unreadCountInfo.getData().getUnread_total();
-//            String totalStr = total + "";
-//            if (total > 99) {
-//                totalStr = "99+";
-//            }
-//            messageCountTv.setText(totalStr);
-//            if (totalStr.equals("0")) {
-//                messageCountTv.setVisibility(View.GONE);
-//            } else {
-//                messageCountTv.setVisibility(View.VISIBLE);
-//            }
+//             返回主框架页面重新设置未读消息条数
+            int total = Constants.unreadCountInfo.getData().getUnread_total();
+            String totalStr = total + "";
+            if (total > 99) {
+                totalStr = "99+";
+            }
+            messageCountTv.setText(totalStr);
+            if (totalStr.equals("0")) {
+                messageCountTv.setVisibility(View.GONE);
+            } else {
+                messageCountTv.setVisibility(View.VISIBLE);
+            }
             if(fragmentMy != null){
                 // 重新设置我的页面的消息条数
                 fragmentMy.setMessageCount();
@@ -100,6 +106,7 @@ public class MainActivity extends FragmentActivity {
         main_tabBar = ((RadioGroup) findViewById(R.id.main_tabBar));
         manager = getSupportFragmentManager();
         fragmentTransaction = manager.beginTransaction();
+        messageCountTv = (TextView) findViewById(R.id.message_count_tv);
 
 //        if(Constants.intentFlag.equals("1")){
 //        	Constants.intentFlag = "";
@@ -150,27 +157,27 @@ public class MainActivity extends FragmentActivity {
                 CustomToast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
             } else {
                 Constants.unreadCountInfo = JSON.parseObject(result, UnreadCount.class);
-//                //以后要要的
-//                int total = Constants.unreadCountInfo.getData().getUnread_total();
-//                String totalStr = total + "";
-//                if (total > 99) {
-//                    totalStr = "99+";
-//                }
-////                messageCountTv.setText(totalStr);
-//                if (totalStr.equals("0")) {
-//                    messageCountTv.setVisibility(View.GONE);
-//                } else {
-//                    messageCountTv.setVisibility(View.VISIBLE);
-//                }
-                // 以后要替换成下面那个的
-                if (fragmentMessage != null) {
-                    // 重新设置我的页面的消息条数
-                    fragmentMessage.showMessage();
+                //以后要要的
+                int total = Constants.unreadCountInfo.getData().getUnread_total();
+                String totalStr = total + "";
+                if (total > 99) {
+                    totalStr = "99+";
                 }
-//                if (fragmentMy != null) {
+                messageCountTv.setText(totalStr);
+                if (totalStr.equals("0")) {
+                    messageCountTv.setVisibility(View.GONE);
+                } else {
+                    messageCountTv.setVisibility(View.VISIBLE);
+                }
+//                // 以后要替换成下面那个的
+//                if (fragmentMessage != null) {
 //                    // 重新设置我的页面的消息条数
-//                    fragmentMy.setMessageCount();
+//                    fragmentMessage.showMessage();
 //                }
+                if (fragmentMy != null) {
+                    // 重新设置我的页面的消息条数
+                    fragmentMy.setMessageCount();
+                }
             }
         }
     }
@@ -338,9 +345,17 @@ public class MainActivity extends FragmentActivity {
      * 定时获取token(根据账号密码or第三方的token)
      */
     private void obtainToken(){
+        // 当前用户类型
+        String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+        String login_email = getSharedPreferences("userinfo", MODE_PRIVATE).getString("login_email", "");
         String url = "";
-        url = Constants.Url + "?app=public&mod=Passport&act=AppLogin";
-
+        if ("qq".equals(type)){
+            url = Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display&type=qq&token="+Constants.statictokeystr;
+        }else if("weixin".equals(type)){
+            url = Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display&type=weixin&token="+Constants.statictokeystr;
+        }else{
+            url = Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr;
+        }
         final String urlStr = url;
         Timer timer = new Timer();
         // 开定时器获取数据
@@ -352,7 +367,7 @@ public class MainActivity extends FragmentActivity {
                 ));
             }
         };
-        timer.schedule(task, 30000, 30000); // 30000s后执行task,经过30s再次执行
+        timer.schedule(task, 10, 60000); // 30000s后执行task,经过30s再次执行
     }
 
 
@@ -366,10 +381,24 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            Log.e("mh123","这里是登陆的东西"+result);
             if (result == null) {
                 CustomToast.makeText(getApplicationContext(), "获取token出错", Toast.LENGTH_LONG).show();
-            } else {
+                // 退出程序到登陆页面
 
+            } else {
+                String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+                if ("common".equals(type)){
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        Constants.apptoken = jsonObject.getString("token");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    // 第三方的
+
+                }
             }
         }
     }

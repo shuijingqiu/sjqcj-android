@@ -152,7 +152,7 @@ public class ExpertListsActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/rank/getRankList&condition=" + condition + "&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/rank/getRankList&token="+Constants.apptoken+"&condition=" + condition + "&p="+page+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();

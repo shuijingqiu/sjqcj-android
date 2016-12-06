@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 股票交易列表
+ * 股票交易列表 不要的
  * Created by Administrator on 2016/8/19.
  */
 public class FragmentTransactionList extends Fragment {
@@ -50,10 +50,8 @@ public class FragmentTransactionList extends Fragment {
     private SoListView listView;
     // 交易的行情List的Adapter
     private MyDealAccountAdapter listAdapter;
-    // 滚动控件
-    private MyScrollView myScrollView;
     // 调用买卖接口返回的数据
-    private String resstr = "";
+    private String mMresstr = "";
     // 调用接口获取用户的交易排名信息
     private String xxstr = "";
     // 分时接口返回的数据
@@ -115,8 +113,6 @@ public class FragmentTransactionList extends Fragment {
 
     private void findView(View view) {
         assetsChart = (LineChart) view.findViewById(R.id.assets_chart);
-
-        myScrollView = (MyScrollView) view.findViewById(R.id.myScrollView);
         listAdapter = new MyDealAccountAdapter(getActivity());
         listView = (SoListView) view.findViewById(
                 R.id.list_view);
@@ -166,7 +162,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&p="+page);
+                mMresstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&p="+page+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -175,7 +171,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+uidstr);
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+uidstr+"&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(2);
             }
         }).start();
@@ -184,7 +180,7 @@ public class FragmentTransactionList extends Fragment {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                chartstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getTimeChart&uid="+uidstr);
+                chartstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getTimeChart&uid="+uidstr+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(3);
             }
         }).start();
@@ -206,7 +202,7 @@ public class FragmentTransactionList extends Fragment {
                 case 0:
                     try {
                         int wpage = 0;
-                        JSONObject jsonObject = new JSONObject(resstr);
+                        JSONObject jsonObject = new JSONObject(mMresstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(getActivity(),jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
@@ -228,8 +224,8 @@ public class FragmentTransactionList extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    // 滚动到顶部
-                    myScrollView.smoothScrollTo(0, 0);
+//                    // 滚动到顶部
+//                    myScrollView.smoothScrollTo(0, 0);
                     break;
                 case 1:
                     Double price;

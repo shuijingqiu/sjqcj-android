@@ -20,8 +20,10 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
+import com.example.sjqcjstock.view.SoListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 个人中心-->微博页面的Fragment
+ * 个人中心-->微博页面的Fragment  不要的
  * Created by Administrator on 2016/8/19.
  */
 public class FragmentMicroBlog extends Fragment {
@@ -37,16 +39,16 @@ public class FragmentMicroBlog extends Fragment {
     /**
      * 普通帖集合
      */
-    private ListView commonlistview;
+    private SoListView commonlistview;
     // 定义List集合容器
     private commonnoteAdapter usercommonnoteAdapter;
     private ArrayList<HashMap<String, String>> listusercommonnoteData;
-    // 上下拉刷新控件
-    private PullToRefreshLayout ptrl;
+//    // 上下拉刷新控件
+//    private PullToRefreshLayout ptrl;
     // 访问页数控制
     private int current = 1;
-    // 刷新列表标识
-    private String isreferlist = "1";
+//    // 刷新列表标识
+//    private String isreferlist = "1";
     // 查看的用户ID
     private String uidstr = "";
 
@@ -58,8 +60,9 @@ public class FragmentMicroBlog extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_micro_blog, container, false);
         findView(view);
-        // 自动下拉刷新
-        ptrl.autoRefresh();
+//        // 自动下拉刷新
+//        ptrl.autoRefresh();
+        geneItems();
         return view;
     }
 
@@ -71,7 +74,7 @@ public class FragmentMicroBlog extends Fragment {
     private void findView(View view) {
 
         /** 普通帖集合 */
-        commonlistview = (ListView) view.findViewById(R.id.notelist1);
+        commonlistview = (SoListView) view.findViewById(R.id.notelist1);
         // 存储数据的数组列表
         listusercommonnoteData = new ArrayList<HashMap<String, String>>();
         usercommonnoteAdapter = new commonnoteAdapter(getActivity());
@@ -99,28 +102,7 @@ public class FragmentMicroBlog extends Fragment {
             }
 
         });
-        ptrl = ((PullToRefreshLayout) view.findViewById(
-                R.id.refresh_view));
-        // 添加上下拉刷新事件
-        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            // 下来刷新
-            @Override
-            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                //清空列表重载数据
-                listusercommonnoteData.clear();
-                current = 1;
-                isreferlist = "1";
-                geneItems();
-            }
 
-            // 下拉加载
-            @Override
-            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                current++;
-                isreferlist = "0";
-                geneItems();
-            }
-        });
     }
 
     private void geneItems() {
@@ -164,13 +146,13 @@ public class FragmentMicroBlog extends Fragment {
             List<Map<String, Object>> datastrlists2 = null;
             if (result == null) {
                 CustomToast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
-                // 千万别忘了告诉控件刷新完毕了哦！失败
-                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+//                // 千万别忘了告诉控件刷新完毕了哦！失败
+//                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
             } else {
                 super.onPostExecute(result);
-                if ("1".equals(isreferlist)) {
-                    listusercommonnoteData.clear();
-                }
+//                if ("1".equals(isreferlist)) {
+//                    listusercommonnoteData.clear();
+//                }
                 result = result.replace("\n ", "");
                 result = result.replace("\n", "");
                 result = result.replace(" ", "");
@@ -371,8 +353,9 @@ public class FragmentMicroBlog extends Fragment {
                     }
                 }
                 usercommonnoteAdapter.setlistData(listusercommonnoteData);
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         }
     }

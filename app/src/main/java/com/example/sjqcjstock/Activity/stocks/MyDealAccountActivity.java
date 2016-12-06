@@ -112,12 +112,6 @@ public class MyDealAccountActivity extends Activity {
     private String cdstr = "";
     // 调用自选股接口返回的数据
     private String zxgstr = "";
-    // 分页
-    private int page = 1;
-    // 委托分页
-    private int wpage = 0;
-    // 持仓分页
-    private int cpage = 0;
     // 持仓的数据
     private ArrayList<PositionEntity> positionArrayList = null;
     // 委托的数据
@@ -142,12 +136,17 @@ public class MyDealAccountActivity extends Activity {
         findView();
         getData();
         initLine();
+        Constants.isBuy = false;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getData1();
+        if (Constants.isBuy){
+            getData();
+            Constants.isBuy = false;
+        }
     }
 
     /**
@@ -220,28 +219,22 @@ public class MyDealAccountActivity extends Activity {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 if (transactionLl.getVisibility()==View.VISIBLE){
-                    page = 1;
                     market = 0;
                     getData();
                 }
                 else{
                     getData1();
                 }
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
             // 下拉加载
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 if (transactionLl.getVisibility()==View.VISIBLE){
-                    page += 1;
                     getData();
                 }
                 else{
                     getData1();
                 }
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
 
@@ -274,7 +267,7 @@ public class MyDealAccountActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+Constants.staticmyuidstr+"&p="+page+"&np="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -283,7 +276,7 @@ public class MyDealAccountActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr);
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(3);
             }
         }).start();
@@ -298,7 +291,7 @@ public class MyDealAccountActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取用户获取自选股
-                zxgstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+Constants.staticmyuidstr);
+                zxgstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(4);
             }
         }).start();
@@ -319,19 +312,12 @@ public class MyDealAccountActivity extends Activity {
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        wpage = jsonObject.getInt("totalPage");
-                        cpage = jsonObject.getInt("nTotalPage");
                         // 持仓的数据
                         ArrayList<PositionEntity> positionList = (ArrayList<PositionEntity>) JSON.parseArray(jsonObject.getString("data"),PositionEntity.class);
                         // 委托的数据
                         ArrayList<PositionEntity> entrustList = (ArrayList<PositionEntity>) JSON.parseArray(jsonObject.getString("nData"),PositionEntity.class);
-                        if(page == 1){
                             positionArrayList = positionList;
                             entrustArrayList = entrustList;
-                        }else{
-                            positionArrayList.addAll(positionList);
-                            entrustArrayList.addAll(entrustList);
-                        }
                         // 有数据就展示
                         if (1 > entrustArrayList.size()){
                             entrustLl.setVisibility(View.GONE);
@@ -345,23 +331,21 @@ public class MyDealAccountActivity extends Activity {
                         else{
                             positionsTv.setText("持仓("+positionArrayList.size()+")");
                         }
-                        if (page >= wpage){
                             entrustAdapter.setlistData(entrustArrayList);
-                        }
-                        if (page >= cpage){
                             // 获取最新的股票信息
                             getRealTimeData(positionList);
                             listAdapter.setlistData(positionArrayList);
+
+                        if (transactionLl.getVisibility() == View.VISIBLE) {
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                         }
-//                        ViewUtil.setListViewHeightBasedOnChildren(listView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if(page == 1) {
                         // 滚动到顶部
                         myScrollView.smoothScrollTo(0, 0);
                         dialog.dismiss();
-                    }
                     break;
                 case 1:
                     Double price;
@@ -433,6 +417,10 @@ public class MyDealAccountActivity extends Activity {
                         optionalArrayList = optionalList;
                         // 获取股票实时数据
                         getoptionalData(optionalList);
+                        if (stockLl.getVisibility() == View.VISIBLE){
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -587,6 +575,7 @@ public class MyDealAccountActivity extends Activity {
 //                dataList.add(new BasicNameValuePair("id", id));
                 dataList.add(new BasicNameValuePair("status", "2"));
                 dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                dataList.add(new BasicNameValuePair("token", Constants.apptoken));
                 // 调用接口获取股票当前行情数据
                 cdstr = HttpUtil.restHttpPut(Constants.moUrl+"/orders/"+id,dataList);
                 handler.sendEmptyMessage(2);

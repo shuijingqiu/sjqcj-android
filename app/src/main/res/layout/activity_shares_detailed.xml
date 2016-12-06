@@ -499,7 +499,7 @@
     <com.example.sjqcjstock.view.stocks.NoScrollViewPager
         android:id="@+id/mViewpager"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="250dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -519,29 +519,29 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="purchaseClick"
-            android:clickable="true"
-            android:text="买入"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:onClick="purchaseClick"
+                android:clickable="true"
+                android:text="买入"/>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="30dp"
-                android:background="@drawable/line"/>
-            
-        <TextView
-            android:id="@+id/optional_value_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="optionalClick"
-            android:clickable="true"
-            android:text="+自选"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/line"/>
+
+            <TextView
+                android:id="@+id/optional_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:onClick="optionalClick"
+                android:clickable="true"
+                android:text="+自选"/>
 
         </LinearLayout>
 

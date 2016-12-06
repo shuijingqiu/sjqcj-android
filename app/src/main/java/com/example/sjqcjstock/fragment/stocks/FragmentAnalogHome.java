@@ -68,6 +68,8 @@ public class FragmentAnalogHome extends Fragment {
     private ProgressDialog dialog;
     // 牛人动态返回的数据
     private String resstr;
+    // 返回图片数据
+    private String resimg;
     // 缓存用的类
     private ACache mCache;
 
@@ -201,9 +203,6 @@ public class FragmentAnalogHome extends Fragment {
      * 数据的加载
      */
     private void initData() {
-        // 开线程获取广告图片
-        SendImageLoder taskSl = new SendImageLoder();
-        taskSl.execute(new TaskParams(Constants.globalSwf));
         String data = mCache.getAsString("orders");
         if (data != null){
             geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(data,GeniusEntity.class);
@@ -212,11 +211,19 @@ public class FragmentAnalogHome extends Fragment {
                 dialog.dismiss();
             }
         }
+        // 开线程获取广告图片
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resimg = HttpUtil.restHttpGet(Constants.moUrl+"/ad&type=1&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
         // 开线程获牛人动态数据
         new Thread(new Runnable() {
             @Override
             public void run() {
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders");
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -245,47 +252,47 @@ public class FragmentAnalogHome extends Fragment {
         cycleViewPager.setIndicatorCenter();
     }
 
-    private class SendImageLoder extends AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            if (result == null) {
-                dialog.dismiss();
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = null;
-                    String status = jsonObject.getString("status");
-                    if ("1".equals(status)) {
-                        jsonArray = jsonObject.getJSONArray("data");
-                    }
-                    if (jsonArray != null && jsonArray.length() > 0) {
-                        ADInfo info = null;
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            jsonObject = (JSONObject) jsonArray.get(i);
-                            info = new ADInfo();
-                            info.setUrl(jsonObject.getString("pic"));
-                            info.setContent(jsonObject.getString("url"));
-                            infos.add(info);
-                        }
-                    }
-                } catch (JSONException e) {
-                    // mh 应该是要去找缓存的
-                    e.printStackTrace();
-                    return;
-                }
-                if (infos.size() > 0) {
-                    setImageLoader();
-                }
-            }
-        }
-    }
+//    private class SendImageLoder extends AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            if (result == null) {
+//                dialog.dismiss();
+//            } else {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    JSONArray jsonArray = null;
+//                    String status = jsonObject.getString("status");
+//                    if ("success".equals(status)) {
+//                        jsonArray = jsonObject.getJSONArray("data");
+//                        if (jsonArray != null && jsonArray.length() > 0) {
+//                            ADInfo info = null;
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                jsonObject = (JSONObject) jsonArray.get(i);
+//                                info = new ADInfo();
+//                                info.setUrl(jsonObject.getString("image"));
+//                                info.setContent(jsonObject.getString("url"));
+//                                infos.add(info);
+//                            }
+//                         }
+//                    }
+//                } catch (JSONException e) {
+//                    // mh 应该是要去找缓存的
+//                    e.printStackTrace();
+//                    return;
+//                }
+//                if (infos.size() > 0) {
+//                    setImageLoader();
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 点击广告图片的单机事件
@@ -333,8 +340,31 @@ public class FragmentAnalogHome extends Fragment {
                     }
                     dialog.dismiss();
                     break;
+                case 1:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resimg);
+                        String  status = jsonObject.getString("status");
+                        if ("success".equals(status)) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            if (jsonArray != null && jsonArray.length() > 0) {
+                                ADInfo info = null;
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    jsonObject = (JSONObject) jsonArray.get(i);
+                                    info = new ADInfo();
+                                    info.setUrl(jsonObject.getString("image"));
+                                    info.setContent(jsonObject.getString("url"));
+                                    infos.add(info);
+                                }
+                            }
+                            if (infos.size() > 0) {
+                                setImageLoader();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
-
 }

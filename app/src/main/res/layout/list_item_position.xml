@@ -8,7 +8,6 @@
         android:id="@+id/name_code_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="万马股份 002276"
         android:textSize="16sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
@@ -22,10 +21,9 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="2">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/present_price_tv"
@@ -41,7 +39,8 @@
                 android:layout_toRightOf="@id/present_price_tv"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="18.91"/>
+                android:textColor="@color/red"
+                android:text="0.00"/>
 
             <TextView
                 android:id="@+id/latest_market_price_tv"
@@ -59,7 +58,7 @@
                 android:layout_below="@+id/present_price_tv"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
-                android:text="288654.12"/>
+                android:text="0"/>
 
             <TextView
                 android:id="@+id/position_number_tv"
@@ -76,16 +75,14 @@
                 android:layout_toRightOf="@id/latest_market_price_tv"
                 android:layout_below="@+id/latest_market_price_value_tv"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="15500"/>
+                android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/profit_tv"
@@ -101,7 +98,8 @@
                 android:layout_toRightOf="@id/profit_tv"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="-0.61%"/>
+                android:textColor="@color/red"
+                android:text="0.00%"/>
 
             <TextView
                 android:id="@+id/average_cost_tv"
@@ -118,8 +116,7 @@
                 android:layout_toRightOf="@id/average_cost_tv"
                 android:layout_below="@+id/profit_value_tv"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="288654.12"/>
+                android:layout_marginLeft="10dp"/>
 
             <TextView
                 android:id="@+id/can_buy_quantity_tv"
@@ -136,8 +133,7 @@
                 android:layout_toRightOf="@id/can_buy_quantity_tv"
                 android:layout_below="@+id/average_cost_value_tv"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="15500"/>
+                android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
 

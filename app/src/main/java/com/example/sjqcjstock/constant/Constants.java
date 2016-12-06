@@ -17,6 +17,8 @@ public class Constants {
     public static String orderNumber = "";
     //是否刷新股吧列表
     public static String isreferforumlist = "0";//0为刷新，1为不刷新
+    // 个人账户是否刷新
+    public static boolean isBuy = false;
     //code
     public static String weixincode = "";
     //用户信息持久化

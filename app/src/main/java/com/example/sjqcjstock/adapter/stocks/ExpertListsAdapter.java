@@ -99,24 +99,24 @@ public class ExpertListsAdapter extends BaseAdapter {
         if(type == 0){
             // 常胜牛人
             holder.averageIncome.setText("周平均收益 "+totalProfitEntity.getWeek_avg_profit_rate()+"%");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate());
+            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
         }else if(type == 1){
             // 人气牛人
             holder.averageIncome.setText("粉丝数 1000  ");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate());
+            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
         }else if(type == 2){
             // 总收益榜
             holder.averageIncome.setText("总收益 "+totalProfitEntity.getTotal_rate()+"%");
             holder.explainStrTv.setText("周平均收益 ");
-            holder.grossProfitRate.setText(totalProfitEntity.getWeek_avg_profit_rate());
+            holder.grossProfitRate.setText(totalProfitEntity.getWeek_avg_profit_rate()+"%");
         }else{
             // 选股牛人
             holder.averageIncome.setText("胜率 "+totalProfitEntity.getSuccess_rate()+"%");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate());
+            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
         }
-        holder.winningProbability.setText(totalProfitEntity.getSuccess_rate());
+        holder.winningProbability.setText(totalProfitEntity.getSuccess_rate()+"%");
         holder.holdingPeriod.setText(totalProfitEntity.getAvg_position_day());
-        holder.position.setText(totalProfitEntity.getPosition());
+        holder.position.setText(totalProfitEntity.getPosition()+"%");
 
         ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
                         .getMd5(totalProfitEntity.getUid())),
