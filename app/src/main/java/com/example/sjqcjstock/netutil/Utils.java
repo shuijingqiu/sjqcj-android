@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.netutil;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -492,11 +491,9 @@ public class Utils {
         if (strList == null) {
             return str;
         }
-        Log.e("mh1234",str);
         for (String url : strList) {
             str = str.replace(url, "<a href = \"" + url + "\">网址</a>");
         }
-        Log.e("mh12345",str);
         return str;
     }
 
@@ -535,6 +532,28 @@ public class Utils {
             code = "sz"+code;
         }
         return code;
+    }
+
+    /**
+     * 判断当前时间是否是交易时间
+     * @return
+     */
+    public static  boolean isTransactionDate(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minuts = cal.get(Calendar.MINUTE);
+        int week = cal.get(Calendar.DAY_OF_WEEK);
+        if (week == 1 || week == 7){
+            return false;
+        }
+        if (hour < 9 || (hour == 9 && minuts<29) || hour > 15){
+            return false;
+        }
+        if ((hour > 11 || (hour == 11 &&  minuts > 31)) && hour < 13){
+            return false;
+        }
+        return true;
     }
 
 }

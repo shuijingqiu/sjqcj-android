@@ -22,6 +22,7 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.Order;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -118,16 +119,12 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 getData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
             // 上拉加载
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 getData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
     }
@@ -156,17 +153,29 @@ public class TransactionDetailActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    if("".equals(resstr)){
+                        CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                        dialog.dismiss();
+                        return;
+                    }
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
                         }
                         ArrayList<Order> orderList = (ArrayList<Order>) JSON.parseArray(jsonObject.getString("data"),Order.class);
                         orderArrayList = orderList;
                         dealAdapter.setlistData(orderArrayList);
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     } catch (JSONException e) {
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
                     dialog.dismiss();

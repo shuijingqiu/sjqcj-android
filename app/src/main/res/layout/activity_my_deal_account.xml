@@ -23,7 +23,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="个人账户" />
+            android:text="我的账户" />
 
         <ImageView
             android:id="@+id/iv_search"
@@ -72,33 +72,32 @@
                         android:background="@color/color_toptitle"
                         android:orientation="horizontal">
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
                             <TextView
                                 android:id="@+id/total_assets_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
+                                android:layout_gravity="center_horizontal"
                                 android:text="总资产"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/total_assets_value_tv"
-                                android:layout_width="140dp"
+                                android:layout_width="150dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@+id/total_assets_tv"
-                                android:text=""
                                 android:textColor="@color/white"
                                 android:textSize="28dp" />
 
-                        </RelativeLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="38dp"
+                            android:layout_gravity="center"
+                            android:background="@color/gray_line" />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal">
 
                             <TextView
                                 android:id="@+id/total_revenue_tv"
@@ -340,7 +339,8 @@
                         android:id="@+id/entrust_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/entrust_tv"
@@ -434,7 +434,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="名称代码"
+                            android:text="股票名称"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />
 
@@ -459,7 +459,7 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="推荐数"
+                            android:text="关注人数"
                             android:textColor="@color/color_text2"
                             android:textSize="14sp" />
 
@@ -478,7 +478,8 @@
 
         </com.example.sjqcjstock.view.PullableScrollView>
 
-        <include layout="@layout/load_more" />
+        <include layout="@layout/load_more"
+            android:visibility="gone"/>
 
     </com.example.sjqcjstock.view.PullToRefreshLayout>
 

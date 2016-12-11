@@ -81,7 +81,7 @@ public class DealAdapter extends BaseAdapter {
         holder.number.setText(numberStr);
         holder.time.setText(listData.get(position).getTime());
         holder.money.setText(Utils.getNumberFormat2(Double.valueOf(priceStr)*Double.valueOf(numberStr)+""));
-        holder.cost.setText(listData.get(position).getFee());
+        holder.cost.setText(Utils.getNumberFormat2(listData.get(position).getFee()));
         // 1代表买入2代表卖出
         if("1".equals(listData.get(position).getType())){
              holder.type.setText("买入");

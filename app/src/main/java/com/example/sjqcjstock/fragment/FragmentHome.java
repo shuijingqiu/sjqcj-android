@@ -25,6 +25,7 @@ import com.example.sjqcjstock.Activity.forumnotedetailActivity;
 import com.example.sjqcjstock.Activity.gwzhmatchActivity;
 import com.example.sjqcjstock.Activity.hotstocklistActivity;
 import com.example.sjqcjstock.Activity.selectstockmatchActivity;
+import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.supermanlistActivity;
 import com.example.sjqcjstock.Activity.todaybullsrankingActivity;
@@ -446,9 +447,11 @@ public class FragmentHome extends Fragment {
     class picktosesencelist1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-//            Intent intent = new Intent(getActivity(), EssenceListActivty.class);
-//            startActivity(intent);
+            // 定位到交易页面
             mainActivity.clickStocks();
+//            // 跳转到模拟炒股的模拟比赛里面
+//            Intent intent = new Intent(getActivity(), SimulationGameActivity.class);
+//            startActivity(intent);
         }
     }
 
@@ -783,7 +786,9 @@ public class FragmentHome extends Fragment {
                     appindexList = (ArrayList<HashMap<String, String>>) listessenceData.clone();
                 }
             }
-            dialog.dismiss();
+            if (dialog!=null){
+                dialog.dismiss();
+            }
             rl_refresh_layout.setVisibility(View.GONE);
         }
     }

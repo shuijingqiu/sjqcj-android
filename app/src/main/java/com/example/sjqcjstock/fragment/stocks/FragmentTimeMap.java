@@ -1,11 +1,13 @@
 package com.example.sjqcjstock.fragment.stocks;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
 import com.example.sjqcjstock.entity.stocks.ListStickEntity;
 import com.example.sjqcjstock.entity.stocks.SpotEntity;
@@ -65,6 +68,12 @@ public class FragmentTimeMap extends Fragment {
     private Map<String, String> buySellMap;
     // 定时器
     private Timer timer;
+    // 网络请求提示
+    private ProgressDialog dialog;
+    // 第三方返回的数据
+    private String strData;
+    // 控制循环获取次数
+    private int isCot = 1;
 
     public FragmentTimeMap(String code, String openF, Map<String, String> buySellMap) {
         this.code = code;
@@ -85,14 +94,20 @@ public class FragmentTimeMap extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // 关闭掉定时器
-        timer.cancel();
+        if (timer != null) {
+            // 关闭掉定时器
+            timer.cancel();
+        }
     }
 
     /**
      * 加载控件
      */
     private void findView(View view) {
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(true);
+        dialog.show();
 //        time = (TextView) view.findViewById(R.id.time);
 //        price = (TextView) view.findViewById(R.id.price);
 //        headNumber = (TextView) view.findViewById(R.id.head_number);
@@ -124,7 +139,6 @@ public class FragmentTimeMap extends Fragment {
         sell4n = (TextView) view.findViewById(R.id.number_sell_4);
         sell5p = (TextView) view.findViewById(R.id.price_sell_5);
         sell5n = (TextView) view.findViewById(R.id.number_sell_5);
-
         // 修改买卖信息
         updateBuySell(buySellMap);
 
@@ -134,16 +148,24 @@ public class FragmentTimeMap extends Fragment {
      * 获取网络数据线程
      */
     private void initData() {
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/minute/" + Utils.judgeSharesCode(code) + ".js");
-                processData(strData);
+                strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/minute/" + Utils.judgeSharesCode(code) + ".js");
                 handler.sendEmptyMessage(0);
             }
-        };
-        timer.schedule(task, 0, 30000); // 0s后执行task,经过30s再次执行
+        }).start();
+        if (Utils.isTransactionDate()){
+            timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/minute/" + Utils.judgeSharesCode(code) + ".js");
+                    handler.sendEmptyMessage(0);
+                }
+            };
+            timer.schedule(task, 60000, 60000); // 0s后执行task,经过30s再次执行
+        }
     }
 
     /**
@@ -151,14 +173,12 @@ public class FragmentTimeMap extends Fragment {
      */
     private void initMinuteChart() {
         List<LineEntity> lines = new ArrayList<LineEntity>();
-
         //日均线数据
         LineEntity MAve = new LineEntity();
         MAve.setTitle("MAve");
         MAve.setLineColor(Color.rgb(255, 130, 142));
         MAve.setLineData(lineAveData);
         lines.add(MAve);
-
         //线数据
         LineEntity MA1 = new LineEntity();
         MA1.setTitle("MA1");
@@ -271,16 +291,27 @@ public class FragmentTimeMap extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (strData.length() < 40){
+                dialog.show();
+                isCot++;
+                if (isCot < 5){
+                    initData();
+                }
+                Log.e("mh:","123456---");
+                return;
+            }
+            isCot= 1;
+            processData(strData);
             // UI界面的更新等相关操作
             // 设置分时图的一些属性
             initMinuteChart();
             // 设置K线图的一些属性
             initStickChart();
-
             // redraw
             machart.invalidate();
             // redraw
             stickchart.invalidate();
+            dialog.dismiss();
         }
     };
 

@@ -80,7 +80,7 @@ public class SimulationGameAdapter extends BaseAdapter {
             holder.titleImg = (ImageView) convertView.findViewById(R.id.title_img_iv);
             holder.title = (TextView) convertView.findViewById(R.id.title_tv);
             holder.time = (TextView) convertView.findViewById(R.id.time_tv);
-            holder.ranking = (TextView) convertView.findViewById(R.id.ranking_tv);
+            holder.ranking = (TextView) convertView.findViewById(R.id.ranking_value_tv);
             holder.rankingValue = (TextView) convertView.findViewById(R.id.ranking_value_tv);
             holder.joinTv = (TextView) convertView.findViewById(R.id.join_tv);
             holder.joinBut = (TextView) convertView.findViewById(R.id.join_but);

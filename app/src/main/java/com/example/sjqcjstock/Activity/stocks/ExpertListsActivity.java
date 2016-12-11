@@ -20,6 +20,8 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.TotalProfitEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.netutil.ToastUtil;
+import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -104,8 +106,6 @@ public class ExpertListsActivity extends Activity {
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 page = 1;
                 initData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
             // 下拉加载
@@ -113,8 +113,6 @@ public class ExpertListsActivity extends Activity {
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 page += 1;
                 initData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
     }
@@ -169,9 +167,17 @@ public class ExpertListsActivity extends Activity {
             switch (msg.what) {
                 case 0:
                     try {
+                        if("".equals(resstr)){
+                            CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            return;
+                        }
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
-                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
                         }
                         // 持仓的数据
@@ -182,8 +188,11 @@ public class ExpertListsActivity extends Activity {
                             totalProfitList.addAll(totalProfit);
                         }
                         expertListsAdapter.setlistData(totalProfitList);
-
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     } catch (JSONException e) {
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
             }

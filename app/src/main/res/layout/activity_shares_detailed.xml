@@ -48,7 +48,7 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="8dp"
                 android:textSize="30sp"
-                android:text="8.30" />
+                android:text="0.00" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/white"
-                    android:text="-2.24" />
+                    android:text="0.00" />
 
                 <TextView
                     android:id="@+id/rise_and_fall_tv"
@@ -71,7 +71,7 @@
                     android:textColor="@color/white"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="-3.18%" />
+                    android:text="0.00%" />
 
             </LinearLayout>
 
@@ -100,7 +100,7 @@
                     android:id="@+id/open_price_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="69.00"
+                    android:text="00.00"
                     android:textColor="@color/white"
                     android:layout_marginTop="2dp"
                     android:textSize="14sp" />
@@ -117,7 +117,7 @@
                     android:id="@+id/volume_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="29.1万"
+                    android:text="00.00万"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -141,7 +141,7 @@
                     android:id="@+id/zuo_shuo_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="70.49"
+                    android:text="00.00"
                     android:textColor="@color/white"
                     android:layout_marginTop="2dp"
                     android:textSize="14sp" />
@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="15.52%"
+                    android:text="00.00%"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -198,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="69.38"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="18.5万"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -278,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="67.58"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -302,7 +302,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="13.3万"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -326,7 +326,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="2.66%"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -358,7 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="22.3亿"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -382,7 +382,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="1817.61亿"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
 
@@ -406,7 +406,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="127.2亿"
+                    android:text="0"
                     android:textColor="@color/color_text1"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -529,6 +529,23 @@
                 android:text="买入"/>
 
                 <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/line"/>
+
+
+            <TextView
+                android:id="@+id/sell_out_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:onClick="sellOutClick"
+                android:clickable="true"
+                android:text="卖出"/>
+
+                <View
+                    android:id="@+id/sell_out_v"
                     android:layout_width="1dp"
                     android:layout_height="30dp"
                     android:background="@drawable/line"/>

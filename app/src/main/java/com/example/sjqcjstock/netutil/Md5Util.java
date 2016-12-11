@@ -36,7 +36,7 @@ public class Md5Util {
     /**
      * 截取 md5的前6位
      *
-     * @param string
+     * @param uidmd5
      * @return
      */
     public static String getuidstrMd5(String uidmd5) {

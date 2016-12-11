@@ -336,7 +336,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
-                android:layout_marginTop="-2dp"
+                android:layout_marginTop="-2.5dp"
                 android:background="@color/gray_line" />
 
             <include
@@ -369,6 +369,6 @@
 
     </com.example.sjqcjstock.view.PullToRefreshLayout>
 
-    <include layout="@layout/progress" />
+    <!--<include layout="@layout/progress" />-->
 
 </LinearLayout>

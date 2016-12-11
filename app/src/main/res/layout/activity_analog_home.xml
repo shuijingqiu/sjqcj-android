@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="模拟炒股" />
+            android:text="模拟比赛" />
 
         <ImageView
             android:id="@+id/iv_search"
@@ -33,7 +33,15 @@
 
     </RelativeLayout>
 
-    <com.example.sjqcjstock.userdefined.MyScrollView
+    <com.example.sjqcjstock.view.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <include layout="@layout/refresh_head" />
+    <!-- 支持所有实现Pullable接口的View -->
+
+    <com.example.sjqcjstock.view.PullableScrollView
         android:id="@+id/myScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -151,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="股票牛人" />
+                        android:text="选股牛人" />
 
                 </LinearLayout>
 
@@ -249,7 +257,13 @@
 
         </LinearLayout>
 
-    </com.example.sjqcjstock.userdefined.MyScrollView>
+        </com.example.sjqcjstock.view.PullableScrollView>
 
+        <include layout="@layout/load_more"
+            android:visibility="gone"/>
+
+    </com.example.sjqcjstock.view.PullToRefreshLayout>
+
+    <include layout="@layout/progress" />
 
 </LinearLayout>

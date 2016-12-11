@@ -95,8 +95,6 @@ public class DayCommissionActivity extends Activity {
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 page = 1;
                 getData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
             // 上拉加载
@@ -104,8 +102,6 @@ public class DayCommissionActivity extends Activity {
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 page += 1;
                 getData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
     }
@@ -137,8 +133,14 @@ public class DayCommissionActivity extends Activity {
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            if(page == 1){
+                                orderArrayList = new ArrayList<Order>();
+                                commissionAdapter.setlistData(orderArrayList);
+                            }
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
                         }
                         ArrayList<Order> orderList = (ArrayList<Order>) JSON.parseArray(jsonObject.getString("data"),Order.class);
@@ -152,6 +154,8 @@ public class DayCommissionActivity extends Activity {
                         e.printStackTrace();
                     }
                     dialog.dismiss();
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     break;
             }
         }

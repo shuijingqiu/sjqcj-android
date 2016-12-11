@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -349,25 +350,35 @@ public class MainActivity extends FragmentActivity {
         String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
         String login_email = getSharedPreferences("userinfo", MODE_PRIVATE).getString("login_email", "");
         String url = "";
+        TaskParams taskParams = null;
         if ("qq".equals(type)){
-            url = Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display&type=qq&token="+Constants.statictokeystr;
+            taskParams = new TaskParams(
+                    Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
+                    new String[]{"type", "qq"},
+                    new String[]{"tokey", Constants.statictokeystr}
+            );
         }else if("weixin".equals(type)){
-            url = Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display&type=weixin&token="+Constants.statictokeystr;
+            taskParams = new TaskParams(
+                    Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
+                    new String[]{"type", "weixin"},
+                    new String[]{"tokey", Constants.statictokeystr}
+            );
         }else{
-            url = Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr;
+            taskParams = new TaskParams(
+                    Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr
+            );
         }
-        final String urlStr = url;
+        final TaskParams taskps = taskParams;
         Timer timer = new Timer();
         // 开定时器获取数据
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                new SendInfoTaskForCommonUserLogin().execute(new TaskParams(
-                        urlStr
-                ));
+                new SendInfoTaskForCommonUserLogin().execute(taskps);
             }
         };
-        timer.schedule(task, 10, 60000); // 30000s后执行task,经过30s再次执行
+        timer.schedule(task, 10, 1000*60*30); // 10ms后执行task,经过0.5h再次执行
+
     }
 
 
@@ -381,27 +392,36 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("mh123","这里是登陆的东西"+result);
             if (result == null) {
-                CustomToast.makeText(getApplicationContext(), "获取token出错", Toast.LENGTH_LONG).show();
-                // 退出程序到登陆页面
-
+                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
             } else {
-                String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
-                if ("common".equals(type)){
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        Constants.apptoken = jsonObject.getString("token");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try {
+                    String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (!"1".equals(jsonObject.getString("status"))) {
+                        // 登录不成功退出程序到登陆页面
+                        Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
-                }else{
-                    // 第三方的
-
+                    if ("common".equals(type)) {
+                        Constants.apptoken = jsonObject.getString("token");
+                    } else {
+                        // 第三方的
+                        jsonObject = new JSONObject(jsonObject.getString("data"));
+                        Constants.apptoken = jsonObject.getString("token");
+                    }
+                    if (Constants.apptoken == null || "".equals(Constants.apptoken.trim())) {
+                        // 获取token不成功退出程序到登陆页面
+                        Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
-
 }
 

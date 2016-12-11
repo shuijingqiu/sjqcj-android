@@ -190,10 +190,10 @@ public class UserDetailNewActivity extends FragmentActivity{
     private List<String> ytitle;
     // X轴标题
     private List<String> xtitle;
-    // 交易页面的分页
-    private int jypage = 1;
     // 设置下横条的位置
     private LinearLayout.LayoutParams lp ;
+    // 可用资金
+    private double availableFundsValue = 0;
 
 
     @Override
@@ -237,6 +237,8 @@ public class UserDetailNewActivity extends FragmentActivity{
             textTransaction.setTextColor(unselect_color);
         }
         img_line.setLayoutParams(lp);
+        // 滚动到顶部
+        myScrollView.smoothScrollTo(0, 0);
     }
 
     private void initView() {
@@ -326,7 +328,6 @@ public class UserDetailNewActivity extends FragmentActivity{
                     weiboPage = 1;
                     getWeiBoData();
                 }else if(linearTransaction.getVisibility()==View.VISIBLE){
-                    jypage = 1;
                     market = 0;
                     getTransactionData();
                 } else{
@@ -339,11 +340,9 @@ public class UserDetailNewActivity extends FragmentActivity{
                 if (fragmentMicroBlog.getVisibility()==View.VISIBLE){
                     weiboPage += 1;
                     getWeiBoData();
-                }else if(linearTransaction.getVisibility()==View.VISIBLE){
-                    jypage += 1;
-                    getTransactionData();
                 }else{
-                    getStockData();
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }
         });
@@ -1034,32 +1033,24 @@ public class UserDetailNewActivity extends FragmentActivity{
                     break;
                 case 2:
                     try {
-                        int wpage = 0;
                         JSONObject jsonObject = new JSONObject(mMresstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(getActivity(),jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
-
                             if (linearTransaction.getVisibility()==View.VISIBLE) {
                                 // 千万别忘了告诉控件刷新完毕了哦！
                                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             }
                             return;
                         }
-                        wpage = jsonObject.getInt("totalPage");
                         // 持仓的数据
                         ArrayList<PositionEntity> positionList = (ArrayList<PositionEntity>) JSON.parseArray(jsonObject.getString("data"), PositionEntity.class);
-                        if (jypage == 1) {
-                            positionArrayList = positionList;
-                        } else {
-                            positionArrayList.addAll(positionList);
-                        }
-                        if (wpage >= jypage) {
-                            // 获取最新的股票信息
-                            getRealTimeData(positionList);
-                            listAdapter.setlistData(positionArrayList);
-                            ((TextView)findViewById(R.id.position_count_tv)).setText("当前持仓（"+positionList.size()+")");
-                        }
-//                        ViewUtil.setListViewHeightBasedOnChildren(listView);
+                        positionArrayList = positionList;
+                        // 获取最新的股票信息
+                        getRealTimeData(positionList);
+                        listAdapter.setlistData(positionArrayList);
+                        ((TextView)findViewById(R.id.position_count_tv)).setText("当前持仓（"+positionList.size()+")");
+                        // 滚动到顶部
+                        myScrollView.smoothScrollTo(0, 0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1080,7 +1071,12 @@ public class UserDetailNewActivity extends FragmentActivity{
                         // 最新市值的累加
                         market += price * positionValue;
                     }
-                    marketValue.setText(Utils.getNumberFormat2(market+""));
+//                    // 更新总资产
+//                    funds.setText(Utils.getNumberFormat2(market+availableFundsValue+""));
+////                     更新仓位
+//                    position.setText(Utils.getNumberFormat2(market/(market+availableFundsValue)*100+"")+"%");
+                    // 更新最新市值
+                    marketValue.setText(Utils.getNumberFormat2(market+"")+"元");
                     // 刷新持仓列表
                     listAdapter.setlistData(positionArrayList);
                     break;
@@ -1088,17 +1084,16 @@ public class UserDetailNewActivity extends FragmentActivity{
                     try {
                         JSONObject jsonObject = new JSONObject(xxstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         JSONObject jsonStr = new JSONObject(jsonObject.getString("data"));
                         // 仓位
                         position.setText(jsonStr.getString("position")+"%");
-
                         // 总收益
                         String totalRateValue = jsonStr.getString("total_rate");
-                        totalRate.setText(totalRateValue + "%");
-                        totalRate1.setText(totalRateValue + "%");
+                        totalRate.setText(Utils.getNumberFormat2(totalRateValue) + "%");
+                        totalRate1.setText(Utils.getNumberFormat2(totalRateValue) + "%");
                         if (Double.valueOf(totalRateValue)>=0){
                             totalRate1.setTextColor(totalRate1.getResources().getColor(R.color.color_ef3e3e));
                         }else{
@@ -1106,22 +1101,26 @@ public class UserDetailNewActivity extends FragmentActivity{
                         }
                         // 排名
                         totalProfitRank.setText(jsonStr.getString("total_profit_rank"));
+                        Double fundsValue = jsonStr.getDouble("funds");
                         // 总资产
-                        funds.setText(jsonStr.getString("funds")+"元");
+                        funds.setText(Utils.getNumberFormat2(fundsValue+"")+"元");
                         // 可用资金
-                        availableFunds.setText(jsonStr.getString("available_funds")+"元");
+                        availableFundsValue = jsonStr.getDouble("available_funds");
+                        // 可用资金
+                        availableFunds.setText(Utils.getNumberFormat2(availableFundsValue+"")+"元");
                         // 周收益率
                         String weekRate = jsonStr.getString("week_avg_profit_rate");
-                        weekAvgProfitRate.setText(weekRate+"%");
+                        weekAvgProfitRate.setText(Utils.getNumberFormat2(weekRate)+"%");
+                        // 股票市值
+                        marketValue.setText(Utils.getNumberFormat2(fundsValue - availableFundsValue+"")+"元");
                         if (Double.valueOf(weekRate)>=0){
                             weekAvgProfitRate.setTextColor(weekAvgProfitRate.getResources().getColor(R.color.color_ef3e3e));
                         }else{
                             weekAvgProfitRate.setTextColor(weekAvgProfitRate.getResources().getColor(R.color.color_1bc07d));
                         }
-
                         // 比赛胜率
-                        winRate.setText(jsonStr.getString("win_rate")+"%");
-                        winRate1.setText(jsonStr.getString("win_rate")+"%");
+                        winRate.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate"))+"%");
+                        winRate1.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate"))+"%");
                         // 建户时间
                         time.setText(jsonStr.getString("time").substring(0,10));
 
@@ -1135,7 +1134,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                     try {
                         JSONObject jsonObject = new JSONObject(chartstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));
@@ -1205,7 +1204,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                mMresstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&p="+jypage+"&token="+Constants.apptoken);
+                mMresstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&token="+Constants.apptoken);
                 handler.sendEmptyMessage(2);
             }
         }).start();
@@ -1262,13 +1261,14 @@ public class UserDetailNewActivity extends FragmentActivity{
      */
     private void initMinuteChart() {
 
-        maxY = (float) (maxY + maxY * 0.1);
-        miniY = (float) (miniY - miniY * 0.1);
+        // 最大最小
+//        maxY = (float) (maxY + maxY * 0.1);
+//        miniY = (float) (miniY - miniY * 0.1);
 
         List<String> ytitleInner = new ArrayList<String>();
-        ytitleInner.add(maxY+"");
+        ytitleInner.add(maxY+"%");
         ytitleInner.add("");
-        ytitleInner.add(miniY+"");
+        ytitleInner.add(miniY+"%");
         ytitleInner.add("");
         ytitle = new ArrayList<String>();
         ytitle.add("");

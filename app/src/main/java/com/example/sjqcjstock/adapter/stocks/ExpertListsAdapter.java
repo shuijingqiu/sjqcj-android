@@ -14,6 +14,7 @@ import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.entity.stocks.TotalProfitEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
+import com.example.sjqcjstock.netutil.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class ExpertListsAdapter extends BaseAdapter {
             holder.averageIncome = (TextView) convertView.findViewById(R.id.average_income_tv);
             holder.grossProfitRate = (TextView) convertView.findViewById(R.id.gross_profit_rate_value_tv);
             holder.winningProbability = (TextView) convertView.findViewById(R.id.winning_probability_value_tv);
+            holder.winningProbabilityTv = (TextView) convertView.findViewById(R.id.winning_probability_tv);
             holder.holdingPeriod = (TextView) convertView.findViewById(R.id.holding_period_value_tv);
             holder.position = (TextView) convertView.findViewById(R.id.position_value_tv);
 
@@ -96,27 +98,29 @@ public class ExpertListsAdapter extends BaseAdapter {
             holder.ranking.setText(rownum);
             holder.ranking.setBackgroundResource(R.mipmap.nullimg);
         }
+        holder.winningProbability.setText(totalProfitEntity.getSuccess_rate()+"%");
         if(type == 0){
             // 常胜牛人
-            holder.averageIncome.setText("周平均收益 "+totalProfitEntity.getWeek_avg_profit_rate()+"%");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
+            holder.averageIncome.setText("周平均收益 "+ Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
+            holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
         }else if(type == 1){
             // 人气牛人
             holder.averageIncome.setText("粉丝数 1000  ");
             holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
         }else if(type == 2){
             // 总收益榜
-            holder.averageIncome.setText("总收益 "+totalProfitEntity.getTotal_rate()+"%");
+            holder.averageIncome.setText("总收益 "+Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
+            holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
             holder.explainStrTv.setText("周平均收益 ");
-            holder.grossProfitRate.setText(totalProfitEntity.getWeek_avg_profit_rate()+"%");
         }else{
             // 选股牛人
-            holder.averageIncome.setText("胜率 "+totalProfitEntity.getSuccess_rate()+"%");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
+            holder.averageIncome.setText("选股胜率 "+Utils.getNumberFormat2(totalProfitEntity.getSuccess_rate())+"%");
+            holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
+            holder.winningProbabilityTv.setText("周平均收益 ");
+            holder.winningProbability.setText(Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
         }
-        holder.winningProbability.setText(totalProfitEntity.getSuccess_rate()+"%");
         holder.holdingPeriod.setText(totalProfitEntity.getAvg_position_day());
-        holder.position.setText(totalProfitEntity.getPosition()+"%");
+        holder.position.setText(Utils.getNumberFormat2(totalProfitEntity.getPosition())+"%");
 
         ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
                         .getMd5(totalProfitEntity.getUid())),
@@ -138,6 +142,8 @@ public class ExpertListsAdapter extends BaseAdapter {
         TextView grossProfitRate;
         // 胜率
         TextView winningProbability;
+        // 胜率文字
+        TextView winningProbabilityTv;
         // 平均持股周期
         TextView holdingPeriod;
         // 仓位

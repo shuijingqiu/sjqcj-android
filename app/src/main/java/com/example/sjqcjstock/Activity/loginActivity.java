@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -251,6 +252,7 @@ public class loginActivity extends Activity {
 
     private void onClickLogin() {
         dialog.show();
+        mQQAuth.logout(this);
         if (!mQQAuth.isSessionValid()) {
             IUiListener listener = new BaseUiListener() {
                 @Override
@@ -261,8 +263,9 @@ public class loginActivity extends Activity {
             mQQAuth.login(this, "all", listener);
             mTencent.login(this, "all", listener);
         } else {
+            // 注销登陆
             mQQAuth.logout(this);
-            updateUserInfo();
+//            updateUserInfo();
         }
     }
 
@@ -396,9 +399,6 @@ public class loginActivity extends Activity {
                         Constants.setStaticpasswordstr(fillpassword1.getText().toString());
                         Constants.apptoken = apptoken;
 
-                        if (dialog != null){
-                            dialog.dismiss();
-                        }
                         if (Integer.parseInt(statusstr) == 1) {
                             Intent intent = new Intent(loginActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -406,6 +406,9 @@ public class loginActivity extends Activity {
                         }
                     }
                 }
+            }
+            if (dialog != null){
+                dialog.dismiss();
             }
         }
     }

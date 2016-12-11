@@ -25,6 +25,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
 import com.example.sjqcjstock.view.CustomToast;
+import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -264,6 +265,11 @@ public class BusinessActivity extends Activity {
         String number = numberEt.getText().toString();
         // 当前输入的价格
         spotPrice = priceEt.getText().toString();
+        if ("".equals(code)){
+            CustomToast.makeText(getApplicationContext(), "请输股票代码", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         if ("".equals(spotPrice)){
             CustomToast.makeText(getApplicationContext(), "请输入正确价格", Toast.LENGTH_SHORT)
                     .show();
@@ -274,16 +280,24 @@ public class BusinessActivity extends Activity {
                     .show();
             return;
         }
-        if(Integer.valueOf(number) < 100){
-            numberEt.setText("100");
-            number = "100";
-        }
-        if(Integer.valueOf(number)%100 != 0){
-            CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
-                    .show();
-            number = Integer.valueOf(number)/100+"00";
-            numberEt.setText(number);
-            return;
+
+        if ("2".equals(type)) {
+            if(Integer.valueOf(number) < 1){
+                CustomToast.makeText(getApplicationContext(), "请输入卖出数量", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }else {
+            if(Integer.valueOf(number) < 100){
+                numberEt.setText("100");
+                number = "100";
+            }
+            if (Integer.valueOf(number) % 100 != 0) {
+                CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
+                        .show();
+                number = Integer.valueOf(number) / 100 + "00";
+                numberEt.setText(number);
+                return;
+            }
         }
         if(Integer.valueOf(number) > Double.valueOf(businessNumber)){
             numberEt.setText(businessNumber);
@@ -310,26 +324,39 @@ public class BusinessActivity extends Activity {
         String number = numberEt.getText().toString();
         // 当前输入的价格
         String spotPriceStr = priceEt.getText().toString();
+
+        if ("".equals(code)){
+            CustomToast.makeText(getApplicationContext(), "请输股票代码", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         if ("".equals(spotPriceStr)){
             CustomToast.makeText(getApplicationContext(), "请输入正确价格", Toast.LENGTH_SHORT)
                     .show();
             return;
         }
         if ("".equals(number)){
-            CustomToast.makeText(getApplicationContext(), "请输交易数量", Toast.LENGTH_SHORT)
+            CustomToast.makeText(getApplicationContext(), "请输入交易数量", Toast.LENGTH_SHORT)
                     .show();
             return;
         }
-        if(Integer.valueOf(number) < 100){
-            numberEt.setText("100");
-            number = "100";
-        }
-        if(Integer.valueOf(number)%100 != 0){
-            CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
-                    .show();
-            number = Integer.valueOf(number)/100+"00";
-            numberEt.setText(number);
-            return;
+        if ("2".equals(type)) {
+            if(Integer.valueOf(number) < 1){
+                CustomToast.makeText(getApplicationContext(), "请输入卖出数量", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }else{
+            if(Integer.valueOf(number) < 100){
+                numberEt.setText("100");
+                number = "100";
+            }
+            if(Integer.valueOf(number)%100 != 0){
+                CustomToast.makeText(getApplicationContext(), "请输入100倍数的数量", Toast.LENGTH_SHORT)
+                        .show();
+                number = Integer.valueOf(number)/100+"00";
+                numberEt.setText(number);
+                return;
+            }
         }
         showDialog("1");
     }
@@ -517,11 +544,15 @@ public class BusinessActivity extends Activity {
                                 {
                                     alertDialog.dismiss();
                                 }
-                                // （如果购买成功清空数据）
-//                                finish();
-                                // 设置买卖成功 用于个人账户刷新
                                 Constants.isBuy = true;
-                                clerData();
+                                if ("2".equals(type)) {
+                                    // （如果购买成功清空数据）卖的情况
+                                    finish();
+                                }else{
+                                    // 设置买卖成功 用于个人账户刷新
+                                    clerData();
+                                }
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -535,6 +566,10 @@ public class BusinessActivity extends Activity {
                     break;
                 case 2:
                     try {
+                        if("".equals(xxstr)){
+                            CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         JSONObject jsonObject = new JSONObject(xxstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(BusinessActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();

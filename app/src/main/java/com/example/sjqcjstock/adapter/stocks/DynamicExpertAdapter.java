@@ -16,6 +16,7 @@ import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
+import com.example.sjqcjstock.netutil.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -95,6 +96,39 @@ public class DynamicExpertAdapter extends BaseAdapter {
             }
         });
         type = geniusEntity.getType();
+        holder.name.setText(geniusEntity.getUsername());
+//        holder.time.setText(geniusEntity.getTime().substring(0,10));
+        holder.time.setText(geniusEntity.getTime());
+        // 总收益
+        String totalRate = geniusEntity.getTotal_rate();
+        if (totalRate!=null && Double.valueOf(totalRate)>=0){
+            holder.totalYield.setTextColor(holder.totalYield.getResources().getColor(R.color.color_ef3e3e));
+        }else{
+            holder.totalYield.setTextColor(holder.totalYield.getResources().getColor(R.color.color_1bc07d));
+        }
+        holder.totalYield.setText(Utils.getNumberFormat2(geniusEntity.getTotal_rate())+"%");
+        holder.nameCode.setText(geniusEntity.getStock_name()+"("+geniusEntity.getStock()+")");
+        // 1代表买入2代表卖出
+        if("1".equals(type)){
+            holder.type.setText("买");
+            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
+            holder.returnRate.setText(geniusEntity.getPrice());
+            holder.returnRateTv.setText("买入价");
+            holder.toBuy.setText("跟买");
+        }else{
+            holder.type.setText("卖");
+            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_1bc07d));
+            // 收益率
+            String ratio = geniusEntity.getRatio();
+            holder.returnRate.setText(Utils.getNumberFormat2(ratio)+"%");
+            holder.returnRateTv.setText("收益率");
+            if (ratio!=null && Double.valueOf(ratio)>=0){
+                holder.returnRate.setTextColor(holder.returnRate.getResources().getColor(R.color.color_ef3e3e));
+            }else{
+                holder.returnRate.setTextColor(holder.returnRate.getResources().getColor(R.color.color_1bc07d));
+            }
+            holder.toBuy.setText("查看");
+        }
         // 跳转到买卖页面
         holder.toBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,38 +152,6 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 }
             }
         });
-        holder.name.setText(geniusEntity.getUsername());
-        holder.time.setText(geniusEntity.getTime().substring(0,10));
-        // 总收益
-        String totalRate = geniusEntity.getTotal_rate();
-        if (totalRate!=null && Double.valueOf(totalRate)>=0){
-            holder.totalYield.setTextColor(holder.totalYield.getResources().getColor(R.color.color_ef3e3e));
-        }else{
-            holder.totalYield.setTextColor(holder.totalYield.getResources().getColor(R.color.color_1bc07d));
-        }
-        holder.totalYield.setText(geniusEntity.getTotal_rate()+"%");
-        holder.nameCode.setText(geniusEntity.getStock_name()+"("+geniusEntity.getStock()+")");
-        // 1代表买入2代表卖出
-        if("1".equals(type)){
-            holder.type.setText("买");
-            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
-            holder.returnRate.setText(geniusEntity.getPrice());
-            holder.returnRateTv.setText("买入价");
-            holder.toBuy.setText("跟买");
-        }else{
-            holder.type.setText("卖");
-            holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_1bc07d));
-            // 收益率
-            String ratio = geniusEntity.getRatio();
-            holder.returnRate.setText(ratio+"%");
-            holder.returnRateTv.setText("收益率");
-            if (ratio!=null && Double.valueOf(ratio)>=0){
-                holder.returnRate.setTextColor(holder.returnRate.getResources().getColor(R.color.color_ef3e3e));
-            }else{
-                holder.returnRate.setTextColor(holder.returnRate.getResources().getColor(R.color.color_1bc07d));
-            }
-            holder.toBuy.setText("查看");
-        }
         ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
                         .getMd5(geniusEntity.getUid())),
                 holder.head, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());

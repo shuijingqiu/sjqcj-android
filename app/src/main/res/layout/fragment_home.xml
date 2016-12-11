@@ -107,7 +107,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:text="模拟炒股"
+                            android:text="模拟比赛"
                             android:textColor="@color/color_text1" />
 
                     </LinearLayout>
@@ -160,7 +160,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:text="股王争霸"
+                            android:text="股王争霸赛"
                             android:textColor="@color/color_text1" />
                     </LinearLayout>
                 </LinearLayout>

@@ -56,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:text="委托价格"/>
 
             <TextView
@@ -73,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/entrust_price_tv"
+                android:textColor="@color/color_text2"
                 android:text="委托时间"/>
 
             <TextView
@@ -98,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:text="委托数量"/>
 
             <TextView
@@ -115,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/entrust_number_tv"
+                android:textColor="@color/color_text2"
                 android:text="冻结资金"/>
 
             <TextView
@@ -136,26 +140,16 @@
         android:layout_height="1dp"
         android:background="@drawable/line"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_toLeftOf="@+id/kill_an_order_tv"
-            android:background="@drawable/line"/>
 
         <TextView
             android:id="@+id/kill_an_order_tv"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
             android:gravity="center"
+            android:layout_gravity="center"
             android:text="撤单"/>
 
-    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

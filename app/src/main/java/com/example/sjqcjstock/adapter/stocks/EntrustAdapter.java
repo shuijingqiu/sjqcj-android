@@ -77,7 +77,7 @@ public class EntrustAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final PositionEntity positionEntity = listData.get(position);
-        holder.name_code.setText(positionEntity.getStock_name() + "  " + positionEntity.getStock());
+        holder.name_code.setText(positionEntity.getStock_name() + "(" + positionEntity.getStock()+")");
         holder.name_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +133,7 @@ public class EntrustAdapter extends BaseAdapter {
         }
         holder.entrustPrice.setText(price);
         holder.entrustNumber.setText(number);
-        holder.entrustTime.setText(positionEntity.getTime().substring(0,10));
+        holder.entrustTime.setText(positionEntity.getTime());
 
         return convertView;
     }

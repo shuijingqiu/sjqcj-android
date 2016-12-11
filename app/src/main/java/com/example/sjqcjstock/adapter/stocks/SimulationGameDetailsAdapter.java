@@ -12,6 +12,7 @@ import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
+import com.example.sjqcjstock.netutil.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
         }else{
             holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_1bc07d));
         }
-        holder.profit.setText(totalRate+"%");
+        holder.profit.setText(Utils.getNumberFormat2(totalRate)+"%");
 
         ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
                         .getMd5(matchEntity.getUid())),

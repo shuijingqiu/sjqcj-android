@@ -126,6 +126,10 @@ public class MyDealAccountActivity extends Activity {
     private Map<String,Map> mapZxgStr;
     // 最新市值
     private double market = 0;
+//    // 计算的总资产
+//    private double totalAssets = 0;
+//    // 可用资金
+//    private double totalAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +139,7 @@ public class MyDealAccountActivity extends Activity {
         ExitApplication.getInstance().addActivity(this);
         findView();
         getData();
+        getData1();
         initLine();
         Constants.isBuy = false;
     }
@@ -142,7 +147,6 @@ public class MyDealAccountActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        getData1();
         if (Constants.isBuy){
             getData();
             Constants.isBuy = false;
@@ -229,12 +233,8 @@ public class MyDealAccountActivity extends Activity {
             // 下拉加载
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                if (transactionLl.getVisibility()==View.VISIBLE){
-                    getData();
-                }
-                else{
-                    getData1();
-                }
+                // 千万别忘了告诉控件刷新完毕了哦！
+                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
 
@@ -318,6 +318,14 @@ public class MyDealAccountActivity extends Activity {
                         ArrayList<PositionEntity> entrustList = (ArrayList<PositionEntity>) JSON.parseArray(jsonObject.getString("nData"),PositionEntity.class);
                             positionArrayList = positionList;
                             entrustArrayList = entrustList;
+                        String number = "";
+                        String price = "";
+//                        // 计算总资金
+//                        for(PositionEntity entrust:entrustList){
+//                            number = entrust.getNumber();
+//                            price = entrust.getPrice();
+//                            totalAssets += Double.valueOf(price) * Double.valueOf(number)+Double.valueOf(entrust.getFee());
+//                        }
                         // 有数据就展示
                         if (1 > entrustArrayList.size()){
                             entrustLl.setVisibility(View.GONE);
@@ -358,6 +366,12 @@ public class MyDealAccountActivity extends Activity {
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getAvailable_number())+Integer.valueOf(positionArrayList.get(i).getFreeze_number());
                         market += price * positionValue;
                     }
+//                    totalAssets = market + totalAmount;
+//                    // 重新更新总资金
+//                    totalAssetsTv.setText(Utils.getNumberFormat2(totalAssets+""));
+//                    // 重新更新仓位
+//                    positionTv.setText(Utils.getNumberFormat2(market/totalAssets*100+"")+"%");
+                    // 设置最新市值
                     marketTv.setText(Utils.getNumberFormat2(market+""));
                     // 刷新持仓列表
                     listAdapter.setlistData(positionArrayList);
@@ -385,18 +399,18 @@ public class MyDealAccountActivity extends Activity {
                         }
                         JSONObject jsonStr = new JSONObject(jsonObject.getString("data"));
                         // 仓位
-                        positionTv.setText(jsonStr.getString("position")+"%");
+                        positionTv.setText(Utils.getNumberFormat2(jsonStr.getString("position"))+"%");
                         // 总收益
-                        totalRevenueTv.setText(jsonStr.getString("total_rate")+"%");
+                        totalRevenueTv.setText(Utils.getNumberFormat2(jsonStr.getString("total_rate")+"")+"%");
                         // 排名
                         rankingTv.setText(jsonStr.getString("total_profit_rank"));
                         // 总资产
-                        totalAssetsTv.setText(jsonStr.getString("funds"));
+                        totalAssetsTv.setText(Utils.getNumberFormat2(jsonStr.getString("funds")));
                         // 可用资金
-                        int totalAmount = jsonStr.getInt("available_funds");
-                        availableFundsTv.setText(totalAmount+"");
+                        double totalAmount = jsonStr.getDouble("available_funds");
+                        availableFundsTv.setText(Utils.getNumberFormat2(totalAmount+""));
                         // 当日盈亏
-                        dayBreakTv.setText(jsonStr.getString("shares"));
+                        dayBreakTv.setText(Utils.getNumberFormat2(jsonStr.getString("shares")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

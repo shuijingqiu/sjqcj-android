@@ -114,7 +114,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="胜率"
+                        android:text="选股胜率"
                         android:textColor="@color/color_text2"
                         android:textSize="14sp" />
 
@@ -172,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="胜率"
+                        android:text="选股胜率"
                         android:textColor="@color/color_text1" />
 
 

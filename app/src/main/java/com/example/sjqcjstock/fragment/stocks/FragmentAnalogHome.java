@@ -35,6 +35,8 @@ import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.userdefined.MyScrollView;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.CycleViewPager;
+import com.example.sjqcjstock.view.PullToRefreshLayout;
+import com.example.sjqcjstock.view.PullableScrollView;
 import com.example.sjqcjstock.view.SoListView;
 
 import org.json.JSONArray;
@@ -50,6 +52,10 @@ import java.util.List;
  */
 public class FragmentAnalogHome extends Fragment {
 
+    // 上下拉刷新控件
+    private PullToRefreshLayout ptrl;
+    // ScrollView
+    private PullableScrollView myScrollView;
     // 广告滚动的加载
     private CycleViewPager cycleViewPager;
     // 获取广告的接口的类
@@ -60,8 +66,6 @@ public class FragmentAnalogHome extends Fragment {
     private SoListView listView;
     // 行情List的Adapter
     private DynamicExpertAdapter listAdapter;
-    // 滚动控件
-    private MyScrollView myScrollView;
     // 需要加载的牛人动态数据
     private ArrayList<GeniusEntity> geniusList;
     // 网络请求提示
@@ -81,6 +85,7 @@ public class FragmentAnalogHome extends Fragment {
         mCache = ACache.get(getActivity());
         findView(view);
         initData();
+        initData1();
         return view;
     }
 
@@ -98,7 +103,24 @@ public class FragmentAnalogHome extends Fragment {
         dialog.setCancelable(true);
         dialog.show();
 
-        myScrollView = (MyScrollView) view.findViewById(R.id.myScrollView);
+        myScrollView = (PullableScrollView) view.findViewById(R.id.myScrollView);
+        ptrl = ((PullToRefreshLayout) view.findViewById(
+                R.id.refresh_view));
+        // 添加上下拉刷新事件
+        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            // 下来刷新
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+                initData1();
+            }
+            // 下拉加载
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                // 千万别忘了告诉控件刷新完毕了哦！
+                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+        });
+
         listAdapter = new DynamicExpertAdapter(getActivity());
         listView = (SoListView) view.findViewById(
                 R.id.list_view);
@@ -164,7 +186,7 @@ public class FragmentAnalogHome extends Fragment {
         });
 
         /**
-         * 股票牛人
+         * 选股牛人
          */
         view.findViewById(R.id.gpnr_ll).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,10 +219,18 @@ public class FragmentAnalogHome extends Fragment {
                 startActivity(intent);
             }
         });
+        // 开线程获取广告图片
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resimg = HttpUtil.restHttpGet(Constants.moUrl+"/ad&type=1&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
     }
 
     /**
-     * 数据的加载
+     * 加载缓存的数据
      */
     private void initData() {
         String data = mCache.getAsString("orders");
@@ -211,14 +241,11 @@ public class FragmentAnalogHome extends Fragment {
                 dialog.dismiss();
             }
         }
-        // 开线程获取广告图片
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                resimg = HttpUtil.restHttpGet(Constants.moUrl+"/ad&type=1&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
-                handler.sendEmptyMessage(1);
-            }
-        }).start();
+    }
+    /**
+     * 数据的加载
+     */
+    private void initData1() {
         // 开线程获牛人动态数据
         new Thread(new Runnable() {
             @Override
@@ -228,6 +255,7 @@ public class FragmentAnalogHome extends Fragment {
             }
         }).start();
     }
+
 
     /**
      * 广告图片的一些加载适配
@@ -251,48 +279,6 @@ public class FragmentAnalogHome extends Fragment {
         // 设置圆点指示图标组居中显示，默认靠右
         cycleViewPager.setIndicatorCenter();
     }
-
-//    private class SendImageLoder extends AsyncTask<TaskParams, Void, String> {
-//
-//        @Override
-//        protected String doInBackground(TaskParams... params) {
-//            return HttpUtil.doInBackground(params);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            // TODO Auto-generated method stub
-//            if (result == null) {
-//                dialog.dismiss();
-//            } else {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(result);
-//                    JSONArray jsonArray = null;
-//                    String status = jsonObject.getString("status");
-//                    if ("success".equals(status)) {
-//                        jsonArray = jsonObject.getJSONArray("data");
-//                        if (jsonArray != null && jsonArray.length() > 0) {
-//                            ADInfo info = null;
-//                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                jsonObject = (JSONObject) jsonArray.get(i);
-//                                info = new ADInfo();
-//                                info.setUrl(jsonObject.getString("image"));
-//                                info.setContent(jsonObject.getString("url"));
-//                                infos.add(info);
-//                            }
-//                         }
-//                    }
-//                } catch (JSONException e) {
-//                    // mh 应该是要去找缓存的
-//                    e.printStackTrace();
-//                    return;
-//                }
-//                if (infos.size() > 0) {
-//                    setImageLoader();
-//                }
-//            }
-//        }
-//    }
 
     /**
      * 点击广告图片的单机事件
@@ -322,6 +308,8 @@ public class FragmentAnalogHome extends Fragment {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             dialog.dismiss();
                             return;
                         }
@@ -333,11 +321,11 @@ public class FragmentAnalogHome extends Fragment {
                         ViewUtil.setListViewHeightBasedOnChildren(listView);
                         // 滚动到顶部
                         myScrollView.scrollTo(0, 0);
-                        dialog.dismiss();
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     dialog.dismiss();
                     break;
                 case 1:

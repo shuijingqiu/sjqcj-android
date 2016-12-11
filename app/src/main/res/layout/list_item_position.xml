@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:text="现        价"/>
 
             <TextView
@@ -47,8 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:layout_below="@+id/present_price_tv"
-                android:text="最新市价"/>
+                android:text="最新市值"/>
 
             <TextView
                 android:id="@+id/latest_market_price_value_tv"
@@ -66,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/latest_market_price_tv"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:text="持仓数量"/>
 
             <TextView
@@ -89,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="收        益"/>
+                android:textColor="@color/color_text2"
+                android:text="收  益  率"/>
 
             <TextView
                 android:id="@+id/profit_value_tv"
@@ -107,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/profit_tv"
+                android:textColor="@color/color_text2"
                 android:text="平均成本"/>
 
             <TextView
@@ -124,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/average_cost_tv"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
                 android:text="可卖数量"/>
 
             <TextView
@@ -164,6 +170,7 @@
             android:background="@drawable/line"/>
 
         <TextView
+
             android:id="@+id/purchase_tv"
             android:layout_width="wrap_content"
             android:layout_height="30dp"

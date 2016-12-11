@@ -21,6 +21,7 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -113,8 +114,6 @@ public class SimulationGameActivity extends Activity {
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 page = 1;
                 initData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
             // 下拉加载
@@ -122,8 +121,6 @@ public class SimulationGameActivity extends Activity {
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
                 page += 1;
                 initData();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
 
@@ -161,9 +158,18 @@ public class SimulationGameActivity extends Activity {
             switch (msg.what) {
                 case 0:
                     try {
+                        if("".equals(matchStr)){
+                            CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            dialog.dismiss();
+                            return;
+                        }
                         JSONObject jsonObject = new JSONObject(matchStr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                         }else{
                             ArrayList<MatchEntity> matchList = (ArrayList<MatchEntity>) JSON.parseArray(jsonObject.getString("data"),MatchEntity.class);
                             if(page == 1){
@@ -172,9 +178,12 @@ public class SimulationGameActivity extends Activity {
                                 matchLists.addAll(matchList);
                             }
                             sgAdapter.setlistData(matchLists);
-
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                         }
                     } catch (JSONException e) {
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
                     dialog.dismiss();

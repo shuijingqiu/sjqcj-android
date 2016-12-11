@@ -79,7 +79,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
         final PositionEntity positionEntity = listData.get(position);
         final String stock =  positionEntity.getStock();
         final String name =  positionEntity.getStock_name();
-        holder.name_code.setText(positionEntity.getStock_name() + "  " + stock);
+        holder.name_code.setText(positionEntity.getStock_name() + "(" + stock+")");
         holder.name_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
         });
         //成本价
         String costPrice = positionEntity.getCost_price();
-        holder.averageCost.setText(costPrice);
+        holder.averageCost.setText(Utils.getNumberFormat2(costPrice));
         // 持仓数量
         int positionValue = Integer.valueOf(positionEntity.getAvailable_number())+Integer.valueOf(positionEntity.getFreeze_number());
         holder.positionNumber.setText(positionValue+"");
@@ -110,15 +110,18 @@ public class MyDealAccountAdapter extends BaseAdapter {
                 holder.presentPrice.setTextColor(holder.presentPrice.getResources().getColor(R.color.color_1bc07d));
             }
             // 最新市价
-            String latestMarketPriceStr = Double.valueOf(price) * positionValue + "";
-            holder.latestMarketPrice.setText(Utils.getNumberFormat1(latestMarketPriceStr));
+            String latestMarketPriceStr = Utils.getNumberFormat1(Double.valueOf(price) * positionValue + "");
+            holder.latestMarketPrice.setText(latestMarketPriceStr);
             // 收益
-            String profitStr = (Double.valueOf(latestMarketPriceStr) - positionValue * Double.valueOf(costPrice))/Double.valueOf(latestMarketPriceStr) + "";
-            holder.profit.setText(Utils.getNumberFormat2(profitStr)+"%");
-            if (Double.valueOf(profitStr)>=0){
+            String profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+            holder.profit.setText(profitStr+"%");
+            if (Double.valueOf(profitStr)>0){
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));
-            }else{
+            }else if((Double.valueOf(profitStr)<0)){
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_1bc07d));
+            }
+            else{
+                holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_000000));
             }
         }
         // 可卖数量
