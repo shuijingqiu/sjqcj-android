@@ -52,12 +52,12 @@ public class Utils {
     }
 
     /**
-     * 防止暴力点击 1秒
+     * 防止暴力点击 4秒
      */
     public static boolean isFastDoubleClick4() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < 4000) {       //1000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
+        if (0 < timeD && timeD < 4000) {       //4000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
             return true;
         }
         lastClickTime = time;
@@ -547,7 +547,7 @@ public class Utils {
         if (week == 1 || week == 7){
             return false;
         }
-        if (hour < 9 || (hour == 9 && minuts<29) || hour > 15){
+        if (hour < 9 || (hour == 9 && minuts<29) || hour > 14){
             return false;
         }
         if ((hour > 11 || (hour == 11 &&  minuts > 31)) && hour < 13){

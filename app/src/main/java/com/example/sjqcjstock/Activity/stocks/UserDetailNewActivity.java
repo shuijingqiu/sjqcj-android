@@ -89,8 +89,6 @@ public class UserDetailNewActivity extends FragmentActivity{
     ;
     private String followerstr;
     private String followingstr;
-    // 获取自己的id信息
-    private String myuid;
     private ImageView vipImg;
     private String unamestr;
     private String list_idstr;
@@ -123,7 +121,6 @@ public class UserDetailNewActivity extends FragmentActivity{
      * 当前视图宽度
      **/
     private Integer viewPagerW = 0;
-
     // 微博的ListView
     private ListView commonlistview;
     // 定义List集合容器
@@ -244,11 +241,9 @@ public class UserDetailNewActivity extends FragmentActivity{
     private void initView() {
         myScrollView = (PullableScrollView) findViewById(R.id.myScrollView);
         titleName = (TextView) findViewById(R.id.title_name);
-        // 获取自己的id信息
-        myuid = getSharedPreferences("userinfo", MODE_PRIVATE).getString("userid", "");
         // 获取intent的数据
         uidstr = getIntent().getStringExtra("uid");
-        if (myuid.equals(uidstr)) {
+        if (Constants.staticmyuidstr.equals(uidstr)) {
             findViewById(R.id.private_letter_follow_ll).setVisibility(View.GONE);
             findViewById(R.id.line_iv).setVisibility(View.GONE);
             titleName.setText("我的主页");
@@ -299,7 +294,7 @@ public class UserDetailNewActivity extends FragmentActivity{
         new SendInfoTasksuserinfodetail().execute(new TaskParams(
                 Constants.Url + "?app=public&mod=Profile&act=AppUser",
                 new String[]{"mid", uidstr},
-                new String[]{"id", myuid}
+                new String[]{"id", Constants.staticmyuidstr}
         ));
         // 下面新加的东西
         textMicroBlog = (TextView) findViewById(R.id.text_micro_blog);
@@ -349,7 +344,6 @@ public class UserDetailNewActivity extends FragmentActivity{
         findViewWeibo();
         findViewStock();
         findViewTransaction();
-
     }
 
     /**
@@ -358,7 +352,11 @@ public class UserDetailNewActivity extends FragmentActivity{
     private void findViewTransaction() {
         linearTransaction = (LinearLayout) findViewById(R.id.fragment_transaction);
         assetsChart = (LineChart) findViewById(R.id.assets_chart);
-        listAdapter = new MyDealAccountAdapter(this);
+        boolean isRn = false;
+        if (Constants.staticmyuidstr.equals(uidstr)){
+            isRn = true;
+        }
+        listAdapter = new MyDealAccountAdapter(this,isRn);
         listView = (SoListView) findViewById(
                 R.id.list_view);
         listView.setAdapter(listAdapter);

@@ -134,7 +134,7 @@ public class SearchActivity extends Activity {
                         new String[]{"p", String.valueOf(page)}
                 ));
                 // 开线程调用股票查询接口
-                new SearchStocks().execute(new TaskParams("http://suggest3.sinajs.cn/suggest/type=111&key="+inputstr+"&name=suggestdata_1477116944882"));
+                new SearchStocks().execute(new TaskParams("http://suggest3.sinajs.cn/suggest/type=111&key="+inputstr));
             }
         });
 
@@ -241,7 +241,7 @@ public class SearchActivity extends Activity {
             for (String str:strs){
                 map3 = new HashMap<String, Object>();
                 String[] strlist = str.split(",");
-                map3.put("code",strlist[0]);
+                map3.put("code",strlist[2]);
                 map3.put("name",strlist[4]);
                 listStocks.add(map3);
             }

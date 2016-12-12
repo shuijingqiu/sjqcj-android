@@ -31,9 +31,6 @@ public class DynamicExpertAdapter extends BaseAdapter {
     // 加载用的数据
     private List<GeniusEntity> listData;
     private Context context;
-    // 买卖类型
-    private String type;
-
     public DynamicExpertAdapter(Context context) {
         super();
         this.context = context;
@@ -95,7 +92,6 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        type = geniusEntity.getType();
         holder.name.setText(geniusEntity.getUsername());
 //        holder.time.setText(geniusEntity.getTime().substring(0,10));
         holder.time.setText(geniusEntity.getTime());
@@ -109,7 +105,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
         holder.totalYield.setText(Utils.getNumberFormat2(geniusEntity.getTotal_rate())+"%");
         holder.nameCode.setText(geniusEntity.getStock_name()+"("+geniusEntity.getStock()+")");
         // 1代表买入2代表卖出
-        if("1".equals(type)){
+        if("1".equals(geniusEntity.getType())){
             holder.type.setText("买");
             holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
             holder.returnRate.setText(geniusEntity.getPrice());
@@ -134,7 +130,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // 1代表买入2代表卖出
-                if("1".equals(type)){
+                if("1".equals(geniusEntity.getType())){
                     Intent intent = new Intent(context.getApplicationContext(),
                             BusinessActivity.class);
                     // 要修改的

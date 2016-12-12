@@ -17,7 +17,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:textColor="@color/color_toptitle"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:text="万马股份 002276"/>
 
         <TextView
@@ -26,7 +26,8 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:background="@color/color_ef3e3e"
-            android:text="买入"/>
+            android:textSize="15dp"
+            android:text="买"/>
 
         <TextView
             android:id="@+id/time_tv"
@@ -35,6 +36,7 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/color_text2"
+            android:textSize="15dp"
             android:text="08:55:05"/>
 
     </LinearLayout>
@@ -56,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text2"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="委托价格"/>
 
 
@@ -77,7 +79,7 @@
                 android:textColor="@color/color_text2"
                 android:layout_below="@+id/name_price_tv"
                 android:layout_marginTop="3dp"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="成交数量"/>
 
 
@@ -90,7 +92,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_number_tv"
                 android:layout_below="@+id/name_price_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="0"/>
 
         </RelativeLayout>
@@ -105,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text2"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="委托数量"/>
 
 
@@ -116,7 +118,7 @@
                 android:textColor="@color/color_text1"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_commission_number_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="18.73"/>
 
             <TextView
@@ -126,7 +128,7 @@
                 android:textColor="@color/color_text2"
                 android:layout_below="@+id/name_commission_number_tv"
                 android:layout_marginTop="3dp"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="状        态"/>
 
 
@@ -139,7 +141,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_state_tv"
                 android:layout_below="@+id/name_commission_number_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="已报"/>
 
         </RelativeLayout>

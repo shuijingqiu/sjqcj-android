@@ -3,6 +3,7 @@ package com.example.sjqcjstock.Activity.stocks;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -115,6 +116,7 @@ public class BusinessActivity extends Activity {
         if (code !=null && !"".equals(code)){
             codeEt.setText(code);
         }
+        getData1();
     }
 
     /**
@@ -174,12 +176,23 @@ public class BusinessActivity extends Activity {
             ((Button) findViewById(R.id.confirm_business1)).setText("市价买入");
             businessNumberTv1.setText("可买");
         }
-        // 监听股票代码输入状态
-        codeEt.addTextChangedListener(watcher);
+
+//        // 监听股票代码输入状态
+//        codeEt.addTextChangedListener(watcher);
+        codeEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BusinessActivity.this, SearchSharesActivity.class);
+                intent.putExtra("code",code);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     /**
-     * 开线程获取当前股票信息
+     * 开线程获取当前用户账户信息
      */
     private void getData(){
         // 开线程获取用户账户信息和总盈利排名
@@ -192,6 +205,22 @@ public class BusinessActivity extends Activity {
             }
         }).start();
     }
+    /**
+     * 开线程获取当前股票信息
+     */
+    private void getData1(){
+        dialog.show();
+        // 开线程获取用户账户信息和总盈利排名
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 调用接口获取股票当前行情数据
+                stocksInfo = new sharesUtil().processOrderData(Utils.judgeSharesCode(code));
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
+    }
+
     /**
      * 增加价格的方法
      *
@@ -282,10 +311,11 @@ public class BusinessActivity extends Activity {
         }
 
         if ("2".equals(type)) {
-            if(Integer.valueOf(number) < 1){
-                CustomToast.makeText(getApplicationContext(), "请输入卖出数量", Toast.LENGTH_SHORT)
+            if(Integer.valueOf(number) == 0){
+                CustomToast.makeText(getApplicationContext(), "对不起你没有持仓数量", Toast.LENGTH_SHORT)
                         .show();
             }
+
         }else {
             if(Integer.valueOf(number) < 100){
                 numberEt.setText("100");
@@ -341,10 +371,11 @@ public class BusinessActivity extends Activity {
             return;
         }
         if ("2".equals(type)) {
-            if(Integer.valueOf(number) < 1){
-                CustomToast.makeText(getApplicationContext(), "请输入卖出数量", Toast.LENGTH_SHORT)
+            if(Integer.valueOf(number) == 0){
+                CustomToast.makeText(getApplicationContext(), "对不起你没有持仓数量", Toast.LENGTH_SHORT)
                         .show();
             }
+            return;
         }else{
             if(Integer.valueOf(number) < 100){
                 numberEt.setText("100");
@@ -437,38 +468,38 @@ public class BusinessActivity extends Activity {
             }
         });
     }
-
-    /**
-     * 监听股票代码的输入状态
-     */
-    private TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            code = s.toString();
-            if (s.toString().length() == 6){
-                code = Utils.judgeSharesCode(code);
-                dialog.show();
-                // 开线程获取股票数据信息
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 调用接口获取股票当前行情数据
-                        stocksInfo = new sharesUtil().processOrderData(code);
-                        handler.sendEmptyMessage(0);
-                    }
-                }).start();
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
+//
+//    /**
+//     * 监听股票代码的输入状态
+//     */
+//    private TextWatcher watcher = new TextWatcher() {
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            code = s.toString();
+//            if (s.toString().length() == 6){
+//                code = Utils.judgeSharesCode(code);
+//                dialog.show();
+//                // 开线程获取股票数据信息
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // 调用接口获取股票当前行情数据
+//                        stocksInfo = new sharesUtil().processOrderData(code);
+//                        handler.sendEmptyMessage(0);
+//                    }
+//                }).start();
+//            }
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//
+//        }
+//    };
 
     /**
      * 线程更新Ui
@@ -533,7 +564,6 @@ public class BusinessActivity extends Activity {
                     dialog.dismiss();
                     break;
                 case 1:
-                    Log.e("返回值mh",resstr);
                     if(!"".equals(resstr.trim())){
                         try {
                             JSONObject jsonObject = new JSONObject(resstr);

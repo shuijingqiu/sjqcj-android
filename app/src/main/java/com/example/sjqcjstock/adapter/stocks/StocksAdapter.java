@@ -64,7 +64,7 @@ public class StocksAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.stocksTv.setText(listStocks.get(position).get("name") + "(" + listStocks.get(position).get("code") + ")");
+        holder.stocksTv.setText(listStocks.get(position).get("name") + "（" + listStocks.get(position).get("code") + ")");
         return convertView;
     }
 

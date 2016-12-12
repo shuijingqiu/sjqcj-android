@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.Activity.stocks.BusinessActivity;
@@ -27,10 +28,12 @@ public class MyDealAccountAdapter extends BaseAdapter {
 
     private List<PositionEntity> listData;
     private Context context;
+    private boolean isRn = false;
 
-    public MyDealAccountAdapter(Context context) {
+    public MyDealAccountAdapter(Context context,boolean isRn) {
         super();
         this.context = context;
+        this.isRn = isRn;
     }
 
     public void setlistData(ArrayList<PositionEntity> listData) {
@@ -72,6 +75,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
             holder.transactionDetail = (TextView) convertView.findViewById(R.id.transaction_detail_tv);
             holder.purchase = (TextView) convertView.findViewById(R.id.purchase_tv);
             holder.sellOut = (TextView) convertView.findViewById(R.id.sell_out_tv);
+            holder.operationColumnLl = (LinearLayout) convertView.findViewById(R.id.operation_column_ll);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -79,6 +83,9 @@ public class MyDealAccountAdapter extends BaseAdapter {
         final PositionEntity positionEntity = listData.get(position);
         final String stock =  positionEntity.getStock();
         final String name =  positionEntity.getStock_name();
+        if (!isRn){
+            holder.operationColumnLl.setVisibility(View.GONE);
+        }
         holder.name_code.setText(positionEntity.getStock_name() + "(" + stock+")");
         holder.name_code.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +98,8 @@ public class MyDealAccountAdapter extends BaseAdapter {
             }
         });
         //成本价
-        String costPrice = positionEntity.getCost_price();
-        holder.averageCost.setText(Utils.getNumberFormat2(costPrice));
+        String costPrice = Utils.getNumberFormat2(positionEntity.getCost_price());
+        holder.averageCost.setText(costPrice);
         // 持仓数量
         int positionValue = Integer.valueOf(positionEntity.getAvailable_number())+Integer.valueOf(positionEntity.getFreeze_number());
         holder.positionNumber.setText(positionValue+"");
@@ -114,6 +121,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
             holder.latestMarketPrice.setText(latestMarketPriceStr);
             // 收益
             String profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+
             holder.profit.setText(profitStr+"%");
             if (Double.valueOf(profitStr)>0){
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));
@@ -177,5 +185,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
         TextView purchase;
         // 卖出
         TextView sellOut;
+        // 操作栏
+        LinearLayout operationColumnLl;
     }
 }

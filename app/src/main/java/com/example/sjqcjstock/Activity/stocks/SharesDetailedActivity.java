@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.Activity.stocks;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -153,6 +152,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         if (timer!=null) {
             // 关闭掉定时器
             timer.cancel();
+            timer.purge();
+            timer = null;
         }
     }
 
@@ -321,6 +322,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         }else{
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                         }
+                        Constants.isBuy = true;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -340,8 +342,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         // 持仓股数
                         number = jsonObject.getString("available");
                         if (number == null || Integer.valueOf(number) < 1){
-                            findViewById(R.id.sell_out_tv).setVisibility(View.GONE);
-                            findViewById(R.id.sell_out_v).setVisibility(View.GONE);
+                            number = "0";
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -354,6 +355,9 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         if ("success".equals(jsonObject.getString("status"))){
                             optionalValueTv.setText("+自选");
                             isRn = false;
+                            Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                         }
                         optionalId = "";
                     } catch (JSONException e) {
@@ -752,6 +756,10 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 加入自选股
      */
     public void optionalClick(View view) {
+        if (Utils.isFastDoubleClick()) {
+            return;
+        }
+        Constants.isBuy = true;
         // 开线程添加或删除自选股
         if (isRn){
             if (optionalId == null || "".equals(optionalId.trim())) return;

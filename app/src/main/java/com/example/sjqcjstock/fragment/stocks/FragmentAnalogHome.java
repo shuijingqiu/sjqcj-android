@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -45,6 +47,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 模拟炒股首页
@@ -52,10 +56,10 @@ import java.util.List;
  */
 public class FragmentAnalogHome extends Fragment {
 
-    // 上下拉刷新控件
-    private PullToRefreshLayout ptrl;
+//    // 上下拉刷新控件
+//    private PullToRefreshLayout ptrl;
     // ScrollView
-    private PullableScrollView myScrollView;
+    private ScrollView myScrollView;
     // 广告滚动的加载
     private CycleViewPager cycleViewPager;
     // 获取广告的接口的类
@@ -76,6 +80,8 @@ public class FragmentAnalogHome extends Fragment {
     private String resimg;
     // 缓存用的类
     private ACache mCache;
+    // 定时器
+    private Timer timer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +92,30 @@ public class FragmentAnalogHome extends Fragment {
         findView(view);
         initData();
         initData1();
-        return view;
+
+        if (Utils.isTransactionDate()) {
+            timer = new Timer();
+            // 开定时器获取数据
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    initData1();
+                }
+            };
+            timer.schedule(task, 30000, 30000); // 60s后执行task,经过60s再次执行
+        }
+            return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer!=null) {
+            // 关闭掉定时器
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
     }
 
     /**
@@ -97,29 +126,28 @@ public class FragmentAnalogHome extends Fragment {
             cycleViewPager = new CycleViewPager();
             this.getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_picture_imgs, cycleViewPager).commit();
         }
-
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage(Constants.loadMessage);
         dialog.setCancelable(true);
         dialog.show();
 
-        myScrollView = (PullableScrollView) view.findViewById(R.id.myScrollView);
-        ptrl = ((PullToRefreshLayout) view.findViewById(
-                R.id.refresh_view));
-        // 添加上下拉刷新事件
-        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            // 下来刷新
-            @Override
-            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                initData1();
-            }
-            // 下拉加载
-            @Override
-            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-            }
-        });
+        myScrollView = (ScrollView) view.findViewById(R.id.myScrollView);
+//        ptrl = ((PullToRefreshLayout) view.findViewById(
+//                R.id.refresh_view));
+//        // 添加上下拉刷新事件
+//        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+//            // 下来刷新
+//            @Override
+//            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+//                initData1();
+//            }
+//            // 下拉加载
+//            @Override
+//            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//            }
+//        });
 
         listAdapter = new DynamicExpertAdapter(getActivity());
         listView = (SoListView) view.findViewById(
@@ -242,6 +270,7 @@ public class FragmentAnalogHome extends Fragment {
             }
         }
     }
+
     /**
      * 数据的加载
      */
@@ -308,8 +337,8 @@ public class FragmentAnalogHome extends Fragment {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
-                            // 千万别忘了告诉控件刷新完毕了哦！
-                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                            // 千万别忘了告诉控件刷新完毕了哦！
+//                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             dialog.dismiss();
                             return;
                         }
@@ -324,8 +353,8 @@ public class FragmentAnalogHome extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    // 千万别忘了告诉控件刷新完毕了哦！
-                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                    // 千万别忘了告诉控件刷新完毕了哦！
+//                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     dialog.dismiss();
                     break;
                 case 1:

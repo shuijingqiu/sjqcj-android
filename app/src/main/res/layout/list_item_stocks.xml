@@ -8,6 +8,9 @@
     <TextView
         android:id="@+id/stocks_tv"
         android:layout_width="380dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="10dp"
+        android:textSize="15dp"/>
 
 </LinearLayout>

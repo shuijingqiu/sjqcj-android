@@ -292,10 +292,16 @@ public class FragmentTimeMap extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (strData.length() < 40){
-                dialog.show();
+                if (!dialog.isShowing()){
+                    dialog.show();
+                }
                 isCot++;
                 if (isCot < 5){
                     initData();
+                }else{
+                    if (dialog !=null ){
+                        dialog.dismiss();
+                    }
                 }
                 Log.e("mh:","123456---");
                 return;

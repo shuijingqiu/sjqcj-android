@@ -17,7 +17,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:textColor="@color/color_toptitle"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:text="金亚科技 300028"/>
 
         <TextView
@@ -26,7 +26,8 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:background="@color/color_ef3e3e"
-            android:text="买入"/>
+            android:textSize="15dp"
+            android:text="买"/>
 
         <TextView
             android:id="@+id/time_tv"
@@ -35,6 +36,7 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/color_text2"
+            android:textSize="15dp"
             android:text="2016-08-10 08:55:05"/>
 
     </LinearLayout>
@@ -56,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text2"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="成交价格"/>
 
             <TextView
@@ -66,7 +68,7 @@
                 android:textColor="@color/color_text1"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_price_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="18.73"/>
 
             <TextView
@@ -76,7 +78,7 @@
                 android:textColor="@color/color_text2"
                 android:layout_below="@+id/name_price_tv"
                 android:layout_marginTop="3dp"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="成交金额"/>
 
 
@@ -89,7 +91,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_money_tv"
                 android:layout_below="@+id/name_price_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="1450.00"/>
 
         </RelativeLayout>
@@ -104,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text2"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="成交数量"/>
 
 
@@ -115,7 +117,7 @@
                 android:textColor="@color/color_text1"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_number_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="1873"/>
 
             <TextView
@@ -125,7 +127,7 @@
                 android:textColor="@color/color_text2"
                 android:layout_below="@+id/name_number_tv"
                 android:layout_marginTop="3dp"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="交易费用"/>
 
 
@@ -138,7 +140,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_cost_tv"
                 android:layout_below="@+id/name_number_tv"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:text="5.00"/>
 
         </RelativeLayout>

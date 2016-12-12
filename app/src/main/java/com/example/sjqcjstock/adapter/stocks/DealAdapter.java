@@ -84,11 +84,11 @@ public class DealAdapter extends BaseAdapter {
         holder.cost.setText(Utils.getNumberFormat2(listData.get(position).getFee()));
         // 1代表买入2代表卖出
         if("1".equals(listData.get(position).getType())){
-             holder.type.setText("买入");
+             holder.type.setText("买");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
         }else{
-            holder.type.setText("卖出");
-            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_5471ef));
+            holder.type.setText("卖");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_1bc07d));
         }
         return convertView;
     }

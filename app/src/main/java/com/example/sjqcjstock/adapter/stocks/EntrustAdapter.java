@@ -95,7 +95,7 @@ public class EntrustAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
         new AlertDialog.Builder(context)
-            .setMessage("确认撤单吗？")
+            .setMessage("确认撤单")
             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -105,6 +105,7 @@ public class EntrustAdapter extends BaseAdapter {
             .setNegativeButton("否", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
                 }
             }).show();
             }

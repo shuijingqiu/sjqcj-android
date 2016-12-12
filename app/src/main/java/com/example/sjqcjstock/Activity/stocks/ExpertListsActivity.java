@@ -1,6 +1,7 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,7 +46,6 @@ public class ExpertListsActivity extends Activity {
     private ExpertListsAdapter expertListsAdapter;
     // 需要加载的数据集合
     private ArrayList<TotalProfitEntity> totalProfitList;
-
     // 页面显示类型(0:常胜牛人 1:人气牛人 2:总收益榜 3:选股牛人)
     private int type = 0;
     // 排行接口状态
@@ -54,6 +54,8 @@ public class ExpertListsActivity extends Activity {
     private String resstr;
     // 分页的页码
     private int page = 1;
+    // 网络请求提示
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,11 @@ public class ExpertListsActivity extends Activity {
                 finish();
             }
         });
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(true);
+        dialog.show();
+
         topTitle = (TextView) findViewById(R.id.top_title_tv);
         expertListsAdapter = new ExpertListsAdapter(this,type);
         listView = (ListView) findViewById(
@@ -178,6 +185,7 @@ public class ExpertListsActivity extends Activity {
 //                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            dialog.dismiss();
                             return;
                         }
                         // 持仓的数据
@@ -195,6 +203,7 @@ public class ExpertListsActivity extends Activity {
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
+                    dialog.dismiss();
             }
         }
     };

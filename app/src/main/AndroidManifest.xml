@@ -345,6 +345,9 @@
         <activity
             android:name=".Activity.stocks.UserDetailNewActivity"
             android:label="最新的个人中心列表" />
+        <activity
+            android:name=".Activity.stocks.SearchSharesActivity"
+            android:label="股票代码检索页" />
 
         <receiver
             android:name=".AppRegister"

@@ -117,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/return_rate_tv"
+            android:layout_centerVertical="true"
             android:textColor="@color/red"
             android:textSize="14sp" />
 

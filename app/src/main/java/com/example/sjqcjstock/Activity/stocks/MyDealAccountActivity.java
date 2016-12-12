@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 我的交易账户
@@ -49,10 +52,10 @@ import java.util.Map;
  */
 public class MyDealAccountActivity extends Activity {
 
-    // 上下拉刷新控件
-    private PullToRefreshLayout ptrl;
+//    // 上下拉刷新控件
+//    private PullToRefreshLayout ptrl;
     // ScrollView
-    private PullableScrollView myScrollView;
+    private ScrollView myScrollView;
     // 股票交易的List
     private SoListView listView;
     // 自选股的List
@@ -130,6 +133,8 @@ public class MyDealAccountActivity extends Activity {
 //    private double totalAssets = 0;
 //    // 可用资金
 //    private double totalAmount = 0;
+    // 定时器
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,18 +143,54 @@ public class MyDealAccountActivity extends Activity {
         setContentView(R.layout.activity_my_deal_account);
         ExitApplication.getInstance().addActivity(this);
         findView();
-        getData();
-        getData1();
         initLine();
-        Constants.isBuy = false;
+        Constants.isBuy = true;
+        timer = new Timer(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.isBuy){
-            getData();
-            Constants.isBuy = false;
+        market = 0;
+        // 回到页面看刷新不
+        if (Utils.isTransactionDate()){
+            timer = new Timer(true);
+            // 开定时器获取数据
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    market = 0;
+                    getData();
+                }
+            };
+            timer.schedule(task, 0, 30000); // 0s后执行task,经过30s再次执行
+        }else{
+            if (Constants.isBuy){
+                getData();
+                Constants.isBuy = false;
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (timer!=null) {
+            // 页面关闭时
+            // 关闭掉定时器
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer!=null) {
+            // 页面关闭时
+            // 关闭掉定时器
+            timer.cancel();
         }
     }
 
@@ -172,7 +213,7 @@ public class MyDealAccountActivity extends Activity {
         });
         transactionLl = (LinearLayout) findViewById(R.id.transaction_ll);
         stockLl = (LinearLayout) findViewById(R.id.stock_ll);
-        listAdapter = new MyDealAccountAdapter(this);
+        listAdapter = new MyDealAccountAdapter(this,true);
         entrustAdapter = new EntrustAdapter(this,this);
         listView = (SoListView) findViewById(
                 R.id.position_list);
@@ -214,29 +255,29 @@ public class MyDealAccountActivity extends Activity {
             }
         });
 
-        myScrollView = (PullableScrollView) findViewById(R.id.myScrollView);
-        ptrl = ((PullToRefreshLayout) findViewById(
-                R.id.refresh_view));
-        // 添加上下拉刷新事件
-        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            // 下来刷新
-            @Override
-            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                if (transactionLl.getVisibility()==View.VISIBLE){
-                    market = 0;
-                    getData();
-                }
-                else{
-                    getData1();
-                }
-            }
-            // 下拉加载
-            @Override
-            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-            }
-        });
+        myScrollView = (ScrollView) findViewById(R.id.myScrollView);
+//        ptrl = ((PullToRefreshLayout) findViewById(
+//                R.id.refresh_view));
+//        // 添加上下拉刷新事件
+//        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+//            // 下来刷新
+//            @Override
+//            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+//                if (transactionLl.getVisibility()==View.VISIBLE){
+//                    market = 0;
+//                    getData();
+//                }
+//                else{
+//                    getData1();
+//                }
+//            }
+//            // 下拉加载
+//            @Override
+//            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//            }
+//        });
 
         textTransaction = (TextView) findViewById(R.id.text_transaction);
         textStock = (TextView) findViewById(R.id.text_my_stock);
@@ -252,7 +293,10 @@ public class MyDealAccountActivity extends Activity {
         findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyDealAccountActivity.this, SearchActivity.class);
+//                Intent intent = new Intent(MyDealAccountActivity.this, SearchActivity.class);
+//                startActivity(intent);
+                Intent intent = new Intent(MyDealAccountActivity.this, SearchSharesActivity.class);
+                intent.putExtra("jumpType","1");
                 startActivity(intent);
             }
         });
@@ -280,12 +324,6 @@ public class MyDealAccountActivity extends Activity {
                 handler.sendEmptyMessage(3);
             }
         }).start();
-    }
-
-    /**
-     * 获取自选股信息
-     */
-    private void getData1(){
         // 开线程获取用户获取自选股
         new Thread(new Runnable() {
             @Override
@@ -318,8 +356,8 @@ public class MyDealAccountActivity extends Activity {
                         ArrayList<PositionEntity> entrustList = (ArrayList<PositionEntity>) JSON.parseArray(jsonObject.getString("nData"),PositionEntity.class);
                             positionArrayList = positionList;
                             entrustArrayList = entrustList;
-                        String number = "";
-                        String price = "";
+//                        String number = "";
+//                        String price = "";
 //                        // 计算总资金
 //                        for(PositionEntity entrust:entrustList){
 //                            number = entrust.getNumber();
@@ -344,10 +382,10 @@ public class MyDealAccountActivity extends Activity {
                             getRealTimeData(positionList);
                             listAdapter.setlistData(positionArrayList);
 
-                        if (transactionLl.getVisibility() == View.VISIBLE) {
-                            // 千万别忘了告诉控件刷新完毕了哦！
-                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                        }
+//                        if (transactionLl.getVisibility() == View.VISIBLE) {
+//                            // 千万别忘了告诉控件刷新完毕了哦！
+//                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -356,10 +394,13 @@ public class MyDealAccountActivity extends Activity {
                         dialog.dismiss();
                     break;
                 case 1:
-                    Double price;
+                    Double price = 0.0;
                     for(int i = 0;i < positionArrayList.size();i++){
                         Map<String,String> mStr = mapStr.get(positionArrayList.get(i).getStock());
-                        price = Double.valueOf(mStr.get("price"));
+                        String prices = mStr.get("price");
+                        if (prices != null && !"".equals(prices)) {
+                            price = Double.valueOf(prices);
+                        }
                         positionArrayList.get(i).setLatest_price(price+"");
                         positionArrayList.get(i).setIsType(mStr.get("type"));
                         // 持仓数量
@@ -418,9 +459,10 @@ public class MyDealAccountActivity extends Activity {
                 case 4:
                     try {
                         JSONObject jsonObject = new JSONObject(zxgstr);
+                        stockAdapter.setlistData(new  ArrayList<OptionalEntity>());
                         if ("failed".equals(jsonObject.getString("status"))){
                             if (stockLl.getVisibility() == View.VISIBLE){
-                                Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             }
                             return;
                         }
@@ -431,10 +473,10 @@ public class MyDealAccountActivity extends Activity {
                         optionalArrayList = optionalList;
                         // 获取股票实时数据
                         getoptionalData(optionalList);
-                        if (stockLl.getVisibility() == View.VISIBLE){
-                            // 千万别忘了告诉控件刷新完毕了哦！
-                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                        }
+//                        if (stockLl.getVisibility() == View.VISIBLE){
+//                            // 千万别忘了告诉控件刷新完毕了哦！
+//                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -534,8 +576,7 @@ public class MyDealAccountActivity extends Activity {
      * 买入的单机事件
      */
     public void buyClick(View view) {
-        Intent intent = new Intent(this, BusinessActivity.class);
-        intent.putExtra("type", "1");
+        Intent intent = new Intent(this, SearchSharesActivity.class);
         startActivity(intent);
     }
 
