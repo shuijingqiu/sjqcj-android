@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.StocksAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
+import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.ViewUtil;
@@ -37,8 +38,6 @@ public class SearchSharesActivity extends Activity {
     private ArrayList<HashMap<String, Object>> listStocks;
     // 加载股票的adapter
     private StocksAdapter stocksAdapter;
-    // 股票代码
-    private String code;
     // 跳转地方
     private String jumpType;
 
@@ -51,11 +50,7 @@ public class SearchSharesActivity extends Activity {
         // 将Activity反复链表
         ExitApplication.getInstance().addActivity(this);
         initView();
-        code = getIntent().getStringExtra("code");
         jumpType = getIntent().getStringExtra("jumpType");
-        if (code !=null){
-            et_searchFriend.setText(code);
-        }
     }
 
     private void initView() {
@@ -79,10 +74,7 @@ public class SearchSharesActivity extends Activity {
                     intent.putExtra("code", listStocks.get(position).get("code")+"");
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(SearchSharesActivity.this, BusinessActivity.class);
-                    intent.putExtra("type", "1");
-                    intent.putExtra("code", listStocks.get(position).get("code")+"");
-                    startActivity(intent);
+                    Constants.choiceCode = listStocks.get(position).get("code")+"";
                     finish();
                 }
 
@@ -140,7 +132,7 @@ public class SearchSharesActivity extends Activity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            code = s.toString();
+            String code = s.toString();
             // 开线程调用股票查询接口
             new SearchStocks().execute(new TaskParams("http://suggest3.sinajs.cn/suggest/type=111&key="+code));
         }

@@ -26,7 +26,6 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
 import com.example.sjqcjstock.view.CustomToast;
-import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -100,7 +99,7 @@ public class BusinessActivity extends Activity {
     // 调用接口获取用户的交易排名信息
     private String xxstr = "";
     // 可用资金
-    private double totalAmount = 0;
+    private String totalAmount = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +114,19 @@ public class BusinessActivity extends Activity {
         businessNumber = getIntent().getStringExtra("number");
         if (code !=null && !"".equals(code)){
             codeEt.setText(code);
+            getData1();
         }
-        getData1();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!"".equals(Constants.choiceCode)){
+            code = Constants.choiceCode;
+            codeEt.setText(code);
+            getData1();
+            Constants.choiceCode = "";
+        }
     }
 
     /**
@@ -182,10 +192,10 @@ public class BusinessActivity extends Activity {
         codeEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BusinessActivity.this, SearchSharesActivity.class);
-                intent.putExtra("code",code);
-                startActivity(intent);
-                finish();
+                if (!"2".equals(type)) {
+                    Intent intent = new Intent(BusinessActivity.this, SearchSharesActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -291,7 +301,13 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void confirmBusiness(View view) {
+        if (Utils.isFastDoubleClick3()){
+            return;
+        }
         String number = numberEt.getText().toString();
+        if (businessNumber==null || Double.valueOf(businessNumber) < 1){
+            number = "0";
+        }
         // 当前输入的价格
         spotPrice = priceEt.getText().toString();
         if ("".equals(code)){
@@ -314,8 +330,9 @@ public class BusinessActivity extends Activity {
             if(Integer.valueOf(number) == 0){
                 CustomToast.makeText(getApplicationContext(), "对不起你没有持仓数量", Toast.LENGTH_SHORT)
                         .show();
+                numberEt.setText("0");
+                return;
             }
-
         }else {
             if(Integer.valueOf(number) < 100){
                 numberEt.setText("100");
@@ -351,10 +368,15 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void confirmBusiness1(View view) {
+        if (Utils.isFastDoubleClick3()){
+            return;
+        }
         String number = numberEt.getText().toString();
+        if (businessNumber==null || Double.valueOf(businessNumber) < 1){
+            number = "0";
+        }
         // 当前输入的价格
         String spotPriceStr = priceEt.getText().toString();
-
         if ("".equals(code)){
             CustomToast.makeText(getApplicationContext(), "请输股票代码", Toast.LENGTH_SHORT)
                     .show();
@@ -374,8 +396,9 @@ public class BusinessActivity extends Activity {
             if(Integer.valueOf(number) == 0){
                 CustomToast.makeText(getApplicationContext(), "对不起你没有持仓数量", Toast.LENGTH_SHORT)
                         .show();
+                numberEt.setText("0");
+                return;
             }
-            return;
         }else{
             if(Integer.valueOf(number) < 100){
                 numberEt.setText("100");
@@ -515,7 +538,7 @@ public class BusinessActivity extends Activity {
                         spotPrice = stocksInfo.getSpotPrice();
                         priceEt.setText(spotPrice);
                         if ("1".equals(type)) {
-                            businessNumber = totalAmount / Double.valueOf(spotPrice) + "";
+                            businessNumber = Double.valueOf(totalAmount) / Double.valueOf(spotPrice) + "";
                             businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
                         }
                         businessNumberTv.setText(businessNumber);
@@ -606,9 +629,9 @@ public class BusinessActivity extends Activity {
                             return;
                         }else{
                             JSONObject jsonData = new JSONObject(jsonObject.getString("data"));
-                            totalAmount = jsonData.getDouble("available_funds");
+                            totalAmount = jsonData.getString("available_funds");
                             if ("1".equals(type) && Double.valueOf(spotPrice)>0) {
-                                businessNumber = totalAmount / Double.valueOf(spotPrice) + "";
+                                businessNumber = Double.valueOf(totalAmount) / Double.valueOf(spotPrice) + "";
                                 businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
                                 businessNumberTv.setText(businessNumber);
                             }

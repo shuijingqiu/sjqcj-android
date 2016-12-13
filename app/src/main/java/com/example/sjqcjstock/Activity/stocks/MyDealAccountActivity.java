@@ -576,7 +576,7 @@ public class MyDealAccountActivity extends Activity {
      * 买入的单机事件
      */
     public void buyClick(View view) {
-        Intent intent = new Intent(this, SearchSharesActivity.class);
+        Intent intent = new Intent(this, BusinessActivity.class);
         startActivity(intent);
     }
 

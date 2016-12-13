@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -191,6 +192,8 @@ public class UserDetailNewActivity extends FragmentActivity{
     private LinearLayout.LayoutParams lp ;
     // 可用资金
     private double availableFundsValue = 0;
+    // 网络请求提示
+    private ProgressDialog dialog;
 
 
     @Override
@@ -207,7 +210,7 @@ public class UserDetailNewActivity extends FragmentActivity{
         }
         initView();
         initLine();
-        getStockData();
+//        getStockData();
 
         // 获取屏幕宽度
         Point size = new Point();
@@ -220,16 +223,16 @@ public class UserDetailNewActivity extends FragmentActivity{
             linearTransaction.setVisibility(View.VISIBLE);
             // 关键算法
             lp.leftMargin = (int) ((int) (mScreen1_4 * 1) + (((double) 2 / viewPagerW) * mScreen1_4));
-            ptrl.autoRefresh();
-            getWeiBoData();
+//            ptrl.autoRefresh();
+            getTransactionData();
             textMicroBlog.setTextColor(unselect_color);
             textTransaction.setTextColor(select_color);
         }else{
             fragmentMicroBlog.setVisibility(View.VISIBLE);
             // 关键算法
             lp.leftMargin = (int) ((int) (mScreen1_4 * 0) + (((double) 1 / viewPagerW) * mScreen1_4));
-            ptrl.autoRefresh();
-            getTransactionData();
+//            ptrl.autoRefresh();
+            getWeiBoData();
             textMicroBlog.setTextColor(select_color);
             textTransaction.setTextColor(unselect_color);
         }
@@ -239,6 +242,10 @@ public class UserDetailNewActivity extends FragmentActivity{
     }
 
     private void initView() {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(true);
+        dialog.show();
         myScrollView = (PullableScrollView) findViewById(R.id.myScrollView);
         titleName = (TextView) findViewById(R.id.title_name);
         // 获取intent的数据
@@ -678,14 +685,26 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case R.id.linear_micro_blog:
                     textMicroBlog.setTextColor(select_color);
                     fragmentMicroBlog.setVisibility(View.VISIBLE);
+                    if (listusercommonnoteData.size() < 0){
+                        dialog.dismiss();
+                        getWeiBoData();
+                    }
                     break;
                 case R.id.linear_transaction:
                     textTransaction.setTextColor(select_color);
                     linearTransaction.setVisibility(View.VISIBLE);
+                    if ("".equals(mMresstr)){
+                        dialog.show();
+                        getTransactionData();
+                    }
                     break;
                 case R.id.linear_my_stock:
                     textStock.setTextColor(select_color);
                     linearStock.setVisibility(View.VISIBLE);
+                    if ("".equals(resstr)){
+                        dialog.show();
+                        getStockData();
+                    }
                     break;
             }
             // 关键算法
@@ -767,7 +786,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             String datastr2 = null;
             List<Map<String, Object>> datastrlists2 = null;
             if (result == null) {
-                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_LONG).show();
+                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_SHORT).show();
 //                // 千万别忘了告诉控件刷新完毕了哦！失败
 //                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
             } else {
@@ -976,11 +995,12 @@ public class UserDetailNewActivity extends FragmentActivity{
                 }
                 usercommonnoteAdapter.setlistData(listusercommonnoteData);
                 ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
-                if (fragmentMicroBlog.getVisibility()==View.VISIBLE) {
-                    // 千万别忘了告诉控件刷新完毕了哦！
-                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                }
             }
+            if (fragmentMicroBlog.getVisibility()==View.VISIBLE) {
+                // 千万别忘了告诉控件刷新完毕了哦！
+                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+            dialog.dismiss();
         }
     }
 
@@ -1000,6 +1020,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                                 // 千万别忘了告诉控件刷新完毕了哦！
                                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             }
+                            dialog.dismiss();
                             return;
                         }
                         // 自选股的数据
@@ -1015,6 +1036,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
+                    dialog.dismiss();
                     break;
                 case 1:
                     // 重新加载自选股列表
@@ -1056,6 +1078,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
+                    dialog.dismiss();
                     break;
                 case 3:
                     Double price;

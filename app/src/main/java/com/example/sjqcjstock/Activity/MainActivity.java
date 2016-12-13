@@ -347,34 +347,34 @@ public class MainActivity extends FragmentActivity {
      */
     private void obtainToken(){
         // 当前用户类型
-        String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
-        String login_email = getSharedPreferences("userinfo", MODE_PRIVATE).getString("login_email", "");
-        String url = "";
-        TaskParams taskParams = null;
-        if ("qq".equals(type)){
-            taskParams = new TaskParams(
-                    Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
-                    new String[]{"type", "qq"},
-                    new String[]{"tokey", Constants.statictokeystr}
-            );
-        }else if("weixin".equals(type)){
-            taskParams = new TaskParams(
-                    Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
-                    new String[]{"type", "weixin"},
-                    new String[]{"tokey", Constants.statictokeystr}
-            );
-        }else{
-            taskParams = new TaskParams(
-                    Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr
-            );
-        }
-        final TaskParams taskps = taskParams;
+        final String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+        final String login_email = getSharedPreferences("userinfo", MODE_PRIVATE).getString("login_email", "");
         Timer timer = new Timer();
         // 开定时器获取数据
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                new SendInfoTaskForCommonUserLogin().execute(taskps);
+                String url = "";
+                TaskParams taskParams = null;
+                if ("qq".equals(type)){
+                    taskParams = new TaskParams(
+                            Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
+                            new String[]{"type", "qq"},
+                            new String[]{"tokey", Constants.statictokeystr}
+                    );
+                }else if("weixin".equals(type)){
+                    taskParams = new TaskParams(
+                            Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
+                            new String[]{"type", "weixin"},
+                            new String[]{"tokey", Constants.statictokeystr}
+                    );
+                }else{
+                    taskParams = new TaskParams(
+                            Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr
+                    );
+                }
+                new SendInfoTaskForCommonUserLogin().execute(taskParams);
+
             }
         };
         timer.schedule(task, 10, 1000*60*30); // 10ms后执行task,经过0.5h再次执行

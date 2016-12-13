@@ -558,7 +558,7 @@
                 android:layout_weight="1"
                 android:onClick="optionalClick"
                 android:clickable="true"
-                android:text="+自选"/>
+                android:text="＋自选"/>
 
         </LinearLayout>
 

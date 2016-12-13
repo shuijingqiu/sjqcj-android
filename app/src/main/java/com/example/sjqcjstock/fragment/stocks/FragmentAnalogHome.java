@@ -2,7 +2,6 @@ package com.example.sjqcjstock.fragment.stocks;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -31,14 +30,10 @@ import com.example.sjqcjstock.entity.ADInfo;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
-import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.userdefined.MyScrollView;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.CycleViewPager;
-import com.example.sjqcjstock.view.PullToRefreshLayout;
-import com.example.sjqcjstock.view.PullableScrollView;
 import com.example.sjqcjstock.view.SoListView;
 
 import org.json.JSONArray;
@@ -59,7 +54,7 @@ public class FragmentAnalogHome extends Fragment {
 //    // 上下拉刷新控件
 //    private PullToRefreshLayout ptrl;
     // ScrollView
-    private ScrollView myScrollView;
+    private MyScrollView myScrollView;
     // 广告滚动的加载
     private CycleViewPager cycleViewPager;
     // 获取广告的接口的类
@@ -90,9 +85,9 @@ public class FragmentAnalogHome extends Fragment {
         // 缓存类
         mCache = ACache.get(getActivity());
         findView(view);
-        initData();
+        // 先不要缓存
+//        initData();
         initData1();
-
         if (Utils.isTransactionDate()) {
             timer = new Timer();
             // 开定时器获取数据
@@ -131,7 +126,7 @@ public class FragmentAnalogHome extends Fragment {
         dialog.setCancelable(true);
         dialog.show();
 
-        myScrollView = (ScrollView) view.findViewById(R.id.myScrollView);
+        myScrollView = (MyScrollView) view.findViewById(R.id.myScrollView);
 //        ptrl = ((PullToRefreshLayout) view.findViewById(
 //                R.id.refresh_view));
 //        // 添加上下拉刷新事件
@@ -236,7 +231,6 @@ public class FragmentAnalogHome extends Fragment {
                 startActivity(intent);
             }
         });
-
         /**
          * 模拟交易
          */
@@ -261,14 +255,13 @@ public class FragmentAnalogHome extends Fragment {
      * 加载缓存的数据
      */
     private void initData() {
-        String data = mCache.getAsString("orders");
-        if (data != null){
-            geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(data,GeniusEntity.class);
-            if (geniusList != null && geniusList.size()>0) {
-                listAdapter.setlistData(geniusList);
-                dialog.dismiss();
+        // 开线程加载缓存数据
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(2);
             }
-        }
+        }).start();
     }
 
     /**
@@ -316,7 +309,6 @@ public class FragmentAnalogHome extends Fragment {
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (cycleViewPager.isCycle()) {
-                position = position - 1;
                 Intent intent = new Intent(getActivity(), advertUrlActivity.class);
                 intent.putExtra("url", info.getContent());
                 startActivity(intent);
@@ -347,9 +339,9 @@ public class FragmentAnalogHome extends Fragment {
                         mCache.put("orders", data);
                         geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
                         listAdapter.setlistData(geniusList);
-                        ViewUtil.setListViewHeightBasedOnChildren(listView);
+//                        ViewUtil.setListViewHeightBasedOnChildren(listView);
                         // 滚动到顶部
-                        myScrollView.scrollTo(0, 0);
+                        myScrollView.smoothScrollTo(0, 0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -379,6 +371,20 @@ public class FragmentAnalogHome extends Fragment {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    String data = mCache.getAsString("orders");
+                    if (data != null){
+                        geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(data,GeniusEntity.class);
+                        if (geniusList != null && geniusList.size()>0) {
+                            listAdapter.setlistData(geniusList);
+//                            ViewUtil.setListViewHeightBasedOnChildren(listView);
+                            // 滚动到顶部
+                            myScrollView.smoothScrollTo(0, 0);
+                            dialog.dismiss();
+                            Log.e("mh123","jingle---"+geniusList.size());
+                        }
                     }
                     break;
             }

@@ -39,12 +39,12 @@ public class Constants {
     public static String apptoken = "";
     // 判断第三方登录的时候是否修改过密码
     public static Boolean isDefault = true;
-
     // 没有用
     public static String intentFlag = "";
-
     // 全局变数水晶币个数(每次进入程序就需要获取一次)
     public static String shuijinbiCount = "";
+    // 检索后选中的股票代码
+    public static String choiceCode ="";
 
     // 服务器路径
     public static String Url = "http://www.sjqcj.com/index.php";

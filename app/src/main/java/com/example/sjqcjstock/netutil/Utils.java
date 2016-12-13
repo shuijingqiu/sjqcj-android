@@ -52,6 +52,19 @@ public class Utils {
     }
 
     /**
+     * 防止暴力点击 1秒
+     */
+    public static boolean isFastDoubleClick3() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < 2000) {       //2000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
+
+    /**
      * 防止暴力点击 4秒
      */
     public static boolean isFastDoubleClick4() {

@@ -13,11 +13,14 @@
 
         <TextView
             android:id="@+id/ranking_tv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/color_666666"
             android:gravity="center"
-            android:text=""/>
+            android:textSize="15sp"
+            android:text="100"/>
 
         <ImageView
             android:id="@+id/head_iv"

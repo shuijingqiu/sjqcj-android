@@ -316,7 +316,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("success".equals(jsonObject.getString("status"))){
                             isRn = true;
-                            optionalValueTv.setText("-自选");
+                            optionalValueTv.setText("－自选");
                             optionalId = jsonObject.getString("data");
                             Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
                         }else{
@@ -332,11 +332,11 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         JSONObject jsonObject = new JSONObject(isOptionalStr);
 
                         if ("success".equals(jsonObject.getString("status"))){
-                            optionalValueTv.setText("-自选");
+                            optionalValueTv.setText("－自选");
                             optionalId = jsonObject.getString("data");
                             isRn = true;
                         }else{
-                            optionalValueTv.setText("+自选");
+                            optionalValueTv.setText("＋自选");
                             isRn = false;
                         }
                         // 持仓股数
@@ -353,7 +353,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                         JSONObject jsonObject = new JSONObject(delstr);
                         Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                         if ("success".equals(jsonObject.getString("status"))){
-                            optionalValueTv.setText("+自选");
+                            optionalValueTv.setText("＋自选");
                             isRn = false;
                             Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
                         }else{
