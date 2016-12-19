@@ -28,9 +28,13 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
+import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -98,8 +102,10 @@ public class userinfoeditActivitynew extends Activity {
     // 判断选择性别的属性,默认为男性
     private String selectedsexstr = "1";
     // 从intent获取的用户信息
-    String unamestr2;
-    String introstr2;
+    private String unamestr2;
+    private String introstr2;
+    // 头像图片
+    private String avatar_middlestr2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +129,7 @@ public class userinfoeditActivitynew extends Activity {
         unamestr2 = intent.getStringExtra("unamestr");
         String sexstr2 = intent.getStringExtra("sexstr");
         introstr2 = intent.getStringExtra("introstr");
-        String avatar_middlestr2 = intent.getStringExtra("avatar_middlestr");
+        avatar_middlestr2 = intent.getStringExtra("avatar_middlestr");
 
         pickselectsex1 = (LinearLayout) findViewById(R.id.pickselectsex1);
         selectsexs1 = (RelativeLayout) findViewById(R.id.selectsexs1);
@@ -154,13 +160,11 @@ public class userinfoeditActivitynew extends Activity {
         // 改变默认选项
         // 性别选择框动效设置
         if ("1".equals(sexstr2)) {
-
             selectedsexstr = "1";
             sexcontent1.setText("男");
         } else if ("2".equals(sexstr2)) {
             selectedsexstr = "2";
             sexcontent1.setText("女");
-
         }
 
         if ("1".equals(selectedsexstr)) {
@@ -191,15 +195,6 @@ public class userinfoeditActivitynew extends Activity {
         pickusername1.setOnClickListener(new pickusername1_listener());
         pickpersonalintro1
                 .setOnClickListener(new pickpersonalintro1_listener());
-
-        //
-        // if("男".equals(sexcontent1.getText().toString())){
-        // selectedsexstr="1";
-        //
-        // }else if("女".equals(sexcontent1.getText().toString())){
-        // selectedsexstr="0";
-        //
-        // }
 
     }
 
@@ -406,9 +401,7 @@ public class userinfoeditActivitynew extends Activity {
                                 + "";
                         picwidthstr = datastrmap.get("picwidth")
                                 + "";
-
                     }
-
                 }
 
                 new SendInfoTasksaveheadimg()
@@ -447,6 +440,16 @@ public class userinfoeditActivitynew extends Activity {
 
                         );
             }
+            // 清除本地缓存图片
+            DiskCacheUtils.removeFromCache(Md5Util.getuidstrMd5(Md5Util
+                    .getMd5(Constants.staticmyuidstr)), ImageLoader.getInstance().getDiskCache());
+            MemoryCacheUtils.removeFromCache(Md5Util.getuidstrMd5(Md5Util
+                    .getMd5(Constants.staticmyuidstr)), ImageLoader.getInstance().getMemoryCache());
+
+            DiskCacheUtils.removeFromCache(Md5Util.getuidstrMd5(Md5Util
+                    .getMd5(avatar_middlestr2)), ImageLoader.getInstance().getDiskCache());
+            MemoryCacheUtils.removeFromCache(Md5Util.getuidstrMd5(Md5Util
+                    .getMd5(avatar_middlestr2)), ImageLoader.getInstance().getMemoryCache());
 
         }
     };

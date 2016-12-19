@@ -108,10 +108,13 @@ public class BusinessActivity extends Activity {
         setContentView(R.layout.activity_business);
         ExitApplication.getInstance().addActivity(this);
         type = getIntent().getStringExtra("type");
-        findView();
-        getData();
         code = getIntent().getStringExtra("code");
         businessNumber = getIntent().getStringExtra("number");
+        if (businessNumber == null){
+            businessNumber = "0";
+        }
+        findView();
+        getData();
         if (code !=null && !"".equals(code)){
             codeEt.setText(code);
             getData1();
@@ -220,7 +223,6 @@ public class BusinessActivity extends Activity {
      */
     private void getData1(){
         dialog.show();
-        // 开线程获取用户账户信息和总盈利排名
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -244,6 +246,7 @@ public class BusinessActivity extends Activity {
                     spotPrice = stocksInfo.getHighLimit();
                 }
                 priceEt.setText(spotPrice);
+                priceEt.setSelection(priceEt.length());
             }
         }
     }
@@ -261,6 +264,7 @@ public class BusinessActivity extends Activity {
                     spotPrice = stocksInfo.getPriceLimit();
                 }
                 priceEt.setText(spotPrice);
+                priceEt.setSelection(priceEt.length());
             }
         }
     }
@@ -272,7 +276,11 @@ public class BusinessActivity extends Activity {
      */
     public void numberQuarter(View view) {
         if (businessNumber == null) return;
-        numberEt.setText(Integer.valueOf(businessNumber)/4/100*100+"");
+        if ("2".equals(type)) {
+            numberEt.setText(Integer.valueOf(businessNumber) / 4 + "");
+        }else{
+            numberEt.setText(Integer.valueOf(businessNumber) / 4 / 100 * 100 + "");
+        }
     }
 
     /**
@@ -282,7 +290,11 @@ public class BusinessActivity extends Activity {
      */
     public void numberAhalf(View view) {
         if (businessNumber == null) return;
-        numberEt.setText(Integer.valueOf(businessNumber)/2/100*100+"");
+        if ("2".equals(type)) {
+            numberEt.setText(Integer.valueOf(businessNumber) / 2 + "");
+        }else{
+            numberEt.setText(Integer.valueOf(businessNumber) / 2 / 100 * 100 + "");
+        }
     }
 
     /**
@@ -302,6 +314,16 @@ public class BusinessActivity extends Activity {
      */
     public void confirmBusiness(View view) {
         if (Utils.isFastDoubleClick3()){
+            return;
+        }
+        if (stocksInfo.getZuoShou() == null ||Double.valueOf(stocksInfo.getZuoShou()) <= 0){
+            CustomToast.makeText(getApplicationContext(), "该股票已停牌", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        if (Double.valueOf(spotPrice) <= 0){
+            CustomToast.makeText(getApplicationContext(), "集合竞价中不进行交易", Toast.LENGTH_SHORT)
+                    .show();
             return;
         }
         String number = numberEt.getText().toString();
@@ -359,6 +381,7 @@ public class BusinessActivity extends Activity {
             spotPrice = stocksInfo.getHighLimit();
             priceEt.setText(spotPrice);
         }
+        priceEt.setSelection(priceEt.length());
         showDialog("2");
     }
 
@@ -369,6 +392,16 @@ public class BusinessActivity extends Activity {
      */
     public void confirmBusiness1(View view) {
         if (Utils.isFastDoubleClick3()){
+            return;
+        }
+        if (stocksInfo.getZuoShou() == null ||Double.valueOf(stocksInfo.getZuoShou()) <= 0){
+            CustomToast.makeText(getApplicationContext(), "该股票已停牌", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        if (Double.valueOf(spotPrice) <= 0){
+            CustomToast.makeText(getApplicationContext(), "停牌或集合竞价中不进行交易", Toast.LENGTH_SHORT)
+                    .show();
             return;
         }
         String number = numberEt.getText().toString();
@@ -537,8 +570,9 @@ public class BusinessActivity extends Activity {
                         // 当前价格
                         spotPrice = stocksInfo.getSpotPrice();
                         priceEt.setText(spotPrice);
-                        if ("1".equals(type)) {
-                            businessNumber = Double.valueOf(totalAmount) / Double.valueOf(spotPrice) + "";
+                        priceEt.setSelection(priceEt.length());
+                        if ("1".equals(type)&& Double.valueOf(spotPrice)>0) {
+                            businessNumber = Double.valueOf(totalAmount)*0.9999 / Double.valueOf(spotPrice) + "";
                             businessNumber = (int) (Double.valueOf(businessNumber) / 100) * 100 + "";
                         }
                         businessNumberTv.setText(businessNumber);

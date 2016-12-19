@@ -75,4 +75,13 @@ public class QueryActivity extends Activity {
         startActivity(new Intent(this, HistoryCommissionActivity.class));
     }
 
+    /**
+     * 历史持仓
+     *
+     * @param view
+     */
+    public void historyPositionClick(View view){
+        startActivity(new Intent(this, HistoryPositionActivity.class));
+    }
+
 }

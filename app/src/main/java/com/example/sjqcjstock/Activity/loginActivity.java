@@ -234,8 +234,9 @@ public class loginActivity extends Activity {
     class weixinlogin1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
+            dialog.setCancelable(true);
             dialog.show();
-            final SendAuth.Req req = new SendAuth.Req();
+            SendAuth.Req req = new SendAuth.Req();
             req.scope = "snsapi_userinfo";
             req.state = "wechat_sdk_demo_test";
             api.sendReq(req);
@@ -265,7 +266,6 @@ public class loginActivity extends Activity {
         } else {
             // 注销登陆
             mQQAuth.logout(this);
-//            updateUserInfo();
         }
     }
 
@@ -286,7 +286,9 @@ public class loginActivity extends Activity {
             IUiListener listener = new IUiListener() {
                 @Override
                 public void onError(UiError e) {
-                    // TODO Auto-generated method stub
+                    if (dialog != null){
+                        dialog.dismiss();
+                    }
                 }
 
                 @Override
@@ -299,11 +301,13 @@ public class loginActivity extends Activity {
 
                 @Override
                 public void onCancel() {
+                    if (dialog != null){
+                        dialog.dismiss();
+                    }
                 }
             };
             mInfo = new UserInfo(this, mQQAuth.getQQToken());
             mInfo.getUserInfo(listener);
-
         }
     }
 
@@ -316,15 +320,20 @@ public class loginActivity extends Activity {
         }
 
         protected void doComplete(JSONObject values) {
-
         }
 
         @Override
         public void onError(UiError e) {
+            if (dialog != null){
+                dialog.dismiss();
+            }
         }
 
         @Override
         public void onCancel() {
+            if (dialog != null){
+                dialog.dismiss();
+            }
         }
     }
 

@@ -87,7 +87,7 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
             holder.ranking.setBackgroundResource(R.mipmap.nullimg);
         }
 
-        holder.name.setText(matchEntity.getUser_name());
+        holder.name.setText(matchEntity.getUsername());
         // 周收益率
         String totalRate = matchEntity.getTotal_rate();
         if (Double.valueOf(totalRate)>=0){

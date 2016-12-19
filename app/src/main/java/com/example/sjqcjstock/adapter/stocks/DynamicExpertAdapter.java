@@ -18,7 +18,10 @@ import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.view.SoListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
     // 加载用的数据
     private List<GeniusEntity> listData;
     private Context context;
+
     public DynamicExpertAdapter(Context context) {
         super();
         this.context = context;
@@ -62,7 +66,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.e("mh123","多次加载哎--"+position);
-            LayoutInflater mInflater = LayoutInflater.from(context);
+        LayoutInflater mInflater = LayoutInflater.from(context);
             final ViewHolder holder;
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.list_item_dynamic_expert, null);

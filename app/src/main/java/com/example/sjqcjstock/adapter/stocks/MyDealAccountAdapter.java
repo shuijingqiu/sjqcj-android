@@ -97,11 +97,10 @@ public class MyDealAccountAdapter extends BaseAdapter {
                 context.startActivity(inten);
             }
         });
-        //成本价
-        String costPrice = Utils.getNumberFormat2(positionEntity.getCost_price());
-        holder.averageCost.setText(costPrice);
+        //平均成本价
+        holder.averageCost.setText(positionEntity.getCost_price());
         // 持仓数量
-        int positionValue = Integer.valueOf(positionEntity.getAvailable_number())+Integer.valueOf(positionEntity.getFreeze_number());
+        int positionValue = Integer.valueOf(positionEntity.getPosition_number());
         holder.positionNumber.setText(positionValue+"");
         // 可卖数量
         holder.canBuyQuantity.setText(positionEntity.getAvailable_number());
@@ -120,8 +119,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
             String latestMarketPriceStr = Utils.getNumberFormat1(Double.valueOf(price) * positionValue + "");
             holder.latestMarketPrice.setText(latestMarketPriceStr);
             // 收益
-            String profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
-
+            String profitStr = Utils.getNumberFormat2(positionEntity.getRatio() + "");
             holder.profit.setText(profitStr+"%");
             if (Double.valueOf(profitStr)>0){
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));

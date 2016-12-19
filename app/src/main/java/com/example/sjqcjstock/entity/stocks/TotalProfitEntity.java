@@ -22,6 +22,8 @@ public class TotalProfitEntity {
     private String position;
     // 排名
     private String rownum;
+    // 粉丝数
+    private String fans;
 
     public String getUid() {
         return uid;
@@ -85,5 +87,13 @@ public class TotalProfitEntity {
 
     public void setRownum(String rownum) {
         this.rownum = rownum;
+    }
+
+    public String getFans() {
+        return fans;
+    }
+
+    public void setFans(String fans) {
+        this.fans = fans;
     }
 }

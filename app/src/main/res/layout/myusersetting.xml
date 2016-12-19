@@ -47,11 +47,8 @@
                 android:textSize="16dp" />
 
             <Button
-                style="@style/GreenButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/gracearrow1" />
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

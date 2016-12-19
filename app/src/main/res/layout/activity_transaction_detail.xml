@@ -23,7 +23,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="模拟盘当前持仓" />
+            android:text="当前持仓" />
 
     </RelativeLayout>
 

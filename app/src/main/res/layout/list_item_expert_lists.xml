@@ -31,10 +31,11 @@
 
         <TextView
             android:id="@+id/name_tv"
-            android:layout_width="100dp"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:textColor="@color/color_text1"
             android:layout_marginLeft="10dp"
+            android:textSize="14sp"
             android:text="用户名"/>
 
         <TextView
@@ -42,10 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
+            android:textSize="12sp"
             android:gravity="right"
             android:layout_gravity="top"
-            android:textColor="@color/red"
-            android:text=""/>
+            android:textColor="@color/red"/>
 
     </LinearLayout>
 
@@ -176,8 +177,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_height="5dp"
-        android:background="@drawable/line"/>
+        android:background="@color/gray_line"/>
 
 </LinearLayout>

@@ -45,7 +45,6 @@ import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.netutil.sharesUtil;
-import com.example.sjqcjstock.userdefined.MyScrollView;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 import com.example.sjqcjstock.view.PullableScrollView;
@@ -1081,12 +1080,21 @@ public class UserDetailNewActivity extends FragmentActivity{
                     dialog.dismiss();
                     break;
                 case 3:
-                    Double price;
+                    Double price = 0.0;
+                    // 收益率
+                    String profitStr = "0";
+                    // 成本价
+                    String costPrice = "0";
                     for(int i = 0;i < positionArrayList.size();i++){
                         Map<String,String> mStr = mapStr.get(positionArrayList.get(i).getStock());
                         price = Double.valueOf(mStr.get("price"));
                         positionArrayList.get(i).setLatest_price(price+"");
                         positionArrayList.get(i).setIsType(mStr.get("type"));
+                        // 成本价
+                        costPrice = positionArrayList.get(i).getCost_price();
+                        // 收益率
+                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+                        positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getAvailable_number())+Integer.valueOf(positionArrayList.get(i).getFreeze_number());
                         // 最新市值的累加
@@ -1340,5 +1348,35 @@ public class UserDetailNewActivity extends FragmentActivity{
         assetsChart.setLineData(lines);
         // redraw
         assetsChart.invalidate();
+    }
+
+    /**
+     * 订阅的单机事件
+     * @param view
+     */
+    public void subscribeClick(View view){
+        // 防止多次点击
+        if (Utils.isFastDoubleClick4()){
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setClass(UserDetailNewActivity.this,SubscribeConfirmActivity.class);
+        startActivity(intent);
+        ((TextView)view).setText("取消订阅");
+    }
+
+    /**
+     *查看全部持仓的单机事件
+     * @param view
+     */
+    public void DetailPositionClick(View view){
+        // 防止多次点击
+        if (Utils.isFastDoubleClick4()){
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setClass(UserDetailNewActivity.this,HistoryPositionActivity.class);
+        intent.putExtra("uid",uidstr);
+        startActivity(intent);
     }
 }

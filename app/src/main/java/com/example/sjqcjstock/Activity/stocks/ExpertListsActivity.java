@@ -135,7 +135,7 @@ public class ExpertListsActivity extends Activity {
                 break;
             case 1:
                 topTitle.setText("人气牛人");
-                condition = "";
+                condition = "fans";
                 break;
             case 2:
                 topTitle.setText("总收益榜");

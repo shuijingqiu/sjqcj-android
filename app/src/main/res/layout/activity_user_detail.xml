@@ -23,8 +23,21 @@
             android:layout_centerVertical="true"
             style="@style/top_title" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/subscribe_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="订阅"
+            android:clickable="true"
+            android:onClick="subscribeClick"
+            android:visibility="gone"
+            style="@style/top_title" />
 
+    </RelativeLayout>
 
     <com.example.sjqcjstock.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
@@ -98,18 +111,19 @@
                 android:layout_marginTop="19dp"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="个人简介:"
-                    android:textColor="@color/color_text2"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="个人简介:"-->
+                    <!--android:textColor="@color/color_text2"/>-->
 
                 <TextView
                     android:id="@+id/userintro1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="简介"

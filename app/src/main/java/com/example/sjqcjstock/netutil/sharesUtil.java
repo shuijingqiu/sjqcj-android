@@ -118,12 +118,18 @@ public class sharesUtil {
      */
     public StocksInfo processOrderData(String code) {
 
+        StocksInfo stocksInfo = null;
+        // 先调用新浪接口获取数据
+        stocksInfo =  processOrderDataXL(code);
+        if (stocksInfo != null){
+            return  stocksInfo;
+        }
+
         // 获取该股票当天的分时数据(腾讯接口)
         String str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + code);
 //        String str = HttpUtil.restHttpGet("http://qt.gtimg.cn/q=" + code);
         // 增长类型
         String increaseType = "1";
-        StocksInfo stocksInfo = null;
         // 买入和卖出的价格
         HashMap<String,String> buySellMap = new HashMap<String, String>();
         // 每只股票的数据
@@ -132,13 +138,15 @@ public class sharesUtil {
             stocksInfo = new StocksInfo();
             // 每只股票的详细数据
             String[] sharesMinute = str.split("~");
-            if (sharesMinute.length < 2) {
-                return processOrderDataXL(code);
+            if (sharesMinute.length<2){
+                return  null;
             }
             // 股票名称
             stocksInfo.setName(sharesMinute[1]);
             // 股票代码
             stocksInfo.setCode(sharesMinute[2]);
+            // 昨日收盘价格
+            stocksInfo.setZuoShou(sharesMinute[4]);
             // 当前价格
             stocksInfo.setSpotPrice(sharesMinute[3]);
             // 涨停价格
@@ -186,7 +194,7 @@ public class sharesUtil {
      * @param code
      * @return 股票信息的实体类
      */
-    private StocksInfo processOrderDataXL(String code){
+    public StocksInfo processOrderDataXL(String code){
         // 获取该股票当天的分时数据(新浪接口)
         String str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + code);
         // 判断返回数据是否为空
@@ -217,13 +225,15 @@ public class sharesUtil {
         // 股票名称
         stocksInfo.setName(sharesMinute[0]);
         // 股票代码
-        stocksInfo.setCode(code);
+        stocksInfo.setCode(code.substring(2));
         // 当前价格
         stocksInfo.setSpotPrice(priceD+"");
         // 涨停价格
         stocksInfo.setHighLimit(Utils.getNumberFormat1(priceZ*1.1+""));
         // 跌停价格
         stocksInfo.setPriceLimit(Utils.getNumberFormat1(priceZ*0.9+""));
+        // 昨日收盘价格
+        stocksInfo.setZuoShou(priceZ+"");
 
         buySellMap.put("buy1P", Utils.getNumberFormat1(sharesMinute[11]));
         buySellMap.put("buy1N", Utils.getNumberSharesHq(sharesMinute[10]));
@@ -274,41 +284,13 @@ public class sharesUtil {
         String spotPrice = "0";
         // 涨跌幅
         String rising = "0";
+        // 昨收
+        String zuoshou = "0";
         // 腾讯接口
-        String str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + codes);
+        // 新浪接口
+        String str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + codes);
         if (str.length()<30){
-            // 新浪接口
-            str = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + codes);
-            shares = str.split(";");
-            String code = "";
-            Double closingPrice = 0.0;
-            for (String sharesStr:shares){
-                if (sharesStr.length() > 40){
-                    // 分割股票详细信息
-                    sharesMinute = sharesStr.split(",");
-                    // 当前价格
-                    spotPrice = sharesMinute[3];
-                    // 昨日收盘价
-                    closingPrice  = Double.valueOf(sharesMinute[2]);
-                    // 当前涨幅
-                    rising = Utils.getNumberFormat2((Double.valueOf(spotPrice)-closingPrice)/closingPrice+"");
-                    if (Double.valueOf(spotPrice) == 0){
-                        spotPrice = sharesMinute[2];
-                    }
-                    if(closingPrice >= 0){
-                        type = "1";
-                    }else{
-                        type = "0";
-                    }
-                    map = new HashMap<String, String>();
-                    code = sharesMinute[0].substring(13,19);
-                    map.put("price",spotPrice);
-                    map.put("rising",rising);
-                    map.put("type",type);
-                    mapShares.put(code,map);
-                }
-            }
-        }else{
+            str = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + codes);
             // 处理腾讯返回的数据
             // 分割不同的股票
             shares = str.split(";");
@@ -332,6 +314,36 @@ public class sharesUtil {
                 map.put("rising",rising);
                 map.put("type",type);
                 mapShares.put(sharesMinute[2],map);
+            }
+        }else{
+            shares = str.split(";");
+            String code = "";
+            Double closingPrice = 0.0;
+            for (String sharesStr:shares){
+                if (sharesStr.length() > 40){
+                    // 分割股票详细信息
+                    sharesMinute = sharesStr.split(",");
+                    // 当前价格
+                    spotPrice = sharesMinute[3];
+                    // 昨日收盘价
+                    closingPrice  = Double.valueOf(sharesMinute[2]);
+                    // 当前涨幅
+                    rising = Utils.getNumberFormat2((Double.valueOf(spotPrice)-closingPrice)/closingPrice*100+"");
+                    if (Double.valueOf(spotPrice) == 0){
+                        spotPrice = sharesMinute[2];
+                    }
+                    if(Double.valueOf(rising) >= 0){
+                        type = "0";
+                    }else{
+                        type = "1";
+                    }
+                    map = new HashMap<String, String>();
+                    code = sharesMinute[0].substring(13,19);
+                    map.put("price",Utils.getNumberFormat2(spotPrice));
+                    map.put("rising",rising);
+                    map.put("type",type);
+                    mapShares.put(code,map);
+                }
             }
         }
         return mapShares;

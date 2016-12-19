@@ -164,7 +164,7 @@ public class FragmentTimeMap extends Fragment {
                     handler.sendEmptyMessage(0);
                 }
             };
-            timer.schedule(task, 60000, 60000); // 0s后执行task,经过30s再次执行
+            timer.schedule(task, 30000, 30000); // 0s后执行task,经过30s再次执行
         }
     }
 

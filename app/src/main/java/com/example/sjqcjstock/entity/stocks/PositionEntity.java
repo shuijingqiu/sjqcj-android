@@ -26,6 +26,8 @@ public class PositionEntity {
     private String ratio;
     // 可卖数量
     private String available_number;
+    // 持仓数量
+    private String position_number;
     // 冻结数量
     private String freeze_number;
     // 这只股票总的手续费
@@ -51,7 +53,7 @@ public class PositionEntity {
     private String available_funds;
 
     // 最新价格
-    private String latest_price = "";
+    private String latest_price = "0";
     // 判断当前价格是涨是跌
     private String isType = "0";
 
@@ -245,5 +247,13 @@ public class PositionEntity {
 
     public void setIsType(String isType) {
         this.isType = isType;
+    }
+
+    public String getPosition_number() {
+        return position_number;
+    }
+
+    public void setPosition_number(String position_number) {
+        this.position_number = position_number;
     }
 }

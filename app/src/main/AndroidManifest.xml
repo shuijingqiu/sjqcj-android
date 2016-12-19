@@ -304,7 +304,6 @@
             android:name="com.example.sjqcjstock.Activity.MyAttentionActivity"
             android:label="关注微博" >
         </activity>
-
         <!-- 模拟炒股相关页面 -->
         <activity
             android:name=".Activity.stocks.SharesDetailedActivity"
@@ -328,6 +327,9 @@
             android:name=".Activity.stocks.HistoryCommissionActivity"
             android:label="历史委托页面" />
         <activity
+            android:name=".Activity.stocks.HistoryPositionActivity"
+            android:label="历史委托页面" />
+        <activity
             android:name=".Activity.stocks.MyDealAccountActivity"
             android:label="交易账户页面" />
         <activity
@@ -348,6 +350,12 @@
         <activity
             android:name=".Activity.stocks.SearchSharesActivity"
             android:label="股票代码检索页" />
+        <activity
+            android:name=".Activity.stocks.SubscribeConfirmActivity"
+            android:label="订阅确认页面" />
+        <activity
+            android:name=".Activity.stocks.MyDynamicExpertActivity"
+            android:label="订阅确认页面" />
 
         <receiver
             android:name=".AppRegister"

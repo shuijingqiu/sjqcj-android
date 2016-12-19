@@ -77,6 +77,8 @@ public class FragmentAnalogHome extends Fragment {
     private ACache mCache;
     // 定时器
     private Timer timer;
+    // 是否是第一次进入这个页面
+    private boolean isRnFirst = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -187,11 +189,10 @@ public class FragmentAnalogHome extends Fragment {
         view.findViewById(R.id.rqnr_ll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent inten = new Intent();
-//                inten.putExtra("type", 1);
-//                inten.setClass(getActivity(), ExpertListsActivity.class);
-//                startActivity(inten);
-                Toast.makeText(getActivity(), "功能完善中，敬请期待！", Toast.LENGTH_SHORT).show();
+                Intent inten = new Intent();
+                inten.putExtra("type", 1);
+                inten.setClass(getActivity(), ExpertListsActivity.class);
+                startActivity(inten);
             }
         });
 
@@ -339,9 +340,11 @@ public class FragmentAnalogHome extends Fragment {
                         mCache.put("orders", data);
                         geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
                         listAdapter.setlistData(geniusList);
-//                        ViewUtil.setListViewHeightBasedOnChildren(listView);
-                        // 滚动到顶部
-                        myScrollView.smoothScrollTo(0, 0);
+                        if(isRnFirst){
+                            // 滚动到顶部
+                            myScrollView.smoothScrollTo(0, 0);
+                            isRnFirst = false;
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -383,7 +386,6 @@ public class FragmentAnalogHome extends Fragment {
                             // 滚动到顶部
                             myScrollView.smoothScrollTo(0, 0);
                             dialog.dismiss();
-                            Log.e("mh123","jingle---"+geniusList.size());
                         }
                     }
                     break;

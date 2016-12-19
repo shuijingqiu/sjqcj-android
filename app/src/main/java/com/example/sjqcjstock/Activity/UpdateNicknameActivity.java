@@ -119,7 +119,6 @@ public class UpdateNicknameActivity extends Activity {
 
                     List<Map<String, Object>> datastrlists = JsonTools.listKeyMaps("[" + datastr + "]");
 
-                    Log.d("1000", statusstr);
 
                     // 昵称有重名，跳转到昵称设置界面
                     if ("0".equals(statusstr)) {

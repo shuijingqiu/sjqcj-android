@@ -313,5 +313,14 @@
                 android:divider="@null"
                 android:listSelector="@android:color/transparent" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_line"
+                android:gravity="center"
+                android:padding="10dp"
+                android:clickable="true"
+                android:onClick="DetailPositionClick"
+                android:text="历史持仓" />
 
 </LinearLayout>

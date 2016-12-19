@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,10 +22,43 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="当日成交"
+            android:text="历史持仓"
             style="@style/top_title" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@color/gray_line"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="交易日期"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="股票名称"/>
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="收益率"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="盈亏"/>
+
+    </LinearLayout>
 
     <com.example.sjqcjstock.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
@@ -34,10 +68,10 @@
         <!-- 支持所有实现Pullable接口的View -->
 
         <com.example.sjqcjstock.view.PullableListView
-            android:id="@+id/list_view"
+            android:id="@+id/position_list"
             android:layout_width="match_parent"
             android:divider="@null"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <include layout="@layout/load_more" />
 

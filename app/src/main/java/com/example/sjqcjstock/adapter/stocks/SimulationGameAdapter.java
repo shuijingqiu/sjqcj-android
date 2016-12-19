@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,7 @@ public class SimulationGameAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_simulation_game, null);
             holder = new ViewHolder();
+            holder.rankingLl = (LinearLayout) convertView.findViewById(R.id.ranking_ll);
             holder.titleImg = (ImageView) convertView.findViewById(R.id.title_img_iv);
             holder.title = (TextView) convertView.findViewById(R.id.title_tv);
             holder.time = (TextView) convertView.findViewById(R.id.time_tv);
@@ -99,13 +101,20 @@ public class SimulationGameAdapter extends BaseAdapter {
             if ("0".equals(matchEntity.getJoined())){
                 holder.joinTv.setVisibility(View.GONE);
                 holder.joinBut.setVisibility(View.VISIBLE);
+                holder.rankingLl.setVisibility(View.INVISIBLE);
             }else{
                 holder.joinTv.setVisibility(View.VISIBLE);
                 holder.joinBut.setVisibility(View.GONE);
                 holder.joinTv.setBackgroundResource(R.mipmap.ycj);
+                holder.rankingLl.setVisibility(View.VISIBLE);
             }
         }else{
             holder.joinTv.setBackgroundResource(R.mipmap.yjs);
+            if ("0".equals(matchEntity.getJoined())){
+                holder.rankingLl.setVisibility(View.INVISIBLE);
+            }else {
+                holder.rankingLl.setVisibility(View.VISIBLE);
+            }
         }
         holder.joinBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +140,8 @@ public class SimulationGameAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        // 排名的
+        LinearLayout rankingLl;
         ImageView titleImg;
         TextView title;
         TextView time;

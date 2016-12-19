@@ -280,7 +280,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                     handler.sendEmptyMessage(1);
                 }
             };
-            timer.schedule(task, 60000, 60000); // 60s后执行task,经过60s再次执行
+            timer.schedule(task, 30000, 30000); // 60s后执行task,经过60s再次执行
         }
     }
 

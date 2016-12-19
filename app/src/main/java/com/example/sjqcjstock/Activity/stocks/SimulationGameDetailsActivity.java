@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +23,10 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +47,8 @@ public class SimulationGameDetailsActivity extends Activity {
     private TextView myProfitTv;
     // 我的排名
     private TextView rankingTv;
+    // 头像
+    private ImageView headImgIv;
     // 我比赛的
     private LinearLayout myMatchLl;
     // 显示加载的Adapter
@@ -95,6 +101,7 @@ public class SimulationGameDetailsActivity extends Activity {
         listView = (ListView) findViewById(
                 R.id.list_view);
         listView.setAdapter(sgdAdapter);
+        headImgIv = (ImageView) findViewById(R.id.head_img_iv);
         myProfitTv = (TextView) findViewById(R.id.my_profit_tv);
         rankingTv = (TextView) findViewById(R.id.ranking_tv);
         myMatchLl = (LinearLayout) findViewById(R.id.my_match_ll);
@@ -129,6 +136,9 @@ public class SimulationGameDetailsActivity extends Activity {
                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         });
+        ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util
+                        .getMd5(Constants.staticmyuidstr)),
+                headImgIv, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
     }
 
     /**

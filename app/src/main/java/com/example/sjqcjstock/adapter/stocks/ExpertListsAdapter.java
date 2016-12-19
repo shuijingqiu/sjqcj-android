@@ -100,21 +100,45 @@ public class ExpertListsAdapter extends BaseAdapter {
         }
         holder.winningProbability.setText(totalProfitEntity.getSuccess_rate()+"%");
         if(type == 0){
+            String weekAvgProfitRate = Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate());
             // 常胜牛人
-            holder.averageIncome.setText("周平均收益率 "+ Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
+            holder.averageIncome.setText("周平均收益率 "+ weekAvgProfitRate +"%");
+            if (Double.valueOf(weekAvgProfitRate)>0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_ef3e3e));
+            }else if(Double.valueOf(weekAvgProfitRate)<0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_1bc07d));
+            }else{
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_000000));
+            }
             holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
         }else if(type == 1){
             // 人气牛人
-            holder.averageIncome.setText("粉丝数 1000  ");
-            holder.grossProfitRate.setText(totalProfitEntity.getTotal_rate()+"%");
+            holder.averageIncome.setText("粉丝数 "+totalProfitEntity.getFans());
+            holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
         }else if(type == 2){
+            String totalRate = Utils.getNumberFormat2(totalProfitEntity.getTotal_rate());
             // 总收益榜
-            holder.averageIncome.setText("总收益率 "+Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
+            holder.averageIncome.setText("总收益率 "+totalRate+"%");
+            if (Double.valueOf(totalRate)>0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_ef3e3e));
+            }else if(Double.valueOf(totalRate)<0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_1bc07d));
+            }else{
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_000000));
+            }
             holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
             holder.explainStrTv.setText("周平均收益率 ");
         }else{
+            String successRate = Utils.getNumberFormat2(totalProfitEntity.getSuccess_rate());
             // 选股牛人
-            holder.averageIncome.setText("选股胜率 "+Utils.getNumberFormat2(totalProfitEntity.getSuccess_rate())+"%");
+            holder.averageIncome.setText("选股胜率 "+successRate+"%");
+            if (Double.valueOf(successRate)>0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_ef3e3e));
+            }else if(Double.valueOf(successRate)<0){
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_1bc07d));
+            }else{
+                holder.averageIncome.setTextColor(holder.averageIncome.getResources().getColor(R.color.color_000000));
+            }
             holder.grossProfitRate.setText(Utils.getNumberFormat2(totalProfitEntity.getTotal_rate())+"%");
             holder.winningProbabilityTv.setText("周平均收益率 ");
             holder.winningProbability.setText(Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");

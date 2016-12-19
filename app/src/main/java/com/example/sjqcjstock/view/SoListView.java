@@ -9,10 +9,10 @@ import android.widget.ListView;
  * Created by Administrator on 2016/6/12.
  */
 public class SoListView extends ListView {
+
     public SoListView(Context context) {
         super(context);
     }
-
     public SoListView(Context context, AttributeSet as) {
         super(context, as);
     }
@@ -23,4 +23,5 @@ public class SoListView extends ListView {
                 MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
 }

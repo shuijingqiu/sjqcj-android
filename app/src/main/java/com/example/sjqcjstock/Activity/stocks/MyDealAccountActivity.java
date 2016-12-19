@@ -135,6 +135,8 @@ public class MyDealAccountActivity extends Activity {
 //    private double totalAmount = 0;
     // 定时器
     private Timer timer;
+    // 是否是第一次加载
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +154,10 @@ public class MyDealAccountActivity extends Activity {
     protected void onResume() {
         super.onResume();
         market = 0;
+        if (Constants.isBuy){
+            getData();
+            Constants.isBuy = false;
+        }
         // 回到页面看刷新不
         if (Utils.isTransactionDate()){
             timer = new Timer(true);
@@ -163,12 +169,7 @@ public class MyDealAccountActivity extends Activity {
                     getData();
                 }
             };
-            timer.schedule(task, 0, 30000); // 0s后执行task,经过30s再次执行
-        }else{
-            if (Constants.isBuy){
-                getData();
-                Constants.isBuy = false;
-            }
+            timer.schedule(task, 30000, 30000); // 30000s后执行task,经过30s再次执行
         }
     }
 
@@ -372,10 +373,10 @@ public class MyDealAccountActivity extends Activity {
                             entrustLl.setVisibility(View.VISIBLE);
                         }
                         if (1 > positionArrayList.size()){
-                            positionsTv.setText("持仓(0)");
+                            positionsTv.setText("当前持仓(0)");
                         }
                         else{
-                            positionsTv.setText("持仓("+positionArrayList.size()+")");
+                            positionsTv.setText("当前持仓("+positionArrayList.size()+")");
                         }
                             entrustAdapter.setlistData(entrustArrayList);
                             // 获取最新的股票信息
@@ -389,20 +390,37 @@ public class MyDealAccountActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if (isFirst){
                         // 滚动到顶部
                         myScrollView.smoothScrollTo(0, 0);
-                        dialog.dismiss();
+                        isFirst = false;
+                    }
+                    dialog.dismiss();
                     break;
                 case 1:
+                    if (mapStr==null || mapStr.size()<1){
+                        break;
+                    }
                     Double price = 0.0;
+                    // 收益率
+                    String profitStr = "0";
+                    // 成本价
+                    String costPrice = "0";
                     for(int i = 0;i < positionArrayList.size();i++){
                         Map<String,String> mStr = mapStr.get(positionArrayList.get(i).getStock());
                         String prices = mStr.get("price");
-                        if (prices != null && !"".equals(prices)) {
+                        if (prices != null && !"".equals(prices) && Double.valueOf(prices) != 0) {
                             price = Double.valueOf(prices);
+                            positionArrayList.get(i).setLatest_price(price+"");
+                        }else{
+                            price = Double.valueOf(positionArrayList.get(i).getLatest_price());
                         }
-                        positionArrayList.get(i).setLatest_price(price+"");
                         positionArrayList.get(i).setIsType(mStr.get("type"));
+                        // 成本价
+                        costPrice = positionArrayList.get(i).getCost_price();
+                        // 收益率
+                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+                        positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getAvailable_number())+Integer.valueOf(positionArrayList.get(i).getFreeze_number());
                         market += price * positionValue;
@@ -423,9 +441,9 @@ public class MyDealAccountActivity extends Activity {
                         Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                         if ("success".equals(jsonObject.getString("status"))){
                             // 撤单成功后刷新数据
-                            dialog.show();
                             getData();
-                            return;
+                        }else{
+                            dialog.dismiss();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -577,6 +595,7 @@ public class MyDealAccountActivity extends Activity {
      */
     public void buyClick(View view) {
         Intent intent = new Intent(this, BusinessActivity.class);
+        intent.putExtra("type","1");
         startActivity(intent);
     }
 
@@ -588,13 +607,13 @@ public class MyDealAccountActivity extends Activity {
         textTransaction.setTextColor(select_color);
         transactionLl.setVisibility(View.VISIBLE);
         stockLl.setVisibility(View.GONE);
-        // 滚动到顶部
-        myScrollView.smoothScrollTo(0, 0);
         // 设置下横条的位置
         LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line.getLayoutParams();
         // 关键算法
         lp.leftMargin = (int) ((int) (mScreen1_4 * 0) + (((double) 1 / viewPagerW) * mScreen1_4));
         img_line.setLayoutParams(lp);
+        // 滚动到顶部
+        myScrollView.smoothScrollTo(0, 0);
     }
 
     /**
@@ -605,14 +624,13 @@ public class MyDealAccountActivity extends Activity {
         textTransaction.setTextColor(unselect_color);
         transactionLl.setVisibility(View.GONE);
         stockLl.setVisibility(View.VISIBLE);
-        // 滚动到顶部
-        myScrollView.smoothScrollTo(0, 0);
-
         // 设置下横条的位置
         LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line.getLayoutParams();
         // 关键算法
         lp.leftMargin = (int) ((int) (mScreen1_4 * 1) + (((double) 2 / viewPagerW) * mScreen1_4));
         img_line.setLayoutParams(lp);
+        // 滚动到顶部
+        myScrollView.smoothScrollTo(0, 0);
     }
 
     /**
@@ -621,7 +639,7 @@ public class MyDealAccountActivity extends Activity {
      */
     public void killAnOrderClick(final String id){
         dialog.show();
-        // 开线程获历史交易信息
+        // 开线程撤单
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -631,7 +649,7 @@ public class MyDealAccountActivity extends Activity {
                 dataList.add(new BasicNameValuePair("status", "2"));
                 dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
                 dataList.add(new BasicNameValuePair("token", Constants.apptoken));
-                // 调用接口获取股票当前行情数据
+                // 调用接口撤单
                 cdstr = HttpUtil.restHttpPut(Constants.moUrl+"/orders/"+id,dataList);
                 handler.sendEmptyMessage(2);
             }
