@@ -147,7 +147,6 @@ public class systemMessageListActivity extends Activity {
                 if (systemMessageStr.equals("")) {
                     systemMessageStr = result;
                 }
-                Log.e("mh123",result);
                 systemMessage = JSON.parseObject(result, SystemMessage.class);
                 if ("1".equals(systemMessage.getStatus())) {
                     if (current == 1) {

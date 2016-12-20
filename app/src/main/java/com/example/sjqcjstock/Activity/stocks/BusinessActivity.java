@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -371,16 +368,16 @@ public class BusinessActivity extends Activity {
         if(Integer.valueOf(number) > Double.valueOf(businessNumber)){
             numberEt.setText(businessNumber);
         }
-        // 判断输入价格是否小于跌停价格
-        if(Double.valueOf(stocksInfo.getPriceLimit())>Double.valueOf(spotPrice)){
-            spotPrice = stocksInfo.getPriceLimit();
-            priceEt.setText(spotPrice);
-        }
-        // 判断输入价格是否大于涨停价格
-        if(Double.valueOf(spotPrice) > Double.valueOf(stocksInfo.getHighLimit())){
-            spotPrice = stocksInfo.getHighLimit();
-            priceEt.setText(spotPrice);
-        }
+//        // 判断输入价格是否小于跌停价格
+//        if(Double.valueOf(stocksInfo.getPriceLimit())>Double.valueOf(spotPrice)){
+//            spotPrice = stocksInfo.getPriceLimit();
+//            priceEt.setText(spotPrice);
+//        }
+//        // 判断输入价格是否大于涨停价格
+//        if(Double.valueOf(spotPrice) > Double.valueOf(stocksInfo.getHighLimit())){
+//            spotPrice = stocksInfo.getHighLimit();
+//            priceEt.setText(spotPrice);
+//        }
         priceEt.setSelection(priceEt.length());
         showDialog("2");
     }

@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <stroke android:width="0.5px" android:color="#E0E0E0" /><!--边框颜色-->
-            <solid android:color="@color/gray_line" /><!--填充色-->
+            <stroke android:width="0.5px" android:color="@color/gray_line" /><!--边框颜色-->
+            <solid android:color="@color/color_fafafa" /><!--填充色-->
             <padding
                 android:bottom="1dp"
                 android:left="1dp"

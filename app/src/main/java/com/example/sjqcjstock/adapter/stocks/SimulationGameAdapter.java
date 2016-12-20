@@ -1,14 +1,12 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +18,6 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
-import com.example.sjqcjstock.netutil.Md5Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.message.BasicNameValuePair;

@@ -54,6 +54,8 @@
                 android:textColor="@color/color_text1"
                 android:inputType="number"
                 android:maxLength="6"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="股票代码"/>
 
             <TextView
@@ -115,7 +117,7 @@
                     android:background="@drawable/rounded_edittext1"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:hint="委托价格"/>
 
                 <LinearLayout
@@ -258,7 +260,7 @@
                     android:background="@drawable/buttonstyle7"
                     android:textColor="@color/white"
                     android:layout_marginLeft="10dp"
-                    android:text="市场卖出"
+                    android:text="市价卖出"
                     android:onClick="confirmBusiness1"/>
 
             </LinearLayout>

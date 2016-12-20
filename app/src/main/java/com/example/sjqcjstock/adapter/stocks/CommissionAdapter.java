@@ -1,12 +1,14 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.Order;
 
@@ -52,7 +54,7 @@ public class CommissionAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater mInflater = LayoutInflater.from(context);
         final ViewHolder holder;
         if (convertView == null) {
@@ -76,7 +78,15 @@ public class CommissionAdapter extends BaseAdapter {
         holder.number.setText(order.getNumber());
         holder.price.setText(order.getPrice());
         holder.time.setText(order.getTime());
-
+        holder.nameCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).getStock());
+                intent.putExtra("name",listData.get(position).getStock_name());
+                context.startActivity(intent);
+            }
+        });
         // 1代表买入2代表卖出
         if("1".equals(order.getType())){
             holder.type.setText("买");
@@ -95,8 +105,6 @@ public class CommissionAdapter extends BaseAdapter {
         }else{
             holder.state.setText("交易成功");
         }
-
-
         return convertView;
     }
 

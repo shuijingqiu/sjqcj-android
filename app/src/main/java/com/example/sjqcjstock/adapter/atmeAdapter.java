@@ -173,9 +173,6 @@ public class atmeAdapter extends BaseAdapter {
                     Intent intent = new Intent(context.getApplicationContext(), forumnotedetailActivity.class);
                     intent.putExtra("weibo_id", (String) listData.get(position).get("feed_id"));
                     intent.putExtra("uid", (String) listData.get(position).get("uid"));
-
-                    Log.e("mh123",listData.get(position).get("type").toString()+"----------");
-
                     // 传递转发微博的信息
                     if ("repost".equals(listData.get(position).get("type").toString())) {
                         intent.putExtra(

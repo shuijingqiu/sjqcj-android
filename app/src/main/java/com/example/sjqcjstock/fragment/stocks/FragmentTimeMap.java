@@ -303,7 +303,6 @@ public class FragmentTimeMap extends Fragment {
                         dialog.dismiss();
                     }
                 }
-                Log.e("mh:","123456---");
                 return;
             }
             isCot= 1;

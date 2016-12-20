@@ -60,40 +60,14 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/picktosupermanlist1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.example.sjqcjstock.userdefined.RoundImageView
-                            android:id="@+id/picktosesencelist1"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"
-                            android:src="@mipmap/jinghua" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="精华推荐"
-                            android:textColor="@color/color_text1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.example.sjqcjstock.userdefined.RoundImageView
-                            android:id="@+id/picktosupermanlist1"
+                        <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
@@ -112,14 +86,41 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/picktosesencelist1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.example.sjqcjstock.userdefined.RoundImageView
-                            android:id="@+id/pickselectstockmatch1"
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:src="@mipmap/jinghua" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="模拟比赛"
+                            android:textColor="@color/color_text1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/pickselectstockmatch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
@@ -138,14 +139,14 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/pickgwzbmatch1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.example.sjqcjstock.userdefined.RoundImageView
-                            android:id="@+id/pickgwzbmatch1"
+                        <ImageView
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
@@ -159,7 +160,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:text="股王争霸"
+                            android:text="股王争霸赛"
                             android:textColor="@color/color_text1" />
                     </LinearLayout>
                 </LinearLayout>
@@ -182,7 +183,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:text="焦点"
+                        android:text="精华推荐"
                         android:textColor="@color/color_text1"
                         android:textSize="14dp"
                         android:textStyle="bold" />

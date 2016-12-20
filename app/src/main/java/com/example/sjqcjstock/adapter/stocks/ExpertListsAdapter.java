@@ -8,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.Text;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.entity.stocks.TotalProfitEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
@@ -143,7 +141,7 @@ public class ExpertListsAdapter extends BaseAdapter {
             holder.winningProbabilityTv.setText("周平均收益率 ");
             holder.winningProbability.setText(Utils.getNumberFormat2(totalProfitEntity.getWeek_avg_profit_rate())+"%");
         }
-        holder.holdingPeriod.setText(totalProfitEntity.getAvg_position_day());
+        holder.holdingPeriod.setText(Utils.getNumberFormat2(totalProfitEntity.getAvg_position_day()));
         holder.position.setText(Utils.getNumberFormat2(totalProfitEntity.getPosition())+"%");
 
         ImageLoader.getInstance().displayImage(Md5Util.getuidstrMd5(Md5Util

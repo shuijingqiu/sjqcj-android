@@ -19,7 +19,6 @@ import com.example.sjqcjstock.adapter.stocks.SimulationGameAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;

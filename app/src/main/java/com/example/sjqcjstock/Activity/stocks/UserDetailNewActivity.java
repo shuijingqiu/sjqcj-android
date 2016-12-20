@@ -684,8 +684,8 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case R.id.linear_micro_blog:
                     textMicroBlog.setTextColor(select_color);
                     fragmentMicroBlog.setVisibility(View.VISIBLE);
-                    if (listusercommonnoteData.size() < 0){
-                        dialog.dismiss();
+                    if (listusercommonnoteData.size() < 1){
+                        dialog.show();
                         getWeiBoData();
                     }
                     break;
@@ -1067,7 +1067,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         // 获取最新的股票信息
                         getRealTimeData(positionList);
                         listAdapter.setlistData(positionArrayList);
-                        ((TextView)findViewById(R.id.position_count_tv)).setText("当前持仓（"+positionList.size()+")");
+                        ((TextView)findViewById(R.id.position_count_tv)).setText("当前持仓("+positionList.size()+")");
                         // 滚动到顶部
                         myScrollView.smoothScrollTo(0, 0);
                     } catch (JSONException e) {

@@ -18,7 +18,6 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.netutil.ViewUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

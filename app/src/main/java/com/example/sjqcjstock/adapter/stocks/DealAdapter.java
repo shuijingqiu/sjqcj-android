@@ -1,12 +1,14 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.Order;
 import com.example.sjqcjstock.netutil.Utils;
@@ -22,11 +24,13 @@ public class DealAdapter extends BaseAdapter {
 
     // 加载用的数据
     private List<Order> listData;
+    private Order order;
     private Context context;
     // 交易价格
     private String priceStr;
     // 交易金额
     private String numberStr;
+
 
     public DealAdapter(Context context) {
         super();
@@ -56,7 +60,7 @@ public class DealAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater mInflater = LayoutInflater.from(context);
         final ViewHolder holder;
         if (convertView == null) {
@@ -74,14 +78,15 @@ public class DealAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.nameCode.setText(listData.get(position).getStock_name());
-        priceStr = listData.get(position).getPrice();
-        numberStr = listData.get(position).getNumber();
+        order = listData.get(position);
+        holder.nameCode.setText(order.getStock_name()+"("+order.getStock()+")");
+        priceStr = order.getPrice();
+        numberStr = order.getNumber();
         holder.price.setText(priceStr);
         holder.number.setText(numberStr);
-        holder.time.setText(listData.get(position).getTime());
+        holder.time.setText(order.getTime());
         holder.money.setText(Utils.getNumberFormat2(Double.valueOf(priceStr)*Double.valueOf(numberStr)+""));
-        holder.cost.setText(Utils.getNumberFormat2(listData.get(position).getFee()));
+        holder.cost.setText(Utils.getNumberFormat2(order.getFee()));
         // 1代表买入2代表卖出
         if("1".equals(listData.get(position).getType())){
              holder.type.setText("买");
@@ -90,6 +95,15 @@ public class DealAdapter extends BaseAdapter {
             holder.type.setText("卖");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_1bc07d));
         }
+        holder.nameCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).getStock());
+                intent.putExtra("name",listData.get(position).getStock_name());
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

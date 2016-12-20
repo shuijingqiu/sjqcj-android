@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.example.sjqcjstock.Activity.SearchActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.EntrustAdapter;
 import com.example.sjqcjstock.adapter.stocks.MyDealAccountAdapter;
@@ -32,8 +30,6 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
-import com.example.sjqcjstock.view.PullToRefreshLayout;
-import com.example.sjqcjstock.view.PullableScrollView;
 import com.example.sjqcjstock.view.SoListView;
 
 import org.apache.http.message.BasicNameValuePair;

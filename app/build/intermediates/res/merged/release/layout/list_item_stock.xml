@@ -10,13 +10,13 @@
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="20dp">
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="深圳成指"
-                android:textColor="@color/color_text1"
+                android:textColor="@color/color_toptitle"
                 android:textSize="16sp" />
 
             <TextView
@@ -39,10 +39,10 @@
 
         <TextView
             android:id="@+id/price_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:gravity="center"
             android:text="10876.11"
             android:textColor="@color/color_text1"
             android:textSize="16sp" />
@@ -52,16 +52,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_weight="1"
             android:text="-0.11%"
             android:textColor="@color/color_text1"
             android:textSize="16sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -72,12 +73,6 @@
                 android:textColor="@color/color_text1"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="人"
-                android:textColor="@color/color_text2"
-                android:textSize="16sp" />
 
         </LinearLayout>
 

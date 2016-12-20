@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:2:1-447:12
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:2:1-458:12
 	xmlns:android
 		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:2:11-69
 	package
@@ -12,7 +12,7 @@ ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.x
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 	android:versionCode
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:4:5-28
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:4:5-29
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 uses-sdk
@@ -30,7 +30,7 @@ MERGED from [com.jakewharton:butterknife:8.0.1] E:\Android\sjqcj-Android\sjqcjst
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 		INJECTED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml
 application
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:11:5-394:19
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:11:5-405:19
 MERGED from [com.google.android.gms:play-services-appindexing:8.1.0] E:\Android\sjqcj-Android\sjqcjstockApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] E:\Android\sjqcj-Android\sjqcjstockApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:22.2.0] E:\Android\sjqcj-Android\sjqcjstockApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
@@ -583,221 +583,245 @@ ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.x
 	android:name
 		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:304:13-79
 activity#com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:309:9-311:42
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:308:9-310:42
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:311:17-39
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:310:17-39
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:310:13-67
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:309:13-67
 activity#com.example.sjqcjstock.Activity.stocks.BusinessActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:312:9-314:40
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:311:9-313:40
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:314:17-37
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:313:17-37
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:313:13-61
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:312:13-61
 activity#com.example.sjqcjstock.Activity.stocks.QueryActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:315:9-317:42
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:314:9-316:42
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:317:17-39
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:316:17-39
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:316:13-58
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:315:13-58
 activity#com.example.sjqcjstock.Activity.stocks.DayDealActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:318:9-320:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:317:9-319:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:320:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:319:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:319:13-60
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:318:13-60
 activity#com.example.sjqcjstock.Activity.stocks.DayCommissionActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:321:9-323:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:320:9-322:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:323:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:322:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:322:13-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:321:13-66
 activity#com.example.sjqcjstock.Activity.stocks.HistoryDealActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:324:9-326:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:323:9-325:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:326:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:325:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:325:13-64
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:324:13-64
 activity#com.example.sjqcjstock.Activity.stocks.HistoryCommissionActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:327:9-329:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:326:9-328:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:329:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:328:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:328:13-70
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:327:13-70
+activity#com.example.sjqcjstock.Activity.stocks.HistoryPositionActivity
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:329:9-331:38
+	android:label
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:331:13-35
+	android:name
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:330:13-68
 activity#com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:330:9-332:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:332:9-334:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:332:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:334:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:331:13-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:333:13-66
 activity#com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:333:9-335:42
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:335:9-337:42
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:335:13-39
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:337:13-39
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:334:13-70
-activity#com.example.sjqcjstock.Activity.stocks.ExpertLists
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:336:9-338:37
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:336:13-70
+activity#com.example.sjqcjstock.Activity.stocks.ExpertListsActivity
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:338:9-340:37
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:338:13-34
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:340:13-34
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:337:13-56
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:339:13-64
 activity#com.example.sjqcjstock.Activity.stocks.SimulationGameActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:339:9-341:38
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:341:9-343:38
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:341:13-35
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:343:13-35
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:340:13-67
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:342:13-67
 activity#com.example.sjqcjstock.Activity.stocks.SimulationGameDetailsActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:342:9-344:40
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:344:9-346:40
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:344:13-37
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:346:13-37
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:343:13-74
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:345:13-74
 activity#com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:345:9-347:41
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:347:9-349:41
 	android:label
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:347:13-38
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:349:13-38
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:346:13-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:348:13-66
+activity#com.example.sjqcjstock.Activity.stocks.SearchSharesActivity
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:350:9-352:39
+	android:label
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:352:13-36
+	android:name
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:351:13-65
+activity#com.example.sjqcjstock.Activity.stocks.SubscribeConfirmActivity
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:353:9-355:38
+	android:label
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:355:13-35
+	android:name
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:354:13-69
+activity#com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:356:9-358:38
+	android:label
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:358:13-35
+	android:name
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:357:13-68
 receiver#com.example.sjqcjstock.AppRegister
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:349:9-355:20
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:360:9-366:20
 	android:permission
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:351:13-71
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:362:13-71
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:350:13-40
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:361:13-40
 intent-filter#com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:352:13-354:29
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:363:13-365:29
 action#com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:353:17-100
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:364:17-100
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:353:25-97
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:364:25-97
 meta-data#com.google.android.gms.version
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:359:9-361:69
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:370:9-372:69
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] E:\Android\sjqcj-Android\sjqcjstockApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:21:9-23:69
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:360:13-58
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:371:13-58
 	android:value
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:361:13-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:372:13-66
 activity#com.mob.tools.MobUIShell
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:365:9-383:20
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:376:9-394:20
 	android:windowSoftInputMode
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:370:13-67
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:381:13-67
 	android:screenOrientation
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:369:13-49
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:380:13-49
 	android:configChanges
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:368:13-74
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:379:13-74
 	android:theme
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:367:13-72
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:378:13-72
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:366:13-52
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:377:13-52
 intent-filter#android.intent.category.DEFAULT+com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:379:13-382:29
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:390:13-393:29
 action#com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:380:17-92
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:391:17-92
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:380:25-89
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:391:25-89
 activity#cn.sharesdk.demo.wxapi.WXEntryActivity
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:386:9-391:52
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:397:9-402:52
 	android:screenOrientation
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:391:13-49
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:402:13-49
 	android:configChanges
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:389:13-74
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:400:13-74
 	android:theme
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:388:13-72
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:399:13-72
 	android:exported
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:390:13-36
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:401:13-36
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:387:13-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:398:13-66
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:397:5-79
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:408:5-79
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:397:22-76
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:408:22-76
 uses-permission#android.permission.INTERNET
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:398:5-67
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:409:5-67
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:398:22-64
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:409:22-64
 uses-permission#com.android.launcher.permission.READ_SETTINGS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:399:5-85
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:410:5-85
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:399:22-82
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:410:22-82
 uses-permission#android.permission.WAKE_LOCK
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:400:5-68
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:411:5-68
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:400:22-65
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:411:22-65
 uses-permission#android.permission.CHANGE_WIFI_STATE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:401:5-76
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:412:5-76
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:401:22-73
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:412:22-73
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:402:5-76
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:413:5-76
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:402:22-73
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:413:22-73
 uses-permission#android.permission.GET_TASKS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:403:5-68
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:414:5-68
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:403:22-65
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:414:22-65
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:404:5-81
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:415:5-81
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:404:22-78
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:415:22-78
 uses-permission#android.permission.WRITE_SETTINGS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:405:5-73
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:416:5-73
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:405:22-70
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:416:22-70
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:410:5-84
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:421:5-84
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:410:22-81
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:421:22-81
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:412:5-75
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:423:5-75
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:412:22-72
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:423:22-72
 uses-permission#android.permission.VIBRATE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:414:5-66
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:425:5-66
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:414:22-63
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:425:22-63
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:421:5-79
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:432:5-79
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:421:22-76
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:432:22-76
 permission#android.permission.BAIDU_LOCATION_SERVICE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:423:5-76
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:434:5-76
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:423:17-73
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:434:17-73
 uses-permission#android.permission.BAIDU_LOCATION_SERVICE
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:425:5-81
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:436:5-81
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:425:22-78
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:436:22-78
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:426:5-81
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:437:5-81
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:426:22-78
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:437:22-78
 uses-permission#android.permission.ACCESS_GPS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:428:5-69
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:439:5-69
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:428:22-66
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:439:22-66
 uses-permission#android.permission.READ_LOGS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:429:5-68
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:440:5-68
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:429:22-65
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:440:22-65
 uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:430:5-80
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:441:5-80
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:430:22-77
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:441:22-77
 uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:435:5-89
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:446:5-89
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:435:22-86
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:446:22-86
 uses-permission#android.permission.CAMERA
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:442:5-65
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:453:5-65
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:442:22-62
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:453:22-62
 uses-feature#android.hardware.camera
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:444:5-60
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:455:5-60
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:444:19-57
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:455:19-57
 uses-feature#android.hardware.camera.autofocus
-ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:445:5-70
+ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:456:5-70
 	android:name
-		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:445:19-67
+		ADDED from E:\Android\sjqcj-Android\sjqcjstockApp\app\src\main\AndroidManifest.xml:456:19-67

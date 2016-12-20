@@ -23,8 +23,8 @@ public final class R {
 		public static final int common_signin_btn_light_text_disabled = 0x7f090021;
 		public static final int common_signin_btn_light_text_focused = 0x7f090022;
 		public static final int common_signin_btn_light_text_pressed = 0x7f090023;
-		public static final int common_signin_btn_text_dark = 0x7f090027;
-		public static final int common_signin_btn_text_light = 0x7f090028;
+		public static final int common_signin_btn_text_dark = 0x7f090028;
+		public static final int common_signin_btn_text_light = 0x7f090029;
 	}
 	public static final class drawable {
 		public static final int common_full_open_on_phone = 0x7f020027;

@@ -91,7 +91,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:textColor="@color/white"
-                                android:textSize="28dp" />
+                                android:textSize="28dp"
+                                android:text="0"/>
 
                         <View
                             android:layout_width="1dp"

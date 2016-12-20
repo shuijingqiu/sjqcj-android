@@ -6,13 +6,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:id="@+id/head_name_rl"
-            android:layout_width="140dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -21,13 +21,17 @@
                 android:layout_height="40dp"
                 android:src="@mipmap/portrait2" />
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/head_frame" />
+
             <TextView
                 android:id="@+id/name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/head_iv"
-                android:text="姓名显示"
                 android:textColor="@color/color_text1"
                 android:textSize="14sp" />
 
@@ -39,7 +43,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/head_iv"
-                android:text="2016-08-16"
                 android:textColor="@color/color_text2"
                 android:textSize="12sp" />
 
@@ -55,36 +58,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="胜率"
+                android:text="总收益率"
+                android:textSize="14sp"
                 android:textColor="@color/color_text2" />
-
-            <TextView
-                android:id="@+id/winning_probability_tv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="80%"
-                android:textColor="@color/red"
-                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/total_yield_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="总收益率"
-                android:textColor="@color/color_text2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="12dp"
-                android:text="70%"
                 android:textColor="@color/red"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -95,31 +81,32 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/name_code_tv"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="天府股份 (610010)"
-            android:textSize="16sp" />
+            android:textColor="@color/color_toptitle"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/business_tv"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/return_rate_tv"
+            android:layout_toRightOf="@+id/name_code_tv"
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:text="买入"
+            android:text="买"
+            android:textSize="14sp"
             android:textColor="@color/red" />
 
         <TextView
             android:id="@+id/return_rate_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/return_rate_value_tv"
+            android:layout_toRightOf="@+id/business_tv"
             android:layout_centerVertical="true"
             android:text="收益率"
             android:textSize="14sp" />
@@ -129,15 +116,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/to_buy_tv"
-            android:text="29.88%"
+            android:layout_toRightOf="@+id/return_rate_tv"
+            android:layout_centerVertical="true"
             android:textColor="@color/red"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/to_buy_tv"
-            android:layout_width="35dp"
-            android:layout_height="20dp"
+            android:layout_width="40dp"
+            android:layout_height="23dp"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -146,7 +133,7 @@
             android:gravity="center"
             android:text="跟买"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

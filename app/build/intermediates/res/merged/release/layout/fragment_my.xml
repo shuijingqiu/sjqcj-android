@@ -23,20 +23,6 @@
                 android:layout_marginTop="5dp"
                 android:text="我" />
 
-            <LinearLayout
-                android:id="@+id/picksetting2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/usereditlist" />
-            </LinearLayout>
-
             <ImageView
                 android:id="@+id/pickaddweibo1"
                 android:layout_width="wrap_content"
@@ -132,13 +118,6 @@
                             android:textColor="#969696"
                             android:textSize="12dp" />
 
-                        <Button
-                            android:id="@+id/pickuserinfoedit"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:background="@mipmap/addnote1"
-                            android:textSize="15dp"
-                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -151,10 +130,10 @@
 
         </RelativeLayout>
 
-        <View
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_line" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -398,6 +377,133 @@
                     android:background="@color/gray_line" />
 
                 <LinearLayout
+                    android:id="@+id/message_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/gywm" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="消息"
+                        android:textColor="@color/color_text1" />
+
+                    <TextView
+                        android:id="@+id/message_count_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/bg_round_textview"
+                        android:gravity="center"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:id="@+id/mh_account_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/gywm" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="我的交易"
+                        android:textColor="@color/color_text1" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/my_match_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/color_ffffff"
+                        android:clickable="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:src="@mipmap/gywm" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:text="我的比赛"
+                            android:textColor="@color/color_text1" />
+
+                        <Button
+                            style="@style/arrow_img"
+                            android:layout_gravity="center"
+                            android:clickable="false" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_line" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/picksetting"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -502,134 +608,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_line" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/my_match_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/color_ffffff"
-                        android:clickable="true"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/gywm" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:text="我的比赛"
-                            android:textColor="@color/color_text1" />
-
-                        <Button
-                            style="@style/arrow_img"
-                            android:layout_gravity="center"
-                            android:clickable="false" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_line" />
-
-                    <LinearLayout
-                        android:id="@+id/message_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/color_ffffff"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/gywm" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:text="消息"
-                            android:textColor="@color/color_text1" />
-
-                        <TextView
-                            android:id="@+id/message_count_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/bg_round_textview"
-                            android:gravity="center"
-                            android:paddingLeft="3dp"
-                            android:paddingRight="3dp"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:visibility="gone" />
-
-                        <Button
-                            style="@style/arrow_img"
-                            android:layout_gravity="center"
-                            android:clickable="false" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_line" />
-
-                    <LinearLayout
-                        android:id="@+id/mh_account_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/color_ffffff"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/gywm" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:text="我的账户"
-                            android:textColor="@color/color_text1" />
-
-                        <Button
-                            style="@style/arrow_img"
-                            android:layout_gravity="center"
-                            android:clickable="false" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_line" />
-
-                </LinearLayout>
 
             </LinearLayout>
 

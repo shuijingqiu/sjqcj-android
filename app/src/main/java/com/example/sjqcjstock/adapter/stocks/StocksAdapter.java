@@ -8,12 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.Order;
-import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 加载股票的Adapter

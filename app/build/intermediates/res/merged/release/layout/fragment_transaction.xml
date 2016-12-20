@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-
-    <com.example.sjqcjstock.userdefined.MyScrollView
-        android:id="@+id/myScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:descendantFocusability="beforeDescendants"
             android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,13 +28,14 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/shenma" />
+                        android:src="@mipmap/my_zsyl" />
 
                     <TextView
+                        android:id="@+id/total_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="+0.84%"
+                        android:text="0.00%"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
@@ -78,13 +64,14 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/zuqiu" />
+                        android:src="@mipmap/my_pm" />
 
                     <TextView
+                        android:id="@+id/total_profit_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="第100000名"
+                        android:text="0"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
@@ -113,20 +100,21 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/keai" />
+                        android:src="@mipmap/my_sy" />
 
                     <TextView
+                        android:id="@+id/win_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="9.01%"
+                        android:text="0.00%"
                         android:textColor="@color/color_text1"
                         android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="胜率"
+                        android:text="选股胜率"
                         android:textColor="@color/color_text2"
                         android:textSize="14sp" />
 
@@ -136,16 +124,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="155dp"
                 android:layout_margin="10dp"
                 android:background="@color/gray_line"
-                android:orientation="vertical"
-                android:padding="30dp">
+                android:orientation="vertical">
 
-                <TextView
+                <com.example.sjqcjstock.view.stocks.LineChart
+                    android:id="@+id/assets_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="K线图的页面" />
+                    android:layout_height="155dp"/>
 
             </LinearLayout>
 
@@ -185,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="胜率"
+                        android:text="选股胜率"
                         android:textColor="@color/color_text1" />
 
 
@@ -198,31 +185,35 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/total_rate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="+54.40%"
+                        android:text="0%"
                         android:textColor="@color/red" />
 
                     <TextView
+                        android:id="@+id/funds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="1543993.03元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
+                        android:id="@+id/market_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="1470159.00元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
+                        android:id="@+id/win_rate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="72.73%"
+                        android:text="0%"
                         android:textColor="@color/color_text1" />
 
                 </LinearLayout>
@@ -258,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="初次交易"
+                        android:text="建户日期"
                         android:textColor="@color/color_text1" />
 
 
@@ -271,31 +262,34 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/week_avg_profit_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="+54.40%"
+                        android:text="0%"
                         android:textColor="@color/red" />
 
                     <TextView
+                        android:id="@+id/available_funds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="72834.03元"
+                        android:text="0元"
                         android:textColor="@color/color_text1" />
 
                     <TextView
+                        android:id="@+id/position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="95.22%"
+                        android:text="0%"
                         android:textColor="@color/color_text1" />
 
                     <TextView
+                        android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="2016-03-07"
                         android:textColor="@color/color_text1" />
 
                 </LinearLayout>
@@ -303,12 +297,13 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/position_count_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/gray_line"
                 android:padding="10dp"
-                android:text="当前持仓" />
+                android:text="当前持仓(0)" />
 
             <com.example.sjqcjstock.view.SoListView
                 android:id="@+id/list_view"
@@ -318,8 +313,14 @@
                 android:divider="@null"
                 android:listSelector="@android:color/transparent" />
 
-        </LinearLayout>
-
-    </com.example.sjqcjstock.userdefined.MyScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_line"
+                android:gravity="center"
+                android:padding="10dp"
+                android:clickable="true"
+                android:onClick="DetailPositionClick"
+                android:text="历史持仓" />
 
 </LinearLayout>

@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
@@ -19,7 +17,6 @@ import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.StockAdapter;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.OptionalEntity;
-import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;

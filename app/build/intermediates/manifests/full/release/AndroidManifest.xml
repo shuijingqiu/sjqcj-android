@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sjqcjstock"
-    android:versionCode="9"
-    android:versionName="1.9.1" >
+    android:versionCode="10"
+    android:versionName="2.0.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -363,7 +363,6 @@
             android:name="com.example.sjqcjstock.Activity.MyAttentionActivity"
             android:label="关注微博" >
         </activity>
-
         <!-- 模拟炒股相关页面 -->
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity"
@@ -387,13 +386,16 @@
             android:name="com.example.sjqcjstock.Activity.stocks.HistoryCommissionActivity"
             android:label="历史委托页面" />
         <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.HistoryPositionActivity"
+            android:label="历史委托页面" />
+        <activity
             android:name="com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity"
             android:label="交易账户页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity"
             android:label="当前持仓成交明细页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.stocks.ExpertLists"
+            android:name="com.example.sjqcjstock.Activity.stocks.ExpertListsActivity"
             android:label="模拟排行榜" />
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.SimulationGameActivity"
@@ -404,6 +406,15 @@
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity"
             android:label="最新的个人中心列表" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.SearchSharesActivity"
+            android:label="股票代码检索页" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.SubscribeConfirmActivity"
+            android:label="订阅确认页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity"
+            android:label="订阅确认页面" />
 
         <receiver
             android:name="com.example.sjqcjstock.AppRegister"

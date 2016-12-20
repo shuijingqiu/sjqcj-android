@@ -17,8 +17,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:textColor="@color/color_toptitle"
-            android:textSize="15dp"
-            android:text="金亚科技 300028"/>
+            android:textSize="15dp"/>
 
         <TextView
             android:id="@+id/type_tv"
@@ -36,8 +35,7 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/color_text2"
-            android:textSize="15dp"
-            android:text="2016-08-10 08:55:05"/>
+            android:textSize="15dp"/>
 
     </LinearLayout>
 
@@ -68,8 +66,7 @@
                 android:textColor="@color/color_text1"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_price_tv"
-                android:textSize="13sp"
-                android:text="18.73"/>
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/name_money_tv"
@@ -91,8 +88,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_money_tv"
                 android:layout_below="@+id/name_price_tv"
-                android:textSize="13sp"
-                android:text="1450.00"/>
+                android:textSize="13sp"/>
 
         </RelativeLayout>
         <RelativeLayout
@@ -117,8 +113,7 @@
                 android:textColor="@color/color_text1"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_number_tv"
-                android:textSize="13sp"
-                android:text="1873"/>
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/name_cost_tv"
@@ -140,8 +135,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/name_cost_tv"
                 android:layout_below="@+id/name_number_tv"
-                android:textSize="13sp"
-                android:text="5.00"/>
+                android:textSize="13sp"/>
 
         </RelativeLayout>
 

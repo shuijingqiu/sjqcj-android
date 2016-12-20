@@ -25,7 +25,6 @@ import com.example.sjqcjstock.Activity.forumnotedetailActivity;
 import com.example.sjqcjstock.Activity.gwzhmatchActivity;
 import com.example.sjqcjstock.Activity.hotstocklistActivity;
 import com.example.sjqcjstock.Activity.selectstockmatchActivity;
-import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.supermanlistActivity;
 import com.example.sjqcjstock.Activity.todaybullsrankingActivity;
@@ -45,7 +44,6 @@ import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.userdefined.MyScrollView;
-import com.example.sjqcjstock.userdefined.RoundImageView;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.CycleViewPager;
 

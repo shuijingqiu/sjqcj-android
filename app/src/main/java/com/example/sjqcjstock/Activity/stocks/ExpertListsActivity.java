@@ -9,7 +9,6 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.TotalProfitEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.ToastUtil;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 

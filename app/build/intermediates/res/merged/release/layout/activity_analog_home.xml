@@ -20,14 +20,36 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="模拟炒股" />
+            android:text="模拟比赛" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:src="@mipmap/select3" />
 
     </RelativeLayout>
 
+    <!--<com.example.sjqcjstock.view.PullToRefreshLayout-->
+        <!--android:id="@+id/refresh_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--<include layout="@layout/refresh_head" />-->
+    <!--&lt;!&ndash; 支持所有实现Pullable接口的View &ndash;&gt;-->
+
+    <!--<com.example.sjqcjstock.view.PullableScrollView-->
+        <!--android:id="@+id/myScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
     <com.example.sjqcjstock.userdefined.MyScrollView
         android:id="@+id/myScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +85,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/csnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,7 +106,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/rqnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,7 +127,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/zsyp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,15 +158,16 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/xgnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="股票牛人" />
+                        android:text="选股牛人" />
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/mnbs_ll"
@@ -157,7 +180,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/mnbs" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,7 +201,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/mnjy" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -231,15 +254,28 @@
                 android:layout_height="1dp"
                 android:background="@drawable/line" />
 
-            <com.example.sjqcjstock.view.SoListView
-                android:id="@+id/list_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null" />
+                android:layout_height="match_parent">
+
+                <com.example.sjqcjstock.view.SoListView
+                    android:id="@+id/list_view"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </com.example.sjqcjstock.userdefined.MyScrollView>
+        </com.example.sjqcjstock.userdefined.MyScrollView>
 
+        <!--<include layout="@layout/load_more"-->
+            <!--android:visibility="gone"/>-->
+
+    <!--</com.example.sjqcjstock.view.PullToRefreshLayout>-->
+
+    <!--<include layout="@layout/progress" />-->
 
 </LinearLayout>

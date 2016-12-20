@@ -2,7 +2,6 @@ package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;

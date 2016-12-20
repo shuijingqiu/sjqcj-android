@@ -2,7 +2,6 @@ package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,7 @@ import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.Utils;
-import com.example.sjqcjstock.view.SoListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +61,6 @@ public class DynamicExpertAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.e("mh123","多次加载哎--"+position);
         LayoutInflater mInflater = LayoutInflater.from(context);
             final ViewHolder holder;
             if (convertView == null) {

@@ -303,7 +303,6 @@ public class FragmentMonthMap extends Fragment {
                     type = 1;
                 }
                 volume = Float.valueOf(Utils.getNumberFormatW(strS[5]));
-                Log.e("mh123:",time+"  *-");
                 // 判断当前是否是星期一
                 if (Utils.isDayOne(time)) {
                     // K线图数据的添加

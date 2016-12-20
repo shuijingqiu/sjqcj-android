@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +28,6 @@ import com.example.sjqcjstock.fragment.stocks.FragmentAnalogHome;
 import com.example.sjqcjstock.helper.ChangeFragmentHelper;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
 import org.json.JSONException;

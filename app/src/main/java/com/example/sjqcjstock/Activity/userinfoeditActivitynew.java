@@ -30,7 +30,6 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
 import com.example.sjqcjstock.entity.stocks.ListStickEntity;
 import com.example.sjqcjstock.entity.stocks.OHLCEntity;

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="模拟盘历史成交"
+            android:text="历史成交"
             style="@style/top_title" />
 
     </RelativeLayout>
@@ -40,7 +41,7 @@
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:divider="@null"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <include layout="@layout/load_more" />
 

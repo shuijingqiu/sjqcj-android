@@ -24,7 +24,6 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
@@ -32,7 +31,6 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,9 +42,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.KeyStore;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -204,8 +200,7 @@ public class HttpUtil {
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-        Log.e("mh-URl:-", "+" + tp.getUrl());
-        Log.e("mh-Params:-", "+" + tp.getEncodeParams());
+//        Log.e("mh-URl:-", "+" + tp.getUrl());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
             // POST GET
@@ -227,7 +222,7 @@ public class HttpUtil {
             if ("".equals(resstr)) {
                 resstr = null;
             }
-            Log.e("mh-resstr:-", "+" + resstr);
+//            Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
 //            Log.e("网络关闭出错了！IOException", e.getMessage()+"");
             resstr = null;
@@ -260,8 +255,7 @@ public class HttpUtil {
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-        Log.e("mh-URl:-", "+" + tp.getUrl());
-        Log.e("mh-Params:-", "+" + tp.getEncodeParams());
+//        Log.e("mh-URl:-", "+" + tp.getUrl());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
             // POST GET
@@ -277,7 +271,7 @@ public class HttpUtil {
             if ("".equals(resstr)) {
                 resstr = null;
             }
-            Log.e("mh-resstr:-", "+" + resstr);
+//            Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
             resstr = null;
             e.printStackTrace();
@@ -415,7 +409,7 @@ public class HttpUtil {
     public static String getIntentData(String url) {
         String strDta = "";
         try {
-            Log.e("mhresult-url-123- ", url);
+//            Log.e("mhresult-url-123- ", url);
             URL uri = new URL(url);//注意，这里的URL地址必须为网络地址，
             HttpURLConnection ucon = (HttpURLConnection) uri.openConnection();
             ucon.setConnectTimeout(2000);// 设置连接主机超时
@@ -430,10 +424,10 @@ public class HttpUtil {
                 jsonbuilder.append(strDta);
             }
             strDta = jsonbuilder.toString();
-            Log.e("mhresult--12- ", strDta+"-");
+//            Log.e("mhresult--12- ", strDta+"-");
 //            reader.close();
         } catch (Exception e) {
-            Log.e("mh", e.toString());
+            e.getMessage();
         }
         return strDta;
     }
@@ -451,7 +445,7 @@ public class HttpUtil {
         client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         //创建一个GET请求
         HttpGet httpGet=new HttpGet(url);
-        Log.e("mh123url:",url + "---");
+//        Log.e("mh123url:",url + "---");
         String resstr = "";
         try{
             //向服务器发送请求并获取服务器返回的结果
@@ -459,10 +453,9 @@ public class HttpUtil {
             //返回的结果可能放到InputStream，http Header中等。
             InputStream inputStream=response.getEntity().getContent();
             resstr = changeInputStream2((inputStream));
-            Log.e("mh123:",resstr + "---");
+//            Log.e("mh123:",resstr + "---");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("mh123:",e.getMessage());
             return "";
         }
         return resstr;
@@ -473,7 +466,6 @@ public class HttpUtil {
      * @return
      */
     public static String restHttpPost(String url,List listData){
-        Log.e("mhUrlpost:",url);
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         //创建一个POST请求
@@ -489,7 +481,6 @@ public class HttpUtil {
             resstr = changeInputStream2((inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("mh123:",e.getMessage());
             return "";
         }
         return resstr;
@@ -515,7 +506,6 @@ public class HttpUtil {
             resstr = changeInputStream2((inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("mh123:",e.getMessage());
             return "";
         }
         return resstr;

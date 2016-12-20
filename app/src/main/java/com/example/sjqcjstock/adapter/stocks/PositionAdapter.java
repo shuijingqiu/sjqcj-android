@@ -1,15 +1,15 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.entity.stocks.Order;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.netutil.Utils;
 
@@ -91,6 +91,15 @@ public class PositionAdapter extends BaseAdapter {
             holder.sharesTv.setText(Utils.getNumberFormat2(profit+"")+"元");
             holder.sharesTv.setTextColor(holder.ratioTv.getResources().getColor(R.color.color_1bc07d));
         }
+        holder.stockNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SharesDetailedActivity.class);
+                intent.putExtra("code",positionEntity.getStock());
+                intent.putExtra("name",positionEntity.getStock_name());
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

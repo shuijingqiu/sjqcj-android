@@ -260,7 +260,6 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                 // 调用新浪接口
 //                    strData = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + Utils.judgeSharesCode(code));
 //                    processData1(strData);
-                    Log.e("mh","新浪接口不能用");
                 }else{
                     processData(strData);
                 }
@@ -432,6 +431,9 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             stocksInfo = new StocksInfo();
             // 每只股票的详细数据
             String[] sharesMinute = str.split("~");
+            if (sharesMinute.length <3){
+                return;
+            }
             // 股票名称
             stocksInfo.setName(sharesMinute[1]);
             // 股票代码
