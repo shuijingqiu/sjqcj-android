@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -61,10 +62,7 @@ public class todayuprankingAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-
         ViewHolder holder;
-
-
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_todayupranking, null);
             holder = new ViewHolder();
@@ -74,19 +72,13 @@ public class todayuprankingAdapter extends BaseAdapter {
             holder.user_image = (ImageView) convertView.findViewById(R.id.user_image);
             holder.currentPrice = (TextView) convertView.findViewById(R.id.currentPrice);
             holder.pickuserinfo1 = (LinearLayout) convertView.findViewById(R.id.pickuserinfo1);
-
-
             convertView.setTag(holder);
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
         ImageLoader.getInstance().displayImage((String) listData.get(position).
                         get("uidimg"),
                 holder.user_image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-
         holder.user_image.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -99,8 +91,6 @@ public class todayuprankingAdapter extends BaseAdapter {
 
             }
         });
-
-
         String currentPrice = listData.get(position).get("currentPrice");
         if (currentPrice == null || "".equals(currentPrice) || Double.valueOf(currentPrice) == 0) {
             holder.increasestr.setText("—");
@@ -113,6 +103,15 @@ public class todayuprankingAdapter extends BaseAdapter {
 
         holder.unamestr.setText((String) listData.get(position).get("uname"));
         holder.ballot_namestr.setText((String) listData.get(position).get("ballot_name"));
+        holder.ballot_namestr.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares"));
+                intent.putExtra("name",listData.get(position).get("ballot_name"));
+                context.startActivity(intent);
+            }
+        });
         holder.pickuserinfo1.setOnClickListener(new OnClickListener() {
 
             @Override

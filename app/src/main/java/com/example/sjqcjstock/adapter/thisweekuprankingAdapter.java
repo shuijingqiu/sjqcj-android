@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -131,6 +132,15 @@ public class thisweekuprankingAdapter extends BaseAdapter {
 
                 }
 
+            }
+        });
+        holder.ballot_namestr.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares"));
+                intent.putExtra("name",listData.get(position).get("ballot_name"));
+                context.startActivity(intent);
             }
         });
 

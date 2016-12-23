@@ -144,8 +144,7 @@ public class RegisterActivity extends Activity {
 
         @Override
         public void onClick(View arg0) {
-
-            if (!verificationstr.equals(fillregistercode1.getText().toString().trim())) {
+            if (!verificationstr.equals((fillregistercode1.getText()+"").trim())) {
                 CustomToast.makeText(getApplicationContext(), "你输入的验证码不正确", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -275,7 +274,6 @@ public class RegisterActivity extends Activity {
 
                     List<Map<String, Object>> datastrlists = JsonTools.listKeyMaps("[" + datastr + "]");
                     for (Map<String, Object> datastrmap : datastrlists) {
-
                         verify_idstr = datastrmap.get("id") + "";
                         verificationstr = datastrmap.get("verification") + "";
                         //String statusstr= datastrmap.get("status")+"";

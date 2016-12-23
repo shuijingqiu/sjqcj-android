@@ -33,18 +33,18 @@ public class essenceweekrankingActivity extends Activity {
 
     // hotstockAdapter hotstockAdapter;
 
-    essencematchAdapter essencematchAdapter;
+    private essencematchAdapter essencematchAdapter;
 
     // 定义于数据库同步的字段集合
     // private String[] name;
     // ArrayList<HashMap<String,Object>> listhotstockData;
-    ArrayList<HashMap<String, Object>> listessencematchData;
+    private ArrayList<HashMap<String, Object>> listessencematchData;
 
     // 获取我是否已关注用户的标识
 
     // 名人集合
     // 精英集合
-    ListView essencelistview;
+    private ListView essencelistview;
 
 
     @Override

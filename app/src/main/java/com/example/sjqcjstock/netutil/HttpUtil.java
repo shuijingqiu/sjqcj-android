@@ -200,7 +200,7 @@ public class HttpUtil {
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-//        Log.e("mh-URl:-", "+" + tp.getUrl());
+        Log.e("mh-URl:-", "+" + tp.getUrl());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
             // POST GET
@@ -222,7 +222,7 @@ public class HttpUtil {
             if ("".equals(resstr)) {
                 resstr = null;
             }
-//            Log.e("mh-resstr:-", "+" + resstr);
+            Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
 //            Log.e("网络关闭出错了！IOException", e.getMessage()+"");
             resstr = null;

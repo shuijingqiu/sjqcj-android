@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -82,8 +83,6 @@ public class essencematchAdapter extends BaseAdapter {
             holder.maxuprange1 = (TextView) convertView.findViewById(R.id.maxuprange1);
             holder.maxuprange2 = (TextView) convertView.findViewById(R.id.maxuprange2);
             holder.pickfamousmanname1 = (LinearLayout) convertView.findViewById(R.id.pickfamousmanname1);
-
-
             convertView.setTag(holder);
 
         } else {
@@ -181,6 +180,24 @@ public class essencematchAdapter extends BaseAdapter {
         //rankingcount.setText((String)listData.get(position).get("rankingcount"));
 
 
+        holder.stockname1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares")+"");
+                intent.putExtra("name",listData.get(position).get("shares_name")+"");
+                context.startActivity(intent);
+            }
+        });
+        holder.shares2_name.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares2")+"");
+                intent.putExtra("name",listData.get(position).get("shares2_name")+"");
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

@@ -171,8 +171,11 @@ public class weekrankingnewdetailActivity extends Activity {
                         // 股票名字
                         String shares_namestr = datastrmap.get("shares_name")
                                 + "";
-                        String shares2_namestr = datastrmap.get("shares2_name")
-                                + "";
+                        String shares2_namestr = datastrmap.get("shares2_name")+ "";
+                        //第一只股票编码
+                        String shares = datastrmap.get("shares") + "";
+                        //第二只股票编码
+                        String shares2 = datastrmap.get("shares2") + "";
 
                         // String
                         // shares_namestr=datastrmap.get("shares_reason")+"";
@@ -237,6 +240,8 @@ public class weekrankingnewdetailActivity extends Activity {
                         // datastrmap.get("shares2_name").toString());
                         map2.put("shares_name", shares_namestr);
                         map2.put("shares2_name", shares2_namestr);
+                        map2.put("shares", Utils.jieQuSharesCode(shares));
+                        map2.put("shares2", Utils.jieQuSharesCode(shares2));
                         map2.put("list_price", list_pricestr);
                         // map2.put("ballot_jifen", ballot_jifenstr);
                         map2.put("price", pricestr);

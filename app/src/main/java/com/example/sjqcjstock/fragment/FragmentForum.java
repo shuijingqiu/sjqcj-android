@@ -57,6 +57,7 @@ public class FragmentForum extends Fragment implements ViewPager.OnPageChangeLis
     // 是否是第一次打开这个页面
     private boolean isFisrt = true;
 
+    public FragmentForum(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum, null);

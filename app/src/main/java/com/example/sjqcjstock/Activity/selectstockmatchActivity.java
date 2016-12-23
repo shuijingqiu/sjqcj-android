@@ -28,6 +28,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.userdefined.MyScrollView;
 import com.example.sjqcjstock.userdefined.RoundImageView;
 import com.example.sjqcjstock.view.CustomToast;
@@ -313,9 +314,9 @@ public class selectstockmatchActivity extends Activity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        //模拟按钮点击
-        totop.performClick();
-        myScrollView.fullScroll(ScrollView.FOCUS_UP);
+//        //模拟按钮点击
+//        totop.performClick();
+//        myScrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
     /**
@@ -421,10 +422,12 @@ public class selectstockmatchActivity extends Activity {
                             String uidstr = ballot1strmap.get("uid") + "";
                             //股票名字
                             String shares_namestr = ballot1strmap.get("shares_name") + "";
-                            //第二只股票编码
-                            String shares2str = ballot1strmap.get("shares2") + "";
+                            //第一只股票编码
+                            String shares = ballot1strmap.get("shares") + "";
                             //第二只股票的名称
                             String shares2_namestr = ballot1strmap.get("shares2_name") + "";
+                            //第二只股票编码
+                            String shares2 = ballot1strmap.get("shares2") + "";
 
                             //当前价1
                             if (ballot1strmap.get("price") == null) {
@@ -441,25 +444,17 @@ public class selectstockmatchActivity extends Activity {
                             }
                             //第1只周涨幅
                             String integration3str = ballot1strmap.get("integration1") + "";
-
                             //第2只周涨幅
                             String integration4str = ballot1strmap.get("integration2") + "";
-
                             //第1只最高涨幅
                             String integration1str = ballot1strmap.get("integration3") + "";
-
                             //最2只最高涨幅
                             String integration2str = ballot1strmap.get("integration4") + "";
-
-
                             //周积分
                             String list_pricestr = ballot1strmap.get("integration") + "";
-
                             //总积分
                             String ballot_jifenstr = ballot1strmap.get("ballot_jifen") + "";
-
                             String unamestr = ballot1strmap.get("uname") + "";
-
                             String weekly = ballot1strmap.get("weekly") + "";
 
                             integration3str = integration3str + "%";
@@ -469,6 +464,8 @@ public class selectstockmatchActivity extends Activity {
                             map2.put("uname", unamestr);
                             map2.put("shares_name", shares_namestr);
                             map2.put("shares2_name", shares2_namestr);
+                            map2.put("shares", Utils.jieQuSharesCode(shares));
+                            map2.put("shares2", Utils.jieQuSharesCode(shares2));
                             map2.put("list_price", list_pricestr);
                             map2.put("ballot_jifen", ballot_jifenstr);
                             map2.put("price", pricestr);
@@ -538,6 +535,8 @@ public class selectstockmatchActivity extends Activity {
                             map2.put("uname", unamestr);
                             map2.put("shares_name", ballot2strmap.get("shares_name").toString());
                             map2.put("shares2_name", ballot2strmap.get("shares2_name").toString());
+                            map2.put("shares", Utils.jieQuSharesCode(ballot2strmap.get("shares").toString()));
+                            map2.put("shares2", Utils.jieQuSharesCode(ballot2strmap.get("shares2").toString()));
                             map2.put("list_price", list_pricestr);
                             map2.put("ballot_jifen", ballot_jifenstr);
                             map2.put("price", pricestr);

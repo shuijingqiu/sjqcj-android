@@ -229,9 +229,20 @@ public class sharesUtil {
         // 当前价格
         stocksInfo.setSpotPrice(priceD+"");
         // 涨停价格
-        stocksInfo.setHighLimit(Utils.getNumberFormat1(priceZ*1.1+""));
+        String highLimit = "0";
         // 跌停价格
-        stocksInfo.setPriceLimit(Utils.getNumberFormat1(priceZ*0.9+""));
+        String priceLimit = "0";
+        if (code.toLowerCase().indexOf("st") == -1){
+            highLimit = Utils.getNumberFormat1(priceZ*1.1+"");
+            priceLimit =Utils.getNumberFormat1(priceZ*0.9+"");
+        }else{
+            highLimit = Utils.getNumberFormat1(priceZ*1.05+"");
+            priceLimit =Utils.getNumberFormat1(priceZ*0.95+"");
+        }
+        // 涨停价格
+        stocksInfo.setHighLimit(highLimit);
+        // 跌停价格
+        stocksInfo.setPriceLimit(priceLimit);
         // 昨日收盘价格
         stocksInfo.setZuoShou(priceZ+"");
 

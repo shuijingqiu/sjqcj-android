@@ -18,7 +18,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="20dp"
             android:text="佳创视讯"
-            android:textColor="@color/color_000000"/>
+            android:textColor="@color/color_toptitle"/>
 
         <TextView
             android:id="@+id/shoptype1"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:text="买入"
-            android:textColor="@color/color_000000"/>
+            android:textColor="@color/color_text1"/>
 
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:text="15.92"
-            android:textColor="@color/color_000000"/>
+            android:textColor="@color/color_text1"/>
 
         <LinearLayout
             android:id="@+id/tradecountlayout1"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10000"
-                android:textColor="@color/color_000000"/>
+                android:textColor="@color/color_text1"/>
             <!--
             <TextView
                 android:layout_width="wrap_content"

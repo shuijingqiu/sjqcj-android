@@ -15,8 +15,10 @@ public class Order {
     private String price;
     // 购买数量
     private String number;
-    // 时间
+    // 委托时间
     private String time;
+    // 成交时间
+    private String deal_time;
     // 购买类型 1为买入 2为卖出
     private String type;
     // 未成交  0代表带成交  1代表成交  2代表撤单
@@ -134,5 +136,13 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeal_time() {
+        return deal_time;
+    }
+
+    public void setDeal_time(String deal_time) {
+        this.deal_time = deal_time;
     }
 }

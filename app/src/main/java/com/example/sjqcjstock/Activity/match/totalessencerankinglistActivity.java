@@ -35,20 +35,20 @@ public class totalessencerankinglistActivity extends Activity {
 
     //hotstockAdapter hotstockAdapter;
 
-    com.example.sjqcjstock.adapter.matchadapter.totalrankingsessenceAdapter totalrankingsessenceAdapter;
+    private com.example.sjqcjstock.adapter.matchadapter.totalrankingsessenceAdapter totalrankingsessenceAdapter;
 
 
     //定义于数据库同步的字段集合
     //private String[] name;
     //ArrayList<HashMap<String,Object>> listhotstockData;
-    ArrayList<HashMap<String, Object>> totalrankingsessenceData;
+    private ArrayList<HashMap<String, Object>> totalrankingsessenceData;
 
     //获取我是否已关注用户的标识
 
 
     //名人集合
     //精英集合
-    ListView totalrankingsessencelistview;
+    private ListView totalrankingsessencelistview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

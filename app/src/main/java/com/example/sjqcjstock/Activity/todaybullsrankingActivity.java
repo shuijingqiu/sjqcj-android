@@ -21,6 +21,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
 import java.util.ArrayList;
@@ -72,8 +73,7 @@ public class todaybullsrankingActivity extends Activity {
         // 存储数据的数组列表
         listtodayuprankingData = new ArrayList<HashMap<String, String>>(200);
         // 为ListView 添加适配器
-        todayuprankingAdapter = new todayuprankingAdapter(
-                getApplicationContext());
+        todayuprankingAdapter = new todayuprankingAdapter(this);
         todaybullsrankinglist2.setAdapter(todayuprankingAdapter);
         todaybullsrankinglist2
                 .setOnItemClickListener(new OnItemClickListener() {
@@ -136,6 +136,8 @@ public class todaybullsrankingActivity extends Activity {
                             ballot_namestr = datastrmap.get("ballot_name")
                                     + "";
                         }
+                        // 股票代码
+                        String shares = datastrmap.get("shares")+"";
                         // 用户名
                         String unamestr = datastrmap.get("uname") + "";
                         String uidstr = datastrmap.get("uid") + "";
@@ -147,6 +149,7 @@ public class todaybullsrankingActivity extends Activity {
                         map2.put("uidimg",
                                 Md5Util.getuidstrMd5(Md5Util.getMd5(uidstr)));
                         map2.put("uid", uidstr);
+                        map2.put("shares", Utils.jieQuSharesCode(shares));
                         listtodayuprankingData.add(map2);
                     }
                 }

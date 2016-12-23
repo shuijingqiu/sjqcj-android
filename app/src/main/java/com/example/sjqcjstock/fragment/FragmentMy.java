@@ -86,6 +86,8 @@ public class FragmentMy extends Fragment {
     // 未读消息条数
     private TextView messageCountTv;
 
+    public FragmentMy(){}
+
     @Override
     public void onResume() {
         super.onResume();

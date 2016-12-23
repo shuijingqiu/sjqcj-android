@@ -19,6 +19,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
 import java.util.ArrayList;
@@ -67,8 +68,7 @@ public class weekbullsrankingActivity extends Activity {
         // 存储数据的数组列表
         listthisweekuprankingData = new ArrayList<HashMap<String, String>>(200);
         // 为ListView 添加适配器
-        thisweekuprankingAdapter = new com.example.sjqcjstock.adapter.thisweekuprankingAdapter(
-                getApplicationContext(), listthisweekuprankingData);
+        thisweekuprankingAdapter = new com.example.sjqcjstock.adapter.thisweekuprankingAdapter(this, listthisweekuprankingData);
         thisweekuprankinglist2.setAdapter(thisweekuprankingAdapter);
         thisweekuprankinglist2
                 .setOnItemClickListener(new OnItemClickListener() {
@@ -138,6 +138,8 @@ public class weekbullsrankingActivity extends Activity {
                         }
                         // 用户名
                         String unamestr = datastrmap.get("uname") + "";
+                        // 股票代码
+                        String shares = datastrmap.get("shares")+"";
 
                         String uidstr = datastrmap.get("uid") + "";
                         HashMap<String, String> map2 = new HashMap<String, String>();
@@ -146,6 +148,7 @@ public class weekbullsrankingActivity extends Activity {
                         map2.put("currentPrice", currentPricestr);
 
                         map2.put("ballot_name", ballot_namestr);
+                        map2.put("shares", Utils.jieQuSharesCode(shares));
                         map2.put("uname", unamestr);
                         map2.put("uidimg",
                                 Md5Util.getuidstrMd5(Md5Util.getMd5(uidstr)));

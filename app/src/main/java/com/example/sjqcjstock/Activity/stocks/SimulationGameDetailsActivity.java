@@ -111,6 +111,7 @@ public class SimulationGameDetailsActivity extends Activity {
                         UserDetailNewActivity.class);
                 intent.putExtra("uid", matchLists.get(position).getUid());
                 intent.putExtra("type","1");
+                startActivity(intent);
             }
         });
         ptrl = ((PullToRefreshLayout) findViewById(

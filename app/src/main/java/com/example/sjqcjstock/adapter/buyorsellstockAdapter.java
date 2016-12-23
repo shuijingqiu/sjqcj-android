@@ -1,13 +1,16 @@
 package com.example.sjqcjstock.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,68 +75,24 @@ public class buyorsellstockAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
 
         }
-        //String str=(String)listData.get(position).get("max_assetsstr");
-        //
-
-//		ImageView image=(ImageView)convertView.findViewById(R.id.user_image);
-//		 // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-//		  ImageLoader.getInstance().displayImage((String)listData.get(position).
-//	    		get("image_url"),
-//				image,options,new AnimateFirstDisplayListener());
-//		  
-//		  
-//		  image.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View arg0) {
-//				// TODO Auto-generated method stub
-//				Intent intent=new Intent(context.getApplicationContext(),UserDetailNewActivity.class);
-//				String  uidstr= (String)listData.get(position).get("uidstr");
-//				intent.putExtra("uid",(String)listData.get(position).get("uidstr"));
-//				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
-//				context.startActivity(intent);
-//				
-//			}
-//		  });
-//		
-        //TextView username=(TextView)convertView.findViewById(R.id.weibo_titlestr);
-        //username.setText((String)listData.get(position).get("shopstr"));
-
-        //TextView shoptype1=(TextView)convertView.findViewById(R.id.shoptype1);
         holder.shoptype1.setText((String) listData.get(position).get("shopstr"));
-
-        //TextView shopname1=(TextView)convertView.findViewById(R.id.shopname1);
         holder.shopname1.setText((String) listData.get(position).get("shopnamestr"));
-////		
-        //TextView tradeprice1=(TextView)convertView.findViewById(R.id.tradeprice1);
         holder.tradeprice1.setText((String) listData.get(position).get("shopmoneystr"));
-
-        //TextView tradecount1=(TextView)convertView.findViewById(R.id.tradecount1);
         holder.tradecount1.setText((String) listData.get(position).get("shopnumstr"));
+        holder.shopname1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object name = listData.get(position).get("shopnamestr");
+                if (name != null && !"".equals(name.toString()+"")){
+                    Intent intent = new Intent(context,SharesDetailedActivity.class);
+                    intent.putExtra("name",name.toString());
+                    intent.putExtra("code", Utils.jieQuSharesCode(listData.get(position).get("sharesstr")+""));
+                    context.startActivity(intent);
+                }
+            }
+        });
 
-//		
-//		CheckBox check=(CheckBox)convertView.findViewById(R.id.selected);
 
-//		//判断用户是否已被选择，如被选择，则复选框为勾选，如未选择则复选框为可选
-//		if((Boolean) listData.get(position).get("selected")){
-//			state.put(position,true);
-//			
-//		}
-
-//		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//				// TODO Auto-generated method stub
-//				if(isChecked){
-//					state.put(position,isChecked);
-//				}else {
-//					state.remove(position);
-//				}
-//			}
-//		});
-
-//		check.setChecked((state.get(position)==null?false:true));
 
         return convertView;
     }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -137,6 +138,26 @@ public class famousmanmatchAdapter extends BaseAdapter {
         ViewUtil.setViewColor(holder.uprange1, listData.get(position).get("integration3").toString());
         ViewUtil.setViewColor(holder.uprange2, listData.get(position).get("integration4").toString());
         holder.weekly.setText((String) listData.get(position).get("weekly"));
+
+        holder.stockname1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares")+"");
+                intent.putExtra("name",listData.get(position).get("shares_name")+"");
+                context.startActivity(intent);
+            }
+        });
+        holder.shares2_name.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,SharesDetailedActivity.class);
+                intent.putExtra("code",listData.get(position).get("shares2")+"");
+                intent.putExtra("name",listData.get(position).get("shares2_name")+"");
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 

@@ -418,7 +418,7 @@ public class MyDealAccountActivity extends Activity {
                         profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
                         positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
-                        int positionValue = Integer.valueOf(positionArrayList.get(i).getAvailable_number())+Integer.valueOf(positionArrayList.get(i).getFreeze_number());
+                        int positionValue = Integer.valueOf(positionArrayList.get(i).getPosition_number());
                         market += price * positionValue;
                     }
 //                    totalAssets = market + totalAmount;

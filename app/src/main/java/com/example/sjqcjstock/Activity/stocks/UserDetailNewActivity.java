@@ -194,7 +194,6 @@ public class UserDetailNewActivity extends FragmentActivity{
     // 网络请求提示
     private ProgressDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -425,10 +424,9 @@ public class UserDetailNewActivity extends FragmentActivity{
                 intent.putExtra(
                         "weibo_id",
                         listusercommonnoteData.get(position)
-                                .get("feed_id").toString());
+                                .get("feed_id")+"");
                 intent.putExtra("uid",
-                        listusercommonnoteData.get(position).get("uid")
-                                .toString());
+                        listusercommonnoteData.get(position).get("uid")+"");
                 startActivity(intent);
             }
         });
@@ -756,6 +754,7 @@ public class UserDetailNewActivity extends FragmentActivity{
         }).start();
     }
 
+
     private class SendInfoTasknotereplylistloadmore extends
             AsyncTask<TaskParams, Void, String> {
         @Override
@@ -825,7 +824,6 @@ public class UserDetailNewActivity extends FragmentActivity{
                         if (diggArrstr.contains(feed_idstr)) {
                             isdigg = "1";
                         }
-
                         // 微博类型
                         String typestr = datastrmap.get("type") + "";
                         // 获取为本类容
@@ -845,10 +843,8 @@ public class UserDetailNewActivity extends FragmentActivity{
                         } else {
                             contentstr = datastrmap.get("body") + "";
                         }
-
                         contentstr = contentstr.replace("【", "<font color=\"#4471BC\" >【");
                         contentstr = contentstr.replace("】", "】</font>");
-
                         // 正则表达式处理 去Html代码
                         String regex = "\\<[^\\>]+\\>";
                         /////////////////////////////////////////////////////////////////////
@@ -866,13 +862,10 @@ public class UserDetailNewActivity extends FragmentActivity{
                         contentstr = contentstr.replace(".gif'", "\"");
                         contentstr = contentstr.replace("imgsrc", "img src");
                         contentstr = contentstr.replace("'http://www.sjqcj.com/addons/plugin/LongText/editor/kindeditor-4.1.4/plugins/emoticons/images/", "\"");
-
-
                         HashMap<String, String> map2 = new HashMap<String, String>();
                         map2.put("type", typestr);
                         if ("repost".equals(typestr)) {
                             contentstr = contentstr.substring(0, contentstr.indexOf("◆"));
-
                             String api_sourcestr = datastrmap.get("api_source") + "";
                             List<Map<String, Object>> api_sourcestrlists = JsonTools.listKeyMaps("[" + api_sourcestr + "]");
                             for (Map<String, Object> api_sourcestrmap : api_sourcestrlists) {
@@ -899,13 +892,10 @@ public class UserDetailNewActivity extends FragmentActivity{
                                     String gaiyao = api_sourcestrmap.get("zy") + "";
                                     source_contentstr = "<font color=\"#4471BC\" >" + source_contentstr.substring(source_contentstr.indexOf("【"), source_contentstr.indexOf("】") + 1) + "</font><Br/>" + gaiyao;
                                 }
-
                                 map2.put("source_contentstr", source_contentstr);
                                 map2.put("source_feed_idstr", source_feed_idstr);
-
                                 List<Map<String, Object>> source_user_infostrlists = JsonTools.listKeyMaps("[" + source_user_infostr + "]");
                                 for (Map<String, Object> source_user_infostrmap : source_user_infostrlists) {
-
                                     sourceuidstr = source_user_infostrmap.get("uid") + "";
                                     sourceunamestr = source_user_infostrmap.get("uname") + "";
                                     avatar_middlestr = source_user_infostrmap.get("avatar_middle") + "";
@@ -914,11 +904,9 @@ public class UserDetailNewActivity extends FragmentActivity{
                                     map2.put("sourceuidstr", sourceuidstr);
                                     map2.put("sourceuname", sourceunamestr);
                                     map2.put("sourceavatar_middlestr", avatar_middlestr);
-
                                 }
                             }
                         }
-
                         String publish_timestr = datastrmap.get("publish_time") + "";
                         if (datastrmap.get("digg_count") == null) {
                             digg_countstr = "0";
@@ -950,7 +938,6 @@ public class UserDetailNewActivity extends FragmentActivity{
                             // 解析短微博图片地址
                             attach_urlstr = attach_urlstr.substring(1, attach_urlstr.length() - 1);
                         }
-
                         // 不带图的富文本
                         if ("".equals(contentstr)) {
                             contentstr = "//";
@@ -960,7 +947,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                             contentstr = "<font color=\"#4471BC\" >" + contentstr.substring(contentstr.indexOf("【"), contentstr.indexOf("】") + 1) + "</font><Br/>" + introduction;
                         }
                         if (state != null) {
-                            map2.put("state", state.toString());
+                            map2.put("state", state+"");
                         }
                         map2.put("reward", reward);
                         map2.put("feed_id", feed_idstr);
@@ -993,7 +980,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                     }
                 }
                 usercommonnoteAdapter.setlistData(listusercommonnoteData);
-                ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
+//                ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
             }
             if (fragmentMicroBlog.getVisibility()==View.VISIBLE) {
                 // 千万别忘了告诉控件刷新完毕了哦！
@@ -1096,7 +1083,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
                         positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
-                        int positionValue = Integer.valueOf(positionArrayList.get(i).getAvailable_number())+Integer.valueOf(positionArrayList.get(i).getFreeze_number());
+                        int positionValue = Integer.valueOf(positionArrayList.get(i).getPosition_number());
                         // 最新市值的累加
                         market += price * positionValue;
                     }

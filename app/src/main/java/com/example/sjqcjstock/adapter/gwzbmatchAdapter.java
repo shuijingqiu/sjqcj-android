@@ -2,16 +2,20 @@ package com.example.sjqcjstock.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -99,10 +103,7 @@ public class gwzbmatchAdapter extends BaseAdapter {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
-                } finally {
-
                 }
 
             }
@@ -114,7 +115,7 @@ public class gwzbmatchAdapter extends BaseAdapter {
         buyorsellflist1 = (ListView) convertView.findViewById(R.id.buyorsellflist1);
         listgwzbmatchData2 = new ArrayList<HashMap<String, Object>>();
         buyorsellstockAdapter = new com.example.sjqcjstock.adapter.buyorsellstockAdapter
-                (context.getApplicationContext(), listgwzbmatchData2);
+                (context, listgwzbmatchData2);
         buyorsellflist1.setAdapter(buyorsellstockAdapter);
 
         String suggeststr = (String) listData.get(position).get("suggeststr");
@@ -155,7 +156,6 @@ public class gwzbmatchAdapter extends BaseAdapter {
             map3.put("shopnumstr", shopnumstr + "股");
             map3.put("shopmoneystr", shopmoneystr);
             listgwzbmatchData2.add(map3);
-            listgwzbmatchData2.size();
         }
         buyorsellstockAdapter.notifyDataSetChanged();
         Utils.setListViewHeightBasedOnChildren(buyorsellflist1);

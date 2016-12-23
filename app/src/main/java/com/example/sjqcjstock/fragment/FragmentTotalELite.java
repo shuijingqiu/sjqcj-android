@@ -123,24 +123,21 @@ public class FragmentTotalELite extends Fragment
                 }
                 for (Map<String, Object> map : lists) {
                     if (statusstr == null) {
-                        statusstr = map.get("data").toString();
+                        statusstr = map.get("data")+"";
                         statusstrlists = JsonTools.listKeyMaps("[" + statusstr
                                 + "]");
                     }
                     for (Map<String, Object> statusstrmap : statusstrlists) {
                         if (status2str == null) {
-                            status2str = statusstrmap.get("data").toString();
+                            status2str = statusstrmap.get("data")+"";
                             statusstr2lists = JsonTools.listKeyMaps(status2str);
                         }
                         for (Map<String, Object> statusstrlists2map : statusstr2lists) {
-                            String uidstr = statusstrlists2map.get("uid")
-                                    .toString();
+                            String uidstr = statusstrlists2map.get("uid")+"";
                             String ballot_jifenstr = statusstrlists2map.get(
-                                    "ballot_jifen").toString();
-                            String weeklystr = statusstrlists2map.get("weekly")
-                                    .toString();
-                            String unamestr = statusstrlists2map.get("uname")
-                                    .toString();
+                                    "ballot_jifen")+"";
+                            String weeklystr = statusstrlists2map.get("weekly")+"";
+                            String unamestr = statusstrlists2map.get("uname")+"";
                             // 取小数点后两位
                             java.text.DecimalFormat df = new java.text.DecimalFormat(
                                     "#.##");

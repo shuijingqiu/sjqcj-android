@@ -19,6 +19,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.JsonTools;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 
 import java.util.ArrayList;
@@ -135,15 +136,13 @@ public class famousmatchActivity extends Activity {
                                     .get("ballot_id") + "";
                             // 用户id
                             String uidstr = ballot1strmap.get("uid") + "";
-                            // 股票编码
-                            String sharesstr = ballot1strmap.get("shares")
-                                    + "";
                             // 股票名字
                             String shares_namestr = ballot1strmap.get(
                                     "shares_name") + "";
+                            // 第一只股票编码
+                            String shares = ballot1strmap.get("shares")+"";
                             // 第二只股票编码
-                            String shares2str = ballot1strmap.get("shares2")
-                                    + "";
+                            String shares2 = ballot1strmap.get("shares2")+ "";
                             // 第二只股票的名称
                             String shares2_namestr = ballot1strmap.get(
                                     "shares2_name") + "";
@@ -198,6 +197,8 @@ public class famousmatchActivity extends Activity {
                             map2.put("uname", unamestr);
                             map2.put("shares_name", shares_namestr);
                             map2.put("shares2_name", shares2_namestr);
+                            map2.put("shares", Utils.jieQuSharesCode(shares));
+                            map2.put("shares2", Utils.jieQuSharesCode(shares2));
                             map2.put("list_price", list_pricestr);
                             map2.put("ballot_jifen", ballot_jifenstr);
                             map2.put("price", pricestr);

@@ -291,7 +291,6 @@ public class FragmentMonthMap extends Fragment {
             // 柱状图数据的添加
             volAll.add(new StickEntity(volume, type, time));
         }
-
         if (!"".equals(strKmap)) {
             strS = strKmap.split("\\|");
             if (Utils.isTimeOne(strS[6])) {

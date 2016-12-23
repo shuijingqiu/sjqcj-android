@@ -215,7 +215,7 @@
         android:id="@+id/line_iv"
         android:layout_width="match_parent"
         android:layout_height="6dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         android:background="@color/gray_line" />
 
     <LinearLayout
@@ -235,10 +235,10 @@
             <Button
                 android:id="@+id/personalletter3"
                 android:layout_width="70dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/buttonstyle"
                 android:padding="5dp"
                 android:text="私信"
@@ -265,10 +265,10 @@
             <Button
                 android:id="@+id/followersign1"
                 android:layout_width="70dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/buttonstyle"
                 android:padding="5dp"
                 android:text=" + 关注"

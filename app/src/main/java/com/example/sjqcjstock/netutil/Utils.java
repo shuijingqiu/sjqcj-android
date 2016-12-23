@@ -483,6 +483,9 @@ public class Utils {
      * @return
      */
     public static Boolean isDayOne(String date) {
+        if(date == null || date.length()<4){
+            return false;
+        }
         int days = Integer.valueOf(date.substring(2, 4));
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
@@ -545,6 +548,19 @@ public class Utils {
             code = "sz"+code;
         }
         return code;
+    }
+
+
+    /**
+     * 去掉股票编号的前两位
+     * @param code
+     * @return
+     */
+    public static String jieQuSharesCode(String code){
+        if (code == null || code.length() <= 6){
+            return code;
+        }
+        return code.substring(2);
     }
 
     /**

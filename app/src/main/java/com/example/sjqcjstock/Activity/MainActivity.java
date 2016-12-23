@@ -155,27 +155,31 @@ public class MainActivity extends FragmentActivity {
             if (result == null) {
                 CustomToast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
             } else {
-                Constants.unreadCountInfo = JSON.parseObject(result, UnreadCount.class);
-                //以后要要的
-                int total = Constants.unreadCountInfo.getData().getUnread_total();
-                String totalStr = total + "";
-                if (total > 99) {
-                    totalStr = "99+";
-                }
-                messageCountTv.setText(totalStr);
-                if (totalStr.equals("0")) {
-                    messageCountTv.setVisibility(View.GONE);
-                } else {
-                    messageCountTv.setVisibility(View.VISIBLE);
-                }
+                try {
+                    Constants.unreadCountInfo = JSON.parseObject(result, UnreadCount.class);
+                    //以后要要的
+                    int total = Constants.unreadCountInfo.getData().getUnread_total();
+                    String totalStr = total + "";
+                    if (total > 99) {
+                        totalStr = "99+";
+                    }
+                    messageCountTv.setText(totalStr);
+                    if (totalStr.equals("0")) {
+                        messageCountTv.setVisibility(View.GONE);
+                    } else {
+                        messageCountTv.setVisibility(View.VISIBLE);
+                    }
 //                // 以后要替换成下面那个的
 //                if (fragmentMessage != null) {
 //                    // 重新设置我的页面的消息条数
 //                    fragmentMessage.showMessage();
 //                }
-                if (fragmentMy != null) {
-                    // 重新设置我的页面的消息条数
-                    fragmentMy.setMessageCount();
+                    if (fragmentMy != null) {
+                        // 重新设置我的页面的消息条数
+                        fragmentMy.setMessageCount();
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -301,7 +305,6 @@ public class MainActivity extends FragmentActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click(); //调用双击退出函数
         }

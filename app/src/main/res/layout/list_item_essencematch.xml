@@ -250,8 +250,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:text="中泰桥梁"
-
-                    />
+                    android:textColor="@color/color_toptitle"/>
 
                 <TextView
                     android:id="@+id/stockname2"
@@ -260,8 +259,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:text="新南洋"
-
-                    />
+                    android:textColor="@color/color_toptitle"/>
 
 
             </LinearLayout>

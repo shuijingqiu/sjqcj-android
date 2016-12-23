@@ -30,26 +30,22 @@ public class famousweekrankingActivity extends Activity {
 
     //获取控件
     private LinearLayout goback1;
-
     //定义List集合容器
-
-
     //hotstockAdapter hotstockAdapter;
-
-    famousmanmatchAdapter famousmanchAdapter;
+    private famousmanmatchAdapter famousmanchAdapter;
 
 
     //定义于数据库同步的字段集合
     //private String[] name;
     //ArrayList<HashMap<String,Object>> listhotstockData;
-    ArrayList<HashMap<String, Object>> famousmanematchData;
+    private ArrayList<HashMap<String, Object>> famousmanematchData;
 
     //获取我是否已关注用户的标识
 
 
     //名人集合
     //精英集合
-    ListView famousmanlistview;
+    private ListView famousmanlistview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

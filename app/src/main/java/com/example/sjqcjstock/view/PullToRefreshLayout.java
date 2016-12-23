@@ -204,6 +204,10 @@ public class PullToRefreshLayout extends RelativeLayout {
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void refreshFinish(int refreshResult) {
+        if (refreshingView == null)
+        {
+            return;
+        }
         refreshingView.clearAnimation();
         refreshingView.setVisibility(View.GONE);
         switch (refreshResult) {

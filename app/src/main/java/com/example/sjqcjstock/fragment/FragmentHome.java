@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import com.example.sjqcjstock.Activity.forumnotedetailActivity;
 import com.example.sjqcjstock.Activity.gwzhmatchActivity;
 import com.example.sjqcjstock.Activity.hotstocklistActivity;
 import com.example.sjqcjstock.Activity.selectstockmatchActivity;
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.supermanlistActivity;
 import com.example.sjqcjstock.Activity.todaybullsrankingActivity;
@@ -109,8 +111,12 @@ public class FragmentHome extends Fragment {
     private String globalSwfStr = "";
 
     private MainActivity mainActivity;
+
+    public FragmentHome(){}
+
     public FragmentHome(MainActivity mainActivity){
         this.mainActivity = mainActivity;
+
     }
     public void test(ArrayList<HashMap<String, String>> listData) {
         listsupermanData = listData;
@@ -229,8 +235,7 @@ public class FragmentHome extends Fragment {
         // 存储数据的数组列表
         listessenceData = new ArrayList<HashMap<String, String>>();
         // 为ListView 添加适配器
-        essencelistAdapter = new essenceAdapter(getActivity()
-                .getApplicationContext());
+        essencelistAdapter = new essenceAdapter(getActivity());
         essencelistview.setAdapter(essencelistAdapter);
         essencelistview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -261,8 +266,7 @@ public class FragmentHome extends Fragment {
 
         // 为ListView 添加适配器
 
-        supermanAdapter = new supermanActivityAdapter(getActivity()
-                .getApplicationContext());
+        supermanAdapter = new supermanActivityAdapter(getActivity());
 
         supermanlistview.setAdapter(supermanAdapter);
 
@@ -272,7 +276,7 @@ public class FragmentHome extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 try {
                     Intent intent = new Intent(getActivity(), UserDetailNewActivity.class);
-                    intent.putExtra("uid", listsupermanData.get(position).get("uid").toString());
+                    intent.putExtra("uid", listsupermanData.get(position).get("uid") + "");
                     startActivity(intent);
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -306,14 +310,16 @@ public class FragmentHome extends Fragment {
         // 存储数据的数组列表
         listtodayuprankingData = new ArrayList<HashMap<String, String>>();
         // 为ListView 添加适配器
-        todayuprankingAdapter = new todayuprankingAdapter(getActivity()
-                .getApplicationContext());
+        todayuprankingAdapter = new todayuprankingAdapter(getActivity());
         todayuprankinglist.setAdapter(todayuprankingAdapter);
         todayuprankinglist.setOnItemClickListener(new OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                Intent intent = new Intent(getActivity(),SharesDetailedActivity.class);
+                intent.putExtra("code",listtodayuprankingData.get(position).get("shares"));
+                intent.putExtra("name",listtodayuprankingData.get(position).get("ballot_name"));
+                startActivity(intent);
             }
         });
         /** 当周牛股榜集合 */
@@ -324,7 +330,7 @@ public class FragmentHome extends Fragment {
         listthisweekuprankingData = new ArrayList<HashMap<String, String>>();
         // 为ListView 添加适配器
         thisweekuprankingAdapter = new com.example.sjqcjstock.adapter.thisweekuprankingAdapter(
-                getActivity().getApplicationContext(),
+                getActivity(),
                 listthisweekuprankingData);
         thisweekupranking.setAdapter(thisweekuprankingAdapter);
         thisweekupranking.setOnItemClickListener(new OnItemClickListener() {
@@ -332,7 +338,10 @@ public class FragmentHome extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
+                Intent intent = new Intent(getActivity(),SharesDetailedActivity.class);
+                intent.putExtra("code",listthisweekuprankingData.get(position).get("shares"));
+                intent.putExtra("name",listthisweekuprankingData.get(position).get("ballot_name"));
+                startActivity(intent);
             }
 
         });
@@ -502,7 +511,7 @@ public class FragmentHome extends Fragment {
                 }
                 for (Map<String, Object> map : lists2) {
                     if (datastr2 == null) {
-                        datastr2 = map.get("data").toString();
+                        datastr2 = map.get("data") + "";
                         datastrlists2 = JsonTools.listKeyMaps(datastr2);
                     }
                     if (datastrlists2 == null) {
@@ -512,27 +521,27 @@ public class FragmentHome extends Fragment {
                     for (Map<String, Object> datastrmap : datastrlists2) {
                         j++;
                         // 涨幅
-                        String increasestr = datastrmap.get("increase")
-                                .toString();
+                        String increasestr = datastrmap.get("increase") + "";
                         // 最新价
-                        String currentPricestr = datastrmap.get("currentPrice")
-                                .toString();
+                        String currentPricestr = datastrmap.get("currentPrice") + "";
 
                         // 股票名
                         String ballot_namestr;
                         if (datastrmap.get("ballot_name") == null) {
                             ballot_namestr = "暂无";
-                        } else {
-                            ballot_namestr = datastrmap.get("ballot_name")
-                                    .toString();
+                        }else{
+                            ballot_namestr = datastrmap.get("ballot_name")+"";
                         }
+                        // 股票编号
+                        String shares = Utils.jieQuSharesCode(datastrmap.get("shares")+"");
                         // 用户名
-                        String unamestr = datastrmap.get("uname").toString();
-                        String uidstr = datastrmap.get("uid").toString();
+                        String unamestr = datastrmap.get("uname")+"";
+                        String uidstr = datastrmap.get("uid")+"";
                         HashMap<String, String> map2 = new HashMap<String, String>();
                         map2.put("currentPrice", currentPricestr);
                         map2.put("increase", increasestr);
                         map2.put("ballot_name", ballot_namestr);
+                        map2.put("shares", shares);
                         map2.put("uname", unamestr);
                         map2.put("uidimg",
                                 Md5Util.getuidstrMd5(Md5Util.getMd5(uidstr)));
@@ -585,7 +594,7 @@ public class FragmentHome extends Fragment {
 
                 for (Map<String, Object> map : lists) {
                     if (datastr == null) {
-                        datastr = map.get("data").toString();
+                        datastr = map.get("data") + "";
 
                         datastrlists = JsonTools.listKeyMaps(datastr);
                     }
@@ -593,19 +602,18 @@ public class FragmentHome extends Fragment {
                     for (Map<String, Object> datastrmap : datastrlists) {
                         i++;
                         // 涨幅
-                        String increasestr = datastrmap.get("increase")
-                                .toString();
+                        String increasestr = datastrmap.get("increase") + "";
                         // 最新价
-                        String currentPricestr = datastrmap.get("currentPrice")
-                                .toString();
+                        String currentPricestr = datastrmap.get("currentPrice") + "";
                         // 股票名
                         String ballot_namestr;
                         if (datastrmap.get("ballot_name") == null) {
                             ballot_namestr = "暂无";
                         } else {
-                            ballot_namestr = datastrmap.get("ballot_name")
-                                    .toString();
+                            ballot_namestr = datastrmap.get("ballot_name") + "";
                         }
+                        // 股票编号
+                        String shares = Utils.jieQuSharesCode(datastrmap.get("shares")+"");
                         // 用户名
                         String unamestr = datastrmap.get("uname") + "";
                         String uidstr = datastrmap.get("uid") + "";
@@ -613,6 +621,7 @@ public class FragmentHome extends Fragment {
                         map2.put("currentPrice", currentPricestr);
                         map2.put("increase", increasestr);
                         map2.put("ballot_name", ballot_namestr);
+                        map2.put("shares",shares);
                         map2.put("uname", unamestr);
                         map2.put("uidimg",
                                 Md5Util.getuidstrMd5(Md5Util.getMd5(uidstr)));
@@ -662,37 +671,31 @@ public class FragmentHome extends Fragment {
                     if (map.get("data") == null) {
                         break;
                     }
-                    String statusstr = map.get("data").toString();
+                    String statusstr = map.get("data") + "";
                     List<Map<String, Object>> supermanlists = JsonTools
                             .listKeyMaps(statusstr);
                     for (int i = 0; i < 3; i++) {
                         String introstr = "";
                         if (supermanlists.get(i).get("intro") != null) {
-                            introstr = supermanlists.get(i).get("intro")
-                                    .toString();
+                            introstr = supermanlists.get(i).get("intro") + "";
                         }
                         String uidstr = supermanlists.get(i).get("uid")+"";
                         String unamestr = supermanlists.get(i).get("uname")+"";
-
                         String save_pathstr = supermanlists.get(i)
-                                .get("save_path").toString();
+                                .get("save_path") + "";
                         String followstr;
                         if (supermanlists.get(i).get("follow") == null) {
                             followstr = "";
                         } else {
-                            followstr = supermanlists.get(i).get("follow")
-                                    .toString();
+                            followstr = supermanlists.get(i).get("follow") + "";
                         }
                         String followingstr = "";
                         String followerstr = "";
                         List<Map<String, Object>> followingstrlists = JsonTools
                                 .listKeyMaps("[" + followstr + "]");
                         for (Map<String, Object> followingstrmap : followingstrlists) {
-                            followingstr = followingstrmap.get("following")
-                                    .toString();
-                            followerstr = followingstrmap.get("follower")
-                                    .toString();
-
+                            followingstr = followingstrmap.get("following") + "";
+                            followerstr = followingstrmap.get("follower") + "";
                         }
                         HashMap<String, String> map2 = new HashMap<String, String>();
                         String authentication = supermanlists.get(i).get("authentication") + "";
@@ -745,23 +748,21 @@ public class FragmentHome extends Fragment {
                             .listKeyMaps(result);
 
                     for (Map<String, Object> map : lists) {
-                        String statusstr = map.get("data").toString();
+                        String statusstr = map.get("data") + "";
                         List<Map<String, Object>> supermanlists = JsonTools.listKeyMaps(statusstr);
                         for (int i = 0; i < 3; i++) {
-                            String namestr = supermanlists.get(i).get("uname")
-                                    .toString();
+                            String namestr = supermanlists.get(i).get("uname") + "";
                             String weibo_titlestr = supermanlists.get(i)
-                                    .get("weibo_title").toString();
+                                    .get("weibo_title") + "";
                             String save_pathstr = supermanlists.get(i)
-                                    .get("save_path").toString();
+                                    .get("save_path") + "";
                             String save_namestr = supermanlists.get(i)
-                                    .get("save_name").toString();
+                                    .get("save_name") + "";
                             String weibo_idstr = supermanlists.get(i)
-                                    .get("weibo_id").toString();
-                            String uidstr = supermanlists.get(i).get("uid")
-                                    .toString();
+                                    .get("weibo_id") + "";
+                            String uidstr = supermanlists.get(i).get("uid") + "";
                             String comment_countstr = supermanlists.get(i)
-                                    .get("comment_count").toString();
+                                    .get("comment_count") + "";
                             String imageurl = save_pathstr + save_namestr;
                             HashMap<String, String> map2 = new HashMap<String, String>();
                             String authentication = supermanlists.get(i).get("authentication") + "";

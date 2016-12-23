@@ -253,7 +253,7 @@ public class CandleStickChart extends GridChart {
      */
     protected void initAxisX() {
         List<String> TitleX = new ArrayList<String>();
-        if (null != OHLCData) {
+        if (null != OHLCData && OHLCData.size()>0) {
             int sticksNum = OHLCData.size();
             if (sticksNum > maxSticksNum) {
                 sticksNum = maxSticksNum;

@@ -78,6 +78,8 @@ public class FragmentAnalogHome extends Fragment {
     // 是否是第一次进入这个页面
     private boolean isRnFirst = true;
 
+    public FragmentAnalogHome(){}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

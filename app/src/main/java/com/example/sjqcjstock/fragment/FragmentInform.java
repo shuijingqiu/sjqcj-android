@@ -36,7 +36,6 @@ import java.util.Map;
  * 财经资讯页面
  */
 public class FragmentInform extends Fragment {
-
     // 定义List集合容器
     private InformAdapter informAdapter;
     private ArrayList<HashMap<String, String>> listinformData;
@@ -52,6 +51,8 @@ public class FragmentInform extends Fragment {
     private ArrayList<HashMap<String, String>> appNewsList;
     // 上下拉刷新控件
     private PullToRefreshLayout ptrl;
+
+    public FragmentInform(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
