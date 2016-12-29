@@ -47,6 +47,8 @@ public class FragmentEssenceJh extends Fragment {
     // 模块的标识
     private String category = "3";
 
+    public FragmentEssenceJh(){}
+
     public FragmentEssenceJh(String category) {
         this.category = category;
     }

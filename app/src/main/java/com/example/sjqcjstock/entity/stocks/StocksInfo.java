@@ -41,7 +41,7 @@ public class StocksInfo {
     /**
      * 昨收
      */
-    private String zuoShou;
+    private String zuoShou = "";
 
     /**
      * 成交量

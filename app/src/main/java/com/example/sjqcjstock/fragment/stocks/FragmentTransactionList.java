@@ -108,7 +108,7 @@ public class FragmentTransactionList extends Fragment {
 
     private void findView(View view) {
         assetsChart = (LineChart) view.findViewById(R.id.assets_chart);
-        listAdapter = new MyDealAccountAdapter(getActivity(),true);
+        listAdapter = new MyDealAccountAdapter(getActivity());
         listView = (SoListView) view.findViewById(
                 R.id.list_view);
         listView.setAdapter(listAdapter);

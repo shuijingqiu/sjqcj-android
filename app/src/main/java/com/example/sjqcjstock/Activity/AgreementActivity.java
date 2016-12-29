@@ -69,7 +69,7 @@ public class AgreementActivity extends Activity {
     private void initData() {
         String type = getIntent().getStringExtra("type");
         if (type != null && !"".equals(type)) {
-            serviceId = "8";
+            serviceId = type;
         }
         rl_refresh_layout.setVisibility(View.VISIBLE);
         new SendAgreementTask().execute(new TaskParams(Constants.agreementUrl,

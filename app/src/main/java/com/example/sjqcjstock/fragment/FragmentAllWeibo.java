@@ -103,6 +103,9 @@ public class FragmentAllWeibo extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (listessenceData.size()<1){
+                    return;
+                }
                 try {
                     String content = listessenceData.get(arg2).get("content");
                     if (content.length() > 3 && Constants.microBlogShare.equals(content.substring(0, 4))) {

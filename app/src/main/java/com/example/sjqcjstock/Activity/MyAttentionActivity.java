@@ -82,6 +82,9 @@ public class MyAttentionActivity extends Activity {
         lv_myAttention.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (myattentioncommonnoteData.size()<1){
+                    return;
+                }
                 try {
                     String content = myattentioncommonnoteData.get(arg2).get("content");
                     if (content.length() > 3 && Constants.microBlogShare.equals(content.substring(0, 4))) {

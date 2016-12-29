@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +53,7 @@ public class Utils {
     }
 
     /**
-     * 防止暴力点击 1秒
+     * 防止暴力点击 2秒
      */
     public static boolean isFastDoubleClick3() {
         long time = System.currentTimeMillis();
@@ -372,7 +373,7 @@ public class Utils {
         if (str == null || str == "") {
             return "";
         }
-        double DStr = Double.valueOf(str)/100;
+        double DStr = Double.valueOf(str) / 100;
         String format = "#########";
         DecimalFormat df = new DecimalFormat(format);
         str = df.format(DStr);
@@ -483,7 +484,7 @@ public class Utils {
      * @return
      */
     public static Boolean isDayOne(String date) {
-        if(date == null || date.length()<4){
+        if (date == null || date.length() < 4) {
             return false;
         }
         int days = Integer.valueOf(date.substring(2, 4));
@@ -534,18 +535,19 @@ public class Utils {
 
     /**
      * 判断并且返回股票的全部代码编码
+     *
      * @param code
      * @return
      */
-    public static String judgeSharesCode(String code){
-        if (code == null || code.length()!=6){
+    public static String judgeSharesCode(String code) {
+        if (code == null || code.length() != 6) {
             return code;
         }
-        String firstStr = code.substring(0,1);
-        if ("6".equals(firstStr)){
-            code = "sh"+code;
+        String firstStr = code.substring(0, 1);
+        if ("6".equals(firstStr)) {
+            code = "sh" + code;
         } else {
-            code = "sz"+code;
+            code = "sz" + code;
         }
         return code;
     }
@@ -553,11 +555,12 @@ public class Utils {
 
     /**
      * 去掉股票编号的前两位
+     *
      * @param code
      * @return
      */
-    public static String jieQuSharesCode(String code){
-        if (code == null || code.length() <= 6){
+    public static String jieQuSharesCode(String code) {
+        if (code == null || code.length() <= 6) {
             return code;
         }
         return code.substring(2);
@@ -565,24 +568,83 @@ public class Utils {
 
     /**
      * 判断当前时间是否是交易时间
+     *
      * @return
      */
-    public static  boolean isTransactionDate(){
+    public static boolean isTransactionDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minuts = cal.get(Calendar.MINUTE);
         int week = cal.get(Calendar.DAY_OF_WEEK);
-        if (week == 1 || week == 7){
+        if (week == 1 || week == 7) {
             return false;
         }
-        if (hour < 9 || (hour == 9 && minuts<29) || hour > 14){
+        if (hour < 9 || (hour == 9 && minuts < 29) || hour > 14) {
             return false;
         }
-        if ((hour > 11 || (hour == 11 &&  minuts > 31)) && hour < 13){
+        if ((hour > 11 || (hour == 11 && minuts > 31)) && hour < 13) {
             return false;
         }
         return true;
     }
 
+    /**
+     * 计算当前时间距传入时间的天数
+     */
+    public static String CalculatedDays(String dtime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(sdf.format(new Date())));
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(sdf.parse(dtime));
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 * 24) + 1;
+        return String.valueOf(between_days);
+    }
+
+    /**
+     * 加入日期的加减法
+     * @param format 日期返回格式
+     * @param StrDate 日期 传空默认为当前日期
+     * @param year 要加减的年
+     * @param month 要加减的月
+     * @param day 要加减的日
+     * @return
+     */
+    public static String GetSysDate(String format, String StrDate, int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sFmt = new SimpleDateFormat(format);
+        if (StrDate == null || "".equals(StrDate))
+        {
+            StrDate = sFmt.format(new Date());
+        }
+        cal.setTime(sFmt.parse((StrDate), new ParsePosition(0)));
+        if (day != 0) {
+            cal.add(cal.DATE, day);
+        }
+        if (month != 0) {
+            cal.add(cal.MONTH, month);
+        }
+        if (year != 0) {
+            cal.add(cal.YEAR, year);
+        }
+        return sFmt.format(cal.getTime());
+    }
+
+    /**
+     * 格式化传入的时间
+     * @param format 传入的格式
+     * @param StrDate 传入的时间
+     * @return
+     */
+    public static String FormattingTime(String format, String StrDate) {
+        SimpleDateFormat sFmt = new SimpleDateFormat(format);
+        try {
+            return sFmt.format(sFmt.parse(StrDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return StrDate;
+    }
 }

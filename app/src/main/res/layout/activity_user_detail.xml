@@ -5,6 +5,7 @@
     android:background="@color/color_ffffff" >
 
     <RelativeLayout
+        android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/color_toptitle" >
@@ -34,7 +35,6 @@
             android:text="订阅"
             android:clickable="true"
             android:onClick="subscribeClick"
-            android:visibility="gone"
             style="@style/top_title" />
 
     </RelativeLayout>

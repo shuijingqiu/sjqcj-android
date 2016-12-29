@@ -117,6 +117,9 @@ public class personalnewsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
+                if (listpersonalnewsData.size()<1){
+                    return;
+                }
                 // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(personalnewsActivity.this, personalnewsdetail.class);

@@ -100,6 +100,9 @@ public class mycollectActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (listmycellectData.size()<1){
+                    return;
+                }
                 try {
                     Intent intent = new Intent(mycollectActivity.this, forumnotedetailActivity.class);
                     // 传递发布微博的信息

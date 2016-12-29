@@ -136,6 +136,14 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (dialog != null){
+            dialog.dismiss();
+        }
+    }
+
     // 获取用户财富设置水晶币个数
     private class SendInfoTaskmywealth extends AsyncTask<TaskParams, Void, String> {
         @Override
@@ -196,7 +204,6 @@ public class FragmentHome extends Fragment {
 
 
     private void initView(View view) {
-
         if (cycleViewPager == null) {
             cycleViewPager = new CycleViewPager();
             this.getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_picture, cycleViewPager).commit();
@@ -832,24 +839,28 @@ public class FragmentHome extends Fragment {
      * 广告图片的一些加载适配
      */
     private void setImageLoader() {
-        // 将最后一个ImageView添加进来
-        views.add(ImageUtil.getImageView(this.getActivity(), infos.get(infos.size() - 1).getUrl()));
-        for (int i = 0; i < infos.size(); i++) {
-            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(i).getUrl()));
+        try{
+            // 将最后一个ImageView添加进来
+            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(infos.size() - 1).getUrl()));
+            for (int i = 0; i < infos.size(); i++) {
+                views.add(ImageUtil.getImageView(this.getActivity(), infos.get(i).getUrl()));
+            }
+            // 将第一个ImageView添加进来
+            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(0).getUrl()));
+            // 设置循环，在调用setData方法前调用
+            cycleViewPager.setCycle(true);
+            // 在加载数据前设置是否循环
+            cycleViewPager.setData(views, infos, mAdCycleViewListener);
+            // 设置轮播
+            cycleViewPager.setWheel(true);
+            // 设置轮播时间，默认5000ms
+            cycleViewPager.setTime(2000);
+            // 设置圆点指示图标组居中显示，默认靠右
+            cycleViewPager.setIndicatorCenter();
+        }catch (Exception e){
+            e.getMessage();
         }
-        // 将第一个ImageView添加进来
-        views.add(ImageUtil.getImageView(this.getActivity(), infos.get(0).getUrl()));
-        // 设置循环，在调用setData方法前调用
-        cycleViewPager.setCycle(true);
-        // 在加载数据前设置是否循环
-        cycleViewPager.setData(views, infos, mAdCycleViewListener);
-        // 设置轮播
-        cycleViewPager.setWheel(true);
-        // 设置轮播时间，默认5000ms
-        cycleViewPager.setTime(2000);
-        // 设置圆点指示图标组居中显示，默认靠右
-        cycleViewPager.setIndicatorCenter();
-    }
+}
 
     private class SendImageLoder extends AsyncTask<TaskParams, Void, String> {
 

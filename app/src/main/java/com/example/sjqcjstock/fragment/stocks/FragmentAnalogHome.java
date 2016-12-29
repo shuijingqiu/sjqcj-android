@@ -105,6 +105,14 @@ public class FragmentAnalogHome extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (dialog != null){
+            dialog.dismiss();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (timer!=null) {
@@ -284,23 +292,27 @@ public class FragmentAnalogHome extends Fragment {
      * 广告图片的一些加载适配
      */
     private void setImageLoader() {
-        // 将最后一个ImageView添加进来
-        views.add(ImageUtil.getImageView(this.getActivity(), infos.get(infos.size() - 1).getUrl()));
-        for (int i = 0; i < infos.size(); i++) {
-            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(i).getUrl()));
+        try{
+            // 将最后一个ImageView添加进来
+            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(infos.size() - 1).getUrl()));
+            for (int i = 0; i < infos.size(); i++) {
+                views.add(ImageUtil.getImageView(this.getActivity(), infos.get(i).getUrl()));
+            }
+            // 将第一个ImageView添加进来
+            views.add(ImageUtil.getImageView(this.getActivity(), infos.get(0).getUrl()));
+            // 设置循环，在调用setData方法前调用
+            cycleViewPager.setCycle(true);
+            // 在加载数据前设置是否循环
+            cycleViewPager.setData(views, infos, mAdCycleViewListener);
+            // 设置轮播
+            cycleViewPager.setWheel(true);
+            // 设置轮播时间，默认5000ms
+            cycleViewPager.setTime(2000);
+            // 设置圆点指示图标组居中显示，默认靠右
+            cycleViewPager.setIndicatorCenter();
+        }catch (Exception e){
+            e.getMessage();
         }
-        // 将第一个ImageView添加进来
-        views.add(ImageUtil.getImageView(this.getActivity(), infos.get(0).getUrl()));
-        // 设置循环，在调用setData方法前调用
-        cycleViewPager.setCycle(true);
-        // 在加载数据前设置是否循环
-        cycleViewPager.setData(views, infos, mAdCycleViewListener);
-        // 设置轮播
-        cycleViewPager.setWheel(true);
-        // 设置轮播时间，默认5000ms
-        cycleViewPager.setTime(2000);
-        // 设置圆点指示图标组居中显示，默认靠右
-        cycleViewPager.setIndicatorCenter();
     }
 
     /**

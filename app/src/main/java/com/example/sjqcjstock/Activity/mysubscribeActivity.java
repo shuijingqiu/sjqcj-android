@@ -91,11 +91,13 @@ public class mysubscribeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
+                if (listmycellectData.size()<1){
+                    return;
+                }
                 Intent intent = new Intent(mysubscribeActivity.this,
                         forumnotedetailActivity.class);
-                intent.putExtra("weibo_id", (String) listmycellectData.get(position).get("feed_id"));
-                intent.putExtra("uid", (String) listmycellectData.get(position).get("uid"));
+                intent.putExtra("weibo_id", listmycellectData.get(position).get("feed_id"));
+                intent.putExtra("uid", listmycellectData.get(position).get("uid"));
                 // mh传递转微博的参数还没有写
                 startActivity(intent);
             }

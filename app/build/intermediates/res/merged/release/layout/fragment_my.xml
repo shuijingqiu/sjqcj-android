@@ -535,43 +535,6 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray_line"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/pickshare1"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/color_ffffff"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/fx" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="分享"
-                        android:textColor="@color/color_text1" />
-
-                    <Button
-                        style="@style/arrow_img"
-                        android:layout_gravity="center"
-                        android:clickable="false" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
                     android:background="@color/gray_line" />
 
                 <LinearLayout
@@ -604,10 +567,50 @@
 
                 </LinearLayout>
 
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_line" />
+
+                <!-- 我的订阅 -->
+                <LinearLayout
+                    android:id="@+id/my_dynamic_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/soucang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="我的牛人订阅"
+                        android:textColor="@color/color_text1" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="gone"
+                    android:background="@color/gray_line" />
+
 
             </LinearLayout>
 

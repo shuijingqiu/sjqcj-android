@@ -320,8 +320,7 @@
             android:background="@color/color_ffffff"
             android:orientation="horizontal"
             android:clickable="true"
-            android:onClick="dynamicExpertClick"
-            android:visibility="gone">
+            android:onClick="dynamicExpertClick">
 
             <TextView
                 android:layout_width="wrap_content"

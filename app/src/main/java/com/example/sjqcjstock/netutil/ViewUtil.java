@@ -1,5 +1,7 @@
 package com.example.sjqcjstock.netutil;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +85,13 @@ public class ViewUtil {
             ImageLoader.getInstance().displayImage(str,
                     imageView, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
     }
-
+    private boolean isValidContext (Context c){
+        Activity a = (Activity)c;
+        if (a.isDestroyed() || a.isFinishing()){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 }

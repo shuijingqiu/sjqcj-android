@@ -31,14 +31,15 @@
         android:id="@+id/my_match_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_marginLeft="7dp"
-        android:orientation="horizontal">
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/head_img_iv"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="2dp"
             android:src="@drawable/ic_error2"/>
 

@@ -76,7 +76,7 @@ public class CommissionAdapter extends BaseAdapter {
         holder.nameCode.setText(order.getStock_name()+"("+order.getStock()+")");
         holder.commissionNumber.setText(order.getNumber());
         holder.number.setText(order.getNumber());
-        holder.price.setText(order.getPrice());
+        holder.price.setText(order.getEntrustment());
         holder.time.setText(order.getTime());
         holder.nameCode.setOnClickListener(new View.OnClickListener() {
             @Override

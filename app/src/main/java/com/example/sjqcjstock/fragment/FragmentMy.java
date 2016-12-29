@@ -25,6 +25,8 @@ import com.example.sjqcjstock.Activity.myfansActivity;
 import com.example.sjqcjstock.Activity.mynoteslistActivity;
 import com.example.sjqcjstock.Activity.mysubscribeActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
+import com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity;
+import com.example.sjqcjstock.Activity.stocks.MyDynamicOrderActivity;
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.usersettingActivity;
@@ -69,7 +71,6 @@ public class FragmentMy extends Fragment {
     // 我的订阅
     private LinearLayout myweibo1;
     private LinearLayout pickshuijinqiu1;
-    private LinearLayout pickshare1;
     private String unamestr;
     private String sexstr;
     private String introstr;
@@ -166,7 +167,6 @@ public class FragmentMy extends Fragment {
         pickaboutmy1 = (LinearLayout) view.findViewById(R.id.pickaboutmy1);
         myweibo1 = (LinearLayout) view.findViewById(R.id.myweibo1);
         pickshuijinqiu1 = (LinearLayout) view.findViewById(R.id.pickshuijinqiu1);
-        pickshare1 = (LinearLayout) view.findViewById(R.id.pickshare1);
 
         following_count1 = (TextView) view.findViewById(R.id.following_count1);
         follower_count1 = (TextView) view.findViewById(R.id.follower_count1);
@@ -195,7 +195,6 @@ public class FragmentMy extends Fragment {
         pickaddweibo1.setOnClickListener(new pickaddweibo1_listener());
         myweibo1.setOnClickListener(new myweibo1_listener());
         pickshuijinqiu1.setOnClickListener(new pickshuijinqiu1_listener());
-        pickshare1.setOnClickListener(new pickshare1_listener());
 
         // 我的订阅单机事件
         view.findViewById(R.id.ll_myOrder).setOnClickListener(new View.OnClickListener() {
@@ -241,15 +240,18 @@ public class FragmentMy extends Fragment {
             }
         });
 
-    }
+        /**
+         * 跳转到我的牛人订阅列表页面
+         * @param view
+         */
+        view.findViewById(R.id.my_dynamic_order).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyDynamicOrderActivity.class);
+                startActivity(intent);
+            }
+        });
 
-    class pickshare1_listener implements OnClickListener {
-
-        @Override
-        public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            CustomToast.makeText(getActivity(), "暂无该功能", Toast.LENGTH_LONG).show();
-        }
     }
 
     class pickshuijinqiu1_listener implements OnClickListener {

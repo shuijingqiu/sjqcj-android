@@ -45,7 +45,8 @@ public class RegisterActivity extends Activity {
     private EditText fillregistercode1;
     //用于接收 验证码id和验证码
     private String verify_idstr;
-    private String verificationstr;
+    private String verificationstr = "";
+    private boolean isName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,8 +145,7 @@ public class RegisterActivity extends Activity {
 
         @Override
         public void onClick(View arg0) {
-            if (!verificationstr.equals((fillregistercode1.getText()+"").trim())) {
-                CustomToast.makeText(getApplicationContext(), "你输入的验证码不正确", Toast.LENGTH_SHORT).show();
+            if (Utils.isFastDoubleClick3()){
                 return;
             }
             String str1 = "";
@@ -154,34 +154,52 @@ public class RegisterActivity extends Activity {
             String str5 = "";
             String str6 = "";
             if ("".equals(loginusername1.getText().toString().trim())) {
-                str1 = "1";
+                CustomToast.makeText(getApplicationContext(), "请输入用户名", Toast.LENGTH_SHORT).show();
+                return;
             } else {
                 str1 = loginusername1.getText().toString().trim();
             }
+            if (isName){
+                CustomToast.makeText(getApplicationContext(), "该用户名已被使用", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if ("".equals(fillpassword2.getText().toString().trim())) {
-                str3 = "1";
+                CustomToast.makeText(getApplicationContext(), "请输入设置密码", Toast.LENGTH_SHORT).show();
+                return;
             } else {
                 str3 = fillpassword2.getText().toString().trim();
             }
 
             if ("".equals(fillphonecode1.getText().toString().trim())) {
-                str4 = "1";
+                CustomToast.makeText(getApplicationContext(), "请输入手机号", Toast.LENGTH_SHORT).show();
+                return;
             } else {
                 str4 = fillphonecode1.getText().toString().trim();
             }
-
+            if (!Utils.isMobileNO(fillphonecode1.getText().toString())) {
+                CustomToast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if ("".equals(fillregistercode1.getText().toString().trim())) {
+                CustomToast.makeText(getApplicationContext(), "请输入验证码", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if ("".equals(verify_idstr) || verify_idstr == null) {
                 str5 = "1";
             } else {
                 str5 = verify_idstr;
             }
             if ("".equals(verificationstr) || verificationstr == null) {
-                str6 = "1";
+                CustomToast.makeText(getApplicationContext(), "你输入的验证码不正确", Toast.LENGTH_SHORT).show();
+                return;
             } else {
                 str6 = verificationstr;
             }
 
+            if ("".equals(fillphonecode1.getText())) {
+                return;
+            }
             new SendInfoTaskregister().execute(new TaskParams(Constants.Url + "?app=public&mod=Register&act=AppRegister",
                             new String[]{"uname", str1},
                             new String[]{"email", str4 + "@qq.com"},
@@ -207,8 +225,6 @@ public class RegisterActivity extends Activity {
     class shortmessage1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-
             if (!Utils.isMobileNO(fillphonecode1.getText().toString())) {
                 CustomToast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 return;
@@ -397,11 +413,12 @@ public class RegisterActivity extends Activity {
                 for (Map<String, Object> map : lists) {
                     String infostr;
                     String statusstr = map.get("status") + "";
-
                     if (map.get("info") == null) {
                         infostr = "该用户名可用";
+                        isName = false;
                     } else {
                         infostr = map.get("info") + "";
+                        isName = true;
                     }
                     //isexist1.setText(infostr);
                     //

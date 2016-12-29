@@ -355,7 +355,16 @@
             android:label="订阅确认页面" />
         <activity
             android:name=".Activity.stocks.MyDynamicExpertActivity"
-            android:label="订阅确认页面" />
+            android:label="订阅牛人动态信息列表页面" />
+        <activity
+            android:name=".Activity.stocks.MyDynamicOrderActivity"
+            android:label="订阅牛人列表页面" />
+        <activity
+            android:name=".Activity.stocks.DynamicOrderDetailsActivity"
+            android:label="订阅牛人动态订单详情页面" />
+        <activity
+            android:name=".Activity.stocks.SubscribeOrderListActivity"
+            android:label="订阅订单列表页面" />
 
         <receiver
             android:name=".AppRegister"

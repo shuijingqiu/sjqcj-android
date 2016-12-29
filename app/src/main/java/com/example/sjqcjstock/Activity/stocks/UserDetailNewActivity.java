@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import com.example.sjqcjstock.view.PullToRefreshLayout;
 import com.example.sjqcjstock.view.PullableScrollView;
 import com.example.sjqcjstock.view.SoListView;
 import com.example.sjqcjstock.view.stocks.LineChart;
+import com.example.sjqcjstock.view.stocks.SubscribeChoicePopup;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
@@ -66,12 +68,14 @@ import java.util.Map;
  *
  * @author Administrator
  */
-public class UserDetailNewActivity extends FragmentActivity{
+public class UserDetailNewActivity extends FragmentActivity {
 
     // 上下拉刷新控件
     private PullToRefreshLayout ptrl;
     // 上面显示的标题
     private TextView titleName;
+    // 订阅按钮
+    private TextView subscribeTv;
     // 获取uid
     private String uidstr;
     // 获取控件
@@ -135,7 +139,7 @@ public class UserDetailNewActivity extends FragmentActivity{
     // 调用自选股的数据
     private String resstr = "";
     // 自选股股票最新信息的Map
-    private Map<String,Map> mapZxgStr;
+    private Map<String, Map> mapZxgStr;
     // 自选股的的数据
     private ArrayList<OptionalEntity> optionalArrayList = null;
     // 交易用的一些属性
@@ -147,12 +151,14 @@ public class UserDetailNewActivity extends FragmentActivity{
     private String mMresstr = "";
     // 调用接口获取用户的交易排名信息
     private String xxstr = "";
+    // 调用是否订阅的接口获取的数据
+    private String desertStr;
     // 分时接口返回的数据
     private String chartstr = "";
     // 持仓的数据
     private ArrayList<PositionEntity> positionArrayList = null;
     // 持仓股票最新信息的Map
-    private Map<String,Map> mapStr;
+    private Map<String, Map> mapStr;
     // 总收益
     private TextView totalRate;
     private TextView totalRate1;
@@ -188,11 +194,18 @@ public class UserDetailNewActivity extends FragmentActivity{
     // X轴标题
     private List<String> xtitle;
     // 设置下横条的位置
-    private LinearLayout.LayoutParams lp ;
+    private LinearLayout.LayoutParams lp;
     // 可用资金
     private double availableFundsValue = 0;
     // 网络请求提示
     private ProgressDialog dialog;
+    // 是否订阅的订阅ID
+    private String desertId = "";
+    // 是否可以延长订阅
+    private String desertExtend = "";
+    // 订阅时间
+    private String desertTime = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +221,6 @@ public class UserDetailNewActivity extends FragmentActivity{
         }
         initView();
         initLine();
-//        getStockData();
 
         // 获取屏幕宽度
         Point size = new Point();
@@ -217,7 +229,7 @@ public class UserDetailNewActivity extends FragmentActivity{
         lp = (android.widget.LinearLayout.LayoutParams) img_line.getLayoutParams();
         // 判断显示那个页
         String type = getIntent().getStringExtra("type");
-        if(type != null && "1".equals(type)){
+        if (type != null && "1".equals(type)) {
             linearTransaction.setVisibility(View.VISIBLE);
             // 关键算法
             lp.leftMargin = (int) ((int) (mScreen1_4 * 1) + (((double) 2 / viewPagerW) * mScreen1_4));
@@ -225,7 +237,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             getTransactionData();
             textMicroBlog.setTextColor(unselect_color);
             textTransaction.setTextColor(select_color);
-        }else{
+        } else {
             fragmentMicroBlog.setVisibility(View.VISIBLE);
             // 关键算法
             lp.leftMargin = (int) ((int) (mScreen1_4 * 0) + (((double) 1 / viewPagerW) * mScreen1_4));
@@ -239,6 +251,14 @@ public class UserDetailNewActivity extends FragmentActivity{
         myScrollView.smoothScrollTo(0, 0);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        desertId = "";
+        // 查询当前用户是否被订阅
+        getisDesert();
+    }
+
     private void initView() {
         dialog = new ProgressDialog(this);
         dialog.setMessage(Constants.loadMessage);
@@ -246,14 +266,17 @@ public class UserDetailNewActivity extends FragmentActivity{
         dialog.show();
         myScrollView = (PullableScrollView) findViewById(R.id.myScrollView);
         titleName = (TextView) findViewById(R.id.title_name);
+        subscribeTv = (TextView) findViewById(R.id.subscribe_tv);
         // 获取intent的数据
         uidstr = getIntent().getStringExtra("uid");
         if (Constants.staticmyuidstr.equals(uidstr)) {
             findViewById(R.id.private_letter_follow_ll).setVisibility(View.GONE);
             findViewById(R.id.line_iv).setVisibility(View.GONE);
             titleName.setText("我的主页");
-        }else{
+            findViewById(R.id.subscribe_tv).setVisibility(View.GONE);
+        } else {
             titleName.setText("他的主页");
+            findViewById(R.id.subscribe_tv).setVisibility(View.VISIBLE);
         }
         username2 = (TextView) findViewById(R.id.username2);
         headimg2 = (ImageView) findViewById(R.id.headimg2);
@@ -324,23 +347,24 @@ public class UserDetailNewActivity extends FragmentActivity{
             // 下来刷新
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                if (fragmentMicroBlog.getVisibility()==View.VISIBLE){
+                if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
                     weiboPage = 1;
                     getWeiBoData();
-                }else if(linearTransaction.getVisibility()==View.VISIBLE){
+                } else if (linearTransaction.getVisibility() == View.VISIBLE) {
                     market = 0;
                     getTransactionData();
-                } else{
+                } else {
                     getStockData();
                 }
             }
+
             // 下拉加载
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                if (fragmentMicroBlog.getVisibility()==View.VISIBLE){
+                if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
                     weiboPage += 1;
                     getWeiBoData();
-                }else{
+                } else {
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -352,16 +376,30 @@ public class UserDetailNewActivity extends FragmentActivity{
     }
 
     /**
+     * 判断当前用户是否被订阅
+     */
+    private void getisDesert() {
+        // 开线程获取用户是否订阅
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                desertStr = HttpUtil.restHttpGet(Constants.moUrl + "/desert/isDesert&uid=" + Constants.staticmyuidstr + "&price_uid=" + uidstr);
+                handler.sendEmptyMessage(6);
+            }
+        }).start();
+    }
+
+    /**
      * 绑定交易的控件
      */
     private void findViewTransaction() {
         linearTransaction = (LinearLayout) findViewById(R.id.fragment_transaction);
         assetsChart = (LineChart) findViewById(R.id.assets_chart);
-        boolean isRn = false;
-        if (Constants.staticmyuidstr.equals(uidstr)){
-            isRn = true;
-        }
-        listAdapter = new MyDealAccountAdapter(this,isRn);
+//        boolean isRn = false;
+//        if (Constants.staticmyuidstr.equals(uidstr)){
+//            isRn = true;
+//        }
+        listAdapter = new MyDealAccountAdapter(this, uidstr);
         listView = (SoListView) findViewById(
                 R.id.list_view);
         listView.setAdapter(listAdapter);
@@ -424,9 +462,9 @@ public class UserDetailNewActivity extends FragmentActivity{
                 intent.putExtra(
                         "weibo_id",
                         listusercommonnoteData.get(position)
-                                .get("feed_id")+"");
+                                .get("feed_id") + "");
                 intent.putExtra("uid",
-                        listusercommonnoteData.get(position).get("uid")+"");
+                        listusercommonnoteData.get(position).get("uid") + "");
                 startActivity(intent);
             }
         });
@@ -682,7 +720,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case R.id.linear_micro_blog:
                     textMicroBlog.setTextColor(select_color);
                     fragmentMicroBlog.setVisibility(View.VISIBLE);
-                    if (listusercommonnoteData.size() < 1){
+                    if (listusercommonnoteData.size() < 1) {
                         dialog.show();
                         getWeiBoData();
                     }
@@ -690,7 +728,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case R.id.linear_transaction:
                     textTransaction.setTextColor(select_color);
                     linearTransaction.setVisibility(View.VISIBLE);
-                    if ("".equals(mMresstr)){
+                    if ("".equals(mMresstr)) {
                         dialog.show();
                         getTransactionData();
                     }
@@ -698,14 +736,14 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case R.id.linear_my_stock:
                     textStock.setTextColor(select_color);
                     linearStock.setVisibility(View.VISIBLE);
-                    if ("".equals(resstr)){
+                    if ("".equals(resstr)) {
                         dialog.show();
                         getStockData();
                     }
                     break;
             }
             // 关键算法
-            lp.leftMargin = (int) ((int) (mScreen1_4 * index) + (((double) (index+1) / viewPagerW) * mScreen1_4));
+            lp.leftMargin = (int) ((int) (mScreen1_4 * index) + (((double) (index + 1) / viewPagerW) * mScreen1_4));
             img_line.setLayoutParams(lp);
             // 滚动到顶部
             myScrollView.smoothScrollTo(0, 0);
@@ -725,7 +763,6 @@ public class UserDetailNewActivity extends FragmentActivity{
         linearStock.setVisibility(View.GONE);
     }
 
-
     /**
      * 获取微博页面数据
      */
@@ -734,7 +771,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         Constants.Url + "?app=public&mod=FeedListMini&act=loadMore",
                         new String[]{"type", "myfeed"},
                         new String[]{"id", Constants.staticmyuidstr},
-                        new String[]{"mid", uidstr}, new String[]{"p",weiboPage+""}
+                        new String[]{"mid", uidstr}, new String[]{"p", weiboPage + ""}
                 )
         );
     }
@@ -748,12 +785,11 @@ public class UserDetailNewActivity extends FragmentActivity{
             @Override
             public void run() {
                 // 调用接口获取用户获取自选股
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/user/getUserOptional&uid="+uidstr+"&token="+Constants.apptoken);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl + "/user/getUserOptional&uid=" + uidstr + "&token=" + Constants.apptoken);
                 handler.sendEmptyMessage(0);
             }
         }).start();
     }
-
 
     private class SendInfoTasknotereplylistloadmore extends
             AsyncTask<TaskParams, Void, String> {
@@ -947,7 +983,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                             contentstr = "<font color=\"#4471BC\" >" + contentstr.substring(contentstr.indexOf("【"), contentstr.indexOf("】") + 1) + "</font><Br/>" + introduction;
                         }
                         if (state != null) {
-                            map2.put("state", state+"");
+                            map2.put("state", state + "");
                         }
                         map2.put("reward", reward);
                         map2.put("feed_id", feed_idstr);
@@ -982,7 +1018,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                 usercommonnoteAdapter.setlistData(listusercommonnoteData);
 //                ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
             }
-            if (fragmentMicroBlog.getVisibility()==View.VISIBLE) {
+            if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
                 // 千万别忘了告诉控件刷新完毕了哦！
                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -1001,8 +1037,8 @@ public class UserDetailNewActivity extends FragmentActivity{
                 case 0:
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
-                        if ("failed".equals(jsonObject.getString("status"))){
-                            if (linearStock.getVisibility()==View.VISIBLE) {
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            if (linearStock.getVisibility() == View.VISIBLE) {
                                 // 千万别忘了告诉控件刷新完毕了哦！
                                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             }
@@ -1010,7 +1046,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                             return;
                         }
                         // 自选股的数据
-                        ArrayList<OptionalEntity> optionalList = (ArrayList<OptionalEntity>) JSON.parseArray(jsonObject.getString("data"),OptionalEntity.class);
+                        ArrayList<OptionalEntity> optionalList = (ArrayList<OptionalEntity>) JSON.parseArray(jsonObject.getString("data"), OptionalEntity.class);
                         getoptionalData(optionalList);
                         optionalArrayList = optionalList;
                         // 加载自选股股票信息
@@ -1018,7 +1054,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (linearStock.getVisibility()==View.VISIBLE) {
+                    if (linearStock.getVisibility() == View.VISIBLE) {
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
@@ -1026,9 +1062,9 @@ public class UserDetailNewActivity extends FragmentActivity{
                     break;
                 case 1:
                     // 重新加载自选股列表
-                    for(int i = 0;i < optionalArrayList.size();i++){
-                        Map<String,String> mStr = mapZxgStr.get(optionalArrayList.get(i).getStock());
-                        if (mStr!=null && mStr.size()>0) {
+                    for (int i = 0; i < optionalArrayList.size(); i++) {
+                        Map<String, String> mStr = mapZxgStr.get(optionalArrayList.get(i).getStock());
+                        if (mStr != null && mStr.size() > 0) {
                             optionalArrayList.get(i).setPrice(mStr.get("price"));
                             optionalArrayList.get(i).setRising(mStr.get("rising"));
                             optionalArrayList.get(i).setIstype(mStr.get("type"));
@@ -1042,7 +1078,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                         JSONObject jsonObject = new JSONObject(mMresstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(getActivity(),jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
-                            if (linearTransaction.getVisibility()==View.VISIBLE) {
+                            if (linearTransaction.getVisibility() == View.VISIBLE) {
                                 // 千万别忘了告诉控件刷新完毕了哦！
                                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             }
@@ -1054,13 +1090,13 @@ public class UserDetailNewActivity extends FragmentActivity{
                         // 获取最新的股票信息
                         getRealTimeData(positionList);
                         listAdapter.setlistData(positionArrayList);
-                        ((TextView)findViewById(R.id.position_count_tv)).setText("当前持仓("+positionList.size()+")");
+                        ((TextView) findViewById(R.id.position_count_tv)).setText("当前持仓(" + positionList.size() + ")");
                         // 滚动到顶部
                         myScrollView.smoothScrollTo(0, 0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (linearTransaction.getVisibility()==View.VISIBLE) {
+                    if (linearTransaction.getVisibility() == View.VISIBLE) {
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
@@ -1072,15 +1108,15 @@ public class UserDetailNewActivity extends FragmentActivity{
                     String profitStr = "0";
                     // 成本价
                     String costPrice = "0";
-                    for(int i = 0;i < positionArrayList.size();i++){
-                        Map<String,String> mStr = mapStr.get(positionArrayList.get(i).getStock());
+                    for (int i = 0; i < positionArrayList.size(); i++) {
+                        Map<String, String> mStr = mapStr.get(positionArrayList.get(i).getStock());
                         price = Double.valueOf(mStr.get("price"));
-                        positionArrayList.get(i).setLatest_price(price+"");
+                        positionArrayList.get(i).setLatest_price(price + "");
                         positionArrayList.get(i).setIsType(mStr.get("type"));
                         // 成本价
                         costPrice = positionArrayList.get(i).getCost_price();
                         // 收益率
-                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) - Double.valueOf(costPrice)) / Double.valueOf(costPrice) * 100 + "");
                         positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getPosition_number());
@@ -1092,53 +1128,53 @@ public class UserDetailNewActivity extends FragmentActivity{
 ////                     更新仓位
 //                    position.setText(Utils.getNumberFormat2(market/(market+availableFundsValue)*100+"")+"%");
                     // 更新最新市值
-                    marketValue.setText(Utils.getNumberFormat2(market+"")+"元");
+                    marketValue.setText(Utils.getNumberFormat2(market + "") + "元");
                     // 刷新持仓列表
                     listAdapter.setlistData(positionArrayList);
                     break;
                 case 4:
                     try {
                         JSONObject jsonObject = new JSONObject(xxstr);
-                        if ("failed".equals(jsonObject.getString("status"))){
+                        if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         JSONObject jsonStr = new JSONObject(jsonObject.getString("data"));
                         // 仓位
-                        position.setText(jsonStr.getString("position")+"%");
+                        position.setText(jsonStr.getString("position") + "%");
                         // 总收益
                         String totalRateValue = jsonStr.getString("total_rate");
                         totalRate.setText(Utils.getNumberFormat2(totalRateValue) + "%");
                         totalRate1.setText(Utils.getNumberFormat2(totalRateValue) + "%");
-                        if (Double.valueOf(totalRateValue)>=0){
+                        if (Double.valueOf(totalRateValue) >= 0) {
                             totalRate1.setTextColor(totalRate1.getResources().getColor(R.color.color_ef3e3e));
-                        }else{
+                        } else {
                             totalRate1.setTextColor(totalRate1.getResources().getColor(R.color.color_1bc07d));
                         }
                         // 排名
                         totalProfitRank.setText(jsonStr.getString("total_profit_rank"));
                         Double fundsValue = jsonStr.getDouble("funds");
                         // 总资产
-                        funds.setText(Utils.getNumberFormat2(fundsValue+"")+"元");
+                        funds.setText(Utils.getNumberFormat2(fundsValue + "") + "元");
                         // 可用资金
                         availableFundsValue = jsonStr.getDouble("available_funds");
                         // 可用资金
-                        availableFunds.setText(Utils.getNumberFormat2(availableFundsValue+"")+"元");
+                        availableFunds.setText(Utils.getNumberFormat2(availableFundsValue + "") + "元");
                         // 周收益率
                         String weekRate = jsonStr.getString("week_avg_profit_rate");
-                        weekAvgProfitRate.setText(Utils.getNumberFormat2(weekRate)+"%");
+                        weekAvgProfitRate.setText(Utils.getNumberFormat2(weekRate) + "%");
                         // 股票市值
-                        marketValue.setText(Utils.getNumberFormat2(fundsValue - availableFundsValue+"")+"元");
-                        if (Double.valueOf(weekRate)>=0){
+                        marketValue.setText(Utils.getNumberFormat2(fundsValue - availableFundsValue + "") + "元");
+                        if (Double.valueOf(weekRate) >= 0) {
                             weekAvgProfitRate.setTextColor(weekAvgProfitRate.getResources().getColor(R.color.color_ef3e3e));
-                        }else{
+                        } else {
                             weekAvgProfitRate.setTextColor(weekAvgProfitRate.getResources().getColor(R.color.color_1bc07d));
                         }
                         // 比赛胜率
-                        winRate.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate"))+"%");
-                        winRate1.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate"))+"%");
+                        winRate.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate")) + "%");
+                        winRate1.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate")) + "%");
                         // 建户时间
-                        time.setText(jsonStr.getString("time").substring(0,10));
+                        time.setText(jsonStr.getString("time").substring(0, 10));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -1149,7 +1185,7 @@ public class UserDetailNewActivity extends FragmentActivity{
                     xtitle = new ArrayList<String>();
                     try {
                         JSONObject jsonObject = new JSONObject(chartstr);
-                        if ("failed".equals(jsonObject.getString("status"))){
+                        if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -1160,13 +1196,13 @@ public class UserDetailNewActivity extends FragmentActivity{
                             jsonObject = (JSONObject) jsonArray.get(i);
                             endFunds = (float) jsonObject.getDouble("endFunds");
                             time = jsonObject.getString("time");
-                            if (i == 0){
+                            if (i == 0) {
                                 maxY = endFunds;
                                 miniY = endFunds;
-                            }else{
-                                if (maxY < endFunds){
+                            } else {
+                                if (maxY < endFunds) {
                                     maxY = endFunds;
-                                }else if (miniY > endFunds){
+                                } else if (miniY > endFunds) {
                                     miniY = endFunds;
                                 }
                             }
@@ -1181,18 +1217,39 @@ public class UserDetailNewActivity extends FragmentActivity{
                         e.printStackTrace();
                     }
                     break;
+                case 6:
+                    try {
+                        JSONObject jsonObject = new JSONObject(desertStr);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            return;
+                        }
+                        String data = jsonObject.getString("data");
+                        if (data.length() < 3) {
+                            subscribeTv.setText("订阅");
+                        } else {
+                            JSONObject jsonStr = new JSONObject(data);
+                            desertId = jsonStr.getString("id");
+                            desertTime = jsonStr.getString("exp_time");
+                            desertExtend = jsonStr.getString("is_extend");
+                            subscribeTv.setText("已订阅");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
 
     /**
      * 获取自选股股票实时数据进行处理
+     *
      * @param listOptional
      */
-    private void getoptionalData(ArrayList<OptionalEntity>  listOptional){
+    private void getoptionalData(ArrayList<OptionalEntity> listOptional) {
         String str = "";
-        for (OptionalEntity optionalEntity:listOptional){
-            if (!"".equals(str)){
+        for (OptionalEntity optionalEntity : listOptional) {
+            if (!"".equals(str)) {
                 str += ",";
             }
             str += Utils.judgeSharesCode(optionalEntity.getStock());
@@ -1220,7 +1277,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                mMresstr = HttpUtil.restHttpGet(Constants.moUrl+"/users&uid="+uidstr+"&token="+Constants.apptoken);
+                mMresstr = HttpUtil.restHttpGet(Constants.moUrl + "/users&uid=" + uidstr + "&token=" + Constants.apptoken);
                 handler.sendEmptyMessage(2);
             }
         }).start();
@@ -1229,7 +1286,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                xxstr = HttpUtil.restHttpGet(Constants.moUrl+"/users/"+uidstr+"&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
+                xxstr = HttpUtil.restHttpGet(Constants.moUrl + "/users/" + uidstr + "&token=" + Constants.apptoken + "&uid=" + Constants.staticmyuidstr);
                 handler.sendEmptyMessage(4);
             }
         }).start();
@@ -1238,7 +1295,7 @@ public class UserDetailNewActivity extends FragmentActivity{
             @Override
             public void run() {
                 // 调用接口获取用户账户信息和总盈利排名
-                chartstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getTimeChart&uid="+uidstr+"&token="+Constants.apptoken);
+                chartstr = HttpUtil.restHttpGet(Constants.moUrl + "/share/getTimeChart&uid=" + uidstr + "&token=" + Constants.apptoken);
                 handler.sendEmptyMessage(5);
             }
         }).start();
@@ -1247,17 +1304,18 @@ public class UserDetailNewActivity extends FragmentActivity{
 
     /**
      * 获取持仓股票实时数据进行处理
+     *
      * @param listPosition
      */
-    private void getRealTimeData(ArrayList<PositionEntity>  listPosition){
+    private void getRealTimeData(ArrayList<PositionEntity> listPosition) {
         String codeStr = "";
-        for (PositionEntity positionEntity:listPosition){
-            if (!"".equals(codeStr)){
+        for (PositionEntity positionEntity : listPosition) {
+            if (!"".equals(codeStr)) {
                 codeStr += ",";
             }
             codeStr += Utils.judgeSharesCode(positionEntity.getStock());
         }
-        if ("".equals(codeStr)){
+        if ("".equals(codeStr)) {
             return;
         }
         // 开线程获股票当前信息
@@ -1282,9 +1340,9 @@ public class UserDetailNewActivity extends FragmentActivity{
 //        miniY = (float) (miniY - miniY * 0.1);
 
         List<String> ytitleInner = new ArrayList<String>();
-        ytitleInner.add(maxY+"%");
+        ytitleInner.add(maxY + "%");
         ytitleInner.add("");
-        ytitleInner.add(miniY+"%");
+        ytitleInner.add(miniY + "%");
         ytitleInner.add("");
         ytitle = new ArrayList<String>();
         ytitle.add("");
@@ -1293,10 +1351,10 @@ public class UserDetailNewActivity extends FragmentActivity{
         int size = xtitle.size();
         List<String> listTitle = new ArrayList<String>();
         listTitle.add(xtitle.get(0));
-        if (size > 2){
-            listTitle.add(xtitle.get(size/2));
+        if (size > 2) {
+            listTitle.add(xtitle.get(size / 2));
         }
-        listTitle.add(xtitle.get(size-1));
+        listTitle.add(xtitle.get(size - 1));
 
         List<LineEntity> lines = new ArrayList<LineEntity>();
         //日均线数据
@@ -1321,7 +1379,7 @@ public class UserDetailNewActivity extends FragmentActivity{
         //y轴的最小值
         assetsChart.setMinValue(miniY);
         //一共需要画多少点
-        assetsChart.setMaxPointNum(lineAveData.size()-1);
+        assetsChart.setMaxPointNum(lineAveData.size() - 1);
         // X轴上的标题是否显示
         assetsChart.setDisplayAxisXTitle(true);
         // Y轴上的标题是否显示
@@ -1339,31 +1397,55 @@ public class UserDetailNewActivity extends FragmentActivity{
 
     /**
      * 订阅的单机事件
+     *
      * @param view
      */
-    public void subscribeClick(View view){
+    public void subscribeClick(View view) {
         // 防止多次点击
-        if (Utils.isFastDoubleClick4()){
+        if (Utils.isFastDoubleClick4()) {
             return;
         }
-        Intent intent = new Intent();
-        intent.setClass(UserDetailNewActivity.this,SubscribeConfirmActivity.class);
-        startActivity(intent);
-        ((TextView)view).setText("取消订阅");
+        if ("".equals(desertId)) {
+            // 跳转到订阅确认页面
+            Intent intent = new Intent();
+            intent.putExtra("name", unamestr);
+            intent.putExtra("uid", uidstr);
+            intent.setClass(UserDetailNewActivity.this, SubscribeConfirmActivity.class);
+            startActivity(intent);
+        } else {
+            // 打开订阅选择页面popup
+            HashMap<String,String> map = new HashMap<String, String>();
+            map.put("name",unamestr);
+            map.put("time",desertTime);
+            map.put("isExtend",desertExtend);
+            map.put("uid",uidstr);
+            map.put("id",desertId);
+            //实例化SelectPicPopupWindow
+            SubscribeChoicePopup menuWindow = new SubscribeChoicePopup(UserDetailNewActivity.this, map);
+            //显示窗口
+            menuWindow.showAtLocation(UserDetailNewActivity.this.findViewById(R.id.title_rl), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+        }
     }
 
     /**
-     *查看全部持仓的单机事件
+     * 查看全部持仓的单机事件
+     *
      * @param view
      */
-    public void DetailPositionClick(View view){
+    public void DetailPositionClick(View view) {
         // 防止多次点击
-        if (Utils.isFastDoubleClick4()){
+        if (Utils.isFastDoubleClick4()) {
             return;
         }
         Intent intent = new Intent();
-        intent.setClass(UserDetailNewActivity.this,HistoryPositionActivity.class);
-        intent.putExtra("uid",uidstr);
+        intent.setClass(UserDetailNewActivity.this, HistoryPositionActivity.class);
+        intent.putExtra("uid", uidstr);
         startActivity(intent);
+    }
+
+    // 修改订阅文字
+    public void udpateSubscribeTx(){
+        desertId = "";
+        subscribeTv.setText("订阅");
     }
 }

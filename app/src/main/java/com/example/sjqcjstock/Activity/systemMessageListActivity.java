@@ -82,6 +82,9 @@ public class systemMessageListActivity extends Activity {
         messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (systemMessage == null || systemMessage.getData().size()<1){
+                    return;
+                }
                 // 跳转到对于的微博页面
                 Intent intent = new Intent(systemMessageListActivity.this, systemMessageActivity.class);
                 intent.putExtra("title", systemMessage.getData().get(position).getTitle());

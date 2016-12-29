@@ -45,11 +45,12 @@ public class Constants {
     public static String shuijinbiCount = "";
     // 检索后选中的股票代码
     public static String choiceCode ="";
+    // 判断是否延长订阅（用户页面刷新）
+    public static boolean isDynamic = false;
 
     // 服务器路径
     public static String Url = "http://www.sjqcj.com/index.php";
     public static String moUrl = "https://moni.sjqcj.com";
-//    public static String moUrl = "http://192.168.2.105";
 //    public static String Url = "http://192.168.2.105/index.php";
 //    public static String Url = "http://192.168.2.199/index.php";
     // 分享的前半段路径
@@ -95,16 +96,6 @@ public class Constants {
 
     // 各种消息条数的实体类
     public static UnreadCount unreadCountInfo;
-
-//	// 图片加载化的一些共通设置
-//	public static DisplayImageOptions options=new DisplayImageOptions.Builder().
-//		cacheInMemory().cacheOnDisc().
-//		showStubImage(R.drawable.ic_stub).
-//		showImageForEmptyUri(R.drawable.ic_empty).
-//		showImageOnFail(R.drawable.ic_error).
-//		//displayer(new RoundedBitmapDisplayer(20)).
-//		imageScaleType(ImageScaleType.IN_SAMPLE_INT)//图片显示方式
-//		.bitmapConfig(Bitmap.Config.ARGB_4444).build();//設置圖片配置信息  對圖片進行處理防止內存溢出
 
     public static void setStatictokeystr(String statictokeystr) {
         Constants.statictokeystr = statictokeystr;

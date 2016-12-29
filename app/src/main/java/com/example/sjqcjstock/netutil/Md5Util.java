@@ -16,10 +16,12 @@ public class Md5Util {
     /**
      * 用于获取一个String的md5值
      *
-     * @param string
      * @return
      */
     public static String getMd5(String str) {
+        if (str == null || "".equals(str)){
+            return "";
+        }
         byte[] bs = md5.digest(str.getBytes());
         StringBuilder sb = new StringBuilder(40);
         for (byte x : bs) {
@@ -40,6 +42,9 @@ public class Md5Util {
      * @return
      */
     public static String getuidstrMd5(String uidmd5) {
+        if (uidmd5 == null || "".equals(uidmd5)){
+            return "";
+        }
         StringBuilder uidimgurl = new StringBuilder();
         String uidmidimg = uidmd5.substring(0, 6);
         uidimgurl.append("http://www.sjqcj.com/data/upload/avatar/");

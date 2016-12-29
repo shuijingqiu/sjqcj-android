@@ -371,7 +371,10 @@ public class MainActivity extends FragmentActivity {
                     );
                 }else{
                     taskParams = new TaskParams(
-                            Constants.Url + "?app=public&mod=Passport&act=AppLogin&login_remember=1&login_email="+login_email+"&login_password="+Constants.staticpasswordstr
+                            Constants.Url + "?app=public&mod=Passport&act=AppLogin",
+                            new String[]{"login_email", login_email},
+                            new String[]{"login_password", Constants.staticpasswordstr},
+                            new String[]{"login_remember", "1"}
                     );
                 }
                 new SendInfoTaskForCommonUserLogin().execute(taskParams);

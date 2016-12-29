@@ -58,6 +58,8 @@ public class TransactionDetailActivity extends Activity {
     private String resstr = "";
     // 股票代码
     private String code = "";
+    // 查询的用户ID
+    private String uid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class TransactionDetailActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_history_deal);
         ExitApplication.getInstance().addActivity(this);
-
         Calendar now = Calendar.getInstance();
         endYear = startYear = now.get(Calendar.YEAR);
         endMonth  = now.get(Calendar.MONTH) + 1;
@@ -74,6 +75,10 @@ public class TransactionDetailActivity extends Activity {
         endDate = Utils.getStringDate(endYear, endMonth, endDay);
         startDate = Utils.getStringDate(endYear, startMonth, endDay);
         code = getIntent().getStringExtra("code");
+        uid = getIntent().getStringExtra("uid");
+        if ("".equals(uid)){
+            uid = Constants.staticmyuidstr;
+        }
         findView();
         dialog.show();
         getData();
@@ -138,7 +143,7 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void run() {
                 // 调用接口获取股票当前行情数据
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getStockInfo&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken+"&stock="+code+"&stime="+startDate+"&etime="+endDate);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/share/getStockInfo&uid="+uid+"&token="+Constants.apptoken+"&stock="+code+"&stime="+startDate+"&etime="+endDate);
                 handler.sendEmptyMessage(0);
             }
         }).start();

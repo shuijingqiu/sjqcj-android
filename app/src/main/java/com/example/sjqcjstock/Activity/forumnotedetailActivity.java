@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -240,6 +241,14 @@ public class forumnotedetailActivity extends Activity implements
         super.onResume();
         // 当评论或者回复后进行页面刷新
         refercommentreply();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (dialog != null){
+            dialog.dismiss();
+        }
     }
 
     private void initView() {
@@ -1283,10 +1292,12 @@ public class forumnotedetailActivity extends Activity implements
                         is_digg = "0";
                     }
                 }
-
-                int diggcount2 = Integer.parseInt(digg_count1.getText()
-                        .toString());
-                digg_count1.setText(String.valueOf(diggcount2 - 1));
+                if ("".equals(digg_count1.getText())){
+                    digg_count1.setText("0");
+                }else{
+                    int diggcount2 = Integer.parseInt(digg_count1.getText()+"");
+                    digg_count1.setText(String.valueOf(diggcount2 - 1));
+                }
                 isdiggsign1.setText("点赞");
                 praise1.setImageResource(R.mipmap.praise6);
 

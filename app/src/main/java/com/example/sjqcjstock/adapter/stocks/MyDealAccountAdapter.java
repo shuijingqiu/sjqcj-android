@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.Activity.stocks.BusinessActivity;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity;
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.netutil.Utils;
 
@@ -27,12 +27,21 @@ public class MyDealAccountAdapter extends BaseAdapter {
 
     private List<PositionEntity> listData;
     private Context context;
-    private boolean isRn = false;
+    private String uid = "";
+    // 可卖数量
+    private String number = "0";
+//    private boolean isRn = false;
 
-    public MyDealAccountAdapter(Context context,boolean isRn) {
+    public MyDealAccountAdapter(Context context) {
         super();
         this.context = context;
-        this.isRn = isRn;
+//        this.isRn = isRn;
+    }
+
+    public MyDealAccountAdapter(Context context,String uid) {
+        super();
+        this.context = context;
+        this.uid = uid;
     }
 
     public void setlistData(ArrayList<PositionEntity> listData) {
@@ -74,7 +83,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
             holder.transactionDetail = (TextView) convertView.findViewById(R.id.transaction_detail_tv);
             holder.purchase = (TextView) convertView.findViewById(R.id.purchase_tv);
             holder.sellOut = (TextView) convertView.findViewById(R.id.sell_out_tv);
-            holder.operationColumnLl = (LinearLayout) convertView.findViewById(R.id.operation_column_ll);
+//            holder.operationColumnLl = (LinearLayout) convertView.findViewById(R.id.operation_column_ll);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -82,9 +91,9 @@ public class MyDealAccountAdapter extends BaseAdapter {
         final PositionEntity positionEntity = listData.get(position);
         final String stock =  positionEntity.getStock();
         final String name =  positionEntity.getStock_name();
-        if (!isRn){
-            holder.operationColumnLl.setVisibility(View.GONE);
-        }
+//        if (!isRn){
+//            holder.operationColumnLl.setVisibility(View.GONE);
+//        }
         holder.name_code.setText(positionEntity.getStock_name() + "(" + stock+")");
         holder.name_code.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,14 +138,17 @@ public class MyDealAccountAdapter extends BaseAdapter {
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_000000));
             }
         }
-        // 可卖数量
-        final String number = positionEntity.getAvailable_number();
+        if (Constants.staticmyuidstr.equals(uid)){
+            // 可卖数量
+            number = positionEntity.getAvailable_number();
+        }
         holder.transactionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TransactionDetailActivity.class);
                 intent.putExtra("code",stock);
                 intent.putExtra("name",name);
+                intent.putExtra("uid",uid);
                 context.startActivity(intent);
             }
         });
@@ -182,7 +194,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
         TextView purchase;
         // 卖出
         TextView sellOut;
-        // 操作栏
-        LinearLayout operationColumnLl;
+//        // 操作栏
+//        LinearLayout operationColumnLl;
     }
 }

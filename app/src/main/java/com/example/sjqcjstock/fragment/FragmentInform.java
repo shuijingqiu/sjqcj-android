@@ -91,15 +91,18 @@ public class FragmentInform extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
-                try {
-                    Intent intent = new Intent(getActivity(),
-                            informdetailActivity.class);
-                    intent.putExtra("news_id", listinformData.get(arg2)
-                            .get("news_idstrstr").toString());
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            if (listinformData.size()<1){
+                return;
+            }
+            try {
+                Intent intent = new Intent(getActivity(),
+                        informdetailActivity.class);
+                intent.putExtra("news_id", listinformData.get(arg2)
+                        .get("news_idstrstr").toString());
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             }
         });
         String str = mCache.getAsString("AppNewsx");

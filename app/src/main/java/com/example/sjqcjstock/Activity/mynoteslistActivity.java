@@ -103,6 +103,9 @@ public class mynoteslistActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                if (listusercommonnoteData.size()<1){
+                    return;
+                }
                 try {
                     String content = listusercommonnoteData.get(position).get("content");
                     if (content.length() > 3 && Constants.microBlogShare.equals(content.substring(0, 4))) {

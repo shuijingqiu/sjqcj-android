@@ -33,6 +33,8 @@ public class Order {
     private String status_name;
     //
     private String username;
+    // 委托价格
+    private String entrustment;
 
     public String getId() {
         return id;
@@ -144,5 +146,13 @@ public class Order {
 
     public void setDeal_time(String deal_time) {
         this.deal_time = deal_time;
+    }
+
+    public String getEntrustment() {
+        return entrustment;
+    }
+
+    public void setEntrustment(String entrustment) {
+        this.entrustment = entrustment;
     }
 }

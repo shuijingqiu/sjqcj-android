@@ -49,6 +49,8 @@ public class FragmentEssenceJd extends Fragment {
     // 缓存全部微博信息用
     private ArrayList<HashMap<String, String>> appindexListJd;
 
+    public FragmentEssenceJd(){}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_essence_jd, container, false);
@@ -84,6 +86,9 @@ public class FragmentEssenceJd extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
+                if (listessenceData.size()<1){
+                    return;
+                }
                 try {
                     Intent intent = new Intent(getActivity(), forumnotedetailActivity.class);
                     intent.putExtra("weibo_id", (String) listessenceData.get(arg2).get("weibo_idstr"));

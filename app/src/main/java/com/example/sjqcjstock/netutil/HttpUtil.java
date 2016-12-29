@@ -445,7 +445,7 @@ public class HttpUtil {
         client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         //创建一个GET请求
         HttpGet httpGet=new HttpGet(url);
-//        Log.e("mh123url:",url + "---");
+        Log.e("mh123url:",url + "---");
         String resstr = "";
         try{
             //向服务器发送请求并获取服务器返回的结果
@@ -453,7 +453,7 @@ public class HttpUtil {
             //返回的结果可能放到InputStream，http Header中等。
             InputStream inputStream=response.getEntity().getContent();
             resstr = changeInputStream2((inputStream));
-//            Log.e("mh123:",resstr + "---");
+            Log.e("mh123:",resstr + "---");
         } catch (IOException e) {
             e.printStackTrace();
             return "";
@@ -470,6 +470,7 @@ public class HttpUtil {
         HttpClient client = getNewHttpClient();
         //创建一个POST请求
         HttpPost httpPost=new HttpPost(url);
+        Log.e("mh123url:",url + "---");
         String resstr = "";
         try{
             HttpEntity entity = new UrlEncodedFormEntity(listData, "UTF-8");
@@ -483,6 +484,7 @@ public class HttpUtil {
             e.printStackTrace();
             return "";
         }
+        Log.e("mh123resstr:",resstr + "---");
         return resstr;
     }
 

@@ -188,7 +188,7 @@ public class BusinessActivity extends Activity {
         }
 
 //        // 监听股票代码输入状态
-//        codeEt.addTextChangedListener(watcher);
+//
         codeEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,7 +310,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void confirmBusiness(View view) {
-        if (Utils.isFastDoubleClick3()){
+        if (Utils.isFastDoubleClick3() || stocksInfo == null){
             return;
         }
         if (stocksInfo.getZuoShou() == null ||Double.valueOf(stocksInfo.getZuoShou()) <= 0){
@@ -388,7 +388,7 @@ public class BusinessActivity extends Activity {
      * @param view
      */
     public void confirmBusiness1(View view) {
-        if (Utils.isFastDoubleClick3()){
+        if (Utils.isFastDoubleClick3() || stocksInfo == null){
             return;
         }
         if (stocksInfo.getZuoShou() == null ||Double.valueOf(stocksInfo.getZuoShou()) <= 0){
@@ -441,6 +441,9 @@ public class BusinessActivity extends Activity {
                 numberEt.setText(number);
                 return;
             }
+        }
+        if(Integer.valueOf(number) > Double.valueOf(businessNumber)){
+            numberEt.setText(businessNumber);
         }
         showDialog("1");
     }

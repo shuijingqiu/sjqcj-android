@@ -95,6 +95,9 @@ public class FragmentRewardWeibo extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 try {
+                    if (listessenceData.size()<1){
+                        return;
+                    }
                     Intent intent = new Intent(getActivity(), forumnotedetailActivity.class);
                     // 传递发布微博的信息
                     intent.putExtra("weibo_id", listessenceData.get(arg2).get("feed_id").toString());
