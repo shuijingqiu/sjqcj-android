@@ -1,26 +1,24 @@
-package com.example.sjqcjstock.Activity.stocks;
+package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.adapter.stocks.DynamicOredrListAdapter;
-import com.example.sjqcjstock.app.ExitApplication;
+import com.example.sjqcjstock.adapter.stocks.DynamicExpertAdapter;
 import com.example.sjqcjstock.constant.Constants;
-import com.example.sjqcjstock.entity.stocks.DesertEntity;
+import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -29,37 +27,34 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * 订阅订单列表
- * Created by Administrator on 2016/12/29.
+ * 牛人动态列表
+ * Created by Administrator on 2016/12/30.
  */
-public class SubscribeOrderListActivity extends Activity{
+public class FragmentDynamicExpert extends Fragment {
 
     // 上下拉刷新控件
     private PullToRefreshLayout ptrl;
     private ListView listView;
-    // 订阅牛人的Adapter
-    private DynamicOredrListAdapter listAdapter;
-    // 数据列
-    private ArrayList<DesertEntity> desertList;
-    private DesertEntity desertEntity;
+    // 牛人动态的Adapter
+    private DynamicExpertAdapter listAdapter;
     // 返回接口的数据
     private String resstr;
     // 网络请求提示
     private ProgressDialog dialog;
-    // 分页
-    private int page = 1;
-    // 查询人的uid
-    private String uid;
+    // 页数
+    private int page = 0;
+    // 需要加载的数据
+    private ArrayList<GeniusEntity> geniusList;
+
+    public FragmentDynamicExpert (){
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_subscribe_order_list);
-        // 将Activity反复链表
-        ExitApplication.getInstance().addActivity(this);
-        findView();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_my_dynamic_expert, container, false);
+        findView(view);
         getData();
+        return view;
     }
 
     @Override
@@ -73,36 +68,27 @@ public class SubscribeOrderListActivity extends Activity{
     /**
      * 页面控件的绑定
      */
-    private void findView() {
-        uid = getIntent().getStringExtra("uid");
-        findViewById(R.id.goback1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        dialog = new ProgressDialog(this);
+    private void findView(View view) {
+        dialog = new ProgressDialog(getActivity());
         dialog.setMessage(Constants.loadMessage);
         dialog.setCancelable(true);
         dialog.show();
-        listView = (ListView) findViewById(R.id.list_view);
-        listAdapter = new DynamicOredrListAdapter(this);
+        listView = (ListView) view.findViewById(R.id.list_view);
+        listAdapter = new DynamicExpertAdapter(getActivity());
         listView.setAdapter(listAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SubscribeOrderListActivity.this,DynamicOrderDetailsActivity.class);
-                desertEntity = desertList.get(position);
-                intent.putExtra("price_uid",desertEntity.getPrice_uid());
-                intent.putExtra("price_username",desertEntity.getPrice_username());
-                intent.putExtra("exp_time",desertEntity.getExp_time());
-                intent.putExtra("time",desertEntity.getTime());
-                intent.putExtra("order_number",desertEntity.getOrder_number());
-                startActivity(intent);
+                Intent inten = new Intent();
+                inten.putExtra("code", geniusList.get(position).getStock());
+                inten.putExtra("name", geniusList.get(position).getStock_name());
+                inten.setClass(getActivity(), SharesDetailedActivity.class);
+                startActivity(inten);
             }
         });
 
-        ptrl = ((PullToRefreshLayout) findViewById(
+        ptrl = ((PullToRefreshLayout) view.findViewById(
                 R.id.refresh_view));
         // 添加上下拉刷新事件
         ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
@@ -123,14 +109,16 @@ public class SubscribeOrderListActivity extends Activity{
     }
 
     /**
-     * 数据的获取
+     * 加载绑定数据
+     * @return
      */
-    private void getData() {
-        // 开线程获牛人动态列表
+    public void getData() {
+        // 开线程获牛人动态数据（全部的牛人动态信息）
         new Thread(new Runnable() {
             @Override
             public void run() {
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/desert/orderList&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr+"&price_uid="+uid+"&p="+page);
+                String url = Constants.moUrl+"/desert/getCattleTrack&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr+"&p="+page;
+                resstr = HttpUtil.restHttpGet(url);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -148,16 +136,14 @@ public class SubscribeOrderListActivity extends Activity{
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            CustomToast.makeText(SubscribeOrderListActivity.this, jsonObject.getString("data"), Toast.LENGTH_LONG).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             dialog.dismiss();
                             return;
                         }
-                        String data = jsonObject.getString("data");
-                        desertList = (ArrayList<DesertEntity>) JSON.parseArray(data,DesertEntity.class);
-                        if (desertList != null && desertList.size()>0) {
-                            listAdapter.setlistData(desertList);
+                        geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
+                        if (geniusList != null && geniusList.size()>0) {
+                            listAdapter.setlistData(geniusList);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -2,13 +2,14 @@ package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.R;
@@ -17,7 +18,6 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -44,6 +44,8 @@ public class MyDynamicExpertActivity extends Activity{
     private int page = 0;
     // 需要查询人动态
     private String price_uid;
+    // 加载的数据
+    private ArrayList<GeniusEntity> geniusList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class MyDynamicExpertActivity extends Activity{
      */
     private void findView() {
         price_uid = getIntent().getStringExtra("price_uid");
+        findViewById(R.id.title_rl).setVisibility(View.VISIBLE);
         findViewById(R.id.goback1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +85,16 @@ public class MyDynamicExpertActivity extends Activity{
         listView = (ListView) findViewById(R.id.list_view);
         listAdapter = new DynamicExpertAdapter(this);
         listView.setAdapter(listAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent inten = new Intent();
+                inten.putExtra("code", geniusList.get(position).getStock());
+                inten.putExtra("name", geniusList.get(position).getStock_name());
+                inten.setClass(MyDynamicExpertActivity.this, SharesDetailedActivity.class);
+                startActivity(inten);
+            }
+        });
 
         ptrl = ((PullToRefreshLayout) findViewById(
                 R.id.refresh_view));
@@ -134,13 +147,12 @@ public class MyDynamicExpertActivity extends Activity{
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            CustomToast.makeText(MyDynamicExpertActivity.this, jsonObject.getString("data"), Toast.LENGTH_LONG).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             dialog.dismiss();
                             return;
                         }
-                        ArrayList<GeniusEntity> geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
+                        geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
                         if (geniusList != null && geniusList.size()>0) {
                             listAdapter.setlistData(geniusList);
                         }

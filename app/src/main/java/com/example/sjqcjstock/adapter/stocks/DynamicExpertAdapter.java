@@ -94,7 +94,6 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 }
             });
             holder.name.setText(geniusEntity.getUsername());
-    //        holder.time.setText(geniusEntity.getTime().substring(0,10));
             holder.time.setText(geniusEntity.getTime());
             // 总收益
             String totalRate = geniusEntity.getTotal_rate();

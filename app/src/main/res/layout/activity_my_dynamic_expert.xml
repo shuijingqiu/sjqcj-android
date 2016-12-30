@@ -6,9 +6,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_toptitle" >
+        android:background="@color/color_toptitle"
+        android:visibility="gone">
 
         <include
             android:layout_width="wrap_content"

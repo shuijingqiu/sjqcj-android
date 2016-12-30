@@ -49,7 +49,7 @@ public class Constants {
     public static boolean isDynamic = false;
 
     // 服务器路径
-    public static String Url = "http://www.sjqcj.com/index.php";
+    public static String Url = "https://www.sjqcj.com/index.php";
     public static String moUrl = "https://moni.sjqcj.com";
 //    public static String Url = "http://192.168.2.105/index.php";
 //    public static String Url = "http://192.168.2.199/index.php";

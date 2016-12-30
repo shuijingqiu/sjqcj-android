@@ -6,9 +6,13 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/head_name_rl"
         android:layout_width="match_parent"
         android:padding="6dp"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/head_name_rl"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -31,7 +35,10 @@
             android:textColor="@color/color_text1"
             android:text="张三历史为"
             android:layout_centerVertical="true"
+            android:paddingRight="30dp"
             android:textSize="14sp" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/type_tv"
@@ -45,21 +52,18 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:text="有效期至：2019-01-12 23：25"/>
+    <!--<TextView-->
+        <!--android:id="@+id/time_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="60dp"-->
+        <!--android:text="有效期至：2019-01-12 23：25"/>-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_text2"
-        android:textSize="10sp"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="5dp"
-        android:text="牛人交易服务动态通知"/>
+        android:text="获取Ta的牛人动态"/>
     
     <View
         android:layout_width="match_parent"

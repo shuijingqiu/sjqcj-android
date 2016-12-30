@@ -1,20 +1,21 @@
-package com.example.sjqcjstock.Activity.stocks;
+package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.DynamicOredrAdapter;
-import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.DesertEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * 订阅牛人列表页面
  * Created by Administrator on 2016/12/26.
  */
-public class MyDynamicOrderActivity extends Activity{
+public class FragmentDynamicOrder extends Fragment {
 
     // 网络请求提示
     private ProgressDialog dialog;
@@ -39,24 +40,22 @@ public class MyDynamicOrderActivity extends Activity{
     // 接口返回的数据
     private String rest;
 
+    public FragmentDynamicOrder(){}
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_dynamic_order);
-        // 将Activity反复链表
-        ExitApplication.getInstance().addActivity(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_dynamic_order, container, false);
         Constants.isDynamic = false;
-        findView();
+        findView(view);
         getData();
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (Constants.isDynamic){
             getData();
-            Constants.isDynamic = false;
         }
     }
 
@@ -71,27 +70,21 @@ public class MyDynamicOrderActivity extends Activity{
     /**
      * 页面控件的绑定
      */
-    private void findView() {
-        dialog = new ProgressDialog(this);
+    private void findView(View view) {
+        dialog = new ProgressDialog(getActivity());
         dialog.setMessage(Constants.loadMessage);
         dialog.setCancelable(true);
         dialog.show();
         /**
          * 返回按钮的事件绑定
          */
-        findViewById(R.id.goback1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        dynamicOrderList = (ListView) findViewById(R.id.dynamic_order_list);
-        adapter = new DynamicOredrAdapter(this,this);
+        dynamicOrderList = (ListView) view.findViewById(R.id.dynamic_order_list);
+        adapter = new DynamicOredrAdapter(getActivity(),this);
         dynamicOrderList.setAdapter(adapter);
         dynamicOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MyDynamicOrderActivity.this, MyDynamicExpertActivity.class);
+                Intent intent = new Intent(getActivity(), MyDynamicExpertActivity.class);
                 intent.putExtra("price_uid",desertList.get(position).getPrice_uid());
                 startActivity(intent);
             }

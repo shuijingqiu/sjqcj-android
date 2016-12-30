@@ -244,8 +244,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/soucang" />
@@ -279,8 +279,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/soucang" />
@@ -291,7 +291,79 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:text="我的订阅"
+                        android:text="我的文章订阅"
+                        android:textColor="@color/color_text1" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line" />
+
+                <!-- 我的订阅 -->
+                <LinearLayout
+                    android:id="@+id/my_dynamic_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/soucang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="我的牛人订阅"
+                        android:textColor="@color/color_text1" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:id="@+id/mh_account_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/soucang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="我的交易"
                         android:textColor="@color/color_text1" />
 
                     <Button
@@ -306,6 +378,43 @@
                     android:layout_height="1dp"
                     android:background="@color/gray_line" />
 
+                <LinearLayout
+                    android:id="@+id/my_match_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_ffffff"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/soucang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="我的比赛"
+                        android:textColor="@color/color_text1" />
+
+                    <Button
+                        style="@style/arrow_img"
+                        android:layout_gravity="center"
+                        android:clickable="false" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line" />
+
+
                 <!-- 我的收藏 -->
                 <LinearLayout
                     android:id="@+id/pickcollect2"
@@ -315,8 +424,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/soucang" />
@@ -349,11 +458,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:src="@mipmap/shuijingbi" />
+                        android:src="@mipmap/soucang" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -384,11 +493,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:src="@mipmap/gywm" />
+                        android:src="@mipmap/soucang" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -424,84 +533,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_line" />
-
-                <LinearLayout
-                    android:id="@+id/mh_account_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/color_ffffff"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/gywm" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="我的交易"
-                        android:textColor="@color/color_text1" />
-
-                    <Button
-                        style="@style/arrow_img"
-                        android:layout_gravity="center"
-                        android:clickable="false" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_line" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/my_match_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/color_ffffff"
-                        android:clickable="true"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/gywm" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:text="我的比赛"
-                            android:textColor="@color/color_text1" />
-
-                        <Button
-                            style="@style/arrow_img"
-                            android:layout_gravity="center"
-                            android:clickable="false" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_line" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/picksetting"
@@ -545,45 +576,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/gywm" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="关于我们"
-                        android:textColor="@color/color_text1" />
-
-                    <Button
-                        style="@style/arrow_img"
-                        android:layout_gravity="center"
-                        android:clickable="false" />
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_line" />
-
-                <!-- 我的订阅 -->
-                <LinearLayout
-                    android:id="@+id/my_dynamic_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/color_ffffff"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/soucang" />
@@ -594,7 +588,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:text="我的牛人订阅"
+                        android:text="关于我们"
                         android:textColor="@color/color_text1" />
 
                     <Button

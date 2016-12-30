@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sjqcjstock"
-    android:versionCode="11"
-    android:versionName="2.0.1" >
+    android:versionCode="12"
+    android:versionName="2.2.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -357,14 +357,14 @@
             android:name=".Activity.stocks.MyDynamicExpertActivity"
             android:label="订阅牛人动态信息列表页面" />
         <activity
-            android:name=".Activity.stocks.MyDynamicOrderActivity"
-            android:label="订阅牛人列表页面" />
-        <activity
             android:name=".Activity.stocks.DynamicOrderDetailsActivity"
             android:label="订阅牛人动态订单详情页面" />
         <activity
             android:name=".Activity.stocks.SubscribeOrderListActivity"
             android:label="订阅订单列表页面" />
+        <activity
+            android:name=".Activity.stocks.ExpertSubscriptionActivity"
+            android:label="牛人订阅页面" />
 
         <receiver
             android:name=".AppRegister"

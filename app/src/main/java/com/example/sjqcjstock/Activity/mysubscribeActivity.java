@@ -69,7 +69,7 @@ public class mysubscribeActivity extends Activity {
         // 将Activity反复链表
         ExitApplication.getInstance().addActivity(this);
         initView();
-        ((TextView) findViewById(R.id.cellect_title_tv)).setText("订阅微博");
+        ((TextView) findViewById(R.id.cellect_title_tv)).setText("订阅文章");
         // 自动下拉刷新
         ptrl.autoRefresh();
     }

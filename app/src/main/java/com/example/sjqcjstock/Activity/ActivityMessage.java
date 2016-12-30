@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
@@ -31,7 +30,7 @@ public class ActivityMessage extends Activity implements OnClickListener {
     // 我的私信
     private LinearLayout pickatmecomment1;
     // 未读消息条数
-    private TextView messageCountTv1, messageCountTv2, messageCountTv3, messageCountTv4, messageCountTv5, messageCountTv6, messageCountTv7;
+    private TextView messageCountTv1, messageCountTv2, messageCountTv3, messageCountTv4, messageCountTv5, messageCountTv6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,6 @@ public class ActivityMessage extends Activity implements OnClickListener {
         messageCountTv4 = (TextView) findViewById(R.id.message4_count_tv);
         messageCountTv5 = (TextView) findViewById(R.id.message5_count_tv);
         messageCountTv6 = (TextView) findViewById(R.id.message6_count_tv);
-        messageCountTv7 = (TextView) findViewById(R.id.message7_count_tv);
         // 绑定点击事件
         pickrecivecomment1.setOnClickListener(this);
         picksendcomment1.setOnClickListener(this);
@@ -184,13 +182,5 @@ public class ActivityMessage extends Activity implements OnClickListener {
         if (intent != null) {
             startActivity(intent);
         }
-    }
-
-    /**
-     * 我的牛人动态单机事件
-     */
-    public void dynamicExpertClick(View view){
-        Intent intent = new Intent(this, MyDynamicExpertActivity.class);
-        startActivity(intent);
     }
 }

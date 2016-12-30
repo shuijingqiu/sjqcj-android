@@ -313,50 +313,6 @@
             android:layout_height="1px"
             android:background="@drawable/line" />
 
-        <LinearLayout
-            android:id="@+id/dynamic_expert"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_ffffff"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:onClick="dynamicExpertClick">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingLeft="12dp"
-                android:text="我的牛人动态"
-                android:textColor="#444444" />
-
-            <TextView
-                android:id="@+id/message7_count_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round_textview"
-                android:gravity="center"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone" />
-
-            <Button
-                style="@style/arrow_img"
-                android:layout_gravity="center"
-                android:clickable="false" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@drawable/line" />
-
     </LinearLayout>
 
 </LinearLayout>

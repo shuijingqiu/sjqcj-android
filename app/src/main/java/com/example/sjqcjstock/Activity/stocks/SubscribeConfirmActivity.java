@@ -12,12 +12,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.Activity.AgreementActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
-import com.example.sjqcjstock.entity.stocks.DesertEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;

@@ -24,9 +24,8 @@ import com.example.sjqcjstock.Activity.mycollectActivity;
 import com.example.sjqcjstock.Activity.myfansActivity;
 import com.example.sjqcjstock.Activity.mynoteslistActivity;
 import com.example.sjqcjstock.Activity.mysubscribeActivity;
+import com.example.sjqcjstock.Activity.stocks.ExpertSubscriptionActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
-import com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity;
-import com.example.sjqcjstock.Activity.stocks.MyDynamicOrderActivity;
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.Activity.usersettingActivity;
@@ -247,7 +246,7 @@ public class FragmentMy extends Fragment {
         view.findViewById(R.id.my_dynamic_order).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyDynamicOrderActivity.class);
+                Intent intent = new Intent(getActivity(), ExpertSubscriptionActivity.class);
                 startActivity(intent);
             }
         });

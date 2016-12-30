@@ -6,32 +6,39 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/head_name_rl"
         android:layout_width="match_parent"
         android:padding="6dp"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/head_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@mipmap/portrait2" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@mipmap/head_frame" />
-
-        <TextView
-            android:id="@+id/name_tv"
+        <RelativeLayout
+            android:id="@+id/head_name_rl"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/head_iv"
-            android:textColor="@color/color_text1"
-            android:text="张三历史为"
-            android:layout_centerVertical="true"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/head_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/portrait2" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/head_frame" />
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/head_iv"
+                android:textColor="@color/color_text1"
+                android:text="张三历史为"
+                android:layout_centerVertical="true"
+                android:paddingRight="30dp"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/type_tv"
@@ -64,6 +71,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        android:layout_marginTop="5dp"
         android:background="@color/gray_line"/>
 
 </LinearLayout>

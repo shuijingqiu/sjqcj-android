@@ -275,7 +275,7 @@ public class UserDetailNewActivity extends FragmentActivity {
             titleName.setText("我的主页");
             findViewById(R.id.subscribe_tv).setVisibility(View.GONE);
         } else {
-            titleName.setText("他的主页");
+            titleName.setText("Ta的主页");
             findViewById(R.id.subscribe_tv).setVisibility(View.VISIBLE);
         }
         username2 = (TextView) findViewById(R.id.username2);

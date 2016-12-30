@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;

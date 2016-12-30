@@ -9,20 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.example.sjqcjstock.Activity.stocks.MyDynamicOrderActivity;
 import com.example.sjqcjstock.Activity.stocks.SubscribeConfirmActivity;
 import com.example.sjqcjstock.Activity.stocks.SubscribeOrderListActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.DesertEntity;
-import com.example.sjqcjstock.entity.stocks.GeniusEntity;
+import com.example.sjqcjstock.fragment.stocks.FragmentDynamicOrder;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
@@ -49,13 +46,13 @@ public class DynamicOredrAdapter extends BaseAdapter {
     // 接口返回的数据
     private String rest;
     // 回掉的类
-    private MyDynamicOrderActivity myDynamicOrderActivity;
+    private FragmentDynamicOrder fragmentDynamicOrder;
 
 
-    public DynamicOredrAdapter(Context context,MyDynamicOrderActivity myDynamicOrderActivity) {
+    public DynamicOredrAdapter(Context context,FragmentDynamicOrder fragmentDynamicOrder) {
         super();
         this.context = context;
-        this.myDynamicOrderActivity = myDynamicOrderActivity;
+        this.fragmentDynamicOrder = fragmentDynamicOrder;
     }
 
     public void setlistData(ArrayList<DesertEntity> listData) {
@@ -91,7 +88,7 @@ public class DynamicOredrAdapter extends BaseAdapter {
             holder.headIm = (ImageView) convertView.findViewById(R.id.head_iv);
             holder.nameTv = (TextView) convertView.findViewById(R.id.name_tv);
             holder.typeTv = (TextView) convertView.findViewById(R.id.type_tv);
-            holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
+//            holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
             holder.extendedTv = (TextView) convertView.findViewById(R.id.extended_tv);
             holder.cancelTv = (TextView) convertView.findViewById(R.id.cancel_tv);
             holder.seeTv = (TextView) convertView.findViewById(R.id.see_tv);
@@ -113,7 +110,7 @@ public class DynamicOredrAdapter extends BaseAdapter {
             }
         });
         holder.nameTv.setText(desertEntity.getPrice_username());
-        holder.timeTv.setText("有效期至："+desertEntity.getExp_time());
+//        holder.timeTv.setText("有效期至："+desertEntity.getExp_time());
 
         if ("1".equals(desertEntity.getStatus())){
             String date = "0";
@@ -192,8 +189,8 @@ public class DynamicOredrAdapter extends BaseAdapter {
         TextView nameTv;
         // 类型（多久到期）
         TextView typeTv;
-        // 有效日期
-        TextView timeTv;
+//        // 有效日期
+//        TextView timeTv;
         // 延长订阅
         TextView extendedTv;
         // 取消订阅
@@ -216,8 +213,9 @@ public class DynamicOredrAdapter extends BaseAdapter {
                             Toast.makeText(context, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        if (myDynamicOrderActivity !=null) {
-                            myDynamicOrderActivity.getData();
+                        Constants.isDynamic = true;
+                        if (fragmentDynamicOrder !=null) {
+                            fragmentDynamicOrder.getData();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

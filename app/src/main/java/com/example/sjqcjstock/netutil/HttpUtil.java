@@ -209,7 +209,6 @@ public class HttpUtil {
             conn.setConnectTimeout(6000);
             conn.setReadTimeout(6000);
             out = conn.getOutputStream();
-//            Log.e("mh-con34n:-", "+" + conn.getRequestMethod());
             String paramsstr = tp.getEncodeParams();
             out.write(paramsstr.getBytes());
             out.flush();
@@ -255,7 +254,7 @@ public class HttpUtil {
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-//        Log.e("mh-URl:-", "+" + tp.getUrl());
+        Log.e("mh-URl:-", "+" + tp.getUrl());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
             // POST GET
@@ -271,7 +270,7 @@ public class HttpUtil {
             if ("".equals(resstr)) {
                 resstr = null;
             }
-//            Log.e("mh-resstr:-", "+" + resstr);
+            Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
             resstr = null;
             e.printStackTrace();
@@ -409,7 +408,7 @@ public class HttpUtil {
     public static String getIntentData(String url) {
         String strDta = "";
         try {
-//            Log.e("mhresult-url-123- ", url);
+            Log.e("mhresult-url-123- ", url);
             URL uri = new URL(url);//注意，这里的URL地址必须为网络地址，
             HttpURLConnection ucon = (HttpURLConnection) uri.openConnection();
             ucon.setConnectTimeout(2000);// 设置连接主机超时
@@ -424,7 +423,7 @@ public class HttpUtil {
                 jsonbuilder.append(strDta);
             }
             strDta = jsonbuilder.toString();
-//            Log.e("mhresult--12- ", strDta+"-");
+            Log.e("mhresult--12- ", strDta+"-");
 //            reader.close();
         } catch (Exception e) {
             e.getMessage();

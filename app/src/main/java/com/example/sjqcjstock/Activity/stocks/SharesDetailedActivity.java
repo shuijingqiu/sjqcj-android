@@ -770,7 +770,6 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                 public void run() {
                     // 调用接口获取用户获取自选股
                     delstr = HttpUtil.restHttpDelete(Constants.moUrl+"/users/"+optionalId+"&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken);
-                    Log.e("mh123","---"+optionalId);
                     handler.sendEmptyMessage(4);
                 }
             }).start();

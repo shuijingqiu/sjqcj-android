@@ -2,8 +2,6 @@ package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.sjqcjstock.Activity.stocks.MyDynamicOrderActivity;
-import com.example.sjqcjstock.Activity.stocks.SubscribeConfirmActivity;
-import com.example.sjqcjstock.Activity.stocks.SubscribeOrderListActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.DesertEntity;
-import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;

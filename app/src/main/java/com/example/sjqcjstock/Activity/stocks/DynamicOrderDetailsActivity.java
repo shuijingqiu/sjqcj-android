@@ -8,9 +8,9 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.AgreementActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
-import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
 import com.example.sjqcjstock.netutil.Utils;
@@ -113,6 +113,21 @@ public class DynamicOrderDetailsActivity extends Activity {
         intent.putExtra("type","1");
         intent.setClass(DynamicOrderDetailsActivity.this,SubscribeConfirmActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     *  阅读协议的单机事件
+     */
+    public void serviceClick(View view){
+        // 跳转到协议页面
+        findViewById(R.id.service_agreement).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DynamicOrderDetailsActivity.this, AgreementActivity.class);
+                intent.putExtra("type", "12");
+                startActivity(intent);
+            }
+        });
     }
 
 }
