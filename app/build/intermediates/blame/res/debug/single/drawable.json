@@ -1,67 +1,155 @@
 [
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\chatto_bg.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\chatto_bg.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_edittext.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_edittext.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_bt_forground.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_bt_forground.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_my.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_my.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\close.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\close.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bg_f8356e_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bg_f8356e_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle6.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle6.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_fdccdb_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_fdccdb_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\color_cursor2.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\color_cursor2.xml"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape3.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape3.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\tab_txt_sel.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\tab_txt_sel.xml"
     },
     {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle.xml"
+    },
+    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_inform.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_inform.xml"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape2.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape2.xml"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_round_textview.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_round_textview.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_message.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_message.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_bt_forground.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_bt_forground.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_edittext.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\rounded_edittext.xml"
     },
     {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cursor_shape.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\cursor_shape.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle6.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle6.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_forum.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_forum.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\close.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\close.png"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_e03063_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_e03063_c_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_f95d88_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_f95d88_c_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_round_textview1.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_round_textview1.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_f8356e_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_f8356e_c_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_launcher.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\check_box_style.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\check_box_style.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_fdccdb_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_fdccdb_c_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape.xml"
+    },
+    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\line.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\line.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ssdk_oks_classic_progressbar.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ssdk_oks_classic_progressbar.xml"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_2baf2b_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_2baf2b_c_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_my.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_my.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bg_bfa9a9a9_c_a_b_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bg_bfa9a9a9_c_a_b_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_home.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_home.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_cancel_background.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_cancel_background.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_background.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_background.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle4.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle4.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\color_cursor2.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\color_cursor2.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\chatto_bg.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\chatto_bg.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\chatfrom_bg.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\chatfrom_bg.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\color_cursor.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\color_cursor.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_forground.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_forground.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_bfa9a9a9_c_a_b_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_bfa9a9a9_c_a_b_a.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bt_background.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bt_background.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape2.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape2.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_edittext.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_edittext.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bg_f8356e_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bg_f8356e_c_a.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bg_2baf2b_c_a.xml",
@@ -70,97 +158,5 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\whitelinearlayout.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\whitelinearlayout.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_round_textview.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_round_textview.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_forum.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_forum.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_home.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_home.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_bfa9a9a9_c_a_b_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_bfa9a9a9_c_a_b_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_2baf2b_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_2baf2b_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cursor_shape.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\cursor_shape.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle4.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle4.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_e03063_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_e03063_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\color_cursor.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\color_cursor.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_f8356e_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_f8356e_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_f95d88_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_f95d88_c_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_message.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_message.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bg_bfa9a9a9_c_a_b_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bg_bfa9a9a9_c_a_b_a.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\buttonstyle.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\buttonstyle.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\chatfrom_bg.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\chatfrom_bg.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape3.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape3.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ssdk_oks_classic_platform_cell_back.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ssdk_oks_classic_platform_cell_back.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\check_box_style.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\check_box_style.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shape_forground.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_forground.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_bt_background.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_bt_background.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_launcher.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ic_launcher.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_cancel_background.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_cancel_background.xml"
     }
 ]

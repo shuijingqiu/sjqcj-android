@@ -177,6 +177,7 @@
             android:padding="10px"
             android:singleLine="true"
             android:textColorHint="#969696"
+            android:inputType="number"
             android:textSize="14dp" />
 
     </LinearLayout>
@@ -216,6 +217,7 @@
             android:padding="10px"
             android:singleLine="true"
             android:textColorHint="#969696"
+            android:inputType="number"
             android:textSize="14dp" />
 
 

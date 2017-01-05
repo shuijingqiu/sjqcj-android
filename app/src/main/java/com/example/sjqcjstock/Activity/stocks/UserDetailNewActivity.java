@@ -1402,7 +1402,7 @@ public class UserDetailNewActivity extends FragmentActivity {
      */
     public void subscribeClick(View view) {
         // 防止多次点击
-        if (Utils.isFastDoubleClick4()) {
+        if (Utils.isFastDoubleClick3()) {
             return;
         }
         if ("".equals(desertId)) {
@@ -1434,7 +1434,7 @@ public class UserDetailNewActivity extends FragmentActivity {
      */
     public void DetailPositionClick(View view) {
         // 防止多次点击
-        if (Utils.isFastDoubleClick4()) {
+        if (Utils.isFastDoubleClick3()) {
             return;
         }
         Intent intent = new Intent();

@@ -8,10 +8,6 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\close.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\ssdk_oks_classic_progressbar.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ssdk_oks_classic_progressbar.xml"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\shape3.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape3.xml"
     },
@@ -104,16 +100,28 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape_forground.xml"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\ssdk_oks_classic_platform_cell_back.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\ssdk_oks_classic_platform_cell_back.xml"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\bg_edittext.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_edittext.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\chatto_bg.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\chatto_bg.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\selector_my.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_my.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\bg_round_textview1.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_round_textview1.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\shape2.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape2.xml"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\bg_e03063_c_a.xml",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_e03063_c_a.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\tab_txt_sel.xml",
@@ -132,20 +140,8 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_f8356e_c_a.xml"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\selector_my.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_my.xml"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\selector_message.xml",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\selector_message.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\shape2.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\shape2.xml"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\bg_e03063_c_a.xml",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable\\bg_e03063_c_a.xml"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable\\bg_2baf2b_c_a.xml",

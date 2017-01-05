@@ -308,6 +308,9 @@ public class FragmentMonthMap extends Fragment {
                     // 柱状图数据的添加
                     volAll.add(new StickEntity(volume, type, strS[0]));
                 } else {
+                    if (ohlcAll.size()<1){
+                        return;
+                    }
                     int i = ohlcAll.size() - 1;
                     Double max = ohlcAll.get(i).getHigh();
                     Double min = ohlcAll.get(i).getLow();

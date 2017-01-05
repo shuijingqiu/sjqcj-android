@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sjqcjstock"
-    android:versionCode="12"
-    android:versionName="2.2.0" >
+    android:versionCode="13"
+    android:versionName="2.2.3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -127,9 +127,9 @@
         <activity
             android:name=".Activity.modifypasswordActivity"
             android:label="修改密码的页面" />
-        <activity
-            android:name=".Activity.accountboundActivity"
-            android:label="账号绑定的页面" />
+        <!--<activity-->
+            <!--android:name=".Activity.accountboundActivity"-->
+            <!--android:label="账号绑定的页面" />-->
         <!--<activity-->
             <!--android:name=".Activity.feedbackActivity"-->
             <!--android:label="意见反馈的页面" />-->
@@ -365,6 +365,9 @@
         <activity
             android:name=".Activity.stocks.ExpertSubscriptionActivity"
             android:label="牛人订阅页面" />
+        <activity
+            android:name=".Activity.stocks.MoreDynamicExpertActivity"
+            android:label="更多牛人动态页面" />
 
         <receiver
             android:name=".AppRegister"

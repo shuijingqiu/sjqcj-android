@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp">
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textColor="@color/color_toptitle"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/business_tv"
@@ -99,7 +99,7 @@
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:text="买"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textColor="@color/red" />
 
         <TextView
@@ -109,7 +109,7 @@
             android:layout_toRightOf="@+id/business_tv"
             android:layout_centerVertical="true"
             android:text="收益率"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/return_rate_value_tv"
@@ -119,7 +119,7 @@
             android:layout_toRightOf="@+id/return_rate_tv"
             android:layout_centerVertical="true"
             android:textColor="@color/red"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/to_buy_tv"

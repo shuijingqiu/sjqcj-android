@@ -151,7 +151,6 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
             if (result == null) {
                 CustomToast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
             } else {

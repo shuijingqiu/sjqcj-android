@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="收藏微博"
+                android:text="我的收藏"
                 style="@style/top_title" />
         </RelativeLayout>
 

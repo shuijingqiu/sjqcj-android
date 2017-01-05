@@ -28,8 +28,6 @@ public class MyDealAccountAdapter extends BaseAdapter {
     private List<PositionEntity> listData;
     private Context context;
     private String uid = "";
-    // 可卖数量
-    private String number = "0";
 //    private boolean isRn = false;
 
     public MyDealAccountAdapter(Context context) {
@@ -91,6 +89,8 @@ public class MyDealAccountAdapter extends BaseAdapter {
         final PositionEntity positionEntity = listData.get(position);
         final String stock =  positionEntity.getStock();
         final String name =  positionEntity.getStock_name();
+        // 可卖数量
+        final String number = positionEntity.getAvailable_number();
 //        if (!isRn){
 //            holder.operationColumnLl.setVisibility(View.GONE);
 //        }
@@ -111,7 +111,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
         int positionValue = Integer.valueOf(positionEntity.getPosition_number());
         holder.positionNumber.setText(positionValue+"");
         // 可卖数量
-        holder.canBuyQuantity.setText(positionEntity.getAvailable_number());
+        holder.canBuyQuantity.setText(number);
         // 现价
         String price = positionEntity.getLatest_price();
         // 如果最新市价不为空那么就计算盈利和最新市价
@@ -138,10 +138,6 @@ public class MyDealAccountAdapter extends BaseAdapter {
                 holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_000000));
             }
         }
-        if (Constants.staticmyuidstr.equals(uid)){
-            // 可卖数量
-            number = positionEntity.getAvailable_number();
-        }
         holder.transactionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +163,9 @@ public class MyDealAccountAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, BusinessActivity.class);
                 intent.putExtra("type", "2");
                 intent.putExtra("code",  stock);
-                intent.putExtra("number",  number);
+                if (Constants.staticmyuidstr.equals(uid)){
+                    intent.putExtra("number",  number);
+                }
                 context.startActivity(intent);
             }
         });

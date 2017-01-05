@@ -116,6 +116,9 @@ public class SubscribeConfirmActivity extends Activity{
      * 确认订阅的单击事件
      */
     public void subscribeOkClick(View view){
+        if (Utils.isFastDoubleClick3()){
+            return;
+        }
         if (!((CheckBox) findViewById(R.id.check_box_protocol)).isChecked()) {
             CustomToast.makeText(getApplicationContext(), "请阅读订阅服务协议", Toast.LENGTH_LONG).show();
             return;

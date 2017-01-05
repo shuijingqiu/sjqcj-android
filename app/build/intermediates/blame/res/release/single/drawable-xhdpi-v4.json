@@ -80,12 +80,12 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-xhdpi\\icon_2_n.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\icon_5_n.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-xhdpi\\icon_5_n.png"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\ssdk_oks_classic_wechat.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-xhdpi\\ssdk_oks_classic_wechat.png"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\icon_5_n.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-xhdpi\\icon_5_n.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\icon_3_d.png",

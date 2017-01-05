@@ -210,7 +210,7 @@ public class MyDealAccountActivity extends Activity {
         });
         transactionLl = (LinearLayout) findViewById(R.id.transaction_ll);
         stockLl = (LinearLayout) findViewById(R.id.stock_ll);
-        listAdapter = new MyDealAccountAdapter(this);
+        listAdapter = new MyDealAccountAdapter(this,Constants.staticmyuidstr);
         entrustAdapter = new EntrustAdapter(this,this);
         listView = (SoListView) findViewById(
                 R.id.position_list);

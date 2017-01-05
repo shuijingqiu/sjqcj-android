@@ -223,11 +223,9 @@ public class HttpUtil {
             }
             Log.e("mh-resstr:-", "+" + resstr);
         } catch (IOException e) {
-//            Log.e("网络关闭出错了！IOException", e.getMessage()+"");
             resstr = null;
             e.printStackTrace();
         } catch (Exception e) {
-//            Log.e("网络关闭出错了！Exception", e.getMessage()+"");
             resstr = null;
             e.printStackTrace();
         } finally {
@@ -310,8 +308,6 @@ public class HttpUtil {
 
             if (networkInfo != null && networkInfo.length > 0) {
                 for (int i = 0; i < networkInfo.length; i++) {
-//                    Log.e("mh 网络检查state",i + "===状态===" + networkInfo[i].getState());
-//                    Log.e("mh 网络检查name",i + "===类型===" + networkInfo[i].getTypeName());
                     // 判断当前网络状态是否为连接状态
                     if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
@@ -330,7 +326,6 @@ public class HttpUtil {
      */
     public static byte[] httpGet(final String url) {
         if (url == null || url.length() == 0) {
-//            Log.e("wxzfmh", "httpGet, url is null");
             return null;
         }
 

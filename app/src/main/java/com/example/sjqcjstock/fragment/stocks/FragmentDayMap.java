@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
 import com.example.sjqcjstock.entity.stocks.ListStickEntity;
 import com.example.sjqcjstock.entity.stocks.OHLCEntity;
@@ -116,6 +118,9 @@ public class FragmentDayMap extends Fragment {
      * 控件绑定
      */
     private void findView(View view) {
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(Constants.loadMessage);
+        dialog.setCancelable(false);
         Calendar calendar = Calendar.getInstance();
         year = (calendar.get(Calendar.YEAR) + "").substring(2);
         // 蜡线图的控件
@@ -150,7 +155,25 @@ public class FragmentDayMap extends Fragment {
                 String strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/" + Utils.judgeSharesCode(code) + ".js");
                 if (!"".equals(strData.trim())){
                     resolveData(strData);
-                    processData();
+                    // 当 当年的数据小于六十的时候就去获取上一年的数据
+                    if (ohlcAll.size()<60){
+                        year = Integer.valueOf(year)-1+"";
+                        strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/" + Utils.judgeSharesCode(code) + ".js");
+                        if (!"".equals(strData.trim())){
+                            yearSize = 0;
+                            resolveData(strData);
+                        }
+                    }
+                    // 更新线图
+                    handler.sendEmptyMessage(0);
+                }else{
+                    year = Integer.valueOf(year)-1+"";
+                    strData = HttpUtil.getIntentData("http://data.gtimg.cn/flashdata/hushen/daily/" + year + "/" + Utils.judgeSharesCode(code) + ".js");
+                    if (!"".equals(strData.trim())){
+                        resolveData(strData);
+                        // 更新线图
+                        handler.sendEmptyMessage(0);
+                    }
                 }
             }
         });
@@ -161,6 +184,7 @@ public class FragmentDayMap extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            processData();
             // UI界面的更新等相关操作
             //蜡线图数据加载
             initMACandleStickChart();
@@ -169,7 +193,6 @@ public class FragmentDayMap extends Fragment {
             if (dialog != null) {
                 dialog.dismiss();
             }
-            isGetDate = true;
         }
     };
 
@@ -361,6 +384,7 @@ public class FragmentDayMap extends Fragment {
                 // 柱状图数据的添加
                 volAll.add(new StickEntity(volume, type, strS[0]));
             }
+            strKmap = "";
         }
 
         // 跨年增加偏移量
@@ -402,22 +426,18 @@ public class FragmentDayMap extends Fragment {
         if (end > ohlcAll.size()) {
             end = ohlcAll.size();
         }
-        if (end >= maxSticksNum) {
+        if (end >= maxSticksNum && isGetDate) {
+            isGetDate = false;
             open = end - maxSticksNum;
-            if (open == 0 && isGetDate) {
+            if (open == 0) {
                 // 重新加载上一年的数据
                 year = Utils.getYearFormat(year);
-
-//                dialog = new ProgressDialog(getActivity());
-//                dialog.setMessage(Constants.loadMessage);
-//                dialog.setCancelable(false);
-//                dialog.show();
-
-                isGetDate = false;
+                dialog.show();
                 initData();
                 return;
             }
         }
+        isGetDate = true;
         ohlc.clear();
         vol.clear();
         spot5.clear();
@@ -474,8 +494,6 @@ public class FragmentDayMap extends Fragment {
             spot5.add(spot5All.get(i));
             spot10.add(spot10All.get(i));
             spot20.add(spot20All.get(i));
-            // 更新线图
-            handler.sendEmptyMessage(0);
         }
     }
 
@@ -534,12 +552,20 @@ public class FragmentDayMap extends Fragment {
                                 oldDist = newDist;
                             }
                             processData();
+                            //蜡线图数据加载
+                            initMACandleStickChart();
+                            // 柱状图数据加载
+                            initStickChart();
                         } else {
                             // 记录滑动时候的触控点
                             slipPoint = clickPoint - event.getX();
                             offset = (int) slipPoint / 10;
                             // 重新计算数据并且刷新线图
                             processData();
+                            //蜡线图数据加载
+                            initMACandleStickChart();
+                            // 柱状图数据加载
+                            initStickChart();
                         }
                         break;
                 }

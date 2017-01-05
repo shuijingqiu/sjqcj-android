@@ -5,7 +5,6 @@
     <attr format="dimension" name="strokeWidth_"/>
     <attr format="color" name="unselectedColor_"/>
     <color name="color_000000">#000000</color>
-    <color name="color_03FD05">#03FD05</color>
     <color name="color_157efb">#157efb</color>
     <color name="color_1E6BCF">#1E6BCF</color>
     <color name="color_1bc07d">#1bc07d</color>
@@ -86,12 +85,10 @@
     <string name="action_settings">Settings</string>
     <string name="agreement">《付费阅读协议》</string>
     <string name="app_name">水晶球财经</string>
-    <string name="app_tip">提示</string>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
     <string name="auth_google_play_services_client_google_display_name">Google</string>
     <string name="bowen_bi1">用户需输入</string>
     <string name="bowen_bi2">水晶币可看正文</string>
-    <string name="bowen_gaisu">摘要</string>
     <string name="common_android_wear_notification_needs_update_text"><ns1:g id="app_name">%1$s</ns1:g> requires an update to the Android Wear app.</string>
     <string name="common_android_wear_update_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run unless you update the Android Wear app.</string>
     <string msgid="6006316683626838685" name="common_android_wear_update_title">Update Android Wear</string>
@@ -130,8 +127,6 @@
     <string name="menu_item_clear_disc_cache">Clear disc cache</string>
     <string name="menu_item_clear_memory_cache">Clear memory cache</string>
     <string name="more">更多>></string>
-    <string formatted="false" name="pay_result_callback_msg">微信支付结果：%s</string>
-    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
     <string name="pull_to_refresh">下拉刷新</string>
     <string name="pullup_to_load">上拉加载更多</string>
     <string name="recharge_sjb_sm">水晶币可用于订阅和打赏博文</string>
@@ -261,7 +256,7 @@ function login(form){
     <string name="ssdk_oks_share_canceled">分享已取消</string>
     <string name="ssdk_oks_share_completed">分享成功</string>
     <string name="ssdk_oks_share_failed">分享失败</string>
-    <string name="ssdk_oks_sharing">分享操作正在后台进行…</string>
+    <string name="ssdk_oks_sharing">分享进行中…</string>
     <string name="ssdk_pinterest">Pinterest</string>
     <string name="ssdk_pinterest_client_inavailable">Pinterest版本过低或者没有安装，需要升级或安装Pinterest才能使用！</string>
     <string name="ssdk_pocket">Pocket</string>
@@ -296,7 +291,7 @@ function login(form){
     <string name="ssdk_yixin_client_inavailable">目前您的易信版本过低或未安装，需要安装易信才能使用</string>
     <string name="ssdk_yixinmoments">易信朋友圈</string>
     <string name="ssdk_youdao">有道云笔记</string>
-    <string name="subscribe_str">订阅后你将即时收到“”的交易动态消息，并显示在“我-消息-我的牛人动态”中，让你不错过任何赚钱机会。（投资有风险，此项业务发送的消息不构成投资建议）</string>
+    <string name="subscribe_str">订阅后你将即时收到“Ta”的交易动态消息，让你不错过任何赚钱机会。（投资有风险，此项业务发送的消息不构成投资建议）</string>
     <string name="system_message">打赏消息</string>
     <style name="AnimBottom" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/in_from_bottom</item>

@@ -332,6 +332,18 @@
                         android:text="我的牛人订阅"
                         android:textColor="@color/color_text1" />
 
+                    <TextView
+                        android:id="@+id/expert_count_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/bg_round_textview"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
+
                     <Button
                         style="@style/arrow_img"
                         android:layout_gravity="center"

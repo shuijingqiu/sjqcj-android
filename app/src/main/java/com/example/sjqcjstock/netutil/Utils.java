@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mob.tools.utils.Data;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -446,6 +447,9 @@ public class Utils {
      * @return
      */
     public static Boolean isWeekOne(String date) {
+        if (date == null || "".equals(date) || date.length()<6){
+            return false;
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         Calendar calendar = Calendar.getInstance();
         try {
@@ -580,10 +584,7 @@ public class Utils {
         if (week == 1 || week == 7) {
             return false;
         }
-        if (hour < 9 || (hour == 9 && minuts < 29) || hour > 14) {
-            return false;
-        }
-        if ((hour > 11 || (hour == 11 && minuts > 31)) && hour < 13) {
+        if (hour < 9 || hour > 15) {
             return false;
         }
         return true;
@@ -646,5 +647,29 @@ public class Utils {
             e.printStackTrace();
         }
         return StrDate;
+    }
+
+    /**
+     * 比较两个时间的大小
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static boolean ContrastTime(String startTime,String endTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startData;
+        Date endData;
+        try {
+            startData = sdf.parse(startTime);
+            endData = sdf.parse(endTime);
+            if (startData.getTime() <= endData.getTime()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  true;
     }
 }

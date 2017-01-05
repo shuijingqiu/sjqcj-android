@@ -69,8 +69,12 @@ public class HistoryCommissionActivity extends Activity {
         endMonth  = now.get(Calendar.MONTH) + 1;
         startMonth = now.get(Calendar.MONTH);
         endDay = startDay = now.get(Calendar.DAY_OF_MONTH);
-        endDate = Utils.getStringDate(endYear, endMonth, endDay);
-        startDate = Utils.getStringDate(endYear, startMonth, endDay);
+        if (startMonth == 0){
+            startMonth = 12;
+            startYear = startYear -1;
+        }
+        endDate = Utils.GetSysDate("yyyy-MM-dd","",0,0,0);
+        startDate = Utils.GetSysDate("yyyy-MM-dd","",0,-1,0);
         findView();
         dialog.show();
         getData();
@@ -195,7 +199,7 @@ public class HistoryCommissionActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if (year + monthOfYear + dayOfMonth < endYear + endMonth + endDay) {
+                        if (Utils.ContrastTime(Utils.getStringDate(year, monthOfYear+1, dayOfMonth),endDate)) {
                             startYear = year;
                             startMonth = monthOfYear+1;
                             startDay = dayOfMonth;
@@ -220,15 +224,17 @@ public class HistoryCommissionActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        endYear = year;
-                        endMonth = monthOfYear+1;
-                        endDay = dayOfMonth;
-                        endDate = Utils.getStringDate(endYear, endMonth, endDay);
-                        endDateTv.setText(endDate);
-                        // 重新获取数据
-                        page = 1;
-                        dialog.show();
-                        getData();
+                        if (Utils.ContrastTime(startDate,Utils.getStringDate(year, monthOfYear+1, dayOfMonth))) {
+                            endYear = year;
+                            endMonth = monthOfYear + 1;
+                            endDay = dayOfMonth;
+                            endDate = Utils.getStringDate(endYear, endMonth, endDay);
+                            endDateTv.setText(endDate);
+                            // 重新获取数据
+                            page = 1;
+                            dialog.show();
+                            getData();
+                        }
                     }
                 }, endYear, endMonth-1, endDay).show();
     }

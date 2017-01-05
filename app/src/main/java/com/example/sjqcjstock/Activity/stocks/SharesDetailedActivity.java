@@ -373,7 +373,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     private void setInformation() {
         price.setText(stocksInfo.getSpotPrice());
         riseAndFall.setText(stocksInfo.getHighsLowsThan() + "%");
-        Double highsLows = Double.valueOf(stocksInfo.getHighsLows());
+        Double highsLows = Double.valueOf(stocksInfo.getHighsLows()==null?"0":stocksInfo.getHighsLows());
         priceRise.setText(highsLows + "");
         if (highsLows > 0) {
 //            price.setTextColor(Color.RED);

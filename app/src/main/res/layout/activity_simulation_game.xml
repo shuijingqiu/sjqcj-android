@@ -23,7 +23,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="我的比赛"
+            android:text="模拟赛场"
             style="@style/top_title" />
 
     </RelativeLayout>

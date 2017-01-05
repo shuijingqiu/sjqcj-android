@@ -6,11 +6,15 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.ImageControlView;
 
 import java.io.IOException;
@@ -22,15 +26,17 @@ import java.net.URL;
  * Created by Administrator on 2016/7/29.
  */
 public class ShowWebImageActivity extends Activity {
-    private String imagePath = null;
+
+    private String imagePath = "";
     private ImageControlView imageView = null;
     private TextView black = null;
+    private Bitmap bitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_webimage);
-        this.imagePath = getIntent().getStringExtra("image");
+        imagePath = getIntent().getStringExtra("image");
         imageView = (ImageControlView) findViewById(R.id.show_webimage_imageview);
         black = (TextView) findViewById(R.id.black);
         black.setOnClickListener(new View.OnClickListener() {
@@ -39,35 +45,47 @@ public class ShowWebImageActivity extends Activity {
                 finish();
             }
         });
-        try {
-            Bitmap bitmap = ((BitmapDrawable) ShowWebImageActivity.loadImageFromUrl(this.imagePath)).getBitmap();
-            imageView.setImageBitmap(bitmap);
-
-            Rect frame = new Rect();
-            getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-            int statusBarHeight = frame.top;
-
-            int screenW = this.getWindowManager().getDefaultDisplay().getWidth();
-            int screenH = this.getWindowManager().getDefaultDisplay().getHeight()
-                    - statusBarHeight;
-            if (bitmap != null) {
-                imageView.imageInit(bitmap, screenW, screenH, statusBarHeight,
-                        new ImageControlView.ICustomMethod() {
-                            @Override
-                            public void customMethod(Boolean currentStatus) {
-                                // 当图片处于放大或缩小状态时，控制标题是否显示
-                                if (currentStatus) {
-                                    black.setVisibility(View.GONE);
-                                } else {
-                                    black.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
+        // 开线程获取网络数据
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    bitmap = ((BitmapDrawable) ShowWebImageActivity.loadImageFromUrl(imagePath)).getBitmap();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                handler.sendEmptyMessage(0);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap);
+                Rect frame = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+                int statusBarHeight = frame.top;
+                int screenW = getWindowManager().getDefaultDisplay().getWidth();
+                int screenH = getWindowManager().getDefaultDisplay().getHeight()
+                        - statusBarHeight;
+                    imageView.imageInit(bitmap, screenW, screenH, statusBarHeight,
+                            new ImageControlView.ICustomMethod() {
+                                @Override
+                                public void customMethod(Boolean currentStatus) {
+                                    // 当图片处于放大或缩小状态时，控制标题是否显示
+                                    if (currentStatus) {
+                                        black.setVisibility(View.GONE);
+                                    } else {
+                                        black.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
+                }
+        }
+    };
 
     public static Drawable loadImageFromUrl(String url) throws IOException {
         URL m = new URL(url);

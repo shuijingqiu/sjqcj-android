@@ -6,12 +6,12 @@
     <com.example.sjqcjstock.view.stocks.MACandleStickChart
         android:id="@+id/day_map_k"
         android:layout_width="fill_parent"
-        android:layout_height="160dip" />
+        android:layout_height="150dp" />
 
     <com.example.sjqcjstock.view.stocks.StickChart
         android:id="@+id/day_stick_chart"
         android:layout_width="fill_parent"
-        android:layout_height="100dip"
+        android:layout_height="80dp"
         android:layout_marginTop="10dp"/>
 
 </LinearLayout>

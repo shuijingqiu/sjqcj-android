@@ -110,7 +110,7 @@ public class DynamicExpertAdapter extends BaseAdapter {
                 holder.type.setTextColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
                 holder.returnRate.setText(geniusEntity.getPrice());
                 holder.returnRate.setTextColor(holder.returnRate.getResources().getColor(R.color.color_ef3e3e));
-                holder.returnRateTv.setText("买入价");
+                holder.returnRateTv.setText("成交价");
                 holder.toBuy.setText("跟买");
             }else{
                 holder.type.setText("卖");

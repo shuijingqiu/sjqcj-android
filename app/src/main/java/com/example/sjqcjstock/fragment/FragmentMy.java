@@ -3,6 +3,8 @@ package com.example.sjqcjstock.fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,9 @@ import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.view.CustomToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -85,6 +90,10 @@ public class FragmentMy extends Fragment {
     private ImageView vipImg;
     // 未读消息条数
     private TextView messageCountTv;
+    // 未读牛人动态消息条数
+    private TextView expertCountTv;
+    // 消息返回条数
+    private String resstr;
 
     public FragmentMy(){}
 
@@ -152,6 +161,14 @@ public class FragmentMy extends Fragment {
                 Constants.Url + "?app=public&mod=Profile&act=AppUser",
                 new String[]{"mid", Constants.staticmyuidstr}
         ));
+        // 获取牛人动态未读消息条数
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/message/unread&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
     private void initView(View view) {
@@ -179,6 +196,7 @@ public class FragmentMy extends Fragment {
         vipImg = (ImageView) view.findViewById(R.id.vip_img);
 
         messageCountTv = (TextView) view.findViewById(R.id.message_count_tv);
+        expertCountTv = (TextView) view.findViewById(R.id.expert_count_tv);
 
         following_count1.setText("0");
         follower_count1.setText("0");
@@ -338,59 +356,6 @@ public class FragmentMy extends Fragment {
         }
     }
 
-//
-//    class pickuserinfoedit_listener implements OnClickListener {
-//
-//        @Override
-//        public void onClick(View arg0) {
-//            Intent intent = new Intent(getActivity(), userinfoeditActivity.class);
-//            intent.putExtra("unamestr", unamestr);
-//            intent.putExtra("sexstr", sexstr);
-//            intent.putExtra("introstr", userintro1.getText().toString());
-//            intent.putExtra("avatar_middlestr", avatar_middlestr);
-//            startActivity(intent);
-//        }
-//    }
-
-//	class picknote2_listener implements OnClickListener {
-//
-//		@Override
-//		public void onClick(View arg0) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(getActivity(), mynoteslistActivity.class);
-//
-//			startActivity(intent);
-//
-//		}
-//
-//	}
-//
-//	class pickselfselect2_listener implements OnClickListener {
-//
-//		@Override
-//		public void onClick(View arg0) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(getActivity(),
-//					selfselectstocklistActivity.class);
-//			startActivity(intent);
-//
-//		}
-//
-//	}
-//
-//	class combination2_listener implements OnClickListener {
-//
-//		@Override
-//		public void onClick(View arg0) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(getActivity(),
-//					combinationlistActivity.class);
-//			startActivity(intent);
-//
-//		}
-//
-//	}
-
     class pickcollect2_listener implements OnClickListener {
 
         @Override
@@ -413,7 +378,6 @@ public class FragmentMy extends Fragment {
             intent.putExtra("avatar_middlestr", avatar_middlestr);
             startActivity(intent);
         }
-
     }
 
     private class SendInfoTaskmyuserinform extends
@@ -438,12 +402,17 @@ public class FragmentMy extends Fragment {
                 // 解析json字符串获得List<Map<String,Object>>
                 List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
                 for (Map<String, Object> map : lists) {
-                    String datastr = map.get("data").toString();
+                    String datastr = map.get("data")+"";
                     List<Map<String, Object>> datalists = JsonTools.listKeyMaps("[" + datastr + "]");
                     for (Map<String, Object> datamap : datalists) {
-                        unamestr = datamap.get("uname").toString();
-                        avatar_middlestr = datamap.get("avatar_middle").toString();
-                        String Userdatastr = datamap.get("Userdata").toString();
+
+                        // 这个可以不要的 但是在一个不知道的情况下可能会报错
+                        if(datamap == null || datamap.get("uname") == null){
+                            return;
+                        }
+                        unamestr = datamap.get("uname")+"";
+                        avatar_middlestr = datamap.get("avatar_middle")+"";
+                        String Userdatastr = datamap.get("Userdata")+"";
                         List<Map<String, Object>> Userdatastrlists = JsonTools.listKeyMaps("[" + Userdatastr + "]");
 
                         for (Map<String, Object> Userdatamap : Userdatastrlists) {
@@ -454,30 +423,30 @@ public class FragmentMy extends Fragment {
                             if (Userdatamap.get("following_count") == null) {
                                 following_countstr = "0";
                             } else {
-                                following_countstr = Userdatamap.get("following_count").toString();
+                                following_countstr = Userdatamap.get("following_count")+"";
                             }
 
                             if (Userdatamap.get("follower_count") == null) {
                                 follower_countstr = "0";
                             } else {
-                                follower_countstr = Userdatamap.get("follower_count").toString();
+                                follower_countstr = Userdatamap.get("follower_count")+"";
                             }
 
                             if (Userdatamap.get("weibo_count") == null) {
                                 weibo_countstr = "0";
                             } else {
-                                weibo_countstr = Userdatamap.get("weibo_count").toString();
+                                weibo_countstr = Userdatamap.get("weibo_count")+"";
                             }
                             following_count1.setText(following_countstr);
                             follower_count1.setText(follower_countstr);
                             weibo_count1.setText(weibo_countstr);
                         }
 
-                        sexstr = datamap.get("sex").toString();
+                        sexstr = datamap.get("sex")+"";
                         if (datamap.get("intro") == null) {
                             introstr = "暂无简介";
                         } else {
-                            introstr = datamap.get("intro").toString();
+                            introstr = datamap.get("intro")+"";
                         }
                         try {
                             if ("1".equals(sexstr)) {
@@ -501,4 +470,37 @@ public class FragmentMy extends Fragment {
             }
         }
     }
+
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstr);
+                        if ("failed".equals(jsonObject.getString("status"))){
+//                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+                            expertCountTv.setVisibility(View.GONE);
+                            return;
+                        }
+                        String count = jsonObject.getString("data");
+                        if (count !=null && !"".equals(count) && Integer.valueOf(count)>0){
+                            if (Integer.valueOf(count) > 99) {
+                                count = "99+";
+                            }
+                            expertCountTv.setText(count);
+                            expertCountTv.setVisibility(View.VISIBLE);
+                        }else{
+                            expertCountTv.setVisibility(View.GONE);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+    };
 }

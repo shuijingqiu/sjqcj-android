@@ -28,10 +28,6 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\adduser1.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_shrink_up.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_shrink_up.png"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_error2.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_error2.png"
     },
@@ -42,10 +38,6 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\saichengbaodao1.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\saichengbaodao1.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\xlistview_arrow.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\xlistview_arrow.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\common_full_open_on_phone.png",
@@ -72,10 +64,6 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\chatto_bg_pressed.9.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_error.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_error.png"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\icon_point.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\icon_point.png"
     },
@@ -92,28 +80,16 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\dangzhouniugubang.png"
     },
     {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_empty.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_empty.png"
+    },
+    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\amp1.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\amp1.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\voice_rcd_cancel_bg_focused.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\voice_rcd_cancel_bg_focused.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\shortweiboruko.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\shortweiboruko.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\usereditlist.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\usereditlist.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_empty.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_empty.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\longweiboruko.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\longweiboruko.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\chatto_bg_normal.9.png",
@@ -150,10 +126,6 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\zaica.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\zaica.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_details_more.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-hdpi\\ic_details_more.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\chatfrom_bg_focused.9.png",

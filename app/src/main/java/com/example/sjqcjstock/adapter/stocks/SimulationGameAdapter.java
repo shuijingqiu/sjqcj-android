@@ -94,7 +94,14 @@ public class SimulationGameAdapter extends BaseAdapter {
         holder.title.setText(matchEntity.getName());
         holder.time.setText(matchEntity.getStart_date()+"至"+matchEntity.getEnd_date());
         holder.ranking.setText(matchEntity.getRanking());
-        if ("1".equals(matchEntity.getStatus())){
+        if ("3".equals(matchEntity.getStatus())){
+            holder.joinTv.setBackgroundResource(R.mipmap.yjs);
+            if ("0".equals(matchEntity.getJoined())){
+                holder.rankingLl.setVisibility(View.INVISIBLE);
+            }else {
+                holder.rankingLl.setVisibility(View.VISIBLE);
+            }
+        }else{
             if ("0".equals(matchEntity.getJoined())){
                 holder.joinTv.setVisibility(View.GONE);
                 holder.joinBut.setVisibility(View.VISIBLE);
@@ -103,13 +110,6 @@ public class SimulationGameAdapter extends BaseAdapter {
                 holder.joinTv.setVisibility(View.VISIBLE);
                 holder.joinBut.setVisibility(View.GONE);
                 holder.joinTv.setBackgroundResource(R.mipmap.ycj);
-                holder.rankingLl.setVisibility(View.VISIBLE);
-            }
-        }else{
-            holder.joinTv.setBackgroundResource(R.mipmap.yjs);
-            if ("0".equals(matchEntity.getJoined())){
-                holder.rankingLl.setVisibility(View.INVISIBLE);
-            }else {
                 holder.rankingLl.setVisibility(View.VISIBLE);
             }
         }

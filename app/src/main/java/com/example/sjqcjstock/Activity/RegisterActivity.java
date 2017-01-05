@@ -100,8 +100,6 @@ public class RegisterActivity extends Activity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TODO Auto-generated method stub
-
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             if (isineditarea(loginusername1, ev) == true) {
                 loginusername1.setVisibility(View.VISIBLE);
@@ -225,6 +223,9 @@ public class RegisterActivity extends Activity {
     class shortmessage1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
+            if (Utils.isFastDoubleClick()){
+                return;
+            }
             if (!Utils.isMobileNO(fillphonecode1.getText().toString())) {
                 CustomToast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 return;
@@ -354,16 +355,13 @@ public class RegisterActivity extends Activity {
                         //				startActivity(intent);
 
                         new SendInfoTask().execute(new TaskParams(Constants.Url + "?app=public&mod=Passport&act=AppLogin",
-                                        //new String[] { "login_email", "1061550505@qq.com" },
-                                        //new String[] { "login_password", "12345678" },
-                                        //new String[] { "login_remember", "1"}
-                                        //new String[] { "login_email", "2@qq.com" },
                                         new String[]{"login_email", loginusername1.getText().toString()},
-                                        //new String[] { "login_email", "2621617899@qq.com" },
-                                        //new String[] { "login_password", "3665306" },
-                                        //new String[] { "login_password", "111111" },
                                         new String[]{"login_password", fillpassword2.getText().toString()},
                                         new String[]{"login_remember", "1"}
+//
+//                        new String[]{"login_email", login_email},
+//                                new String[]{"login_password", Constants.staticpasswordstr},
+//                                new String[]{"login_remember", "1"}
 
                                 )
 

@@ -71,9 +71,14 @@ public class TransactionDetailActivity extends Activity {
         endYear = startYear = now.get(Calendar.YEAR);
         endMonth  = now.get(Calendar.MONTH) + 1;
         startMonth = now.get(Calendar.MONTH);
+        if (startMonth == 0){
+            startMonth = 12;
+            startYear = startYear -1;
+        }
         endDay = startDay = now.get(Calendar.DAY_OF_MONTH);
-        endDate = Utils.getStringDate(endYear, endMonth, endDay);
-        startDate = Utils.getStringDate(endYear, startMonth, endDay);
+        endDate = Utils.GetSysDate("yyyy-MM-dd","",0,0,0);
+        startDate = Utils.GetSysDate("yyyy-MM-dd","",0,-1,0);
+
         code = getIntent().getStringExtra("code");
         uid = getIntent().getStringExtra("uid");
         if ("".equals(uid)){
@@ -179,7 +184,7 @@ public class TransactionDetailActivity extends Activity {
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     } catch (JSONException e) {
-                        // 千万别忘了告诉控件刷新完毕了哦！
+                        // 千万别忘了告诉控件刷新完毕了哦！`
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
@@ -199,7 +204,7 @@ public class TransactionDetailActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if (year + monthOfYear + dayOfMonth < endYear + endMonth + endDay) {
+                        if (Utils.ContrastTime(Utils.getStringDate(year, monthOfYear+1, dayOfMonth),endDate)) {
                             startYear = year;
                             startMonth = monthOfYear+1;
                             startDay = dayOfMonth;
@@ -224,14 +229,16 @@ public class TransactionDetailActivity extends Activity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        endYear = year;
-                        endMonth = monthOfYear+1;
-                        endDay = dayOfMonth;
-                        endDate = Utils.getStringDate(endYear, endMonth, endDay);
-                        endDateTv.setText(endDate);
-                        // 重新获取数据
-                        dialog.show();
-                        getData();
+                        if (Utils.ContrastTime(startDate,Utils.getStringDate(year, monthOfYear+1, dayOfMonth))) {
+                            endYear = year;
+                            endMonth = monthOfYear + 1;
+                            endDay = dayOfMonth;
+                            endDate = Utils.getStringDate(endYear, endMonth, endDay);
+                            endDateTv.setText(endDate);
+                            // 重新获取数据
+                            dialog.show();
+                            getData();
+                        }
                     }
                 }, endYear, endMonth-1, endDay).show();
     }

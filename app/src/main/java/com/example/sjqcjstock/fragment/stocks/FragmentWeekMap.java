@@ -255,6 +255,7 @@ public class FragmentWeekMap extends Fragment {
         this.ohlcAll = new ArrayList<OHLCEntity>();
         strData = strData.replace("\\n\\", "*");
         strData = strData.replace("\n", "");
+        strData = strData.replace(";", "");
         String[] strS = strData.split("\\*");
         // 开盘价格
         float valueK = 0f;
@@ -309,6 +310,9 @@ public class FragmentWeekMap extends Fragment {
                     // 柱状图数据的添加
                     volAll.add(new StickEntity(volume, type, strS[0]));
                 } else {
+                    if (ohlcAll.size()<1){
+                        return;
+                    }
                     int i = ohlcAll.size() - 1;
                     Double max = ohlcAll.get(i).getHigh();
                     Double min = ohlcAll.get(i).getLow();

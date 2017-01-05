@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="付费文章" />
+                        android:text="订阅文章" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.sjqcjstock.Activity.SearchActivity;
 import com.example.sjqcjstock.Activity.advertUrlActivity;
 import com.example.sjqcjstock.Activity.stocks.ExpertListsActivity;
+import com.example.sjqcjstock.Activity.stocks.MoreDynamicExpertActivity;
 import com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
@@ -90,7 +91,13 @@ public class FragmentAnalogHome extends Fragment {
         // 先不要缓存
 //        initData();
         initData1();
-        if (Utils.isTransactionDate()) {
+            return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Utils.isTransactionDate() && timer == null) {
             timer = new Timer();
             // 开定时器获取数据
             TimerTask task = new TimerTask() {
@@ -101,7 +108,6 @@ public class FragmentAnalogHome extends Fragment {
             };
             timer.schedule(task, 30000, 30000); // 60s后执行task,经过60s再次执行
         }
-            return view;
     }
 
     @Override
@@ -137,6 +143,15 @@ public class FragmentAnalogHome extends Fragment {
         dialog.show();
 
         myScrollView = (MyScrollView) view.findViewById(R.id.myScrollView);
+
+        // 开线程获取广告图片
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resimg = HttpUtil.restHttpGet(Constants.moUrl+"/ad&type=1&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
 //        ptrl = ((PullToRefreshLayout) view.findViewById(
 //                R.id.refresh_view));
 //        // 添加上下拉刷新事件
@@ -250,14 +265,16 @@ public class FragmentAnalogHome extends Fragment {
                 startActivity(intent);
             }
         });
-        // 开线程获取广告图片
-        new Thread(new Runnable() {
+        /**
+         * 加载更多牛人动态
+         */
+        view.findViewById(R.id.more_dynamic_expert).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                resimg = HttpUtil.restHttpGet(Constants.moUrl+"/ad&type=1&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr);
-                handler.sendEmptyMessage(1);
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MoreDynamicExpertActivity.class);
+                startActivity(intent);
             }
-        }).start();
+        });
     }
 
     /**
@@ -341,7 +358,7 @@ public class FragmentAnalogHome extends Fragment {
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+//                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
 //                            // 千万别忘了告诉控件刷新完毕了哦！
 //                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             dialog.dismiss();

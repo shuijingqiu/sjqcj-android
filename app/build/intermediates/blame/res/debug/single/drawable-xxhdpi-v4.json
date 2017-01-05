@@ -1,10 +1,10 @@
 [
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4\\common_full_open_on_phone.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\drawable-xxhdpi\\common_full_open_on_phone.png"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4\\ic_launcher.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4\\common_full_open_on_phone.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\drawable-xxhdpi\\common_full_open_on_phone.png"
     }
 ]

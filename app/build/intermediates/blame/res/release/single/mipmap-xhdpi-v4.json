@@ -1,7 +1,7 @@
 [
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\fx.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\fx.png"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\yjs.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\yjs.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\praise6_l.png",
@@ -20,12 +20,20 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\my_zsyl.png"
     },
     {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\applogo.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\applogo.png"
+    },
+    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\soucang.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\soucang.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\head_frame2.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\head_frame2.png"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\rank1.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\rank1.png"
+    },
+    {
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\facelibrary1.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\facelibrary1.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\mnjy.png",
@@ -38,26 +46,6 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\deleteimg1.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\deleteimg1.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\yjs.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\yjs.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\gywm.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\gywm.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\applogo.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\applogo.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\rank1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\rank1.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\facelibrary1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\facelibrary1.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\rqnr.png",
@@ -74,10 +62,6 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\xuangu.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\xuangu.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\reward1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\reward1.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\getimg1.png",
@@ -108,10 +92,6 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\icon_back.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\zuojiantou.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\zuojiantou.png"
-    },
-    {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\xgnr.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\xgnr.png"
     },
@@ -138,10 +118,6 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\my_pm.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\my_pm.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\shuijingbi.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\shuijingbi.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\zsyp.png",
@@ -208,8 +184,8 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\pull_icon_big.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\gwzbimg5.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\gwzbimg5.png"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\applogo2.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\applogo2.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\jinghua.png",
@@ -220,12 +196,12 @@
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\ycj.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\addnote1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\addnote1.png"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\publicloading.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\publicloading.png"
     },
     {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\recharge_ok.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\recharge_ok.png"
+        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\atsbicon1.png",
+        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\atsbicon1.png"
     },
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\nullimg.png",
@@ -246,21 +222,5 @@
     {
         "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\refreshing.png",
         "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\refreshing.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\applogo2.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\applogo2.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\soucang1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\soucang1.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\publicloading.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\publicloading.png"
-    },
-    {
-        "merged": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi-v4\\atsbicon1.png",
-        "source": "E:\\Android\\sjqcj-Android\\sjqcjstockApp\\app\\src\\main\\res\\mipmap-xhdpi\\atsbicon1.png"
     }
 ]
