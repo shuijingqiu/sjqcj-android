@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/current_profit_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/color_ef3e3e"
+                android:text="6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text2"
+                android:layout_below="@+id/current_profit_tv"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:text="当前收益"/>
+
+        </LinearLayout>
+        
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/gray_line"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/plan_type_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/plan_cg"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/plan_type_tv"
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/color_ef3e3e"
+                android:textSize="10sp"
+                android:text="未开始"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/plan_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text1"
+                android:maxLength="15"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:text="这里放的是标题这里放的是标题这里放的是标题"/>
+
+            <TextView
+                android:id="@+id/code_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_toptitle"
+                android:layout_below="@+id/plan_title_tv"
+                android:text="攀钢股份"/>
+
+            <!--<TextView-->
+                <!--android:id="@+id/code_tv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:layout_below="@+id/plan_title_tv"-->
+                <!--android:layout_toRightOf="@+id/code_name_tv"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:textSize="16sp"-->
+                <!--android:text="000258"/>-->
+
+            <TextView
+                android:id="@+id/target_profit_val_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/code_name_tv"
+                android:text="目标收益"/>
+
+            <TextView
+                android:id="@+id/target_profit_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/color_ef3e3e"
+                android:layout_below="@+id/code_name_tv"
+                android:layout_toRightOf="@+id/target_profit_val_tv"
+                android:text="6.00%"/>
+
+            <TextView
+                android:id="@+id/count_val_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color_text1"
+                android:layout_below="@+id/code_name_tv"
+                android:layout_toRightOf="@+id/target_profit_tv"
+                android:text="订阅"/>
+
+            <TextView
+                android:id="@+id/count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/color_ef3e3e"
+                android:layout_below="@+id/code_name_tv"
+                android:layout_toRightOf="@+id/count_val_tv"
+                android:text="100人"/>
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
+                android:layout_below="@+id/target_profit_val_tv"
+                android:textSize="12sp"
+                android:text="04.17-04.20 (3个交易日)"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"/>
+
+</LinearLayout>

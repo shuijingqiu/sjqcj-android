@@ -1,12 +1,10 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -20,6 +18,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.DesertEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
@@ -45,7 +44,7 @@ public class SubscribeOrderListActivity extends Activity{
     // 返回接口的数据
     private String resstr;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 分页
     private int page = 1;
     // 查询人的uid
@@ -66,7 +65,7 @@ public class SubscribeOrderListActivity extends Activity{
     public void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     }
 
@@ -81,10 +80,8 @@ public class SubscribeOrderListActivity extends Activity{
                 finish();
             }
         });
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         listView = (ListView) findViewById(R.id.list_view);
         listAdapter = new DynamicOredrListAdapter(this);
         listView.setAdapter(listAdapter);
@@ -148,10 +145,10 @@ public class SubscribeOrderListActivity extends Activity{
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            CustomToast.makeText(SubscribeOrderListActivity.this, jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+                            CustomToast.makeText(SubscribeOrderListActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         String data = jsonObject.getString("data");
@@ -164,7 +161,7 @@ public class SubscribeOrderListActivity extends Activity{
                     }
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }

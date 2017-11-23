@@ -28,6 +28,7 @@
     </RelativeLayout>
 
     <include
+        android:id="@+id/time_icd"
         layout="@layout/time_choice"/>
 
     <com.example.sjqcjstock.view.PullToRefreshLayout

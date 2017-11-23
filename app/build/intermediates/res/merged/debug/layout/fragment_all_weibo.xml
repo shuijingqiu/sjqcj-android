@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <!-- 置顶帖，list -->
     <ListView
         android:id="@+id/topnotelist1"
         android:layout_width="match_parent"
+        android:divider="@null"
         android:layout_height="wrap_content" />
 
     <com.example.sjqcjstock.view.PullToRefreshLayout

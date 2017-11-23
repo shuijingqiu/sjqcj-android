@@ -2,7 +2,6 @@ package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +21,7 @@ import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.Order;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
@@ -53,7 +53,7 @@ public class TransactionDetailActivity extends Activity {
     // 截止年月日
     private int endYear, endMonth, endDay;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 调用买卖接口返回的数据
     private String resstr = "";
     // 股票代码
@@ -79,13 +79,20 @@ public class TransactionDetailActivity extends Activity {
         endDate = Utils.GetSysDate("yyyy-MM-dd","",0,0,0);
         startDate = Utils.GetSysDate("yyyy-MM-dd","",0,-1,0);
 
+        // 查看股票的所有交易记录用的 type 不为空就代表查询所有交易记录 并且时间不显示
+        String type = getIntent().getStringExtra("type");
+        if (type != null){
+            startDate = "2016-01-01";
+            findViewById(R.id.time_icd).setVisibility(View.GONE);
+        }
+
         code = getIntent().getStringExtra("code");
         uid = getIntent().getStringExtra("uid");
         if ("".equals(uid)){
             uid = Constants.staticmyuidstr;
         }
         findView();
-        dialog.show();
+        dialog.showDialog();
         getData();
     }
 
@@ -93,9 +100,7 @@ public class TransactionDetailActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
+        dialog = new CustomProgress(this);
         /**
          * 返回按钮的事件绑定
          */
@@ -167,13 +172,13 @@ public class TransactionDetailActivity extends Activity {
                         CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
-                        dialog.dismiss();
+                        dialog.dismissDlog();
                         return;
                     }
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
@@ -188,7 +193,7 @@ public class TransactionDetailActivity extends Activity {
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }
@@ -211,7 +216,7 @@ public class TransactionDetailActivity extends Activity {
                             startDate = Utils.getStringDate(startYear, startMonth, startDay);
                             startDateTv.setText(startDate);
                             // 重新获取数据
-                            dialog.show();
+                            dialog.showDialog();
                             getData();
                         }
 
@@ -236,7 +241,7 @@ public class TransactionDetailActivity extends Activity {
                             endDate = Utils.getStringDate(endYear, endMonth, endDay);
                             endDateTv.setText(endDate);
                             // 重新获取数据
-                            dialog.show();
+                            dialog.showDialog();
                             getData();
                         }
                     }

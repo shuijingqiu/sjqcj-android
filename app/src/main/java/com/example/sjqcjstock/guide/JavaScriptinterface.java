@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
-import com.example.sjqcjstock.Activity.loginActivity;
+import com.example.sjqcjstock.Activity.user.loginActivity;
 
 public class JavaScriptinterface {
 

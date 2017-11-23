@@ -1,14 +1,12 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.netutil.Utils;
@@ -55,7 +53,7 @@ public class PositionAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater mInflater = LayoutInflater.from(context);
         final ViewHolder holder;
         if (convertView == null) {
@@ -76,7 +74,8 @@ public class PositionAdapter extends BaseAdapter {
         holder.stockNameTv.setText(positionEntity.getStock_name());
         double ration = Double.valueOf(positionEntity.getRatio());
         double assets = Double.valueOf(positionEntity.getAssets());
-        double profit = ration * assets/100;
+        double cost = Double.valueOf(positionEntity.getCost());
+        double profit = assets - cost;
         if (ration >= 0){
             holder.ratioTv.setTextColor(holder.ratioTv.getResources().getColor(R.color.color_ef3e3e));
             holder.ratioTv.setText("+"+Utils.getNumberFormat2(ration+"")+"%");
@@ -91,15 +90,17 @@ public class PositionAdapter extends BaseAdapter {
             holder.sharesTv.setText(Utils.getNumberFormat2(profit+"")+"元");
             holder.sharesTv.setTextColor(holder.ratioTv.getResources().getColor(R.color.color_1bc07d));
         }
-        holder.stockNameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, SharesDetailedActivity.class);
-                intent.putExtra("code",positionEntity.getStock());
-                intent.putExtra("name",positionEntity.getStock_name());
-                context.startActivity(intent);
-            }
-        });
+
+        // 暂时不要
+//        holder.stockNameTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, SharesDetailedActivity.class);
+//                intent.putExtra("code",listData.get(position).getStock());
+//                intent.putExtra("name",listData.get(position).getStock_name());
+//                context.startActivity(intent);
+//            }
+//        });
         return convertView;
     }
 

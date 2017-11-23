@@ -23,6 +23,7 @@ public class MyApplication extends Application {
     }
 
     public void init(Context context) {
+
         ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.
                 Builder(context).threadPriority(5)
                 .denyCacheImageMultipleSizesInMemory().//缓存显示不同大小的同一张图片

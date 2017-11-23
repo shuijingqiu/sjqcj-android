@@ -12,7 +12,7 @@ public class PositionEntity {
     private String time;
     // 股票代码
     private String stock;
-    // 股票代码
+    // 股票名称
     private String stock_name;
     // 是否持有 1代表持有  2代表不持有
     private String is_position;

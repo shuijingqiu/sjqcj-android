@@ -8,23 +8,28 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.Article.RaceReportEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**
+ * 赛程报道的adapter
+ */
 public class stockmatchreportAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, Object>> listData;
+    private ArrayList<RaceReportEntity> listData;
 
     public stockmatchreportAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, Object>> listData) {
+    public void setlistData(ArrayList<RaceReportEntity> listData) {
         if (listData != null) {
-            this.listData = (ArrayList<HashMap<String, Object>>) listData.clone();
+            this.listData = (ArrayList<RaceReportEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -46,7 +51,6 @@ public class stockmatchreportAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
         ViewHolder holder;
@@ -55,14 +59,14 @@ public class stockmatchreportAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.course_titlestr = (TextView) convertView.findViewById(R.id.course_titlestr);
             holder.create_timestr = (TextView) convertView.findViewById(R.id.create_timestr);
-
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.course_titlestr.setText((String) listData.get(position).get("course_titlestr"));
-        holder.create_timestr.setText((String) listData.get(position).get("create_timestr"));
+        RaceReportEntity raceReportEntity = listData.get(position);
+        holder.course_titlestr.setText(raceReportEntity.getTitle());
+        holder.create_timestr.setText(CalendarUtil.formatDateTime(Utils.getStringtoDate(raceReportEntity.getTime())));
         return convertView;
     }
 

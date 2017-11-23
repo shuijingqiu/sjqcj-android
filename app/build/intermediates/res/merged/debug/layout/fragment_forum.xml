@@ -16,6 +16,16 @@
             android:background="@color/color_toptitle" >
 
             <TextView
+                android:id="@+id/answer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:text="问答"
+                style="@style/top_title" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -26,22 +36,21 @@
             <ImageView
                 android:id="@+id/addforum1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/edit3" />
 
-            <!-- 暂时不可见 -->
             <ImageView
-                android:visibility="visible"
                 android:id="@+id/iv_search"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="13dp"
                 android:layout_toLeftOf="@id/addforum1"
                 android:src="@mipmap/select3" />
+
         </RelativeLayout>
 
         <View
@@ -94,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="付费文章" />
+                        android:text="内参" />
                 </LinearLayout>
 
             </LinearLayout>

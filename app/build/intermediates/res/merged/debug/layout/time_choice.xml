@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/gray_line"
     android:orientation="horizontal"
-    android:padding="35dp">
+    android:padding="13dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,9 +32,9 @@
 
     <ImageView
         android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:src="@mipmap/deleteimg1" />
+        android:layout_height="15dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/zuoyoujiantou2" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -54,7 +54,8 @@
             android:id="@+id/end_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="--" />
 
     </LinearLayout>
 

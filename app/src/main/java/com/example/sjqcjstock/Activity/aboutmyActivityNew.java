@@ -37,7 +37,6 @@ public class aboutmyActivityNew extends Activity {
     class pickgoback2_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             finish();
         }
     }

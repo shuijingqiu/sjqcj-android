@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
 import com.example.sjqcjstock.entity.stocks.ListStickEntity;
 import com.example.sjqcjstock.entity.stocks.SpotEntity;
@@ -22,6 +20,7 @@ import com.example.sjqcjstock.entity.stocks.StickEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.stocks.CountUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.stocks.LineChart;
 import com.example.sjqcjstock.view.stocks.StickChart;
 
@@ -59,7 +58,7 @@ public class FragmentTimeMap extends Fragment {
     private float maxY = 0;
     // Y轴的最小值
     private float miniY = 0;
-    // 当日开盘价格RF
+    // 昨日收盘价格
     private float openF = 0;
     // 柱状图的最大值
     private float maxYS = 0;
@@ -68,11 +67,14 @@ public class FragmentTimeMap extends Fragment {
     // 定时器
     private Timer timer;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 第三方返回的数据
     private String strData;
     // 控制循环获取次数
     private int isCot = 1;
+
+    public FragmentTimeMap() {
+    }
 
     public FragmentTimeMap(String code, String openF, Map<String, String> buySellMap) {
         this.code = code;
@@ -97,16 +99,18 @@ public class FragmentTimeMap extends Fragment {
             // 关闭掉定时器
             timer.cancel();
         }
+        if (dialog != null) {
+            // 关闭掉定时器
+            dialog.dismissDlog();
+        }
     }
 
     /**
      * 加载控件
      */
     private void findView(View view) {
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(getActivity());
+        dialog.showDialog();
 //        time = (TextView) view.findViewById(R.id.time);
 //        price = (TextView) view.findViewById(R.id.price);
 //        headNumber = (TextView) view.findViewById(R.id.head_number);
@@ -154,7 +158,7 @@ public class FragmentTimeMap extends Fragment {
                 handler.sendEmptyMessage(0);
             }
         }).start();
-        if (Utils.isTransactionDate()){
+        if (Utils.isTransactionDate()) {
             timer = new Timer();
             TimerTask task = new TimerTask() {
                 @Override
@@ -290,21 +294,21 @@ public class FragmentTimeMap extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (strData.length() < 40){
-                if (!dialog.isShowing()){
-                    dialog.show();
+            if (strData.length() < 40) {
+                if (!dialog.isShowing()) {
+                    dialog.showDialog();
                 }
                 isCot++;
-                if (isCot < 5){
+                if (isCot < 5) {
                     initData();
-                }else{
-                    if (dialog !=null ){
-                        dialog.dismiss();
+                } else {
+                    if (dialog != null) {
+                        dialog.dismissDlog();
                     }
                 }
                 return;
             }
-            isCot= 1;
+            isCot = 1;
             processData(strData);
             // UI界面的更新等相关操作
             // 设置分时图的一些属性
@@ -315,7 +319,7 @@ public class FragmentTimeMap extends Fragment {
             machart.invalidate();
             // redraw
             stickchart.invalidate();
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     };
 
@@ -353,6 +357,9 @@ public class FragmentTimeMap extends Fragment {
         for (int i = 2; i < strS.length - 1; i++) {
             String str = strS[i];
             String[] strk = str.split(" ");
+            if (strk.length < 2) {
+                continue;
+            }
             time = Utils.setInsertMark(strk[0]);
             value = Float.valueOf(strk[1]);
             valueNumS = Float.valueOf(strk[2]);
@@ -368,7 +375,6 @@ public class FragmentTimeMap extends Fragment {
                 } else {
                     type = 0;
                 }
-
             } else {
                 valueS = valueNumS - valueNowS;
                 valueNum += value * valueS;
@@ -397,6 +403,9 @@ public class FragmentTimeMap extends Fragment {
             vol.add(new StickEntity(valueS, type, time));
         }
 
+        if(maxY == miniY  &&  maxY > openF ){
+            miniY -= 0.1;
+        }
         if (Math.abs(maxY - openF) > Math.abs(miniY - openF)) {
             // 以最大值为基准
             miniY = 2 * openF - maxY;

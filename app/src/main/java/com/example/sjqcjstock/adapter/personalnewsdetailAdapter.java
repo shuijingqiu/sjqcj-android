@@ -1,46 +1,46 @@
 package com.example.sjqcjstock.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.ShowImageActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.ChatMessageEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class personalnewsdetailAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, Object>> listData;
+    private ArrayList<ChatMessageEntity> listData;
 
-    public personalnewsdetailAdapter(Context context, ArrayList<HashMap<String, Object>> listData) {
+    public personalnewsdetailAdapter(Context context) {
         super();
         this.context = context;
-        this.listData = listData;
     }
 
-    public void setlistData(ArrayList<HashMap<String, Object>> listData) {
-        this.listData = listData;
-    }
-
-    private String[] imagesUrl;
-
-    public void setImagesUrl(String[] imagesUrl) {
-        this.imagesUrl = imagesUrl;
+    public void setlistData(ArrayList<ChatMessageEntity> listData) {
+        if (listData != null) {
+            this.listData = (ArrayList<ChatMessageEntity>) listData.clone();
+            notifyDataSetChanged();
+        }
     }
 
     @Override
     public int getCount() {
-        //return imagesUrl.length;
-        return listData.size();
+        return listData == null ? 0 : listData.size();
     }
 
     @Override
@@ -55,77 +55,90 @@ public class personalnewsdetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-
-        //String meoryoustr=(String)listData.get(position).get("meoryou");
-
-        String uidstr = (String) listData.get(position).get("uidstr");
-        String myuidstr = Constants.getStaticmyuidstr();
-
-        //String ctimestr=(String)listData.get(position).get("ctimestr");
-
-        if (Constants.getStaticmyuidstr().equals(uidstr)) {
-
-            convertView = mInflater.inflate(R.layout.chatting_item_msg_text_right, null);
-            TextView tv_sendtime = (TextView) convertView.findViewById(R.id.tv_sendtime2);
-            tv_sendtime.setText((String) listData.get(position).get("mtimestr"));
-
-            TextView tv_chatcontent = (TextView) convertView.findViewById(R.id.tv_chatcontent);
-            tv_chatcontent.setText((String) listData.get(position).get("contentstr"));
-
-            //TextView tv_username=(TextView)convertView.findViewById(R.id.tv_username);
-            //tv_username.setText((String)listData.get(position).get("unamestr"));
-
-            ImageView image = (ImageView) convertView.findViewById(R.id.iv_userhead);
-            // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-            ImageLoader.getInstance().displayImage((String) listData.get(position).
-                    get("avatar_middlestr"), image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-        } else {
-            convertView = mInflater.inflate(R.layout.chatting_item_msg_text_left, null);
-
-            TextView tv_sendtime = (TextView) convertView.findViewById(R.id.tv_sendtime3);
-            tv_sendtime.setText((String) listData.get(position).get("mtimestr"));
-
-            TextView tv_chatcontent = (TextView) convertView.findViewById(R.id.tv_chatcontent);
-            tv_chatcontent.setText((String) listData.get(position).get("contentstr"));
-
-            //TextView tv_username=(TextView)convertView.findViewById(R.id.tv_username);
-            //tv_username.setText((String)listData.get(position).get("unamestr"));
-
-            ImageView image = (ImageView) convertView.findViewById(R.id.iv_userhead);
-            // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-            ImageLoader.getInstance().displayImage((String) listData.get(position).
-                    get("avatar_middlestr"), image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.chatting_item_msg_text, null);
+            holder = new ViewHolder();
+            holder.sendtimeTv = (TextView) convertView.findViewById(R.id.tv_sendtime);
+            holder.chatcontentLeftTv = (TextView) convertView.findViewById(R.id.tv_chatcontent_left);
+            holder.contentLeftImg = (ImageView) convertView.findViewById(R.id.content_left_img);
+            holder.headLeftIv = (ImageView) convertView.findViewById(R.id.head_img_left);
+            holder.chatcontentRightTv = (TextView) convertView.findViewById(R.id.tv_chatcontent_right);
+            holder.contentRightImg = (ImageView) convertView.findViewById(R.id.content_right_img);
+            holder.headRightIv = (ImageView) convertView.findViewById(R.id.head_img_right);
+            holder.righRl = (RelativeLayout) convertView.findViewById(R.id.righ_rl);
+            holder.leftRl = (RelativeLayout) convertView.findViewById(R.id.left_rl);
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
         }
-
-//		
-//		CheckBox check=(CheckBox)convertView.findViewById(R.id.selected);
-
-//		//判断用户是否已被选择，如被选择，则复选框为勾选，如未选择则复选框为可选
-//		if((Boolean) listData.get(position).get("selected")){
-//			state.put(position,true);
-//			
-//		}
-
-//		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//				// TODO Auto-generated method stub
-//				if(isChecked){
-//					state.put(position,isChecked);
-//				}else {
-//					state.remove(position);
-//				}
-//			}
-//		});
-
-//		check.setChecked((state.get(position)==null?false:true));
+        int count = listData.size()-1-position;
+        ChatMessageEntity chatMessageEntity = listData.get(count);
+        String uidstr = chatMessageEntity.getFrom_uid();
+        final String contentstr = chatMessageEntity.getContent();
+        holder.sendtimeTv.setText(CalendarUtil.formatDateTime(Utils.getStringtoDate(chatMessageEntity.getMtime())));
+        if (Constants.getStaticmyuidstr().equals(uidstr)) {
+            holder.righRl.setVisibility(View.VISIBLE);
+            holder.leftRl.setVisibility(View.GONE);
+            if (contentstr.indexOf("sjqcj.com/data/upload/")!=-1){
+                ImageLoader.getInstance().displayImage(contentstr, holder.contentRightImg, ImageUtil.getOptionLocal(), ImageUtil.getAnimateFirstDisplayListener());
+                holder.chatcontentRightTv.setVisibility(View.GONE);
+                holder.contentRightImg.setVisibility(View.VISIBLE);
+                holder.contentRightImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowImageActivity.class);
+                        intent.putExtra("image",contentstr);
+                        context.startActivity(intent);
+                    }
+                });
+                holder.contentRightImg.setMaxWidth(220);
+            }else{
+                holder.chatcontentRightTv.setText(contentstr);
+                holder.chatcontentRightTv.setVisibility(View.VISIBLE);
+                holder.contentRightImg.setVisibility(View.GONE);
+            }
+            ImageLoader.getInstance().displayImage(chatMessageEntity.getAvatar_middle(), holder.headRightIv, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        }
+        else{
+            holder.righRl.setVisibility(View.GONE);
+            holder.leftRl.setVisibility(View.VISIBLE);
+//            if (contentstr.indexOf("https://www.sjqcj.com/data/upload/")!=-1){
+            if (contentstr.indexOf("sjqcj.com/data/upload/")!=-1){
+                ImageLoader.getInstance().displayImage(contentstr, holder.contentLeftImg, ImageUtil.getOptionLocal(), ImageUtil.getAnimateFirstDisplayListener());
+                holder.chatcontentLeftTv.setVisibility(View.GONE);
+                holder.contentLeftImg.setVisibility(View.VISIBLE);
+                holder.contentLeftImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowImageActivity.class);
+                        intent.putExtra("image",contentstr);
+                        context.startActivity(intent);
+                    }
+                });
+            }else{
+                holder.chatcontentLeftTv.setText(contentstr);
+                holder.chatcontentLeftTv.setVisibility(View.VISIBLE);
+                holder.contentLeftImg.setVisibility(View.GONE);
+            }
+            ImageLoader.getInstance().displayImage(chatMessageEntity.getAvatar_middle(), holder.headLeftIv, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        }
 
         return convertView;
     }
 
+    private static class ViewHolder {
+        TextView sendtimeTv;
+        TextView chatcontentLeftTv;
+        ImageView contentLeftImg;
+        ImageView headLeftIv;
+        TextView chatcontentRightTv;
+        ImageView contentRightImg;
+        ImageView headRightIv;
+        RelativeLayout righRl;
+        RelativeLayout leftRl;
+    }
 
 }

@@ -1,5 +1,8 @@
 package com.example.sjqcjstock.netutil;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,6 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mob.tools.utils.Data;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,7 +83,6 @@ public class Utils {
     }
 
     //定义ListView的高度
-
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -91,8 +93,10 @@ public class Utils {
         int totalHeight = 0;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
+            if (listItem!=null) {
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -246,7 +250,7 @@ public class Utils {
     public static String getNumberFormat2(String str) {
         String format = "########0.00";
         if (str == null || "".equals(str) || "null".equals(str)) {
-            return "0";
+            return "0.00";
         }
         double DStr = Double.valueOf(str);
         DecimalFormat df = new DecimalFormat(format);
@@ -508,6 +512,7 @@ public class Utils {
      * @return
      */
     public static String replaceWebUrl(List<String> strList, String str) {
+        strList = removeDuplicate(strList);
         if (null == str || "".equals(str)) return "";
         if (strList == null) {
             return str;
@@ -516,6 +521,18 @@ public class Utils {
             str = str.replace(url, "<a href = \"" + url + "\">网址</a>");
         }
         return str;
+    }
+
+    /**
+     *  删除ArrayList中重复元素
+     * @param list
+     * @return
+     */
+    public static List removeDuplicate(List list) {
+        HashSet h = new HashSet(list);
+        list.clear();
+        list.addAll(h);
+        return list;
     }
 
     /**
@@ -671,5 +688,128 @@ public class Utils {
             e.printStackTrace();
         }
         return  true;
+    }
+
+    /**
+     * 比较传入时间和当前时间的大小
+     * @param time 小 true
+     * @return
+     */
+    public static boolean ContrastTime1(String time){
+        if (time == null || "".equals(time.trim())){
+            return false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startData;
+        Date endData;
+        try {
+            startData = new Date(System.currentTimeMillis());
+            endData = sdf.parse(time);
+            if (startData.getTime() < endData.getTime()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  false;
+    }
+
+    /**
+     * 截取字符串里面的日期
+     * @param strDate 2017-01-13 11:53:08
+     * @return 01-13 11:53
+     */
+    public static String InterceptDate(String strDate){
+        if (strDate.length() < 17){
+            return  strDate;
+        }
+        String str = strDate.substring(5,16);
+        return  str;
+    }
+
+    /**
+     * 非空判断
+     * @param s
+     * @return 01-13 11:53
+     */
+    public static boolean isEmpty(String s) {
+        if (null == s)
+            return true;
+        if (s.length() == 0)
+            return true;
+        if (s.trim().length() == 0)
+            return true;
+        return false;
+    }
+
+    /**
+     * 网址的正确性判断
+     * @param url 传入的网址
+     */
+    public static boolean isWebsite(String url){
+        if (url == null){
+            return false;
+        }
+        Pattern pattern = Pattern
+                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+        return pattern.matcher(url).matches();
+    }
+
+    /**
+     * 获取App的版本号
+     * @param context
+     * @return
+     */
+    public static int getVersionCode(Context context){
+        if (context == null){
+            // 如果意外使得 context 为空 设当前版本一直为最新
+            return 99;
+        }
+        PackageManager packageManager=context.getPackageManager();
+        PackageInfo packageInfo;
+        int versionCode=0;
+        try {
+            packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            versionCode=packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    /**
+     * 获取App的版名称
+     * @param context
+     * @return
+     */
+    public static String getVersionName(Context context){
+        if (context == null){
+            return "";
+        }
+        PackageManager packageManager=context.getPackageManager();
+        PackageInfo packageInfo;
+        String versionName="";
+        try {
+            packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            versionName=packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }
+
+
+
+    /**
+     * 正则表达式保留 数字和 |
+     * [^0-9,|]
+     *
+     * @param number
+     * @return
+     */
+    public static String getNumber(String number) {
+        return number.replaceAll("[^0-9,|,-]", "");
     }
 }

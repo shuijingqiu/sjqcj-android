@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +19,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.TotalProfitEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
@@ -53,7 +53,7 @@ public class ExpertListsActivity extends Activity {
     // 分页的页码
     private int page = 1;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +80,8 @@ public class ExpertListsActivity extends Activity {
                 finish();
             }
         });
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
 
         topTitle = (TextView) findViewById(R.id.top_title_tv);
         expertListsAdapter = new ExpertListsAdapter(this,type);
@@ -128,7 +126,7 @@ public class ExpertListsActivity extends Activity {
     private void setTitle() {
         switch (type) {
             case 0:
-                topTitle.setText("常胜牛人");
+                topTitle.setText("稳赚牛人");
                 condition = "week_avg_profit_rate";
                 break;
             case 1:
@@ -140,7 +138,7 @@ public class ExpertListsActivity extends Activity {
                 condition = "total_rate";
                 break;
             case 3:
-                topTitle.setText("选股牛人");
+                topTitle.setText("常胜牛人");
                 condition = "success_rate";
                 break;
         }
@@ -150,11 +148,10 @@ public class ExpertListsActivity extends Activity {
      * 数据的加载
      */
     private void initData() {
-        // 开线程获历史交易信息
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // 调用接口获取股票当前行情数据
+                // 调用接口获取排行榜信息
                 resstr = HttpUtil.restHttpGet(Constants.moUrl+"/rank/getRankList&token="+Constants.apptoken+"&condition=" + condition + "&p="+page+"&uid="+Constants.staticmyuidstr);
                 handler.sendEmptyMessage(0);
             }
@@ -183,7 +180,7 @@ public class ExpertListsActivity extends Activity {
 //                            Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         // 持仓的数据
@@ -201,7 +198,7 @@ public class ExpertListsActivity extends Activity {
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
             }
         }
     };

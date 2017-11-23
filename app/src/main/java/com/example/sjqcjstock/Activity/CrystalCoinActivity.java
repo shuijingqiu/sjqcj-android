@@ -2,19 +2,17 @@ package com.example.sjqcjstock.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.view.CustomToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +25,8 @@ public class CrystalCoinActivity extends Activity {
 
     // 水晶币个数
     private TextView shuijinbicount1;
+    // 操作接口返回数据
+    private String jsonStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +54,18 @@ public class CrystalCoinActivity extends Activity {
             }
         });
         // 每次进入都获取水晶币数量
-        new SendInfoTaskmywealth().execute(new TaskParams(Constants.appUserMoneyUrl,
-                new String[]{"mid", Constants.staticmyuidstr}
-        ));
+//        new SendInfoTaskmywealth().execute(new TaskParams(Constants.appUserMoneyUrl,
+//                new String[]{"mid", Constants.staticmyuidstr}
+//        ));
+
+        // 开线程获取水晶币数量
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/credit/info?mid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
     /**
@@ -74,30 +83,57 @@ public class CrystalCoinActivity extends Activity {
         startActivity(new Intent(CrystalCoinActivity.this, RechargeActivity.class));
     }
 
-    // 获取用户财富设置水晶币个数
-    private class SendInfoTaskmywealth extends AsyncTask<TaskParams, Void, String> {
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
+//    // 获取用户财富设置水晶币个数
+//    private class SendInfoTaskmywealth extends AsyncTask<TaskParams, Void, String> {
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            if (result == null) {
+//                CustomToast.makeText(CrystalCoinActivity.this, "", Toast.LENGTH_SHORT).show();
+//            } else {
+//                String count = "0";
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    // 获取水晶币
+//                    count = jsonObj.getJSONObject("data").getJSONObject("credit").getJSONObject("shuijingbi").getString("value");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                Constants.shuijinbiCount = count;
+//                shuijinbicount1.setText(count);
+//            }
+//        }
+//    }
 
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
         @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            if (result == null) {
-                CustomToast.makeText(CrystalCoinActivity.this, "", Toast.LENGTH_LONG).show();
-            } else {
-                String count = "0";
-                try {
-                    JSONObject jsonObj = new JSONObject(result);
-                    // 获取水晶币
-                    count = jsonObj.getJSONObject("data").getJSONObject("credit").getJSONObject("shuijingbi").getString("value");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Constants.shuijinbiCount = count;
-                shuijinbicount1.setText(count);
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        if (Constants.successCode.equals(jsonObject.getString("code"))) {
+                            JSONObject jsonData = new JSONObject(jsonObject.getString("data"));
+                            String shuijingbi = jsonData.getString("shuijingbi");
+                            Constants.shuijinbiCount = shuijingbi;
+                            shuijinbicount1.setText(shuijingbi);
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
-    }
+    };
+
 }

@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,12 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.stocks.SimulationGameAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
@@ -47,7 +48,7 @@ public class SimulationGameActivity extends Activity {
     // 分页的页码
     private int page = 1;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 请求数据的路径
     private String url;
     // 请求标题
@@ -60,7 +61,7 @@ public class SimulationGameActivity extends Activity {
         setContentView(R.layout.activity_simulation_game);
         ExitApplication.getInstance().addActivity(this);
         findView();
-        dialog.show();
+        dialog.showDialog();
         initData();
     }
 
@@ -68,10 +69,8 @@ public class SimulationGameActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         titleName = (TextView) findViewById(R.id.title_name);
         if (getIntent().getStringExtra("type") != null){
             url = Constants.moUrl+"/match/index&uid="+Constants.staticmyuidstr+"&joined=1"+"&token="+Constants.apptoken;
@@ -96,6 +95,13 @@ public class SimulationGameActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
+                // menghuan 不用登陆也可以用
+                // 如果未登陆跳转到登陆页面
+                if (!Constants.isLogin){
+                    Intent intent = new Intent(SimulationGameActivity.this, loginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.putExtra("id",matchLists.get(arg2).getId());
                 intent.putExtra("name",matchLists.get(arg2).getName());
@@ -161,7 +167,7 @@ public class SimulationGameActivity extends Activity {
                             CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.FAIL);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         JSONObject jsonObject = new JSONObject(matchStr);
@@ -185,7 +191,7 @@ public class SimulationGameActivity extends Activity {
                         ptrl.refreshFinish(PullToRefreshLayout.FAIL);
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }

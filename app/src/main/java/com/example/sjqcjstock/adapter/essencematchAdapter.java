@@ -11,41 +11,40 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.selectstockmatchActivity;
 import com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.MatchNewsEntity;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class essencematchAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, Object>> listData;
+    private ArrayList<MatchNewsEntity> listData;
+    private selectstockmatchActivity sActivity;
 
 
-    public essencematchAdapter(Context context, ArrayList<HashMap<String, Object>> listData) {
+    public essencematchAdapter(Context context,selectstockmatchActivity sActivity) {
         super();
         this.context = context;
-        this.listData = listData;
+        this.sActivity = sActivity;
     }
 
-    public void setlistData(ArrayList<HashMap<String, Object>> listData) {
-        this.listData = listData;
-    }
-
-    private String[] imagesUrl;
-
-    public void setImagesUrl(String[] imagesUrl) {
-        this.imagesUrl = imagesUrl;
+    public void setlistData(ArrayList<MatchNewsEntity> listData) {
+        if (listData != null) {
+            this.listData = (ArrayList<MatchNewsEntity>) listData.clone();
+            notifyDataSetChanged();
+        }
     }
 
     @Override
     public int getCount() {
-        return listData.size();
+        return listData == null ? 0 : listData.size();
     }
 
     @Override
@@ -64,10 +63,8 @@ public class essencematchAdapter extends BaseAdapter {
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
         ViewHolder holder;
-
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_essencematch, null);
-
             holder = new ViewHolder();
             holder.image = (ImageView) convertView.findViewById(R.id.user_image1);
             holder.famousmanname1 = (TextView) convertView.findViewById(R.id.famousmanname1);
@@ -88,114 +85,81 @@ public class essencematchAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        ImageView image = (ImageView) convertView.findViewById(R.id.user_image1);
-        // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-        ImageLoader.getInstance().displayImage((String) listData.get(position).
-                        get("uidimg"),
+        final MatchNewsEntity matchNewsEntity = listData.get(position);
+        ImageLoader.getInstance().displayImage(matchNewsEntity.getAvatar_middle(),
                 holder.image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
 
         holder.image.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), UserDetailNewActivity.class);
-                    intent.putExtra("uid", (String) listData.get(position).get("uid"));
+                    intent.putExtra("uid", matchNewsEntity.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
-                } finally {
-
                 }
-
             }
         });
-
 
         holder.pickfamousmanname1.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), UserDetailNewActivity.class);
-                    intent.putExtra("uid", (String) listData.get(position).get("uid"));
+                    intent.putExtra("uid", matchNewsEntity.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
-                } finally {
-
                 }
-
             }
         });
-
-
-        holder.totalscore1.setText((String) listData.get(position).get("ballot_jifen"));
-//		  holder.maxuprange1.setText((String)listData.get(position).get("integration1"));
-//		  holder.maxuprange2.setText((String)listData.get(position).get("integration2"));
-        ViewUtil.setViewColor(holder.maxuprange1, listData.get(position).get("integration1").toString());
-        ViewUtil.setViewColor(holder.maxuprange2, listData.get(position).get("integration2").toString());
-
-        //TextView famousmanname1=(TextView)convertView.findViewById(R.id.famousmanname1);
-        holder.famousmanname1.setText((String) listData.get(position).get("uname"));
-
-        //TextView weekscore1=(TextView)convertView.findViewById(R.id.weekscore1);
-        holder.weekscore1.setText((CharSequence) listData.get(position).get("list_price"));
-//		
-        //TextView totalscore1=(TextView)convertView.findViewById(R.id.totalscore1);
-        //totalscore1.setText((CharSequence)listData.get(position).get("ballot_jifen"));
-//		
-
-
-        //TextView stockname1=(TextView)convertView.findViewById(R.id.stockname1);
-        holder.stockname1.setText((String) listData.get(position).get("shares_name"));
-
-        //TextView shares2_name=(TextView)convertView.findViewById(R.id.stockname2);
-        holder.shares2_name.setText((String) listData.get(position).get("shares2_name"));
-
-
-        //TextView stockprice1=(TextView)convertView.findViewById(R.id.stockprice1);
-        holder.stockprice1.setText((String) listData.get(position).get("price"));
-
-        //TextView stockprice2=(TextView)convertView.findViewById(R.id.stockprice2);
-        holder.stockprice2.setText((String) listData.get(position).get("price2"));
-
-//		  holder.uprange1.setText((String)listData.get(position).get("integration3"));
-//		  holder.uprange2.setText((String)listData.get(position).get("integration4"));
-
-        ViewUtil.setViewColor(holder.uprange1, listData.get(position).get("integration3").toString());
-        ViewUtil.setViewColor(holder.uprange2, listData.get(position).get("integration4").toString());
-
-        //TextView weekly=(TextView)convertView.findViewById(R.id.weekly);
-        holder.weekly.setText((String) listData.get(position).get("weekly"));
-
-        //TextView rankingcount=(TextView)convertView.findViewById(R.id.rankingcount);
-        //rankingcount.setText((String)listData.get(position).get("rankingcount"));
-
-
+        ViewUtil.setViewColor(holder.totalscore1, matchNewsEntity.getWeekly_avg());
+        ViewUtil.setViewColor(holder.maxuprange1, matchNewsEntity.getIntegration1()+"%");
+        ViewUtil.setViewColor(holder.maxuprange2, matchNewsEntity.getIntegration2()+"%");
+        holder.famousmanname1.setText(matchNewsEntity.getUname());
+        ViewUtil.setViewColor(holder.weekscore1,matchNewsEntity.getIntegration());
+        holder.stockname1.setText(matchNewsEntity.getShares_name());
+        holder.shares2_name.setText(matchNewsEntity.getShares2_name());
+        holder.stockprice1.setText(matchNewsEntity.getPrice());
+        holder.stockprice2.setText(matchNewsEntity.getPrice2());
+        ViewUtil.setViewColor(holder.uprange1, matchNewsEntity.getIntegration3()+"%");
+        ViewUtil.setViewColor(holder.uprange2, matchNewsEntity.getIntegration4()+"%");
+        holder.weekly.setText(matchNewsEntity.getWeekly());
         holder.stockname1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,SharesDetailedActivity.class);
-                intent.putExtra("code",listData.get(position).get("shares")+"");
-                intent.putExtra("name",listData.get(position).get("shares_name")+"");
-                context.startActivity(intent);
+                String isFree = matchNewsEntity.getIs_free();
+                if ("1".equals(isFree)){
+                    Intent intent = new Intent(context,SharesDetailedActivity.class);
+                    intent.putExtra("code",matchNewsEntity.getShares());
+                    intent.putExtra("name",matchNewsEntity.getShares_name());
+                    context.startActivity(intent);
+                }else if("2".equals(isFree)){
+                    if (sActivity !=null){
+                        sActivity.PayCrystalCoin(position);
+                    }
+                }
             }
         });
         holder.shares2_name.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,SharesDetailedActivity.class);
-                intent.putExtra("code",listData.get(position).get("shares2")+"");
-                intent.putExtra("name",listData.get(position).get("shares2_name")+"");
-                context.startActivity(intent);
+                String isFree = matchNewsEntity.getIs_free();
+                if ("1".equals(isFree)){
+                    Intent intent = new Intent(context,SharesDetailedActivity.class);
+                    intent.putExtra("code",matchNewsEntity.getShares2());
+                    intent.putExtra("name",matchNewsEntity.getShares2_name());
+                    context.startActivity(intent);
+                }else if("2".equals(isFree)){
+                    if (sActivity !=null){
+                        sActivity.PayCrystalCoin(position);
+                    }
+                }
             }
         });
         return convertView;

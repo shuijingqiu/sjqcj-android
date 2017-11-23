@@ -1,15 +1,18 @@
 package com.example.sjqcjstock.constant;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.Article.UserEntity;
 import com.example.sjqcjstock.entity.UnreadCount;
 
 import java.util.HashMap;
+import java.util.Timer;
 
 public class Constants {
 
     public final static int NUMBER0 = 0;
     public final static int NUMBER1 = 1;
-
+    // 网站自己用的app_key（自己生成的）
+    public static final String app_key="2UV6QALXR81FJWNHFEAU9UH54PIPZ6TB";
     //微信app_id                          wx6608522223b1dea0
     public static final String APP_ID = "wx778e68d591bbe9c8";
     public static final String App_Secret = "72b7bdae9cfbfdf768360c628da89c25";
@@ -19,15 +22,23 @@ public class Constants {
     public static String isreferforumlist = "0";//0为刷新，1为不刷新
     // 个人账户是否刷新
     public static boolean isBuy = false;
+    // 是否刷新直播页面
+    public static boolean isTomlive = false;
     //code
     public static String weixincode = "";
     //用户信息持久化
-    public static String staticmyuidstr = "";
+    public static String staticmyuidstr = "0";
+    // 用户是否登录
+    public static boolean isLogin = true;
 
-    // 存储用户头像地址
-    public static String headImg = "";
-    // 存储用户类别（主要用于是否是禁言用户 如果为4 就为禁言用户）
-    public static String userType = "1";
+//    // 存储用户头像地址 名称 头像
+//    public static String headImg = "";
+//    public static String unameStr = "";
+//    public static String introStr = "";
+//    // 存储用户类别（主要用于是否是禁言用户 如果为4 就为禁言用户）这个不要了  到时候后台控制
+//    public static String userType = "1";
+    // 用户信息
+    public static UserEntity userEntity;
 
     //public static String staticpasswordstr="3665306";
     public static String staticpasswordstr = "";
@@ -40,62 +51,73 @@ public class Constants {
     // 判断第三方登录的时候是否修改过密码
     public static Boolean isDefault = true;
     // 没有用
-    public static String intentFlag = "";
+//    public static String intentFlag = "";
     // 全局变数水晶币个数(每次进入程序就需要获取一次)
-    public static String shuijinbiCount = "";
-    // 检索后选中的股票代码
+    public static String shuijinbiCount = "0";
+    // 检索后选中的股票代码和名称
     public static String choiceCode ="";
+    public static String choiceName ="";
     // 判断是否延长订阅（用户页面刷新）
     public static boolean isDynamic = false;
+    // 判断个人中心问答页面是否刷新
+    public static boolean qaIsrn = false;
 
+    // 返回的成功表示的code
+    public static String successCode = "00";
     // 服务器路径
-    public static String Url = "https://www.sjqcj.com/index.php";
-    public static String moUrl = "https://moni.sjqcj.com";
-//    public static String Url = "http://192.168.2.105/index.php";
-//    public static String Url = "http://192.168.2.199/index.php";
-    // 分享的前半段路径
-    public static String shareArticle = Url + "?app=public&mod=Profile&act=sharemeager&feed_id=";
-    // 股吧页面打赏微博的ListView列表接口
-    public static String appUserMoneyUrl = Url + "?app=public&mod=Profile&act=AppUserMoney";
-    // 股吧页面打赏微博的ListView列表接口
-    public static String subscribeListUrl = Url + "?app=public&mod=AppFeedList&act=SubscribeList";
-    // 提交打赏水晶币的接口
-    public static String apprewardUrl = Url + "?app=public&mod=AppFeedList&act=Appreward";
-    // 获取打赏列表消息的接口
-    public static String rewardMessagedUrl = Url + "?app=public&mod=AppFeedList&act=SystemMessage";
-    // 获取系统消息的接口
-    public static String systemMessagedUrl = Url + "?app=public&mod=Index&act=getSysMessage";
-    // 我的收藏的的接口
-    public static String myCollectionUrl = Url + "?app=public&mod=AppFeedList&act=AppCollection";
-    // 我的订阅的的接口
-    public static String mySubscribeUrl = Url + "?app=public&mod=FeedListMini&act=MySubscribe";
-    // 水晶币流动接口
-    public static String crystalBwaterUrl = Url + "?app=public&mod=AppFeedList&act=crystalBwater";
-    // 水晶币兑换的协议接口
-    public static String agreementUrl = Url + "?app=public&mod=AppFeedList&act=agreement";
-    // 流动广告的接口
-    public static String globalSwf = Url + "?app=public&mod=AppFeedList&act=GlobalSwf";
-    // 文章打赏水晶币人数的详细列表
-    public static String playAMan = Url + "?app=public&mod=AppFeedList&act=PlayAMan";
-    // 调用统一下单的接口
-//	public static String unifiedorder = "http://test.sjqcj.com/index.php?app=public&mod=App&act=test";
-    public static String unifiedorder = Url + "?app=public&mod=App&act=wxpay";
-    // 查询订单是否成功的接口
-    public static String queryOrder = Url + "?app=public&mod=App&act=queryOrder";
-    // 未读消息体的结构
-    public static String unreadCount = Url + "?app=public&mod=Index&act=getAppUnreadCount";
+    // 最新域名
+    public static String newUrl = "https://spare.sjqcj.com";
+    public static String newUrls = "http://spare.sjqcj.com";
 
+//     测试服务器
+//    public static String newUrl = "http://beta.sjqcj.com";
+//    public static String newUrls = "http://beta.sjqcj.com";
+    // 模拟炒股的接口路径
+    public static String moUrl = "https://moni.sjqcj.com";
+    // 测试路径
+//    public static String moUrl = "http://match.sjqcj.com";
+
+    // 植入的h5页面
+    public static String h5Url = "https://spare.sjqcj.com/dist/";
+//    public static String h5Url = "http://test.sjqcj.com/";
+
+//    // 分享的前半段路径
+//    public static String shareArticle = Url + "?app=public&mod=Profile&act=sharemeager&feed_id=";18654946018
+//    // 水晶币个数
+//    public static String appUserMoneyUrl = Url + "?app=public&mod=Profile&act=AppUserMoney";
+//    //微博列表接口
+//    public static String subscribeListUrl = Url + "?app=public&mod=FeedListMini&act=getList";
+//    // 提交打赏水晶币的接口
+//    public static String apprewardUrl = Url + "?app=public&mod=AppFeedList&act=Appreward";
+//    // 获取打赏列表消息的接口
+//    public static String rewardMessagedUrl = Url + "?app=public&mod=AppFeedList&act=SystemMessage";
+//    // 获取系统消息的接口
+//    public static String systemMessagedUrl = Url + "?app=public&mod=Index&act=getSysMessage";
+//    // 水晶币兑换的协议接口
+//    public static String agreementUrl = Url + "?app=public&mod=AppFeedList&act=agreement";
+//    // 流动广告的接口
+//    public static String globalSwf = Url + "?app=public&mod=AppFeedList&act=GlobalSwf";
+//    // 文章打赏水晶币人数的详细列表
+//    public static String playAMan = Url + "?app=public&mod=AppFeedList&act=PlayAMan";
+//    // 调用统一下单的接口
+////	public static String unifiedorder = "http://test.sjqcj.com/index.php?app=public&mod=App&act=test";
+//    public static String unifiedorder = Url + "?app=public&mod=App&act=wxpay";
+//    // 查询订单是否成功的接口
+//    public static String queryOrder = Url + "?app=public&mod=App&act=queryOrder";
+//    // 未读消息体的结构
+//    public static String unreadCount = Url + "?app=public&mod=Index&act=getAppUnreadCount";
     // 页面加载是显示的语句
-    public static String loadMessage = "正在玩命加载中...";
+    public static String loadMessage = "加载中...";
     // 无网络的时候
     public static String noNetwork = "获取数据失败，网络不给力！";
     // 无数据的时候
-    public static String noData = "亲你访问的页面暂时还没有数据！";
+    public static String noData = "你访问的页面暂时还没有数据！";
     // 微博分享
     public static String microBlogShare = "微博分享";
-
     // 各种消息条数的实体类
-    public static UnreadCount unreadCountInfo;
+    public static UnreadCount unreadCountInfo = new UnreadCount();
+    // 用户获取token 时调用的定时器
+    public static Timer timer;
 
     public static void setStatictokeystr(String statictokeystr) {
         Constants.statictokeystr = statictokeystr;
@@ -120,117 +142,6 @@ public class Constants {
 
     }
 
-
-    final int[] imagestr = {R.drawable.aoman, R.drawable.baiyan, R.drawable.bishi,
-            R.drawable.bizui, R.drawable.cahan, R.drawable.caidao, R.drawable.chajin,
-            R.drawable.cheer, R.drawable.chong, R.drawable.ciya, R.drawable.da, R.drawable.dabian,
-            R.drawable.dabing, R.drawable.dajiao, R.drawable.daku, R.drawable.dangao, R.drawable.danu,
-            R.drawable.dao, R.drawable.deyi, R.drawable.diaoxie, R.drawable.e, R.drawable.fadai,
-            R.drawable.fadou, R.drawable.fan, R.drawable.fanu, R.drawable.feiwen, R.drawable.fendou,
-            R.drawable.gangga, R.drawable.geili, R.drawable.gouyin, R.drawable.guzhang, R.drawable.haha,
-            R.drawable.haixiu, R.drawable.haqian, R.drawable.hua, R.drawable.huaixiao, R.drawable.hufen,
-            R.drawable.huishou, R.drawable.huitou, R.drawable.jidong, R.drawable.jingkong, R.drawable.jingya,
-            R.drawable.kafei, R.drawable.keai, R.drawable.kelian, R.drawable.ketou, R.drawable.kiss,
-            R.drawable.ku, R.drawable.kuaikule, R.drawable.kulou, R.drawable.kun, R.drawable.lanqiu,
-            R.drawable.lenghan, R.drawable.liuhan, R.drawable.liulei, R.drawable.liwu,
-            R.drawable.love, R.drawable.ma, R.drawable.meng, R.drawable.nanguo, R.drawable.no,
-            R.drawable.ok, R.drawable.peifu, R.drawable.pijiu, R.drawable.pingpang, R.drawable.pizui,
-            R.drawable.qiang, R.drawable.qinqin, R.drawable.qioudale, R.drawable.qiu, R.drawable.quantou,
-            R.drawable.ruo, R.drawable.se, R.drawable.shandian, R.drawable.shengli, R.drawable.shenma,
-            R.drawable.shuai, R.drawable.shuijiao, R.drawable.taiyang, R.drawable.tiao, R.drawable.tiaopi,
-            R.drawable.tiaosheng, R.drawable.tiaowu, R.drawable.touxiao, R.drawable.tu, R.drawable.tuzi,
-            R.drawable.wabi, R.drawable.weiqu, R.drawable.weixiao, R.drawable.wen, R.drawable.woshou,
-            R.drawable.xia, R.drawable.xianwen, R.drawable.xigua, R.drawable.xinsui, R.drawable.xu,
-            R.drawable.yinxian, R.drawable.yongbao, R.drawable.youhengheng, R.drawable.youtaiji, R.drawable.yueliang,
-            R.drawable.yun, R.drawable.zaijian, R.drawable.zhadan, R.drawable.zhemo, R.drawable.zhuakuang,
-            R.drawable.zhuanquan, R.drawable.zhutou, R.drawable.zuohengheng, R.drawable.zuotaiji, R.drawable.zuqiu,
-
-            R.drawable.img0, R.drawable.img1, R.drawable.img2,
-            R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6,
-            R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10, R.drawable.img11,
-            R.drawable.img12, R.drawable.img13, R.drawable.img14, R.drawable.img15, R.drawable.img16,
-            R.drawable.img17, R.drawable.img18, R.drawable.img19, R.drawable.img20, R.drawable.img21,
-            R.drawable.img22, R.drawable.img23, R.drawable.img24, R.drawable.img25, R.drawable.img26,
-            R.drawable.img27, R.drawable.img28, R.drawable.img29, R.drawable.img30, R.drawable.img31,
-            R.drawable.img32, R.drawable.img33, R.drawable.img34, R.drawable.img35, R.drawable.img36,
-            R.drawable.img37, R.drawable.img38, R.drawable.img39, R.drawable.img40, R.drawable.img41,
-            R.drawable.img42, R.drawable.img43, R.drawable.img44, R.drawable.img45, R.drawable.img46,
-            R.drawable.img47, R.drawable.img48, R.drawable.img49, R.drawable.img50, R.drawable.img51,
-            R.drawable.img52, R.drawable.img53, R.drawable.img54, R.drawable.img55,
-            R.drawable.img56, R.drawable.img57, R.drawable.img58, R.drawable.img59, R.drawable.img60,
-            R.drawable.img61, R.drawable.img62, R.drawable.img63, R.drawable.img64, R.drawable.img65,
-            R.drawable.img66, R.drawable.img67, R.drawable.img68, R.drawable.img69, R.drawable.img70,
-            R.drawable.img71, R.drawable.img72, R.drawable.img73, R.drawable.img74, R.drawable.img75,
-            R.drawable.img76, R.drawable.img77, R.drawable.img78, R.drawable.img79, R.drawable.img80,
-            R.drawable.img81, R.drawable.img82, R.drawable.img83, R.drawable.img84, R.drawable.img85,
-            R.drawable.img86, R.drawable.img87, R.drawable.img88, R.drawable.img89, R.drawable.img90,
-            R.drawable.img91, R.drawable.img92, R.drawable.img93, R.drawable.img94, R.drawable.img95,
-            R.drawable.img96, R.drawable.img97, R.drawable.img98, R.drawable.img99, R.drawable.img100,
-            R.drawable.img101, R.drawable.img102, R.drawable.img103, R.drawable.img104, R.drawable.img105,
-            R.drawable.img106, R.drawable.img107, R.drawable.img108, R.drawable.img109, R.drawable.img110,
-            R.drawable.img111, R.drawable.img112, R.drawable.img113, R.drawable.img114, R.drawable.img115,
-            R.drawable.img116, R.drawable.img117, R.drawable.img118, R.drawable.img119, R.drawable.img120,
-            R.drawable.img121, R.drawable.img122, R.drawable.img123, R.drawable.img124, R.drawable.img125,
-            R.drawable.img126, R.drawable.img127, R.drawable.img128, R.drawable.img129, R.drawable.img130,
-            R.drawable.img131, R.drawable.img132, R.drawable.img133, R.drawable.img134
-    };
-
-
-    final String[] facestrs = {"[aoman]", "[baiyan]", "[bishi]",
-            "[bizui]", "[cahan]", "[caidao]", "[chajin]",
-            "[cheer]", "[chong]", "[ciya]", "[da]", "[dabian]",
-            "[dabing]", "[dajiao]", "[daku]", "[dangao]", "[danu]",
-            "[dao]", "[deyi]", "[diaoxie]", "[e]", "[fadai]",
-            "[fadou]", "[fan]", "[fanu]", "[feiwen]", "[fendou]",
-            "[gangga]", "[geili]", "[gouyin]", "[guzhang]", "[haha]",
-            "[haixiu]", "[haqian]", "[hua]", "[huaixiao]", "[hufen]",
-            "[huishou]", "[huitou]", "[jidong]", "[jingkong]", "[jingya]",
-            "[kafei]", "[keai]", "[kelian]", "[ketou]", "[kiss]",
-            "[ku]", "[kuaikule]", "[kulou]", "[kun]", "[lanqiu]",
-            "[lenghan]", "[liuhan]", "[liulei]", "[liwu]",
-            "[love]", "[ma]", "[meng]", "[nanguo]", "[no]",
-            "[ok]", "[peifu]", "[pijiu]", "[pingpang]", "[pizui]",
-            "[qiang]", "[qinqin]", "[qioudale]", "[qiu]", "[quantou]",
-            "[ruo]", "[se]", "[shandian]", "[shengli]", "[shenma]",
-            "[shuai]", "[shuijiao]", "[taiyang]", "[tiao]", "[tiaopi]",
-            "[tiaosheng]", "[tiaowu]", "[touxiao]", "[tu]", "[tuzi]",
-            "[wabi]", "[weiqu]", "[weixiao]", "[wen]", "[woshou]",
-            "[xia]", "[xianwen]", "[xigua]", "[xinsui]", "[xu]",
-            "[yinxian]", "[yongbao]", "[youhengheng]", "[youtaiji]", "[yueliang]",
-            "[yun]", "[zaijian]", "[zhadan]", "[zhemo]", "[zhuakuang]",
-            "[zhuanquan]", "[zhutou]", "[zuohengheng]", "[zuotaiji]", "[zuqiu]",
-
-            "[1]", "[2]", "[3]",
-            "[4]", "[5]", "[6]", "[7]",
-            "[8]", "[9]", "[10]", "[11]", "[12]",
-            "[13]", "[14]", "[15]", "[16]", "[17]",
-            "[18]", "[19]", "[20]", "[21]", "[22]",
-            "[23]", "[24]", "[25]", "[26]", "[27]",
-            "[28]", "[29]", "[30]", "[31]", "[32]",
-            "[33]", "[34]", "[35]", "[36]", "[37]",
-            "[38]", "[39]", "[40]", "[41]", "[42]",
-            "[43]", "[44]", "[45]", "[46]", "[47]",
-            "[48]", "[49]", "[50]", "[51]", "[52]",
-            "[53]", "[54]", "[55]", "[56]",
-            "[57]", "[58]", "[59]", "[60]", "[61]",
-            "[62]", "[63]", "[64]", "[65]", "[66]",
-            "[67]", "[68]", "[69]", "[70]", "[71]",
-            "[72]", "[73]", "[74]", "[75]", "[76]",
-            "[77]", "[78]", "[79]", "[80]", "[81]",
-            "[82]", "[83]", "[84]", "[85]", "[86]",
-            "[87]", "[88]", "[89]", "[90]", "[91]",
-            "[92]", "[93]", "[94]", "[95]", "[96]",
-            "[97]", "[98]", "[99]", "[100]", "[101]",
-            "[102]", "[103]", "[104]", "[105]", "[106]",
-            "[107]", "[108]", "[109]", "[110]", "[111]",
-            "[112]", "[113]", "[114]", "[115]", "[116]",
-            "[117]", "[118]", "[119]", "[120]", "[121]",
-            "[122]", "[123]", "[124]", "[125]", "[126]",
-            "[127]", "[128]", "[129]", "[130]", "[131]",
-            "[132]", "[133]", "[134]"
-    };
-
-
     public Constants() {
         super();
         // TODO Auto-generated constructor stub
@@ -239,7 +150,6 @@ public class Constants {
     }
 
     private static void initfacemap2() {
-        // TODO Auto-generated method stub
         facemap2.put("aoman", R.drawable.aoman);
         facemap2.put("baiyan", R.drawable.baiyan);
         facemap2.put("bishi", R.drawable.bishi);
@@ -492,12 +402,6 @@ public class Constants {
         facemap2.put("134", R.drawable.img134);
 
 
-    }
-
-
-    public static class userinfoKeys {
-        public final static String Content = "Content";
-        public final static String Id = "id";
     }
 
     public static String getStaticmyuidstr() {

@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -30,6 +29,7 @@ import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.SoListView;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -63,7 +63,7 @@ public class MyDealAccountActivity extends Activity {
     // 自选股的List Adapter
     private StockAdapter stockAdapter;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 交易列表
     private LinearLayout transactionLl;
     // 自选股列表
@@ -170,18 +170,6 @@ public class MyDealAccountActivity extends Activity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (timer!=null) {
-            // 页面关闭时
-            // 关闭掉定时器
-            timer.cancel();
-            timer.purge();
-            timer = null;
-        }
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (timer!=null) {
@@ -195,10 +183,8 @@ public class MyDealAccountActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         /**
          * 返回按钮的事件绑定
          */
@@ -342,6 +328,7 @@ public class MyDealAccountActivity extends Activity {
             switch (msg.what) {
                 case 0:
                     try {
+                        dialog.dismissDlog();
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
@@ -391,7 +378,6 @@ public class MyDealAccountActivity extends Activity {
                         myScrollView.smoothScrollTo(0, 0);
                         isFirst = false;
                     }
-                    dialog.dismiss();
                     break;
                 case 1:
                     if (mapStr==null || mapStr.size()<1){
@@ -415,7 +401,7 @@ public class MyDealAccountActivity extends Activity {
                         // 成本价
                         costPrice = positionArrayList.get(i).getCost_price();
                         // 收益率
-                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Double.valueOf(costPrice)*100 + "");
+                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) -  Double.valueOf(costPrice))/Math.abs(Double.valueOf(costPrice))*100 + "");
                         positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getPosition_number());
@@ -439,7 +425,7 @@ public class MyDealAccountActivity extends Activity {
                             // 撤单成功后刷新数据
                             getData();
                         }else{
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -634,7 +620,7 @@ public class MyDealAccountActivity extends Activity {
      * @param id 撤单ID
      */
     public void killAnOrderClick(final String id){
-        dialog.show();
+        dialog.showDialog();
         // 开线程撤单
         new Thread(new Runnable() {
             @Override

@@ -8,24 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.InformationEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
+import com.example.sjqcjstock.netutil.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class InformAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, String>> listData;
+    private ArrayList<InformationEntity> listData;
 
     public InformAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, String>> listData) {
+    public void setlistData(ArrayList<InformationEntity> listData) {
         if (this.listData != null)
             this.listData.clear();
-        this.listData = (ArrayList<HashMap<String, String>>) listData.clone();
+        this.listData = (ArrayList<InformationEntity>) listData.clone();
         notifyDataSetChanged();
     }
 
@@ -47,11 +49,9 @@ public class InformAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
         ViewHolder holder;
-
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_inform, null);
             holder = new ViewHolder();
@@ -63,37 +63,9 @@ public class InformAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        //TextView informtitle1=(TextView)convertView.findViewById(R.id.informtitle1);
-        holder.informtitle1.setText((String) listData.get(position).get("news_titlestr"));
-//		
-        //TextView create_time1=(TextView)convertView.findViewById(R.id.create_time1);
-        holder.create_time1.setText((String) listData.get(position).get("created"));
-//		
-        //TextView id=(TextView)convertView.findViewById(R.id.create_time1);
-        //id.setText((String)listData.get(position).get("friend_id"));
-//		
-//		CheckBox check=(CheckBox)convertView.findViewById(R.id.selected);
-
-//		//判断用户是否已被选择，如被选择，则复选框为勾选，如未选择则复选框为可选
-//		if((Boolean) listData.get(position).get("selected")){
-//			state.put(position,true);
-//			
-//		}
-
-//		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//				// TODO Auto-generated method stub
-//				if(isChecked){
-//					state.put(position,isChecked);
-//				}else {
-//					state.remove(position);
-//				}
-//			}
-//		});
-
-//		check.setChecked((state.get(position)==null?false:true));
+        InformationEntity informationEntity = listData.get(position);
+        holder.informtitle1.setText(informationEntity.getNews_title());
+        holder.create_time1.setText(CalendarUtil.formatDateTime(Utils.getStringtoDate(informationEntity.getCreated())));
 
         return convertView;
     }
@@ -101,7 +73,5 @@ public class InformAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView informtitle1;
         TextView create_time1;
-
-
     }
 }

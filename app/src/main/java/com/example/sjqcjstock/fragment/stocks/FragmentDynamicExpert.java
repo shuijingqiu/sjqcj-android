@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +18,7 @@ import com.example.sjqcjstock.adapter.stocks.DynamicExpertAdapter;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -40,9 +40,9 @@ public class FragmentDynamicExpert extends Fragment {
     // 返回接口的数据
     private String resstr;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 页数
-    private int page = 0;
+    private int page = 1;
     // 需要加载的数据
     private ArrayList<GeniusEntity> geniusList;
 
@@ -61,7 +61,7 @@ public class FragmentDynamicExpert extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     }
 
@@ -69,10 +69,8 @@ public class FragmentDynamicExpert extends Fragment {
      * 页面控件的绑定
      */
     private void findView(View view) {
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(getActivity());
+        dialog.showDialog();
         listView = (ListView) view.findViewById(R.id.list_view);
         listAdapter = new DynamicExpertAdapter(getActivity());
         listView.setAdapter(listAdapter);
@@ -96,6 +94,9 @@ public class FragmentDynamicExpert extends Fragment {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 page = 1;
+                if (geniusList!=null) {
+                    geniusList.clear();
+                }
                 getData();
             }
 
@@ -138,19 +139,22 @@ public class FragmentDynamicExpert extends Fragment {
                         if ("failed".equals(jsonObject.getString("status"))){
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
-                        geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
+                        ArrayList<GeniusEntity> list = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
                         if (geniusList != null && geniusList.size()>0) {
-                            listAdapter.setlistData(geniusList);
+                            geniusList.addAll(list);
+                        }else{
+                            geniusList = list;
                         }
+                        listAdapter.setlistData(geniusList);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }

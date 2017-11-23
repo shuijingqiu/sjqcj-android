@@ -2,17 +2,18 @@ package com.example.sjqcjstock.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.systemMessageAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
@@ -20,10 +21,12 @@ import com.example.sjqcjstock.constant.ACache;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.SystemMessage;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 打赏消息展示页面
@@ -47,6 +50,10 @@ public class rewardMessageActivity extends Activity {
     private String rewardMessageStr = "";
     // 上下拉刷新控件
     private PullToRefreshLayout ptrl;
+    // 接口返回数据
+    private String jsonStr;
+    // 网络请求提示
+    private CustomProgress dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +63,15 @@ public class rewardMessageActivity extends Activity {
         //将Activity反复链表
         ExitApplication.getInstance().addActivity(this);
         findView();
-        // 自动下拉刷新
-        ptrl.autoRefresh();
+        geneItems();
     }
 
     /**
      * 控件的绑定
      */
     private void findView() {
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         // 缓存类
         mCache = ACache.get(this);
         // 返回按钮
@@ -80,13 +88,11 @@ public class rewardMessageActivity extends Activity {
         messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String feedId = ((TextView) view.findViewById(R.id.feed_id_tv)).getText() + "";
-                if (!"0".equals(feedId)) {
+                String relateId = systemMessage.getData().get(position).getRelate_id();
+                if (!"0".equals(relateId)) {
                     // 跳转到对于的微博页面
-                    Intent intent = new Intent(rewardMessageActivity.this, forumnotedetailActivity.class);
-                    intent.putExtra("weibo_id", feedId);
-                    // 这个UID是指的什么当前用户uid还是获取下来数据的id
-                    intent.putExtra("uid", Constants.staticmyuidstr);
+                    Intent intent = new Intent(rewardMessageActivity.this, ArticleDetailsActivity.class);
+                    intent.putExtra("weibo_id", relateId);
                     startActivity(intent);
                 }
             }
@@ -129,40 +135,50 @@ public class rewardMessageActivity extends Activity {
     }
 
     private void geneItems() {
-        new SendSystemMessageTask().execute(new TaskParams(Constants.rewardMessagedUrl,
-                new String[]{"mid", Constants.staticmyuidstr}, new String[]{
-                "p", current + ""}));
+        // 获取系统消息列表
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/message/system?mid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&type=reward&p=" + current);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
-    private class SendSystemMessageTask extends AsyncTask<TaskParams, Void, String> {
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
         @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    dialog.dismissDlog();
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            CustomToast.makeText(rewardMessageActivity.this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！加载失败
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            return;
+                        }
+                        systemMessage = JSON.parseObject(jsonStr, SystemMessage.class);
+                        if (current == 1) {
+                            adapter.setSystemMessage(systemMessage);
+                            rewardMessageStr = jsonStr;
+                        } else {
+                            adapter.setAddList(systemMessage.getData());
+                        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG)
-                        .show();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
-            } else {
-                if (rewardMessageStr.equals("")) {
-                    rewardMessageStr = result;
-                }
-                systemMessage = JSON.parseObject(result, SystemMessage.class);
-                if ("1".equals(systemMessage.getStatus())) {
-                    if (current == 1) {
-                        adapter.setSystemMessage(systemMessage);
-                    } else {
-                        adapter.setAddList(systemMessage.getData());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    break;
             }
         }
-    }
+    };
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
 
@@ -29,6 +30,10 @@ public class advertUrlActivity extends Activity {
             }
         });
         String url = getIntent().getStringExtra("url");
+        String title = getIntent().getStringExtra("title");
+        if (title != null && !"".equals(title)){
+            ((TextView)findViewById(R.id.title_tv)).setText(title);
+        }
         webView.loadUrl(url);
     }
 }

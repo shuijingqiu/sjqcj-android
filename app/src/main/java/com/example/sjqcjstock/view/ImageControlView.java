@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 /**
- * Created by Administrator on 2016/7/29.
+ * Created by Administrator on 2016/7/29.(可以留到但是不知道这个类的方法可不可以用)
  */
 public class ImageControlView extends ImageView {
     public ImageControlView(Context context) {

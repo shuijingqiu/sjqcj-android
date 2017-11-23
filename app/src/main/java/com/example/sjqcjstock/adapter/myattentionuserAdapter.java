@@ -57,40 +57,51 @@ public class myattentionuserAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_myattentionuser, null);
+            holder = new ViewHolder();
+            holder.nameTv = (TextView) convertView.findViewById(R.id.username);
+            holder.image = (ImageView) convertView.findViewById(R.id.user_image);
+            holder.detailcomment = (TextView) convertView.findViewById(R.id.detailcomment);
+            holder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
+            holder.vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        ImageView image = (ImageView) convertView.findViewById(R.id.user_image);
         ImageLoader.getInstance().displayImage((String) listData.get(position).
                         get("avatar_middle"),
-                image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-        TextView username = (TextView) convertView.findViewById(R.id.username);
-        username.setText((String) listData.get(position).get("uname"));
-        TextView detailcomment = (TextView) convertView.findViewById(R.id.detailcomment);
-        detailcomment.setText((String) listData.get(position).get("intro"));
-        RelativeLayout RelativeLayout = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
-        RelativeLayout.setOnClickListener(new OnClickListener() {
+                holder.image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        holder.nameTv.setText((String) listData.get(position).get("uname"));
+        holder.detailcomment.setText((String) listData.get(position).get("intro"));
+        holder.relativeLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), UserDetailNewActivity.class);
                     intent.putExtra("uid", listData.get(position).get("uid").toString());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
                     context.startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-        ImageView vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
         String isVip = listData.get(position).get(
                 "isVip") + "";
-        ViewUtil.setUpVip(isVip, vipImg);
+        ViewUtil.setUpVip(isVip, holder.vipImg);
         return convertView;
+    }
+
+    public static class ViewHolder {
+        TextView nameTv;
+        ImageView image;
+        TextView detailcomment;
+        RelativeLayout relativeLayout;
+        ImageView vipImg;
     }
 
 }

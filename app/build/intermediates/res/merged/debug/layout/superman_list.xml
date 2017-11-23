@@ -22,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="牛人列表"
+            android:text="认证牛人"
             style="@style/top_title" />
     </RelativeLayout>
 

@@ -13,7 +13,6 @@
         android:paddingBottom="4dip"
         android:paddingRight="12dip">
 
-
         <LinearLayout
             android:id="@+id/user_lay"
             android:layout_width="wrap_content"
@@ -22,22 +21,32 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/user_image1"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@mipmap/portrait2" />
+                <ImageView
+                    android:id="@+id/user_image1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/portrait2" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/head_frame" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/famousmanname1"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:text="一支燕"
                 android:textColor="@color/color_text1"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -61,7 +70,7 @@
                 android:paddingRight="5dp"
                 android:text="6"
                 android:textColor="#E04635"
-                android:textSize="15dp" />
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/attentionuser1"
@@ -75,7 +84,7 @@
                 android:paddingRight="5dp"
                 android:text="总资产  "
                 android:textColor="@color/color_999999"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +108,7 @@
                 android:paddingRight="5dp"
                 android:text="6"
                 android:textColor="#E04635"
-                android:textSize="15dp" />
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/attentionuser2"
@@ -113,7 +122,7 @@
                 android:paddingRight="5dp"
                 android:text="总收益率"
                 android:textColor="@color/color_999999"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
         </LinearLayout>
 
 
@@ -191,8 +200,7 @@
         android:id="@+id/relativelayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dip"
-        android:paddingRight="12dip">
+        android:paddingBottom="4dip">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,277 +1,471 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/color_ffffff" >
+    android:background="@color/color_ffffff">
 
     <RelativeLayout
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_toptitle" >
+        android:background="@color/color_toptitle">
 
         <include
+            layout="@layout/head_back_reuse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            layout="@layout/head_back_reuse" />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/title_name"
+            style="@style/top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            style="@style/top_title" />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/subscribe_tv"
+            style="@style/top_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="subscribeClick"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:text="订阅"
             android:textSize="13sp"
-            android:clickable="true"
-            android:onClick="subscribeClick"
-            style="@style/top_title" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 
     <com.example.sjqcjstock.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_line_v"
+        android:layout_below="@+id/title_rl">
 
-    <include layout="@layout/refresh_head" />
-    <!-- 支持所有实现Pullable接口的View -->
+        <include layout="@layout/refresh_head" />
+        <!-- 支持所有实现Pullable接口的View -->
 
-    <com.example.sjqcjstock.view.PullableScrollView
-        android:id="@+id/myScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <com.example.sjqcjstock.view.PullableScrollView
+            android:id="@+id/myScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/pickuserinfoedit2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-            <ImageView
-                android:id="@+id/headimg2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:src="@mipmap/portrait2" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:orientation="vertical" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/username2"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/pickuserinfoedit2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="-3dp"
-                    android:text="用户名"
-                    android:textColor="@color/color_text1"/>
+                    android:clickable="true"
+                    android:onClick="UserDataClick"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="9dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/headimg2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@mipmap/portrait2" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@mipmap/head_frame" />
+
+                        <LinearLayout
+                            android:id="@+id/name_ll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/headimg2"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/username2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="-3dp"
+                                android:text="用户名"
+                                android:textColor="@color/color_text1" />
+
+                            <ImageView
+                                android:id="@+id/vip_img"
+                                style="@style/vip_img_style1"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/usersex1"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_marginLeft="10dp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/userintro1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/name_ll"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="19dp"
+                            android:layout_toRightOf="@+id/headimg2"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:singleLine="true"
+                            android:text="简介"
+                            android:textColor="@color/color_text2"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/tomlive_lv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="end"
+                            android:src="@mipmap/live_list"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/vip_img"
-                    style="@style/vip_img_style1"
-                    android:visibility="gone"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
 
-                <ImageView
-                    android:id="@+id/usersex1"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginLeft="10dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:background="@color/color_ffffff"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/weibo_count1"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="0"-->
+                            <!--android:textColor="@color/color_text2" />-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="微博"-->
+                            <!--android:textColor="@color/color_text1" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/myattentionuserlist1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/color_ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/following_count2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/color_text2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关注"
+                            android:textColor="@color/color_text1" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/myfansuserlist1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/color_ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/follower_count2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/color_text2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="粉丝"
+                            android:textColor="@color/color_text1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/color_ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:onClick="MyStockClick"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/optional_stock_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/color_text2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="自选股"
+                            android:textColor="@color/color_text1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/linear_micro_blog"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/text_micro_blog"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="微博"
+                                android:textColor="@color/color_toptitle" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_play_reward"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/text_play_reward"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="内参" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_qa"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/text_qa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="问答" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_transaction"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/text_transaction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="交易" />
+
+                        </LinearLayout>
+
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/linear_my_stock"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center">-->
+
+                            <!--<TextView-->
+                                <!--android:id="@+id/text_my_stock"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="自选股" />-->
+
+                        <!--</LinearLayout>-->
+                        <LinearLayout
+                            android:id="@+id/linear_my_plan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/text_my_plan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="计划" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_line"
+                        android:layout_width="75dp"
+                        android:layout_height="1dp"
+                        android:src="@color/color_toptitle" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="-2.5dp"
+                    android:background="@color/gray_line" />
+
+                <include
+                    android:id="@+id/fragment_micro_blog"
+                    layout="@layout/fragment_micro_blog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/fragment_transaction"
+                    layout="@layout/fragment_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <!--<include-->
+                    <!--android:id="@+id/fragment_stock"-->
+                    <!--layout="@layout/fragment_stock"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:visibility="gone" />-->
+
+                <include
+                    android:id="@+id/fragment_plan"
+                    layout="@layout/fragment_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+
+                <com.example.sjqcjstock.view.SoListView
+                    android:id="@+id/play_reward"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/fragment_qa"
+                    layout="@layout/activity_interlocution"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:orientation="horizontal" >
+        </com.example.sjqcjstock.view.PullableScrollView>
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="个人简介:"-->
-                    <!--android:textColor="@color/color_text2"/>-->
+        <include layout="@layout/load_more" />
 
-                <TextView
-                    android:id="@+id/userintro1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="简介"
-                    android:textColor="@color/color_text2" />
+    </com.example.sjqcjstock.view.PullToRefreshLayout>
 
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/color_ffffff"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical" >-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/weibo_count1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="@color/color_text2"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="微博"-->
-                <!--android:textColor="@color/color_text1" />-->
-
-        <!--</LinearLayout>-->
-
-        <LinearLayout
-            android:id="@+id/myattentionuserlist1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/color_ffffff"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/following_count2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text2"
-                android:text="0"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="关注"
-                android:textColor="@color/color_text1" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/myfansuserlist1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/color_ffffff"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/follower_count2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text2"
-                android:text="0"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="粉丝"
-                android:textColor="@color/color_text1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/myfansuserlist2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/color_ffffff"
-            android:gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/follower_count3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text2"
-                android:text="0"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="订阅"
-                android:textColor="@color/color_text1" />
-        </LinearLayout>
-
-    </LinearLayout>
 
     <View
-        android:id="@+id/line_iv"
+        android:id="@+id/view_line_v"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/gray_line" />
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        android:layout_above="@+id/private_letter_follow_ll"/>
 
     <LinearLayout
         android:id="@+id/private_letter_follow_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+        
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/color_ffffff"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/personalletter3"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/buttonstyle"
+                android:background="@null"
                 android:padding="5dp"
                 android:text="私信"
-                android:textColor="#EB5B3B"
                 android:textSize="12dp" />
         </LinearLayout>
 
@@ -289,129 +483,21 @@
             android:layout_weight="1"
             android:background="@color/color_ffffff"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/followersign1"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/buttonstyle"
+                android:background="@null"
                 android:padding="5dp"
                 android:text=" + 关注"
-                android:textColor="#EB5B3B"
                 android:textSize="12dp" />
         </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@color/gray_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/linear_micro_blog"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/text_micro_blog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="微博"
-                    android:textColor="@color/color_toptitle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_transaction"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/text_transaction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="交易" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_my_stock"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/text_my_stock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="自选股" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/img_line"
-            android:layout_width="127dp"
-            android:layout_height="1dp"
-            android:src="@color/color_toptitle" />
 
     </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginTop="-2.5dp"
-                android:background="@color/gray_line" />
-
-            <include
-                android:id="@+id/fragment_micro_blog"
-                layout="@layout/fragment_micro_blog"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-            <include
-                android:id="@+id/fragment_transaction"
-                layout="@layout/fragment_transaction"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-            <include
-                android:id="@+id/fragment_stock"
-                layout="@layout/fragment_stock"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-
-        </LinearLayout>
-
-    </com.example.sjqcjstock.view.PullableScrollView>
-
-        <include layout="@layout/load_more" />
-
-    </com.example.sjqcjstock.view.PullToRefreshLayout>
-
-    <!--<include layout="@layout/progress" />-->
-
-</LinearLayout>
+</RelativeLayout>

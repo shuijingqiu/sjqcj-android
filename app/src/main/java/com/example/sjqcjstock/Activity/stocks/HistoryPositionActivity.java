@@ -1,12 +1,13 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -39,7 +41,7 @@ public class HistoryPositionActivity extends Activity{
     // 需要加载的数据
     private ArrayList<PositionEntity> positionArrayList;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 调用接口返回的数据
     private String resstr = "";
     // 查询用户的uid
@@ -63,10 +65,8 @@ public class HistoryPositionActivity extends Activity{
 
     // 页面控件的绑定
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         /**
          * 返回按钮的事件绑定
          */
@@ -80,6 +80,19 @@ public class HistoryPositionActivity extends Activity{
         listView = (ListView) findViewById(
                 R.id.position_list);
         listView.setAdapter(positionAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(HistoryPositionActivity.this, TransactionDetailActivity.class);
+                PositionEntity positionEntity = positionArrayList.get(position);
+                intent.putExtra("code",positionEntity.getStock());
+                intent.putExtra("name",positionEntity.getStock_name());
+                intent.putExtra("uid",uid);
+                intent.putExtra("type","1");
+                startActivity(intent);
+            }
+        });
+
         ptrl = ((PullToRefreshLayout) findViewById(
                 R.id.refresh_view));
         // 添加上下拉刷新事件
@@ -130,7 +143,7 @@ public class HistoryPositionActivity extends Activity{
                             if (page == 1){
                                 Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             }
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
@@ -145,7 +158,7 @@ public class HistoryPositionActivity extends Activity{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     break;

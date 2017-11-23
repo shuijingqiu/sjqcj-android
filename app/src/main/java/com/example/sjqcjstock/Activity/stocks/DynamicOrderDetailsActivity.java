@@ -119,15 +119,9 @@ public class DynamicOrderDetailsActivity extends Activity {
      *  阅读协议的单机事件
      */
     public void serviceClick(View view){
-        // 跳转到协议页面
-        findViewById(R.id.service_agreement).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DynamicOrderDetailsActivity.this, AgreementActivity.class);
-                intent.putExtra("type", "12");
-                startActivity(intent);
-            }
-        });
+        Intent intent = new Intent(DynamicOrderDetailsActivity.this, AgreementActivity.class);
+        intent.putExtra("type", "12");
+        startActivity(intent);
     }
 
 }

@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.Article.RaceReportEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * (大盘，个股，名家，内参，论道)的控制器
@@ -20,7 +22,7 @@ import java.util.HashMap;
 public class personalstocklistAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, Object>> listData;
+    private ArrayList<RaceReportEntity> listData;
 
 
     public personalstocklistAdapter(Context context) {
@@ -28,9 +30,9 @@ public class personalstocklistAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, Object>> listData) {
+    public void setlistData(ArrayList<RaceReportEntity> listData) {
         if (listData != null) {
-            this.listData = (ArrayList<HashMap<String, Object>>) listData.clone();
+            this.listData = (ArrayList<RaceReportEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -54,27 +56,37 @@ public class personalstocklistAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_personalstock, null);
+            holder = new ViewHolder();
+            holder.titleStr = (TextView) convertView.findViewById(R.id.title1);
+            holder.userName = (TextView) convertView.findViewById(R.id.uname1);
+            holder.time = (TextView) convertView.findViewById(R.id.create_time1);
+            holder.count = (TextView) convertView.findViewById(R.id.comment_count1);
+            holder.vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        TextView informtitle1 = (TextView) convertView.findViewById(R.id.title1);
-        informtitle1.setText((String) listData.get(position).get("weibo_titlestr"));
+        RaceReportEntity raceReportEntity = listData.get(position);
+        holder.titleStr.setText(raceReportEntity.getTitle());
+        holder.userName.setText(raceReportEntity.getUname());
+        holder.time.setText(CalendarUtil.formatDateTime(Utils
+                .getStringtoDate(raceReportEntity.getCtime())));
+        holder.count.setText(raceReportEntity.getComment_count());
 
-        TextView uname1 = (TextView) convertView.findViewById(R.id.uname1);
-        uname1.setText((String) listData.get(position).get("username"));
-
-        TextView create_time1 = (TextView) convertView.findViewById(R.id.create_time1);
-        create_time1.setText((String) listData.get(position).get("ctimestr"));
-
-        TextView comment_count1 = (TextView) convertView.findViewById(R.id.comment_count1);
-        comment_count1.setText((String) listData.get(position).get("comment_countstr"));
-
-        ImageView vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
-        String isVip = listData.get(position).get(
-                "isVip") + "";
-        ViewUtil.setUpVip(isVip, vipImg);
+        ViewUtil.setUpVipNew(raceReportEntity.getUser_group_icon_url(), holder.vipImg);
 
         return convertView;
     }
-
+    public static class ViewHolder {
+        ImageView image;
+        View view;
+        TextView titleStr;
+        TextView userName;
+        TextView time;
+        TextView count;
+        ImageView vipImg;
+    }
 }

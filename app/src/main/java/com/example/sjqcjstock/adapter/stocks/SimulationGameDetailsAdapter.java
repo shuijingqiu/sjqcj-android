@@ -90,7 +90,9 @@ public class SimulationGameDetailsAdapter extends BaseAdapter {
         holder.name.setText(matchEntity.getUsername());
         // 周收益率
         String totalRate = matchEntity.getTotal_rate();
-        if (Double.valueOf(totalRate)>=0){
+        if (Double.valueOf(totalRate)==0d){
+            holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_article));
+        }else if (totalRate.indexOf("-") == -1) {
             holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_ef3e3e));
         }else{
             holder.profit.setTextColor(holder.profit.getResources().getColor(R.color.color_1bc07d));

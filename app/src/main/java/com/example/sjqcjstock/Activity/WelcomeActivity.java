@@ -11,24 +11,25 @@ import android.view.Window;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class WelcomeActivity extends Activity {
-
     private Runnable runnable = null;
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
-                //跳转到主界面
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                // 修改登陆状态 已登陆
+                Constants.isLogin = true;
             } else if (msg.what == 1) {
-                Intent intent = new Intent(WelcomeActivity.this, loginActivity.class);
-                startActivity(intent);
-                finish();
+                // 修改登陆状态 未登陆
+                Constants.isLogin = false;
             }
+            //跳转到主界面
+            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     };
 
@@ -42,8 +43,10 @@ public class WelcomeActivity extends Activity {
             public void run() {
                 // 1已经登陆过，直接跳转主界面
                 if (getSharedPreferences("loginInfo", MODE_PRIVATE).getString("isLogin", "").equals("1")) {
+                    String loginType = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+                    Constants.setStaticLoginType(loginType);
                     // 已经登陆的情况下需要判断登陆类型qq、微信、普通用户登录
-                    if (getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "").equals("qq") || getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "").equals("weixin")) {
+                    if (loginType.equals("qq") || getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "").equals("weixin")) {
                         Constants.isDefault = false;
                         //用户mid token password全局变量
                         Constants.setStaticmyuidstr(getSharedPreferences("loginInfo", MODE_PRIVATE).getString("uidstr", ""));
@@ -51,7 +54,7 @@ public class WelcomeActivity extends Activity {
                         Constants.setStaticpasswordstr(getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginPwd", ""));
                         mHandler.sendEmptyMessage(0);
                         //普通用户登录，需要保存 mid 用户名 密码
-                    } else if (getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "").equals("common")) {
+                    } else if (loginType.equals("common")) {
                         Constants.setStaticmyuidstr(getSharedPreferences("loginInfo", MODE_PRIVATE).getString("uidstr", ""));
                         Constants.setStaticuname(getSharedPreferences("loginInfo", MODE_PRIVATE).getString("unamestr", ""));
                         Constants.setStaticpasswordstr(getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginPwd", ""));
@@ -65,6 +68,12 @@ public class WelcomeActivity extends Activity {
             }
         };
         mHandler.postDelayed(runnable, 2000);
+        // 设置极光推送是否是调试模式
+        JPushInterface.setDebugMode(false);
+        // 初始化极光推送的SDK
+        JPushInterface.init(this);
+        // 先停止推送服务（登陆后再启动推送服务）
+        JPushInterface.stopPush(this);
     }
 
     /**

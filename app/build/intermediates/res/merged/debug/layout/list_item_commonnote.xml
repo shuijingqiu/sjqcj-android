@@ -14,14 +14,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/userimg1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:src="@mipmap/portrait2" />
+                android:layout_margin="10dp">
 
+                <ImageView
+                    android:id="@+id/userimg1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/portrait2" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/head_frame" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -66,6 +76,25 @@
                 android:gravity="right"
                 android:layout_marginRight="15dp"
                 android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="22dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/delete_article_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="删除"
+                    android:textColor="#4471BC"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -168,6 +197,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:visibility="gone" >
 
@@ -193,6 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:visibility="gone" >
 
@@ -210,6 +241,7 @@
                 android:id="@+id/shortweiboimg9"
                 android:layout_width="90dp"
                 android:layout_height="90dp" />
+
         </LinearLayout>
 
         <ImageView
@@ -241,7 +273,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="3dp"
-                    android:text="11"
                     android:textSize="12dp"
                     android:textColor="@color/color_count"/>
             </LinearLayout>
@@ -273,7 +304,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="3dp"
-                    android:text="11"
                     android:textSize="12dp"
                     android:textColor="@color/color_count" />
 
@@ -317,10 +347,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="7px"
-            android:background="@drawable/line" />
+            android:layout_height="10dp"
+            android:background="@color/gray_line" />
+
     </LinearLayout>
 
 </RelativeLayout>

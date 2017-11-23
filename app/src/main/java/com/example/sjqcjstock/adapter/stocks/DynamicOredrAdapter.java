@@ -111,7 +111,6 @@ public class DynamicOredrAdapter extends BaseAdapter {
         });
         holder.nameTv.setText(desertEntity.getPrice_username());
 //        holder.timeTv.setText("有效期至："+desertEntity.getExp_time());
-
         if ("1".equals(desertEntity.getStatus())){
             String date = "0";
             try {

@@ -34,6 +34,8 @@ public class totalrankingnewActivity extends FragmentActivity implements ViewPag
     private TextView text_jy = null;
     private LinearLayout ll_mr = null;
     private LinearLayout ll_jy = null;
+    // 标题
+    private TextView titleTv = null;
     // 滑动条颜色
     private int select_color;
     private int unselect_color;
@@ -43,10 +45,11 @@ public class totalrankingnewActivity extends FragmentActivity implements ViewPag
     private Integer viewPagerW = 0;
     private int mScreen1_4;
     private ImageView img_line;
+    // 展示类容 1 为总收益榜 2为长胜牛人
+    private String type = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.totalrankingnew_list);
@@ -58,6 +61,7 @@ public class totalrankingnewActivity extends FragmentActivity implements ViewPag
     }
 
     private void initView() {
+        type = getIntent().getStringExtra("type");
         goback1 = (LinearLayout) findViewById(R.id.goback1);
         goback1.setOnClickListener(new OnClickListener() {
             @Override
@@ -72,19 +76,23 @@ public class totalrankingnewActivity extends FragmentActivity implements ViewPag
         text_jy = (TextView) findViewById(R.id.text_jy);
         ll_mr = (LinearLayout) findViewById(R.id.linear_mr);
         ll_jy = (LinearLayout) findViewById(R.id.linear_jy);
+        titleTv = (TextView) findViewById(R.id.title_tv);
         ll_mr.setOnClickListener(new MyOnClickListenser(0));
         ll_jy.setOnClickListener(new MyOnClickListenser(1));
         mViewPager = (ViewPager) findViewById(R.id.mViewpager);
         mViewPager.setOffscreenPageLimit(1);
         mDatas = new ArrayList<Fragment>();
+        if ("2".equals(type)){
+            titleTv.setText("选股牛人");
+        }
     }
 
     /**
      * 初始化fragment
      */
     private void initFragment() {
-        FragmentTotalCelebrity mrList = new FragmentTotalCelebrity();
-        FragmentTotalELite jyList = new FragmentTotalELite();
+        FragmentTotalCelebrity mrList = new FragmentTotalCelebrity(type);
+        FragmentTotalELite jyList = new FragmentTotalELite(type);
         mDatas.add(mrList);
         mDatas.add(jyList);
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {

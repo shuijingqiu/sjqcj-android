@@ -73,7 +73,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="我的好友"
-            android:textColor="#E51C23" />
+            android:textColor="@color/color_000000" />
 
     </LinearLayout>
 

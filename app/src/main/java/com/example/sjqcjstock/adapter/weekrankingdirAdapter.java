@@ -16,6 +16,9 @@ import com.example.sjqcjstock.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class weekrankingdirAdapter extends BaseAdapter {
 
     private Context context;
@@ -34,7 +37,7 @@ public class weekrankingdirAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listData.size();
+        return listData == null ? 0 : listData.size();
     }
 
     @Override
@@ -49,23 +52,24 @@ public class weekrankingdirAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_weekrankingdir, null);
+            holder = new ViewHolder();
+            holder.weekly = (TextView) convertView.findViewById(R.id.weekly);
+            holder.pickfamousweekscore1 = (LinearLayout) convertView.findViewById(R.id.pickfamousweekscore1);
+            holder.picksesenceweekscore1 = (LinearLayout) convertView.findViewById(R.id.picksesenceweekscore1);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-
-        TextView weekly = (TextView) convertView.findViewById(R.id.weekly);
-        weekly.setText((String) listData.get(position).get("weekly"));
-
-        LinearLayout pickfamousweekscore1 = (LinearLayout) convertView.findViewById(R.id.pickfamousweekscore1);
-        pickfamousweekscore1.setOnClickListener(new OnClickListener() {
+        holder.weekly.setText((String) listData.get(position).get("weekly"));
+        holder.pickfamousweekscore1.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), weekrankingnewdetailActivity.class);
                     intent.putExtra("match", (String) listData.get(position).get("weekly"));
@@ -74,20 +78,13 @@ public class weekrankingdirAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-
                 }
-
             }
         });
-
-
-        LinearLayout picksesenceweekscore1 = (LinearLayout) convertView.findViewById(R.id.picksesenceweekscore1);
-        picksesenceweekscore1.setOnClickListener(new OnClickListener() {
+        holder.picksesenceweekscore1.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), weekrankingnewdetailActivity.class);
                     intent.putExtra("match", (String) listData.get(position).get("weekly"));
@@ -95,101 +92,16 @@ public class weekrankingdirAdapter extends BaseAdapter {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
-                } finally {
-
                 }
-
             }
         });
-
-        /**
-         ImageView image=(ImageView)convertView.findViewById(R.id.user_image);
-         // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-         ImageLoader.getInstance().displayImage((String)listData.get(position).
-         get("image_url"),
-         image,options,new AnimateFirstDisplayListener());
-
-
-         image.setOnClickListener(new OnClickListener() {
-
-        @Override public void onClick(View arg0) {
-        // TODO Auto-generated method stub
-        Intent intent=new Intent(context.getApplicationContext(),UserDetailNewActivity.class);
-        String  uidstr= (String)listData.get(position).get("uidstr");
-        intent.putExtra("uid",(String)listData.get(position).get("uidstr"));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-
-        }
-        });
-         //
-         TextView username=(TextView)convertView.findViewById(R.id.weibo_titlestr);
-         username.setText((String)listData.get(position).get("weibo_titlestr"));
-
-         TextView detailAddress=(TextView)convertView.findViewById(R.id.username);
-         detailAddress.setText((String)listData.get(position).get("username"));
-         //
-         TextView commentcount1=(TextView)convertView.findViewById(R.id.commentcount1);
-         commentcount1.setText((String)listData.get(position).get("comment_countstr"));
-
-         LinearLayout pickuserinfo1=(LinearLayout)convertView.findViewById(R.id.pickuserinfo1);
-
-         ImageView commentweibo1=(ImageView)convertView.findViewById(R.id.commentweibo1);
-         commentweibo1.setOnClickListener(new OnClickListener() {
-
-        @Override public void onClick(View arg0) {
-        // TODO Auto-generated method stub
-        Intent intent=new Intent(context.getApplicationContext(),addcommentweiboActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("feed_id",(String)listData.get(position).get("weibo_idstr"));
-        intent.putExtra("feeduid",(String)listData.get(position).get("uidstr"));
-
-        context.startActivity(intent);
-        }
-        });
-
-
-         pickuserinfo1.setOnClickListener(new OnClickListener() {
-
-        @Override public void onClick(View arg0) {
-        // TODO Auto-generated method stub
-
-
-        Intent intent=new Intent(context.getApplicationContext(),UserDetailNewActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("uid",(String)listData.get(position).get("uidstr"));
-
-        context.startActivity(intent);
-        }
-        });
-         //
-         //		CheckBox check=(CheckBox)convertView.findViewById(R.id.selected);
-
-         //		//判断用户是否已被选择，如被选择，则复选框为勾选，如未选择则复选框为可选
-         //		if((Boolean) listData.get(position).get("selected")){
-         //			state.put(position,true);
-         //
-         //		}
-
-         //		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-         //
-         //			@Override
-         //			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-         //				// TODO Auto-generated method stub
-         //				if(isChecked){
-         //					state.put(position,isChecked);
-         //				}else {
-         //					state.remove(position);
-         //				}
-         //			}
-         //		});
-
-         //		check.setChecked((state.get(position)==null?false:true));
-         */
         return convertView;
     }
 
-
+    public static class ViewHolder {
+        TextView weekly;
+        LinearLayout picksesenceweekscore1;
+        LinearLayout pickfamousweekscore1;
+    }
 }

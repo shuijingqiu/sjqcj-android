@@ -1,10 +1,15 @@
 package com.example.sjqcjstock.netutil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.Html;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +25,20 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
@@ -81,7 +100,7 @@ public class ImageUtil {
     }
 
     /**
-     * 获取图片的设置加载处理信息
+     * 获取图片的设置加载处理信息(头像用)
      *
      * @return
      */
@@ -143,7 +162,7 @@ public class ImageUtil {
     }
 
     /**
-     * TextView 显示图片的加载器
+     * TextView 显示图片的加载器 (只用于显示表情的)
      *
      * @param resources
      * @return
@@ -151,10 +170,13 @@ public class ImageUtil {
     public static Html.ImageGetter getImageGetter(final Resources resources) {
         Html.ImageGetter imageGetter = new Html.ImageGetter() {
             public Drawable getDrawable(String source) {
+                // 如果为http 开头  并且以.gif 结尾的 就当表情处理
+                if(source.indexOf("http")!=-1 && source.indexOf(".gif")!=-1){
+                    source = source.substring(source.lastIndexOf("/" )+1,source.indexOf(".gif"));
+                }
+
                 if (Constants.facemap2.get(source) != null) {
                     int id = (Integer) Constants.facemap2.get(source);
-                    // int id=id2;
-                    // int id = Integer.parseInt(source);
                     Drawable d = resources.getDrawable(id);
                     d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
                     return d;
@@ -206,4 +228,93 @@ public class ImageUtil {
         }
         return width;
     }
+
+    /**
+     * 根据传入的宽高来计算图片缩放比例
+     */
+    public static double getProportion(int width ,int height){
+        Double proportion = 1.0d;
+
+        if (width>720){
+            proportion = 720.0/width;
+        }
+        if (proportion*height>1280){
+            proportion = 1280.0/height;
+        }
+        if (proportion == 0){
+            proportion = 0.0d;
+        }
+        return proportion;
+    }
+
+    /**
+     * 获取sd卡的根目录
+     * @return
+     */
+    public static String getSDPath(){
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState()
+                .equals(android.os.Environment.MEDIA_MOUNTED);//判断sd卡是否存在
+        if(sdCardExist)
+        {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        return sdDir.toString()+"/sjqimg.jpg";
+    }
+
+    /**
+     * 删除保存的图片
+     * @param ctx
+     * @param filePath
+     */
+    public static void scanFileAsync(Context ctx, String filePath) {
+        if (!TextUtils.isEmpty(filePath)) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+                // 发送广播刷新缩虐图
+                Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                scanIntent.setData(Uri.fromFile(new File(filePath)));
+                ctx.sendBroadcast(scanIntent);
+        }
+    }
+
+
+    // 将图片上传到服务器
+    public static String sendData(Bitmap bitmap) throws Exception {
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpContext localContext = new BasicHttpContext();
+            HttpPost httpPost = new HttpPost(
+                    Constants.newUrls + "/api/upload/post");
+            MultipartEntity entity = new MultipartEntity(
+                    HttpMultipartMode.BROWSER_COMPATIBLE);
+            entity.addPart("mid", new StringBody(Constants.staticmyuidstr));
+            entity.addPart("token", new StringBody(Constants.apptoken));
+            entity.addPart("upload_type", new StringBody("image"));
+            Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(),
+                    true);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bmpCompressed.compress(Bitmap.CompressFormat.PNG, 80, bos);
+            byte[] data = bos.toByteArray();
+            entity.addPart("mylmage", new ByteArrayBody(data, "temp.png"));
+            httpPost.setEntity(entity);
+
+            HttpResponse response = httpClient.execute(httpPost, localContext);
+            InputStream in = response.getEntity().getContent();
+            String resstr = HttpUtil.changeInputStream(in);
+            Log.e("mhimg",resstr);
+            JSONObject jsonObject = new JSONObject(resstr);
+            if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                return "";
+            }
+            JSONObject dataObject = new JSONObject(jsonObject.getString("data"));
+            return dataObject.getString("attach_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

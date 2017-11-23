@@ -308,6 +308,9 @@ public class sharesUtil {
             for (String sharesStr:shares){
                 // 分割股票详细信息
                 sharesMinute = sharesStr.split("~");
+                if (sharesMinute.length<31){
+                    continue;
+                }
                 // 当前价格
                 spotPrice = sharesMinute[3];
                 // 当前涨幅

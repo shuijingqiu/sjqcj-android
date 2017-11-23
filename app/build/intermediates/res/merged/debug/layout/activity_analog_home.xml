@@ -20,24 +20,57 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="模拟炒股" />
+            android:text="模拟比赛" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:src="@mipmap/select3" />
+
+        <TextView
+            android:id="@+id/rule_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="13dp"
+            android:textColor="@color/white"
+            android:text="规则"/>
 
     </RelativeLayout>
 
+    <!--<com.example.sjqcjstock.view.PullToRefreshLayout-->
+        <!--android:id="@+id/refresh_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--<include layout="@layout/refresh_head" />-->
+    <!--&lt;!&ndash; 支持所有实现Pullable接口的View &ndash;&gt;-->
+
+    <!--<com.example.sjqcjstock.view.PullableScrollView-->
+        <!--android:id="@+id/myScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
     <com.example.sjqcjstock.userdefined.MyScrollView
         android:id="@+id/myScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/fragment_picture_imgs"
-                android:layout_width="match_parent"
-                android:layout_height="115dp" />
+            <!--暂时不要的-->
+            <!--<FrameLayout-->
+                <!--android:id="@+id/fragment_picture_imgs"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="115dp" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -49,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -63,13 +96,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/csnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="常胜牛人" />
+                        android:text="稳赚牛人" />
 
                 </LinearLayout>
 
@@ -84,7 +117,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/rqnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,7 +138,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/zsyp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -122,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -136,15 +169,16 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/xgnr" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="股票牛人" />
+                        android:text="常胜牛人" />
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/mnbs_ll"
@@ -157,13 +191,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/mnbs" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="模拟比赛" />
+                        android:text="模拟赛场" />
 
                 </LinearLayout>
 
@@ -178,7 +212,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/jinghua" />
+                        android:src="@mipmap/mnjy" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -193,7 +227,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/gray_line" />
 
             <LinearLayout
@@ -209,20 +243,23 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="牛人动态"
+                    android:text="牛人交易"
                     android:textColor="@color/color_text1"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="更多"-->
-                    <!--android:textColor="@color/color_text2"-->
-                    <!--android:textSize="14dp" />-->
+                <TextView
+                    android:id="@+id/more_dynamic_expert"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="5dp"
+                    android:gravity="right"
+                    android:text="更多"
+                    android:textColor="@color/color_text2"
+                    android:textSize="14dp"
+                    android:clickable="true"/>
 
             </LinearLayout>
 
@@ -231,15 +268,28 @@
                 android:layout_height="1dp"
                 android:background="@drawable/line" />
 
-            <com.example.sjqcjstock.view.SoListView
-                android:id="@+id/list_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null" />
+                android:layout_height="match_parent">
+
+                <com.example.sjqcjstock.view.SoListView
+                    android:id="@+id/list_view"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </com.example.sjqcjstock.userdefined.MyScrollView>
+        </com.example.sjqcjstock.userdefined.MyScrollView>
 
+        <!--<include layout="@layout/load_more"-->
+            <!--android:visibility="gone"/>-->
+
+    <!--</com.example.sjqcjstock.view.PullToRefreshLayout>-->
+
+    <!--<include layout="@layout/progress" />-->
 
 </LinearLayout>

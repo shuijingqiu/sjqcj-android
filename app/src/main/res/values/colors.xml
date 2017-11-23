@@ -59,6 +59,7 @@
     <!-- 浅红色（价格用） -->
     <color name="color_ef3e3e">#ef3e3e</color>
     <!-- 橙色 -->
+    <color name="color_fec84a">#FEC84A</color>
 
 
     <!-- 浅浅灰 -->
@@ -95,5 +96,5 @@
     <!--买卖 按钮背景色-->
     <color name="color_5471ef">#5471ef</color>
 
-
+    <color name="background_tab_pressed">#6633B5E5</color>
 </resources>

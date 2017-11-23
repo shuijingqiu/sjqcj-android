@@ -10,5 +10,9 @@ package com.example.sjqcjstock;
 public final class Manifest {
     public static final class permission {
         public static final String BAIDU_LOCATION_SERVICE="android.permission.BAIDU_LOCATION_SERVICE";
+        /**  极光推送 
+ Required 
+         */
+        public static final String JPUSH_MESSAGdingE="com.example.sjqcjstock.permission.JPUSH_MESSAGdingE";
     }
 }

@@ -1,13 +1,14 @@
 package com.example.sjqcjstock.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.entity.CrystalBwater;
 import com.example.sjqcjstock.netutil.Utils;
@@ -20,27 +21,23 @@ import java.util.List;
  */
 public class CrystalBwaterAdapter extends BaseAdapter {
     // 要加载的数据集合
-    private CrystalBwater crystalBwater;
+    private List<CrystalBwater> crystalBwaterList;
     private Context context;
 
     public CrystalBwaterAdapter(Context context) {
         this.context = context;
     }
 
-    public void setCrystalBwater(CrystalBwater crystalBwater) {
-        this.crystalBwater = crystalBwater;
-        notifyDataSetChanged();
-    }
-
-    // 追加数据
-    public void setAddList(List<CrystalBwater.msgs> msg) {
-        crystalBwater.getMsg().addAll(msg);
-        notifyDataSetChanged();
+    public void setCrystalBwater(List<CrystalBwater> crystalBwaterList) {
+        if (crystalBwaterList!=null){
+            this.crystalBwaterList = crystalBwaterList;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
     public int getCount() {
-        return crystalBwater == null ? 0 : crystalBwater.getMsg().size();
+        return crystalBwaterList == null ? 0 : crystalBwaterList.size();
     }
 
     @Override
@@ -54,35 +51,50 @@ public class CrystalBwaterAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        CrystalBwater.msgs msg = crystalBwater.getMsg().get(position);
-        return makeItemView(msg);
-    }
-
-    // 绘制Item的函数
-    public View makeItemView(CrystalBwater.msgs msg) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        // 使用View的对象itemView与R.layout.item关联
-        View itemView = inflater
-                .inflate(R.layout.list_item_crystal_bwater, null);
-        TextView time = (TextView) itemView.findViewById(R.id.bwater_time_tv);
-        TextView name = (TextView) itemView.findViewById(R.id.bwater_name_tv);
-        TextView typeTv = (TextView) itemView.findViewById(R.id.bwater_type_tv);
-        TextView id = (TextView) itemView.findViewById(R.id.bwater_id_tv);
-        name.setText(msg.getUname());
-        time.setText(Utils.getStringtoDate1(msg.getTime()));
-        id.setText(msg.getAssist_uid());
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        //动态加载布局
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_crystal_bwater, null);
+            holder = new ViewHolder();
+            holder.time = (TextView) convertView.findViewById(R.id.bwater_time_tv);
+            holder.name = (TextView) convertView.findViewById(R.id.bwater_name_tv);
+            holder.typeTv = (TextView) convertView.findViewById(R.id.bwater_type_tv);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        CrystalBwater msg = crystalBwaterList.get(position);
+        holder.name.setText(msg.getUname());
+        holder.time.setText(Utils.getStringtoDate1(msg.getTime()));
         String type = msg.getType();
         if ("0".equals(type)) {
-            typeTv.setText("充值：" + msg.getAmount());
-            typeTv.setTextColor(Color.RED);
+            holder.typeTv.setText(msg.getRetype()+"：+" + msg.getAmount());
+            holder.typeTv.setTextColor(holder.typeTv.getResources().getColor(R.color.color_ef3e3e));
         } else if ("1".equals(type)) {
-            typeTv.setText("打赏：-" + msg.getAmount());
+            holder.typeTv.setText(msg.getRetype()+"：-" + msg.getAmount());
+            holder.typeTv.setTextColor(holder.typeTv.getResources().getColor(R.color.color_1bc07d));
         } else if ("2".equals(type)) {
-            typeTv.setText("被打赏：" + msg.getAmount());
-            typeTv.setTextColor(Color.RED);
+            holder.typeTv.setText(msg.getRetype()+"：" + msg.getAmount());
+            holder.typeTv.setTextColor(holder.typeTv.getResources().getColor(R.color.color_ef3e3e));
         }
-        return itemView;
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 跳转到个人中心
+                Intent intent = new Intent(context, UserDetailNewActivity.class);
+                intent.putExtra("uid", crystalBwaterList.get(position).getAssist_uid());
+                context.startActivity(intent);
+            }
+        });
+        return convertView;
     }
+
+    public static class ViewHolder {
+        TextView time;
+        TextView name;
+        TextView typeTv;
+    }
+
 }

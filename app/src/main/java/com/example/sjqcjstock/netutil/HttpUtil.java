@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.example.sjqcjstock.constant.Constants;
 import com.mob.tools.network.SSLSocketFactoryEx;
 
 import org.apache.http.HttpEntity;
@@ -191,23 +192,29 @@ public class HttpUtil {
         return url_path;
     }
 
+
+    // 要删除的
+    private static long startTime;
+    private static long consumingTime;
+
     // post 提交
     public static String doInBackground(TaskParams... params) {
         if (params.length == 0)
             return null;
+        startTime = System.nanoTime();
         TaskParams tp = params[0];
         HttpURLConnection conn = null;
         OutputStream out = null;
         InputStream in = null;
         String resstr = null;
-        Log.e("mh-URl:-", "+" + tp.getUrl());
         try {
             conn = (HttpURLConnection) new URL(tp.getUrl()).openConnection();
+            Log.e("mh-URl:-", "+" +conn.getURL());
             // POST GET
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
-            conn.setConnectTimeout(6000);
-            conn.setReadTimeout(6000);
+            conn.setConnectTimeout(12000);
+            conn.setReadTimeout(12000);
             out = conn.getOutputStream();
             String paramsstr = tp.getEncodeParams();
             out.write(paramsstr.getBytes());
@@ -240,6 +247,8 @@ public class HttpUtil {
                 resstr = null;
             }
         }
+        consumingTime = System.nanoTime()-startTime;
+        Log.e("mh-time",consumingTime/1000/1000+"豪秒");
         return resstr;
     }
 
@@ -409,17 +418,14 @@ public class HttpUtil {
             ucon.setConnectTimeout(2000);// 设置连接主机超时
             ucon.setReadTimeout(2000);// 设置从主机读取数据超时
             InputStream is = ucon.getInputStream();
-//            strDta = changeInputStream2(is);
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is ,"GBK"));
             StringBuilder jsonbuilder = new StringBuilder();
             while ((strDta = bufferedReader.readLine()) != null) {
-                //outputStream.write(data,0,len);
                 jsonbuilder.append(strDta);
             }
             strDta = jsonbuilder.toString();
             Log.e("mhresult--12- ", strDta+"-");
-//            reader.close();
         } catch (Exception e) {
             e.getMessage();
         }
@@ -431,6 +437,7 @@ public class HttpUtil {
      * @return
      */
     public static String restHttpGet(String url){
+        url = url+getSign();
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         // 请求超时
@@ -439,7 +446,7 @@ public class HttpUtil {
         client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20000);
         //创建一个GET请求
         HttpGet httpGet=new HttpGet(url);
-        Log.e("mh123url:",url + "---");
+        Log.e("mh123url:",url + "-");
         String resstr = "";
         try{
             //向服务器发送请求并获取服务器返回的结果
@@ -447,10 +454,10 @@ public class HttpUtil {
             //返回的结果可能放到InputStream，http Header中等。
             InputStream inputStream=response.getEntity().getContent();
             resstr = changeInputStream2((inputStream));
-            Log.e("mh123:",resstr + "---");
+            Log.e("mh123:",resstr + "-");
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
+            return "{code:99,msg:网络错误,data:网络错误,status:failed}";
         }
         return resstr;
     }
@@ -460,10 +467,12 @@ public class HttpUtil {
      * @return
      */
     public static String restHttpPost(String url,List listData){
+        url = url+getSignNew();
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         //创建一个POST请求
         HttpPost httpPost=new HttpPost(url);
+        Log.e("mhpost",listData.toString());
         Log.e("mh123url:",url + "---");
         String resstr = "";
         try{
@@ -476,7 +485,9 @@ public class HttpUtil {
             resstr = changeInputStream2((inputStream));
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
+            return "{code:99,msg:网络错误,data:网络错误,status:failed}";
+        }catch (Exception e) {
+            return "{code:99,msg:网络异常,data:网络异常,status:failed}";
         }
         Log.e("mh123resstr:",resstr + "---");
         return resstr;
@@ -487,6 +498,7 @@ public class HttpUtil {
      * @return
      */
     public static String restHttpPut(String url,List dataList){
+        url = url+getSign();
         //创建一个http客户端
         HttpClient client = getNewHttpClient();
         //创建一个GET请求
@@ -528,6 +540,26 @@ public class HttpUtil {
             return "";
         }
         return resstr;
+    }
+
+    /**
+     * 获取验证的签名+当前时间戳（网站内部自己的严重）
+     * sign  =  md5(md5(app_key)+md5(time)) time为当前时间的时间戳
+     * TaskParams 里面还有一个相同的写法（这里都用这个会报未知错误）
+     * @return
+     */
+    private static String getSign(){
+        // 时间戳 去掉毫秒
+        String time = System.currentTimeMillis()/1000+"";
+        String sign = Md5Util.getMd5(Md5Util.getMd5(Constants.app_key)+Md5Util.getMd5(time));
+        return "&s_sign="+sign+"&s_time="+time;
+    }
+
+    private static String getSignNew(){
+        // 时间戳 去掉毫秒
+        String time = System.currentTimeMillis()/1000+"";
+        String sign = Md5Util.getMd5(Md5Util.getMd5(Constants.app_key)+Md5Util.getMd5(time));
+        return "?s_sign="+sign+"&s_time="+time;
     }
 
 }

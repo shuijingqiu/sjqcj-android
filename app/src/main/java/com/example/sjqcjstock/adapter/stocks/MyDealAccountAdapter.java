@@ -28,12 +28,10 @@ public class MyDealAccountAdapter extends BaseAdapter {
     private List<PositionEntity> listData;
     private Context context;
     private String uid = "";
-//    private boolean isRn = false;
 
     public MyDealAccountAdapter(Context context) {
         super();
         this.context = context;
-//        this.isRn = isRn;
     }
 
     public MyDealAccountAdapter(Context context,String uid) {
@@ -142,6 +140,7 @@ public class MyDealAccountAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TransactionDetailActivity.class);
+                intent.putExtra("type","type");
                 intent.putExtra("code",stock);
                 intent.putExtra("name",name);
                 intent.putExtra("uid",uid);

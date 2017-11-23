@@ -54,7 +54,7 @@ public class T {
      */
     public static void showLong(Context context, CharSequence message) {
         if (null == toast) {
-            toast = CustomToast.makeText(context, message, Toast.LENGTH_LONG);
+            toast = CustomToast.makeText(context, message, Toast.LENGTH_SHORT);
             // toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -70,7 +70,7 @@ public class T {
      */
     public static void showLong(Context context, int message) {
         if (null == toast) {
-            toast = CustomToast.makeText(context, message, Toast.LENGTH_LONG);
+            toast = CustomToast.makeText(context, message, Toast.LENGTH_SHORT);
             // toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);

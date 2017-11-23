@@ -68,6 +68,7 @@ public class FragmentWeekMap extends Fragment {
     // 当前的最新数据
     private String strKmap = "";
 
+    public FragmentWeekMap(){}
     public FragmentWeekMap(String code, String strKmap) {
         this.code = code;
         this.strKmap = strKmap;
@@ -294,7 +295,7 @@ public class FragmentWeekMap extends Fragment {
 
         if (!"".equals(strKmap)) {
             strS = strKmap.split("\\|");
-            if (Utils.isTimeOne(strS[6])) {
+//            if (Utils.isTimeOne(strS[6])) {
                 valueK = Float.valueOf(strS[1]);
                 valueS = Float.valueOf(strS[2]);
                 if (valueK >= valueS) {
@@ -333,7 +334,7 @@ public class FragmentWeekMap extends Fragment {
                     volAll.get(i).setType(type);
                     volAll.get(i).setHigh(volAll.get(i).getHigh() + volume);
                 }
-            }
+//            }
         }
         end = ohlcAll.size();
         offsetEnd = end;

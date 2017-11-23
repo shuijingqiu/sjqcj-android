@@ -38,7 +38,7 @@ public class SearchSharesActivity extends Activity {
     private ArrayList<HashMap<String, Object>> listStocks;
     // 加载股票的adapter
     private StocksAdapter stocksAdapter;
-    // 跳转地方
+    // 跳转地方（1跳转到股票详情页面）
     private String jumpType;
 
     @Override
@@ -75,6 +75,11 @@ public class SearchSharesActivity extends Activity {
                     startActivity(intent);
                 }else{
                     Constants.choiceCode = listStocks.get(position).get("code")+"";
+                    Constants.choiceName = listStocks.get(position).get("name")+"";
+                    Intent intent=new Intent();
+                    intent.putExtra("name", listStocks.get(position).get("name")+"");
+                    intent.putExtra("code", listStocks.get(position).get("code")+"");
+                    setResult(0,intent);
                     finish();
                 }
 
@@ -98,7 +103,7 @@ public class SearchSharesActivity extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if ("".equals(result)){
-                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG)
+                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT)
                         .show();
                 return;
             }

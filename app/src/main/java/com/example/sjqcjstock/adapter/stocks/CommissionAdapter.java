@@ -87,13 +87,17 @@ public class CommissionAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        // 1代表买入2代表卖出
-        if("1".equals(order.getType())){
-            holder.type.setText("买");
+        String type = order.getType();
+        // 1代表买入2代表卖出 3 送转
+        if("3".equals(type)){
+            holder.type.setText("送转");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
-        }else{
+        }else if ("2".equals(type)){
             holder.type.setText("卖");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_1bc07d));
+        }else{
+            holder.type.setText("买");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
         }
 
         //0代表待成交 1代表成交  2代表撤单

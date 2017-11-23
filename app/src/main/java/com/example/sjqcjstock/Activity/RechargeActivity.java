@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,12 +23,17 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 支付页面
@@ -49,9 +53,10 @@ public class RechargeActivity extends Activity {
     // 选中的显示图标
     private ImageView wxRechargeIv, zfbRechargeIv, ylRechargeIv;
     // 调用服务器返回的订单接口数据
-    private byte[] buf;
+//    private byte[] buf;
+    private String buf;
     // 弹出加载窗体
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +73,15 @@ public class RechargeActivity extends Activity {
     }
 
     private void findView() {
-        dialog = new ProgressDialog(this);
+        dialog = new CustomProgress(this);
         // dialog.setTitle("提示信息");
-        dialog.setMessage("正在跳转微信支付");
-        dialog.setCancelable(true);
-
+        dialog.setMessageDialog("正在跳转微信支付");
         findViewById(R.id.goback1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
         payMoneyTv = (TextView) findViewById(R.id.pay_money_tv);
         countSjbEt = (EditText) findViewById(R.id.count_sjb_et);
         countSjbEt.setSelection(countSjbEt.length());
@@ -132,27 +134,33 @@ public class RechargeActivity extends Activity {
 
         String countStr = countSjbEt.getText().toString().trim();
         if ("".equals(countStr) || Integer.valueOf(countStr) < 1) {
-            CustomToast.makeText(getApplicationContext(), "请输入充值水晶币个数", Toast.LENGTH_LONG).show();
+            CustomToast.makeText(getApplicationContext(), "请输入充值水晶币个数", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!((CheckBox) findViewById(R.id.check_box_protocol)).isChecked()) {
-            CustomToast.makeText(getApplicationContext(), "请阅读水晶币服务协议", Toast.LENGTH_LONG).show();
+            CustomToast.makeText(getApplicationContext(), "请阅读水晶币服务协议", Toast.LENGTH_SHORT).show();
             return;
         }
 
         payBtn = (Button) findViewById(R.id.ok_recharge);
         payBtn.setEnabled(false);
-        dialog.show();
+        dialog.showDialog();
         countStr = Double.valueOf(countStr) / 10 + "";
         final String finalCountStr = countStr;
         new Thread() {
             public void run() {
-                String url = Constants.unifiedorder;
-                url += "&uid=" + Constants.staticmyuidstr + "&body=水晶球财经-水晶币充值&total_fee=" + finalCountStr;
-//                    String url = "http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=android";
-//                String url = "http://test.sjqcj.com/wxpay";
-                buf = HttpUtil.httpGet(url);
+//                String url = Constants.unifiedorder;
+//                url += "&uid=" + Constants.staticmyuidstr + "&body=水晶球财经-水晶币充值&total_fee=" + finalCountStr;
+                String url = Constants.newUrl+"/api/pay/wechat";
+                List dataList = new ArrayList();
+                // 微博id
+                dataList.add(new BasicNameValuePair("mid", Constants.staticmyuidstr));
+                dataList.add(new BasicNameValuePair("token", Constants.apptoken));
+                dataList.add(new BasicNameValuePair("body", "水晶球财经-水晶币充值"));
+                dataList.add(new BasicNameValuePair("total_fee", finalCountStr));
+
+                buf = HttpUtil.restHttpPost(url,dataList);
                 handler.sendEmptyMessage(0);
             }
         }.start();
@@ -165,40 +173,43 @@ public class RechargeActivity extends Activity {
             switch (msg.what) {
                 case 0:
                     try {
-                        if (buf != null && buf.length > 0) {
-                            String content = new String(buf);
-                            JSONObject json = new JSONObject(content);
-                            if (null != json && !json.has("retcode")) {
-                                PayReq req = new PayReq();
-                                req.appId = Constants.APP_ID;
-                                //商户号
-                                req.partnerId = json.getString("partnerid");
-                                //预支付交易会话ID
-                                req.prepayId = json.getString("prepayid");
-                                // 随机字符串
-                                req.nonceStr = json.getString("noncestr");
-                                //时间戳
-                                req.timeStamp = json.getString("timestamp");
-                                //扩展字段
-                                req.packageValue = json.getString("package");
-                                // 签名
-                                req.sign = json.getString("sign");
-                                // app date
-                                req.extData = Utils.getNowDate(); // optional
-                                // 保存订单号
-                                Constants.orderNumber = json.getString("out_trade_no");
+                        if (buf != null && !"".equals(buf)) {
+//                            String content = new String(buf);
+                            JSONObject json = new JSONObject(buf);
+                            if (Constants.successCode.equals(json.getString("code"))){
+                                JSONObject data = new JSONObject(json.getString("data"));
+                                if (null != data && !data.has("retcode")) {
+                                    PayReq req = new PayReq();
+                                    req.appId = Constants.APP_ID;
+                                    //商户号
+                                    req.partnerId = data.getString("partnerid");
+                                    //预支付交易会话ID
+                                    req.prepayId = data.getString("prepayid");
+                                    // 随机字符串
+                                    req.nonceStr = data.getString("noncestr");
+                                    //时间戳
+                                    req.timeStamp = data.getString("timestamp");
+                                    //扩展字段
+                                    req.packageValue = data.getString("package");
+                                    // 签名
+                                    req.sign = data.getString("sign");
+                                    // app date
+                                    req.extData = Utils.getNowDate(); // optional
+                                    // 保存订单号
+                                    Constants.orderNumber = data.getString("out_trade_no");
 
-                                // 保存订单状态订单号(用于控制)
-                                SharedPreferences.Editor editorIsLogin = getSharedPreferences("Recharge", MODE_PRIVATE).edit();
-                                editorIsLogin.putString("out_trade_no", json.getString("out_trade_no"));
-                                // 订单状态1为未处理0为处理
-                                editorIsLogin.putString("order_type", "1");
-                                editorIsLogin.commit();
-                                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-                                api.sendReq(req);
-                            } else {
-                                Log.d("PAY_GET", "返回错误" + json.getString("retmsg"));
+                                    // 保存订单状态订单号(用于控制)
+                                    SharedPreferences.Editor editorIsLogin = getSharedPreferences("Recharge", MODE_PRIVATE).edit();
+                                    editorIsLogin.putString("out_trade_no", data.getString("out_trade_no"));
+                                    // 订单状态1为未处理0为处理
+                                    editorIsLogin.putString("order_type", "1");
+                                    editorIsLogin.commit();
+                                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                    api.sendReq(req);
+                                } else {
+                                    Log.d("PAY_GET", "返回错误" + json.getString("msg"));
 //                            Toast.makeText(RechargeActivity.this, "返回错误"+json.getString("retmsg"), Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } else {
                             Log.d("PAY_GET", "服务器请求错误");
@@ -211,7 +222,7 @@ public class RechargeActivity extends Activity {
                     payBtn.setEnabled(true);
                     break;
             }
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     };
 

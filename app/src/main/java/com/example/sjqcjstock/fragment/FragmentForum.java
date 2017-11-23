@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.Article.commentshortweiboActivity;
 import com.example.sjqcjstock.Activity.SearchActivity;
-import com.example.sjqcjstock.Activity.commentshortweiboActivity;
+import com.example.sjqcjstock.Activity.qa.AllQuestionAnswerActivity;
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.ImageUtil;
@@ -51,8 +53,8 @@ public class FragmentForum extends Fragment implements ViewPager.OnPageChangeLis
     private int mScreen1_4;
     private ImageView img_line;
     private FragmentAllWeibo allWeibo;
-    private FragmentRewardWeibo rewardWeibo;
-    // 判断哪个显示true为全部文章显示
+    private FragmentAllWeibo rewardWeibo;
+    // 判断哪个显示(true为全部文章显示)
     private boolean isShow = true;
     // 是否是第一次打开这个页面
     private boolean isFisrt = true;
@@ -104,14 +106,23 @@ public class FragmentForum extends Fragment implements ViewPager.OnPageChangeLis
         mViewPager = (ViewPager) view.findViewById(R.id.mViewpager);
         mViewPager.setOffscreenPageLimit(1);
         mDatas = new ArrayList<Fragment>();
+        view.findViewById(R.id.answer_tv).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 跳转到问答大厅
+                Intent intent = new Intent(getActivity(),
+                        AllQuestionAnswerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
      * 初始化fragment
      */
     private void initFragment() {
-        allWeibo = new FragmentAllWeibo();
-        rewardWeibo = new FragmentRewardWeibo();
+        allWeibo = new FragmentAllWeibo("all");
+        rewardWeibo = new FragmentAllWeibo("pay");
         mDatas.add(allWeibo);
         mDatas.add(rewardWeibo);
         mAdapter = new FragmentPagerAdapter(getFragmentManager()) {
@@ -139,6 +150,15 @@ public class FragmentForum extends Fragment implements ViewPager.OnPageChangeLis
         ViewGroup.LayoutParams lp = img_line.getLayoutParams();
         lp.width = mScreen1_4;
         img_line.setLayoutParams(lp);
+    }
+
+    /**
+     * 定位到内参的选项卡
+     */
+    public void clickDs(){
+        text_qb.setTextColor(unselect_color);
+        text_ds.setTextColor(select_color);
+        mViewPager.setCurrentItem(1);
     }
 
     @Override
@@ -211,13 +231,23 @@ public class FragmentForum extends Fragment implements ViewPager.OnPageChangeLis
         }
     }
 
+    /**
+     * 跳转到发微博的单机事件
+     */
     class addforum1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // 4表示禁言用户不能发帖
-            if (Constants.userType.equals("4")) {
+            // menghuan 不用登陆也可以用
+            // 如果未登陆跳转到登陆页面
+            if (!Constants.isLogin){
+                Intent intent = new Intent(getActivity(), loginActivity.class);
+                startActivity(intent);
                 return;
             }
+//            // 4表示禁言用户不能发帖
+//            if (Constants.userType.equals("4")) {
+//                return;
+//            }
             // 跳转到写博文的页面
             Intent intent = new Intent(getActivity(), commentshortweiboActivity.class);
             startActivityForResult(intent, REQUEST_CODE_shortweibofinish);

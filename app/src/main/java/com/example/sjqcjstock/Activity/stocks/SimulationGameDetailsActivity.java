@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +23,7 @@ import com.example.sjqcjstock.entity.stocks.MatchEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
 import com.example.sjqcjstock.netutil.Md5Util;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -63,7 +63,7 @@ public class SimulationGameDetailsActivity extends Activity {
     // 分页
     private int page = 1;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +81,8 @@ public class SimulationGameDetailsActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         /**
          * 返回按钮的事件绑定
          */
@@ -196,7 +194,7 @@ public class SimulationGameDetailsActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }

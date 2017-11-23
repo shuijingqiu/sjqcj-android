@@ -31,6 +31,9 @@ public class CustomToast extends Toast {
     }
 
     public static Toast makeText(Context context, String text, int duration) {
+        if (context == null){
+            return null;
+        }
         Toast result = new Toast(context);
         //获取LayoutInflater对象
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,7 +51,7 @@ public class CustomToast extends Toast {
         result.setView(layout);
         result.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         // 设置持续时间
-        result.setDuration(Toast.LENGTH_SHORT);
+        result.setDuration(duration);
         return result;
     }
 

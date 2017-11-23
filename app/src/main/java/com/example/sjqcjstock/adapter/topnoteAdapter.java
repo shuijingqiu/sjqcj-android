@@ -10,12 +10,15 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.forumnotedetailActivity;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
 import com.example.sjqcjstock.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class topnoteAdapter extends BaseAdapter {
 
     private Context context;
@@ -29,44 +32,41 @@ public class topnoteAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return listData.size();
+        return listData == null ? 0 : listData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return listData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_topnote, null);
+            holder = new ViewHolder();
+            holder.title = (TextView) convertView.findViewById(R.id.title);
+            holder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        TextView title = (TextView) convertView.findViewById(R.id.title);
-        title.setText((String) listData.get(position).get("title"));
-        TextView create_time1 = (TextView) convertView.findViewById(R.id.create_time1);
-        create_time1.setText((String) listData.get(position).get("ctimestr"));
-        RelativeLayout relativeLayout = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
-        relativeLayout.setOnClickListener(new OnClickListener() {
+        holder.title.setText((String) listData.get(position).get("title"));
+        holder.relativeLayout.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 try {
-                    Intent intent = new Intent(context.getApplicationContext(), forumnotedetailActivity.class);
+                    Intent intent = new Intent(context.getApplicationContext(), ArticleDetailsActivity.class);
                     intent.putExtra("weibo_id", (String) listData.get(position).get("feed_id"));
-                    intent.putExtra("uid", (String) listData.get(position).get("uid"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
@@ -76,4 +76,11 @@ public class topnoteAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
+    public static class ViewHolder {
+        TextView title;
+        TextView createTime1;
+        RelativeLayout relativeLayout;
+    }
+
 }

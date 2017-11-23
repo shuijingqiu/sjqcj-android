@@ -12,32 +12,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.addcommentweiboActivity;
-import com.example.sjqcjstock.Activity.forumnotedetailActivity;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
+import com.example.sjqcjstock.Activity.Article.addcommentweiboActivity;
 import com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.Article.AtFeedListEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
+import com.example.sjqcjstock.view.ClickOnTouch;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class atmeAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, String>> listData;
+    private ArrayList<AtFeedListEntity> listData;
 
     public atmeAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, String>> listData) {
+    public void setlistData(ArrayList<AtFeedListEntity> listData) {
         if (this.listData != null)
             this.listData.clear();
-        this.listData = (ArrayList<HashMap<String, String>>) listData.clone();
+        this.listData = (ArrayList<AtFeedListEntity>) listData.clone();
         notifyDataSetChanged();
     }
 
@@ -58,7 +61,6 @@ public class atmeAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
         ViewHolder holder;
@@ -71,6 +73,7 @@ public class atmeAdapter extends BaseAdapter {
             holder.contentname1 = (TextView) convertView.findViewById(R.id.contentname1);
             holder.contentbody1 = (TextView) convertView.findViewById(R.id.contentbody1);
             holder.sourceusername1 = (TextView) convertView.findViewById(R.id.sourceusername1);
+            holder.rewardTv = (TextView) convertView.findViewById(R.id.reward_tv);
             holder.originalnotecontent1 = (TextView) convertView.findViewById(R.id.originalnotecontent1);
             holder.contenttimes1 = (TextView) convertView.findViewById(R.id.contenttimes1);
             holder.pickcontentbody1 = (LinearLayout) convertView.findViewById(R.id.pickcontentbody1);
@@ -85,59 +88,63 @@ public class atmeAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-
+        final AtFeedListEntity atFeedListEntity = listData.get(position);
         holder.repostlin1.setVisibility(View.GONE);
-
-        //ImageView user_image1=(ImageView)convertView.findViewById(R.id.user_image1);
-        //image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-        ImageLoader.getInstance().displayImage((String) listData.get(position).
-                        get("avatar_middle"),
+        ImageLoader.getInstance().displayImage(atFeedListEntity.getAvatar_middle(),
                 holder.user_image1, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-//		
-        //TextView contentname1=(TextView)convertView.findViewById(R.id.contentname1);
-        holder.contentname1.setText((String) listData.get(position).get("uname"));
-//		
-        //TextView contentbody1=(TextView)convertView.findViewById(R.id.contentbody1);
-        holder.contentbody1.setText((String) listData.get(position).get("feed_content"));
-//		
-        holder.sourceusername1.setText((String) listData.get(position).get("unames"));
-
-        //TextView originalnotecontent1=(TextView)convertView.findViewById(R.id.originalnotecontent1);
-        //if("repost".equals((String)listData.get(position).get("type"))){
+        holder.contentname1.setText(atFeedListEntity.getUname());
+        String content = atFeedListEntity.getFeed_content();
+        content = content==""?"微博分享":content;
+        holder.contentbody1.setText(Html.fromHtml(content, ImageUtil.getImageGetter(context.getResources()), null));
+        holder.contentbody1.setOnTouchListener(new ClickOnTouch(context));
         //如果转发，显示原微博
-        if (!"".equals(listData.get(position).get("atfeed_content"))) {
+        if ("repost".equals(atFeedListEntity.getType())) {
+            holder.sourceusername1.setText(atFeedListEntity.getApi_source().getUname());
+            holder.sourceusername1.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context.getApplicationContext(), UserDetailNewActivity.class);
+                    intent.putExtra("uid", atFeedListEntity.getApi_source().getUid());
+                    context.startActivity(intent);
+                }
+            });
             holder.repostlin1.setVisibility(View.VISIBLE);
-            holder.originalnotecontent1.setText(Html.fromHtml(listData.get(position).get("atfeed_content"), ImageUtil.getImageGetter(context.getResources()), null));
+            holder.repostlin1.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    Intent intent = new Intent(context.getApplicationContext(), ArticleDetailsActivity.class);
+                    intent.putExtra("weibo_id", atFeedListEntity.getApi_source().getFeed_id());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+            // 打赏文章
+            if ("repost".equals(atFeedListEntity.getApi_source().getType())) {
+                holder.rewardTv.setText(atFeedListEntity.getApi_source().getReward());
+                holder.originalnotecontent1.setText(Html.fromHtml(atFeedListEntity.getApi_source().getIntroduction(), ImageUtil.getImageGetter(context.getResources()), null));
+            }else{
+                holder.rewardTv.setText("");
+                holder.originalnotecontent1.setText(Html.fromHtml(atFeedListEntity.getApi_source().getFeed_content(), ImageUtil.getImageGetter(context.getResources()), null));
+            }
+            holder.originalnotecontent1.setOnTouchListener(new ClickOnTouch(context));
+
+        }else{
+            holder.repostlin1.setVisibility(View.GONE);
         }
 
-
-        holder.repostlin1.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(context.getApplicationContext(), forumnotedetailActivity.class);
-                intent.putExtra("weibo_id", (String) listData.get(position).get("atfeed_id"));
-                intent.putExtra("uid", (String) listData.get(position).get("atfeed_uid"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
-
-
-        holder.contenttimes1.setText((String) listData.get(position).get("publish_time"));
-        //}
-//		
-
+        // 发布时间
+        String feedTime = CalendarUtil.formatDateTime(Utils
+                .getStringtoDate(atFeedListEntity.getPublish_time()));
+        holder.contenttimes1.setText(feedTime);
 
         holder.user_image1.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 try {
                     Intent intent = new Intent(context.getApplicationContext(), UserDetailNewActivity.class);
-                    intent.putExtra("uid", (String) listData.get(position).get("uid"));
+                    intent.putExtra("uid", atFeedListEntity.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
@@ -151,57 +158,28 @@ public class atmeAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(context.getApplicationContext(), addcommentweiboActivity.class);
-                intent.putExtra("feed_id", (String) listData.get(position).get("feed_id"));
-                intent.putExtra("feeduid", (String) listData.get(position).get("uid"));
+                intent.putExtra("feed_id", atFeedListEntity.getFeed_id());
+                intent.putExtra("feeduid", atFeedListEntity.getUid());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
 
-        holder.pickcontentbody1.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                String content = listData.get(position).get("feed_content");
-                if (content.length() > 3 && Constants.microBlogShare.equals(content.substring(0, 4))) {
-                    return;
-                }
-                try {
-                    Intent intent = new Intent(context.getApplicationContext(), forumnotedetailActivity.class);
-                    intent.putExtra("weibo_id", (String) listData.get(position).get("feed_id"));
-                    intent.putExtra("uid", (String) listData.get(position).get("uid"));
-                    // 传递转发微博的信息
-                    if ("repost".equals(listData.get(position).get("type").toString())) {
-                        intent.putExtra(
-                                "sourceweibo_id",
-                                listData.get(position)
-                                        .get("atfeed_id").toString());
-                        intent.putExtra("sourceuid", listData
-                                .get(position).get("atfeed_uid")
-                                .toString());
-                        // 转发类型
-                        intent.putExtra(
-                                "type",
-                                listData.get(position)
-                                        .get("type").toString());
-                    }
-
+        if (!Constants.microBlogShare.equals(content)) {
+            holder.pickcontentbody1.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    Intent intent = new Intent(context.getApplicationContext(), ArticleDetailsActivity.class);
+                    intent.putExtra("weibo_id", atFeedListEntity.getFeed_id());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
 
-        String isVip = listData.get(position).get(
-                "isVip");
-        String isVipSource = listData.get(position).get(
-                "isVipSource");
-        ViewUtil.setUpVip(isVip, holder.vipImg);
-        ViewUtil.setUpVip(isVipSource, holder.vipImgSource);
+        ViewUtil.setUpVipNew(atFeedListEntity.getUser_group_icon_url(), holder.vipImg);
+        ViewUtil.setUpVipNew(atFeedListEntity.getApi_source().getUser_group_icon_url(), holder.vipImgSource);
         return convertView;
     }
 
@@ -210,6 +188,7 @@ public class atmeAdapter extends BaseAdapter {
         TextView contentname1;
         TextView contentbody1;
         TextView sourceusername1;
+        TextView rewardTv;
         TextView originalnotecontent1;
         LinearLayout repostlin1;
         TextView contenttimes1;

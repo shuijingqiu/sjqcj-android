@@ -6,8 +6,8 @@
     android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -26,24 +26,40 @@
                 android:textSize="20sp" />
         </RelativeLayout>
 
-        <com.example.sjqcjstock.view.PullToRefreshLayout
-            android:id="@+id/refresh_view"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="1dp"
+            android:background="@color/gray_line"/>
 
-            <include layout="@layout/refresh_head" />
-            <!-- 支持所有实现Pullable接口的View -->
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            layout="@layout/refreshlayout"/>
 
-            <com.example.sjqcjstock.view.PullableListView
-                android:id="@+id/informnewslist2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <WebView
+            android:id="@+id/infor_wv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
-            <include layout="@layout/load_more" />
+        <!--<com.example.sjqcjstock.view.PullToRefreshLayout-->
+            <!--android:id="@+id/refresh_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" >-->
 
-        </com.example.sjqcjstock.view.PullToRefreshLayout>
+            <!--<include layout="@layout/refresh_head" />-->
+            <!--&lt;!&ndash; 支持所有实现Pullable接口的View &ndash;&gt;-->
 
-        <include layout="@layout/progress" />
+            <!--<com.example.sjqcjstock.view.PullableListView-->
+                <!--android:id="@+id/informnewslist2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
+
+            <!--<include layout="@layout/load_more" />-->
+
+        <!--</com.example.sjqcjstock.view.PullToRefreshLayout>-->
+
+        <!--<include layout="@layout/progress" />-->
 
     </LinearLayout>
 

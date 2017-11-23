@@ -1,14 +1,13 @@
 package com.example.sjqcjstock.Activity.stocks;
 
-import android.app.ProgressDialog;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -24,28 +23,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.example.sjqcjstock.Activity.forumnotedetailActivity;
-import com.example.sjqcjstock.Activity.myattentionlistActivity;
-import com.example.sjqcjstock.Activity.myfansActivity;
-import com.example.sjqcjstock.Activity.personalnewsdetail;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
+import com.example.sjqcjstock.Activity.OnlineServiceActivity;
+import com.example.sjqcjstock.Activity.Tomlive.DirectBroadcastingRoomActivity;
+import com.example.sjqcjstock.Activity.plan.PlanExhibitionActivity;
+import com.example.sjqcjstock.Activity.qa.QuestionAnswerActivity;
+import com.example.sjqcjstock.Activity.user.loginActivity;
+import com.example.sjqcjstock.Activity.user.myfansActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.adapter.commonnoteAdapter;
+import com.example.sjqcjstock.adapter.FeedListAdapter;
+import com.example.sjqcjstock.adapter.plan.PlanAdapter;
+import com.example.sjqcjstock.adapter.qa.QuizAdapter;
+import com.example.sjqcjstock.adapter.qa.QuizMyAdapter;
 import com.example.sjqcjstock.adapter.stocks.MyDealAccountAdapter;
-import com.example.sjqcjstock.adapter.stocks.StockAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.Article.FeedListEntity;
+import com.example.sjqcjstock.entity.Article.UserEntity;
+import com.example.sjqcjstock.entity.plan.PlanEntity;
+import com.example.sjqcjstock.entity.qa.QuestionAnswerEntity;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
-import com.example.sjqcjstock.entity.stocks.OptionalEntity;
 import com.example.sjqcjstock.entity.stocks.PositionEntity;
 import com.example.sjqcjstock.entity.stocks.SpotEntity;
-import com.example.sjqcjstock.netutil.CalendarUtil;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
-import com.example.sjqcjstock.netutil.JsonTools;
-import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.example.sjqcjstock.netutil.sharesUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 import com.example.sjqcjstock.view.PullableScrollView;
@@ -54,6 +59,7 @@ import com.example.sjqcjstock.view.stocks.LineChart;
 import com.example.sjqcjstock.view.stocks.SubscribeChoicePopup;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,8 +71,8 @@ import java.util.Map;
 
 /**
  * 个人中心(模拟炒股和以前的个人中心集合)
- *
  * @author Administrator
+ * 20170706 修改微博列表接口处理
  */
 public class UserDetailNewActivity extends FragmentActivity {
 
@@ -84,14 +90,18 @@ public class UserDetailNewActivity extends FragmentActivity {
     private ImageView usersex1;
     private TextView userintro1;
     private TextView following_count2;
+    //    private TextView weibo_count1;
+    // 自选股条数
+    private TextView optional_stock_tv;
     private TextView follower_count2;
     private Button personalletter3;
     private LinearLayout myattentionuserlist1;
     private LinearLayout myfansuserlist1;
     private LinearLayout goback1;
     private Button followersign1;
-    ;
+    // 是否是粉丝  1是  0否
     private String followerstr;
+    // 是否关注  1是  0否
     private String followingstr;
     private ImageView vipImg;
     private String unamestr;
@@ -105,18 +115,31 @@ public class UserDetailNewActivity extends FragmentActivity {
     private LinearLayout fragmentMicroBlog;
     // 交易的LinearLayout
     private LinearLayout linearTransaction;
-    // 自选股的LinearLayout
-    private LinearLayout linearStock;
+    //    // 自选股的LinearLayout
+//    private LinearLayout linearStock;
+    // 投资计划的LinearLayout
+    private LinearLayout linearPlan;
+    // 问答的LinearLayout
+    private LinearLayout fragmentQa;
     // 控件
     private TextView textMicroBlog = null;
     private TextView textTransaction = null;
-    private TextView textStock = null;
+    private TextView textPlan = null;
+    private TextView textQa = null;
+    private TextView textPlayReward = null;
     private LinearLayout llMicroBlog = null;
     private LinearLayout llTransaction = null;
-    private LinearLayout llStock = null;
+    private LinearLayout llPlan = null;
+    private LinearLayout llQa = null;
+    private LinearLayout llPlayReward = null;
     private ImageView img_line;
     private PullableScrollView myScrollView;
-
+    // 到直播间的按钮
+    private ImageView tomliveLv;
+    // 是否是直播返回的数据
+    private String tomliveStr;
+    // 房间ID
+    private String roomId;
     // 滑动条颜色
     private int select_color;
     private int unselect_color;
@@ -126,22 +149,41 @@ public class UserDetailNewActivity extends FragmentActivity {
      **/
     private Integer viewPagerW = 0;
     // 微博的ListView
-    private ListView commonlistview;
+    private SoListView commonlistview;
     // 定义List集合容器
-    private commonnoteAdapter usercommonnoteAdapter;
-    private ArrayList<HashMap<String, String>> listusercommonnoteData;
+//    private commonnoteAdapter usercommonnoteAdapter;
+//    private ArrayList<HashMap<String, String>> listusercommonnoteData;
+    private FeedListAdapter userFeedListAdapter;
+    private ArrayList<FeedListEntity> userFeedListEntityList;
+
     // 访问微博页数控制
     private int weiboPage = 1;
-    // 自选股的List
-    private ListView stockListView;
-    // 自选股的List Adapter
-    private StockAdapter stockAdapter;
-    // 调用自选股的数据
+    // 访问打赏文章的页数
+    private int rewardPage = 1;
+//    // 自选股的List
+//    private ListView stockListView;
+//    // 自选股的List Adapter
+//    private StockAdapter stockAdapter;
+//    // 调用自选股的数据
+//    private String resstr = "";
+//    // 自选股股票最新信息的Map
+//    private Map<String, Map> mapZxgStr;
+//    // 自选股的的数据
+//    private ArrayList<OptionalEntity> optionalArrayList = null;
+
+    // 调用投资计划的数据
+    private String resstrPlan = "";
+    // 自选股条数的数据
     private String resstr = "";
-    // 自选股股票最新信息的Map
-    private Map<String, Map> mapZxgStr;
-    // 自选股的的数据
-    private ArrayList<OptionalEntity> optionalArrayList = null;
+    // 计划的页数
+    private int planPage = 1;
+    // 定义List集合容器
+    private PlanAdapter planAdapter;
+    //定义于数据库同步的字段集合
+    private ArrayList<PlanEntity> planEntityArrayList;
+    // 投资计划的List
+    private SoListView planListView;
+
     // 交易用的一些属性
     // 股票交易的List
     private SoListView listView;
@@ -179,6 +221,7 @@ public class UserDetailNewActivity extends FragmentActivity {
     private TextView position;
     // 建户时间
     private TextView time;
+
     // 最新市值
     private double market = 0;
     // K线图的
@@ -198,14 +241,71 @@ public class UserDetailNewActivity extends FragmentActivity {
     // 可用资金
     private double availableFundsValue = 0;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 是否订阅的订阅ID
     private String desertId = "";
     // 是否可以延长订阅
     private String desertExtend = "";
     // 订阅时间
     private String desertTime = "";
+    // 2017.1.12 追加的打赏微博
+    // 打赏微博的列表
+    private ListView playRewardList;
+//    // 打赏微博的数据集合
+//    private ArrayList<HashMap<String, String>> listessenceData;
+//    // 控制器
+//    private myattentioncommonnoteAdapter commonnoteAdapter;
 
+    // 控制器
+    private FeedListAdapter payFeedListAdapter;
+        // 打赏微博的数据集合
+    private ArrayList<FeedListEntity> payFeedListEntityList;
+
+    // 问答相关的空间
+    // 控件
+    private TextView text_wd = null;
+    private TextView text_tw = null;
+    private LinearLayout ll_wd = null;
+    private LinearLayout ll_tw = null;
+    // 提问的按钮
+    private Button qaBt = null;
+    private int mScreen1_2;
+    private ImageView img_line2;
+    // 调用接口返回的数据
+    private String resstrAsk = "";
+    // 获取全部问答
+    private String resstrAll = "";
+    // 获取我的问答
+    private String resstrMy = "";
+    // 是否可以提问
+    private boolean isRn = false;
+    // 全部问答的List
+    private ListView allQaList;
+    // 我的问答的List
+    private ListView myQaList;
+
+    // 定义List集合容器
+    private QuizMyAdapter adapterMy;
+    private QuizAdapter adapterAll;
+    //定义于数据库同步的字段集合
+    private ArrayList<QuestionAnswerEntity> listDataMy;
+    private ArrayList<QuestionAnswerEntity> listDataAll;
+
+    // 我的问答列表分页
+    private int myPage = 1;
+    // 全部问答列表分页
+    private int allPage = 1;
+    // 提问水晶币个数
+    private String sjbCount = "0";
+
+    // 个人微博列表数据
+    private String feedSpaceStr;
+    // 个人微博内参列表数据
+    private String feedSpacePayStr;
+    // 博主的个人信息数据
+    private String userStr;
+    // 操作接口数据
+    private String jsonStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,13 +315,12 @@ public class UserDetailNewActivity extends FragmentActivity {
         // 将Activity反复链表
         ExitApplication.getInstance().addActivity(this);
         // 可以在主线程中使用http网络访问
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (android.os.Build.VERSION.SDK_INT > 9) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
         initView();
         initLine();
-
         // 获取屏幕宽度
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
@@ -229,54 +328,130 @@ public class UserDetailNewActivity extends FragmentActivity {
         lp = (android.widget.LinearLayout.LayoutParams) img_line.getLayoutParams();
         // 判断显示那个页
         String type = getIntent().getStringExtra("type");
-        if (type != null && "1".equals(type)) {
+        if ("1".equals(type)) {
+            // 交易
             linearTransaction.setVisibility(View.VISIBLE);
+            subscribeTv.setVisibility(View.VISIBLE);
             // 关键算法
-            lp.leftMargin = (int) ((int) (mScreen1_4 * 1) + (((double) 2 / viewPagerW) * mScreen1_4));
-//            ptrl.autoRefresh();
+            lp.leftMargin = (int) ((mScreen1_4 * 3) + (((double) 4 / viewPagerW) * mScreen1_4));
             getTransactionData();
             textMicroBlog.setTextColor(unselect_color);
             textTransaction.setTextColor(select_color);
+        } else if ("2".equals(type)) {
+            // 内参
+            playRewardList.setVisibility(View.VISIBLE);
+            // 关键算法
+            lp.leftMargin = (int) ((mScreen1_4 * 1) + (((double) 2 / viewPagerW) * mScreen1_4));
+            getRewardData();
+            textMicroBlog.setTextColor(unselect_color);
+            textPlayReward.setTextColor(select_color);
+        } else if ("3".equals(type)) {
+            // 问答
+            fragmentQa.setVisibility(View.VISIBLE);
+            // 关键算法
+            lp.leftMargin = (int) ((mScreen1_4 * 2) + (((double) 3 / viewPagerW) * mScreen1_4));
+            getData();
+            getDataAll();
+            getDataMy();
+            textMicroBlog.setTextColor(unselect_color);
+            textQa.setTextColor(select_color);
+            String type3 = getIntent().getStringExtra("type3");
+            if (type3 != null && "2".equals(type3)) {
+                text_wd.setTextColor(unselect_color);
+                text_tw.setTextColor(select_color);
+                allQaList.setVisibility(View.GONE);
+                myQaList.setVisibility(View.VISIBLE);
+                LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line2.getLayoutParams();
+                // 关键算法
+                lp.leftMargin = (int) ((mScreen1_2 * 1) + (((double) 2 / viewPagerW) * mScreen1_2));
+                img_line2.setLayoutParams(lp);
+            }
+        } else if ("4".equals(type)) {
+            // 个人计划
+            playRewardList.setVisibility(View.VISIBLE);
+            // 关键算法
+            lp.leftMargin = (int) ((mScreen1_4 * 4) + (((double) 5 / viewPagerW) * mScreen1_4));
+            getPlanData();
+            textMicroBlog.setTextColor(unselect_color);
+            textPlan.setTextColor(select_color);
         } else {
+            // 微博
             fragmentMicroBlog.setVisibility(View.VISIBLE);
             // 关键算法
-            lp.leftMargin = (int) ((int) (mScreen1_4 * 0) + (((double) 1 / viewPagerW) * mScreen1_4));
-//            ptrl.autoRefresh();
-            getWeiBoData();
+            lp.leftMargin = (int) ((mScreen1_4 * 0) + (((double) 1 / viewPagerW) * mScreen1_4));
             textMicroBlog.setTextColor(select_color);
             textTransaction.setTextColor(unselect_color);
+            getWeiBoData();
         }
         img_line.setLayoutParams(lp);
         // 滚动到顶部
         myScrollView.smoothScrollTo(0, 0);
+        // 判断是否有直播间
+        getisTomlive();
+        // 获取自选股条数
+        getStockData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         desertId = "";
-        // 查询当前用户是否被订阅
-        getisDesert();
+        // 当交易页面显示的时候再去判断是否查询被订阅
+        if (linearTransaction.getVisibility() == View.VISIBLE) {
+            // 查询当前用户是否被订阅
+            getisDesert();
+        }
+        if (Constants.qaIsrn) {
+            getDataAll();
+            getDataMy();
+
+            // 这个以后来改  很丑 回答后回来刷新的问题
+            text_tw.setTextColor(unselect_color);
+            text_wd.setTextColor(select_color);
+            allQaList.setVisibility(View.VISIBLE);
+            myQaList.setVisibility(View.GONE);
+            LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line2.getLayoutParams();
+            // 关键算法
+            lp.leftMargin = (int) ((mScreen1_2 * 0) + (((double) (0 + 1) / viewPagerW) * mScreen1_2));
+            img_line2.setLayoutParams(lp);
+            // 滚动到顶部
+            myScrollView.smoothScrollTo(0, 0);
+
+            Constants.qaIsrn = false;
+        }
     }
 
     private void initView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        // 获取intent的数据
+        uidstr = getIntent().getStringExtra("uid");
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         myScrollView = (PullableScrollView) findViewById(R.id.myScrollView);
         titleName = (TextView) findViewById(R.id.title_name);
         subscribeTv = (TextView) findViewById(R.id.subscribe_tv);
-        // 获取intent的数据
-        uidstr = getIntent().getStringExtra("uid");
+        subscribeTv.setVisibility(View.GONE);
+        tomliveLv = (ImageView) findViewById(R.id.tomlive_lv);
+        tomliveLv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (roomId == null || roomId.equals("")) {
+                    return;
+                }
+                Intent intent = new Intent(UserDetailNewActivity.this, DirectBroadcastingRoomActivity.class);
+                intent.putExtra("roomId", roomId);
+                intent.putExtra("uid", uidstr);
+                intent.putExtra("name", unamestr);
+                intent.putExtra("remark", userintro1.getText().toString().trim());
+                startActivity(intent);
+            }
+        });
         if (Constants.staticmyuidstr.equals(uidstr)) {
             findViewById(R.id.private_letter_follow_ll).setVisibility(View.GONE);
-            findViewById(R.id.line_iv).setVisibility(View.GONE);
+            findViewById(R.id.view_line_v).setVisibility(View.GONE);
             titleName.setText("我的主页");
-            findViewById(R.id.subscribe_tv).setVisibility(View.GONE);
+            subscribeTv.setVisibility(View.GONE);
         } else {
             titleName.setText("Ta的主页");
-            findViewById(R.id.subscribe_tv).setVisibility(View.VISIBLE);
         }
         username2 = (TextView) findViewById(R.id.username2);
         headimg2 = (ImageView) findViewById(R.id.headimg2);
@@ -284,6 +459,7 @@ public class UserDetailNewActivity extends FragmentActivity {
         userintro1 = (TextView) findViewById(R.id.userintro1);
         following_count2 = (TextView) findViewById(R.id.following_count2);
 //        weibo_count1 = (TextView) findViewById(R.id.weibo_count1);
+        optional_stock_tv = (TextView) findViewById(R.id.optional_stock_tv);
         follower_count2 = (TextView) findViewById(R.id.follower_count2);
         personalletter3 = (Button) findViewById(R.id.personalletter3);
         myattentionuserlist1 = (LinearLayout) findViewById(R.id.myattentionuserlist1);
@@ -297,8 +473,9 @@ public class UserDetailNewActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(UserDetailNewActivity.this,
-                                myattentionlistActivity.class);
+                                myfansActivity.class);
                         intent.putExtra("uidstr", uidstr);
+                        intent.putExtra("type", "following");
                         startActivity(intent);
                     }
                 });
@@ -308,6 +485,7 @@ public class UserDetailNewActivity extends FragmentActivity {
                 Intent intent = new Intent(UserDetailNewActivity.this,
                         myfansActivity.class);
                 intent.putExtra("uidstr", uidstr);
+                intent.putExtra("type", "follower");
                 startActivity(intent);
             }
         });
@@ -318,23 +496,34 @@ public class UserDetailNewActivity extends FragmentActivity {
             }
         });
         followersign1.setOnClickListener(new followersign1_listener());
+
         // 从网络获取用户详细信息
-        new SendInfoTasksuserinfodetail().execute(new TaskParams(
-                Constants.Url + "?app=public&mod=Profile&act=AppUser",
-                new String[]{"mid", uidstr},
-                new String[]{"id", Constants.staticmyuidstr}
-        ));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/user/info?mid=" + uidstr + "&uid=" + Constants.staticmyuidstr);
+                handler.sendEmptyMessage(14);
+            }
+        }).start();
+
         // 下面新加的东西
         textMicroBlog = (TextView) findViewById(R.id.text_micro_blog);
         textTransaction = (TextView) findViewById(R.id.text_transaction);
-        textStock = (TextView) findViewById(R.id.text_my_stock);
+        textPlan = (TextView) findViewById(R.id.text_my_plan);
+        textQa = (TextView) findViewById(R.id.text_qa);
+        textPlayReward = (TextView) findViewById(R.id.text_play_reward);
 
         llMicroBlog = (LinearLayout) findViewById(R.id.linear_micro_blog);
         llTransaction = (LinearLayout) findViewById(R.id.linear_transaction);
-        llStock = (LinearLayout) findViewById(R.id.linear_my_stock);
+        llPlan = (LinearLayout) findViewById(R.id.linear_my_plan);
+        llQa = (LinearLayout) findViewById(R.id.linear_qa);
+        llPlayReward = (LinearLayout) findViewById(R.id.linear_play_reward);
+
         llMicroBlog.setOnClickListener(new MyOnClickListenser(0));
-        llTransaction.setOnClickListener(new MyOnClickListenser(1));
-        llStock.setOnClickListener(new MyOnClickListenser(2));
+        llPlayReward.setOnClickListener(new MyOnClickListenser(1));
+        llQa.setOnClickListener(new MyOnClickListenser(2));
+        llTransaction.setOnClickListener(new MyOnClickListenser(3));
+        llPlan.setOnClickListener(new MyOnClickListenser(4));
         // 获取颜色
         select_color = getResources().getColor(R.color.color_toptitle);
         unselect_color = getResources().getColor(R.color.color_000000);
@@ -349,12 +538,28 @@ public class UserDetailNewActivity extends FragmentActivity {
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
                     weiboPage = 1;
+                    userFeedListEntityList.clear();
                     getWeiBoData();
                 } else if (linearTransaction.getVisibility() == View.VISIBLE) {
                     market = 0;
                     getTransactionData();
+                } else if (playRewardList.getVisibility() == View.VISIBLE) {
+                    rewardPage = 1;
+                    payFeedListEntityList.clear();
+                    getRewardData();
+                } else if (fragmentQa.getVisibility() == View.VISIBLE) {
+                    if (allQaList.getVisibility() == View.VISIBLE) {
+                        allPage = 1;
+                        getDataAll();
+                    } else {
+                        myPage = 1;
+                        getDataMy();
+                    }
                 } else {
-                    getStockData();
+                    planPage = 1;
+                    planEntityArrayList.clear();
+                    // 自选股
+                    getPlanData();
                 }
             }
 
@@ -364,15 +569,63 @@ public class UserDetailNewActivity extends FragmentActivity {
                 if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
                     weiboPage += 1;
                     getWeiBoData();
+                } else if (linearTransaction.getVisibility() == View.VISIBLE) {
+                    market = 0;
+                    getTransactionData();
+                } else if (playRewardList.getVisibility() == View.VISIBLE) {
+                    rewardPage += 1;
+                    getRewardData();
+                } else if (fragmentQa.getVisibility() == View.VISIBLE) {
+                    if (allQaList.getVisibility() == View.VISIBLE) {
+                        allPage += 1;
+                        getDataAll();
+                    } else {
+                        myPage += 1;
+                        getDataMy();
+                    }
                 } else {
+                    planPage += 1;
+                    // 自选股
+                    getPlanData();
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }
         });
         findViewWeibo();
-        findViewStock();
+        findViewPlan();
         findViewTransaction();
+        findViewReward();
+        findViewQa();
+    }
+
+    /**
+     * 打赏微博的数据绑定
+     */
+    private void findViewReward() {
+
+        payFeedListEntityList = new ArrayList<FeedListEntity>();
+        payFeedListAdapter = new FeedListAdapter(UserDetailNewActivity.this);
+        // 打赏微博的列表
+        playRewardList = (ListView) findViewById(R.id.play_reward);
+        playRewardList.setAdapter(payFeedListAdapter);
+
+        playRewardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                try {
+                    if (payFeedListEntityList.size() < 1) {
+                        return;
+                    }
+                    Intent intent = new Intent(UserDetailNewActivity.this, ArticleDetailsActivity.class);
+                    // 传递发布微博的信息
+                    intent.putExtra("weibo_id", payFeedListEntityList.get(arg2).getFeed_id());
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -383,8 +636,22 @@ public class UserDetailNewActivity extends FragmentActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                desertStr = HttpUtil.restHttpGet(Constants.moUrl + "/desert/isDesert&uid=" + Constants.staticmyuidstr + "&price_uid=" + uidstr);
+                desertStr = HttpUtil.restHttpGet(Constants.moUrl + "/desert/isDesert?uid=" + Constants.staticmyuidstr + "&price_uid=" + uidstr);
                 handler.sendEmptyMessage(6);
+            }
+        }).start();
+    }
+
+    /**
+     * 判断当前用户是否开通直播间
+     */
+    private void getisTomlive() {
+        // 开线程获取用户是否开通直播间
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tomliveStr = HttpUtil.restHttpGet(Constants.moUrl + "/live/room/hasRoom&uid=" + uidstr + "&token=" + Constants.apptoken);
+                handler.sendEmptyMessage(7);
             }
         }).start();
     }
@@ -395,10 +662,6 @@ public class UserDetailNewActivity extends FragmentActivity {
     private void findViewTransaction() {
         linearTransaction = (LinearLayout) findViewById(R.id.fragment_transaction);
         assetsChart = (LineChart) findViewById(R.id.assets_chart);
-//        boolean isRn = false;
-//        if (Constants.staticmyuidstr.equals(uidstr)){
-//            isRn = true;
-//        }
         listAdapter = new MyDealAccountAdapter(this, uidstr);
         listView = (SoListView) findViewById(
                 R.id.list_view);
@@ -416,23 +679,44 @@ public class UserDetailNewActivity extends FragmentActivity {
         time = (TextView) findViewById(R.id.time);
     }
 
+//    /**
+//     * 绑定自选股的控件
+//     */
+//    private void findViewStock() {
+//        linearStock = (LinearLayout) findViewById(R.id.fragment_stock);
+//        stockAdapter = new StockAdapter(this);
+//        stockListView = (ListView) findViewById(
+//                R.id.stock_list);
+//        stockListView.setAdapter(stockAdapter);
+//        stockListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent inten = new Intent();
+//                inten.putExtra("name", optionalArrayList.get(position).getStock_name());
+//                inten.putExtra("code", optionalArrayList.get(position).getStock());
+//                inten.setClass(UserDetailNewActivity.this, SharesDetailedActivity.class);
+//                startActivity(inten);
+//            }
+//        });
+//    }
+
     /**
-     * 绑定自选股的控件
+     * 绑定投资计划的控件
      */
-    private void findViewStock() {
-        linearStock = (LinearLayout) findViewById(R.id.fragment_stock);
-        stockAdapter = new StockAdapter(this);
-        stockListView = (ListView) findViewById(
-                R.id.stock_list);
-        stockListView.setAdapter(stockAdapter);
-        stockListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void findViewPlan() {
+        linearPlan = (LinearLayout) findViewById(R.id.fragment_plan);
+        planEntityArrayList = new ArrayList<PlanEntity>();
+        planAdapter = new PlanAdapter(this);
+        planListView = (SoListView) findViewById(
+                R.id.plan_list_view);
+        planListView.setAdapter(planAdapter);
+        planListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent inten = new Intent();
-                inten.putExtra("name", optionalArrayList.get(position).getStock_name());
-                inten.putExtra("code", optionalArrayList.get(position).getStock());
-                inten.setClass(UserDetailNewActivity.this, SharesDetailedActivity.class);
-                startActivity(inten);
+                Intent intent = new Intent(UserDetailNewActivity.this, PlanExhibitionActivity.class);
+                intent.putExtra("id", planEntityArrayList.get(position).getId());
+                intent.putExtra("uid", planEntityArrayList.get(position).getUid());
+                startActivity(intent);
             }
         });
     }
@@ -446,255 +730,267 @@ public class UserDetailNewActivity extends FragmentActivity {
         /** 普通帖集合 */
         commonlistview = (SoListView) findViewById(R.id.notelist1);
         // 存储数据的数组列表
-        listusercommonnoteData = new ArrayList<HashMap<String, String>>();
-        usercommonnoteAdapter = new commonnoteAdapter(this);
-        commonlistview.setAdapter(usercommonnoteAdapter);
+        userFeedListEntityList = new ArrayList<FeedListEntity>();
+        userFeedListAdapter = new FeedListAdapter(this);
+        commonlistview.setAdapter(userFeedListAdapter);
         commonlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                String content = listusercommonnoteData.get(position).get("content");
+                String content = userFeedListEntityList.get(position).getFeed_content();
                 if (content.length() > 3 && Constants.microBlogShare.equals(content.substring(0, 4))) {
                     return;
                 }
                 Intent intent = new Intent(UserDetailNewActivity.this,
-                        forumnotedetailActivity.class);
+                        ArticleDetailsActivity.class);
                 intent.putExtra(
                         "weibo_id",
-                        listusercommonnoteData.get(position)
-                                .get("feed_id") + "");
-                intent.putExtra("uid",
-                        listusercommonnoteData.get(position).get("uid") + "");
+                        userFeedListEntityList.get(position).getFeed_id());
                 startActivity(intent);
             }
         });
     }
 
+    /**
+     * 关注的单机事件
+     */
     class followersign1_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            if ("0".equals(followingstr)) {
-                if (Utils.isFastDoubleClick()) {
-                    return;
-                }
-                new SendInfoTaskfollowsb().execute(new TaskParams(
-                        Constants.Url + "?app=public&mod=AppFeedList&act=AddFollow", new String[]{"mid",
-                        Constants.staticmyuidstr},
-                        new String[]{"login_password",
-                                Constants.staticpasswordstr}, new String[]{
-                        "fid", uidstr}
-                ));
-                if ("1".equals(followerstr)) {
-                    followersign1.setText("相互关注");
-                } else {
-                    followersign1.setText("取消关注");
-                }
-                followingstr = "1";
-            } else {
-                if (Utils.isFastDoubleClick()) {
-                    return;
-                }
-                new SendInfoTaskfollowcancelsb().execute(new TaskParams(
-                                Constants.Url + "?app=public&mod=AppFeedList&act=DelFollow", new String[]{"mid",
-                                Constants.staticmyuidstr},
-                                new String[]{"login_password",
-                                        Constants.staticpasswordstr}, new String[]{
-                                "fid", uidstr}
-                        )
-                );
-                followersign1.setText(" + 关注");
-                followingstr = "0";
+            if (Utils.isFastDoubleClick()) {
+                return;
             }
+            // menghuan 不用登陆也可以用
+            // 如果未登陆跳转到登陆页面
+            if (!Constants.isLogin) {
+                Intent intent = new Intent(UserDetailNewActivity.this, loginActivity.class);
+                startActivity(intent);
+                return;
+            }
+
+            final String type;
+            if ("0".equals(followingstr)) {
+                type = "add";
+            }else{
+                type = "cancel";
+            }
+            // 关注 取消关注
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/user/follow?mid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&uid=" + uidstr+"&type="+type);
+                    handler.sendEmptyMessage(15);
+                }
+            }).start();
+
         }
     }
 
+    /**
+     * 私信的单击事件
+     */
     class personalletter3_listener implements OnClickListener {
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            new SendInfoTaskForChatIsExist().execute(new TaskParams(
-                    Constants.Url + "?app=public&mod=AppFeedList&act=Messages",
-                    new String[]{"mid", Constants.staticmyuidstr},
-                    new String[]{"cid", uidstr}));
+            // menghuan 不用登陆也可以用
+            // 如果未登陆跳转到登陆页面
+            if (!Constants.isLogin) {
+                Intent intent = new Intent(UserDetailNewActivity.this, loginActivity.class);
+                startActivity(intent);
+                return;
+            }
+
+            Intent intent = new Intent(UserDetailNewActivity.this, OnlineServiceActivity.class);
+            intent.putExtra("uidstr", uidstr);
+            intent.putExtra("unamestr", unamestr);
+            startActivity(intent);
+
+            // 测试可以看看不用判断直接跳转
+//            new SendInfoTaskForChatIsExist().execute(new TaskParams(
+//                    Constants.Url + "?app=public&mod=AppFeedList&act=Messages",
+//                    new String[]{"mid", Constants.staticmyuidstr},
+//                    new String[]{"cid", uidstr}));
         }
     }
-
-    private class SendInfoTasksuserinfodetail extends
-            AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_LONG).show();
-            } else {
-                super.onPostExecute(result);
-                result = result.replace("\n ", "");
-                result = result.replace("\n", "");
-                result = result.replace(" ", "");
-                result = "[" + result + "]";
-                List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-
-                for (Map<String, Object> map : lists) {
-                    String statusstr = map.get("data") + "";
-                    statusstr = "[" + statusstr + "]";
-                    List<Map<String, Object>> weibolists = JsonTools.listKeyMaps(statusstr);
-
-                    for (Map<String, Object> weibomap : weibolists) {
-                        String introstr;
-                        unamestr = weibomap.get("uname") + "";
-                        String avatar_middlestr = weibomap.get("avatar_middle") + "";
-                        String Userdatastr = weibomap.get("Userdata") + "";
-                        List<Map<String, Object>> Userdatastrlists = JsonTools.listKeyMaps("[" + Userdatastr + "]");
-
-                        for (Map<String, Object> Userdatamap : Userdatastrlists) {
-                            String following_countstr;
-                            String follower_countstr;
+//
+//    private class SendInfoTasksuserinfodetail extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (result == null) {
+//                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_SHORT).show();
+//            } else {
+//                super.onPostExecute(result);
+//                result = "[" + result + "]";
+//                List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
+//
+//                for (Map<String, Object> map : lists) {
+//                    String statusstr = map.get("data") + "";
+//                    statusstr = "[" + statusstr + "]";
+//                    List<Map<String, Object>> weibolists = JsonTools.listKeyMaps(statusstr);
+//
+//                    for (Map<String, Object> weibomap : weibolists) {
+//                        String introstr;
+//                        unamestr = weibomap.get("uname") + "";
+//                        String avatar_middlestr = weibomap.get("avatar_middle") + "";
+//                        String Userdatastr = weibomap.get("Userdata") + "";
+//                        List<Map<String, Object>> Userdatastrlists = JsonTools.listKeyMaps("[" + Userdatastr + "]");
+//
+//                        for (Map<String, Object> Userdatamap : Userdatastrlists) {
+//                            String following_countstr;
+//                            String follower_countstr;
 //                            String weibo_countstr;
-                            if (Userdatamap.get("following_count") == null) {
-                                following_countstr = "0";
-                            } else {
-                                following_countstr = Userdatamap.get("following_count") + "";
-                            }
+//                            if (Userdatamap.get("weibo_count") == null) {
+//                                weibo_countstr = "0";
+//                            } else {
+//                                weibo_countstr = Userdatamap.get("weibo_count") + "";
+//                            }
+//                            if (Userdatamap.get("following_count") == null) {
+//                                following_countstr = "0";
+//                            } else {
+//                                following_countstr = Userdatamap.get("following_count") + "";
+//                            }
+//
+//                            if (Userdatamap.get("follower_count") == null) {
+//                                follower_countstr = "0";
+//                            } else {
+//                                follower_countstr = Userdatamap.get("follower_count") + "";
+//                            }
+//                            following_count2.setText(following_countstr);
+//                            follower_count2.setText(follower_countstr);
+//                        }
+//                        String followstr = weibomap.get("follow") + "";
+//                        if (!"".equals(followstr) && !"null".equals(followstr)){
+//                            List<Map<String, Object>> followstrlists = JsonTools.listKeyMaps("[" + followstr + "]");
+//                            for (Map<String, Object> followstrmap : followstrlists) {
+//                                followingstr = followstrmap.get("following") + "";
+//                                followerstr = followstrmap.get("follower") + "";// 0是未关注,1是已关注
+//                                if ("0".equals(followingstr)) {
+//                                    followersign1.setText(" + 关注");
+//                                } else {
+//                                    if ("1".equals(followerstr)) {
+//                                        followersign1.setText("相互关注");
+//                                    } else {
+//                                        followersign1.setText("取消关注");
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        //空指针异常
+//                        String sexstr = weibomap.get("sex") + "";
+//                        if (weibomap.get("intro") == null) {
+//                            introstr = "暂无简介";
+//                        } else {
+//                            introstr = weibomap.get("intro") + "";
+//                        }
+//                        if ("1".equals(sexstr)) {
+//                            usersex1.setImageResource(R.mipmap.nan);
+//                        } else {
+//                            usersex1.setImageResource(R.mipmap.nv);
+//                        }
+//                        username2.setText(unamestr);
+//                        userintro1.setText(introstr);
+//
+//                        ImageLoader.getInstance().displayImage(avatar_middlestr,
+//                                headimg2, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+//
+//                        ViewUtil.setUpVip(weibomap.get("user_group") + "", vipImg);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-                            if (Userdatamap.get("follower_count") == null) {
-                                follower_countstr = "0";
-                            } else {
-                                follower_countstr = Userdatamap.get("follower_count") + "";
-                            }
-                            following_count2.setText(following_countstr);
-                            follower_count2.setText(follower_countstr);
-                        }
-                        String followstr = weibomap.get("follow") + "";
-                        List<Map<String, Object>> followstrlists = JsonTools.listKeyMaps("[" + followstr + "]");
-                        for (Map<String, Object> followstrmap : followstrlists) {
-                            followingstr = followstrmap.get("following") + "";
-                            followerstr = followstrmap.get("follower") + "";// 0是未关注,1是已关注
-                            if ("0".equals(followingstr)) {
-                                followersign1.setText(" + 关注");
-                            } else {
-                                if ("1".equals(followerstr)) {
-                                    followersign1.setText("相互关注");
-                                } else {
-                                    followersign1.setText("取消关注");
-                                }
-                            }
-                        }
-                        //空指针异常
-                        String sexstr = weibomap.get("sex") + "";
-                        if (weibomap.get("intro") == null) {
-                            introstr = "暂无简介";
-                        } else {
-                            introstr = weibomap.get("intro") + "";
-                        }
-                        if ("1".equals(sexstr)) {
-                            usersex1.setImageResource(R.mipmap.nan);
-                        } else {
-                            usersex1.setImageResource(R.mipmap.nv);
-                        }
-                        username2.setText(unamestr);
-                        userintro1.setText(introstr);
-
-                        ImageLoader.getInstance().displayImage(avatar_middlestr,
-                                headimg2, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-
-                        ViewUtil.setUpVip(weibomap.get("user_group") + "", vipImg);
-                    }
-                }
-            }
-        }
-    }
-
-    private class SendInfoTaskfollowsb extends
-            AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            int follows = Integer.parseInt((follower_count2.getText()
-                    .toString()));
-            follower_count2.setText(String.valueOf((follows + 1)));
-        }
-    }
-
-    private class SendInfoTaskfollowcancelsb extends
-            AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            int follows = Integer.parseInt((follower_count2.getText()
-                    .toString()));
-
-            follower_count2.setText(String.valueOf((follows - 1)));
-        }
-    }
-
-    //发送请求，判断私信是否存在
-    private class SendInfoTaskForChatIsExist extends AsyncTask<TaskParams, Void, String> {
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            result = result.replace("\n ", "");
-            result = result.replace("\n", "");
-            result = result.replace(" ", "");
-            result = "[" + result + "]";
-            // 解析json字符串获得List<Map<String,Object>>
-            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-            for (Map<String, Object> map : lists) {
-                String statusstr = map.get("status") + "";
-                String datastr = map.get("data") + "";
-                if ("1".equals(statusstr)) {
-                    List<Map<String, Object>> datastrlists = JsonTools.listKeyMaps("[" + datastr + "]");
-                    for (Map<String, Object> datastrmap : datastrlists) {
-                        list_idstr = datastrmap.get("list_id") + "";
-                    }
-                    Intent intent = new Intent(UserDetailNewActivity.this, personalnewsdetail.class);
-                    intent.putExtra("uidstr", uidstr);
-                    intent.putExtra("unamestr", unamestr);
-                    intent.putExtra("list_id", list_idstr);
-                    startActivity(intent);
-                }
-                if ("0".equals(statusstr)) {
-                    //不存在，直接跳转
-                    Intent intent = new Intent(UserDetailNewActivity.this, personalnewsdetail.class);
-                    intent.putExtra("uidstr", uidstr);
-                    intent.putExtra("unamestr", unamestr);
-                    startActivity(intent);
-                }
-            }
-        }
-    }
+//    private class SendInfoTaskfollowsb extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//            int follows = Integer.parseInt((follower_count2.getText()
+//                    .toString()));
+//            follower_count2.setText(String.valueOf((follows + 1)));
+//        }
+//    }
+//
+//    private class SendInfoTaskfollowcancelsb extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            super.onPostExecute(result);
+//
+//            int follows = Integer.parseInt((follower_count2.getText()
+//                    .toString()));
+//
+//            follower_count2.setText(String.valueOf((follows - 1)));
+//        }
+//    }
+//
+//    //发送请求，判断私信是否存在
+//    private class SendInfoTaskForChatIsExist extends AsyncTask<TaskParams, Void, String> {
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            super.onPostExecute(result);
+//            result = result.replace("\n ", "");
+//            result = result.replace("\n", "");
+//            result = result.replace(" ", "");
+//            result = "[" + result + "]";
+//            // 解析json字符串获得List<Map<String,Object>>
+//            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
+//            for (Map<String, Object> map : lists) {
+//                String statusstr = map.get("status") + "";
+//                String datastr = map.get("data") + "";
+//                if ("1".equals(statusstr)) {
+//                    List<Map<String, Object>> datastrlists = JsonTools.listKeyMaps("[" + datastr + "]");
+//                    for (Map<String, Object> datastrmap : datastrlists) {
+//                        list_idstr = datastrmap.get("list_id") + "";
+//                    }
+//                    Intent intent = new Intent(UserDetailNewActivity.this, OnlineServiceActivity.class);
+//                    intent.putExtra("uidstr", uidstr);
+//                    intent.putExtra("unamestr", unamestr);
+//                    intent.putExtra("list_id", list_idstr);
+//                    startActivity(intent);
+//                }
+//                if ("0".equals(statusstr)) {
+//                    //不存在，直接跳转
+//                    Intent intent = new Intent(UserDetailNewActivity.this, OnlineServiceActivity.class);
+//                    intent.putExtra("uidstr", uidstr);
+//                    intent.putExtra("unamestr", unamestr);
+//                    startActivity(intent);
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 初始化line
      */
     private void initLine() {
         img_line = (ImageView) findViewById(R.id.img_line);
-        mScreen1_4 = ImageUtil.getScreenWidth(this) / 3;
+        mScreen1_4 = ImageUtil.getScreenWidth(this) / 5;
         ViewGroup.LayoutParams lp = img_line.getLayoutParams();
         lp.width = mScreen1_4;
         img_line.setLayoutParams(lp);
@@ -716,12 +1012,13 @@ public class UserDetailNewActivity extends FragmentActivity {
         @Override
         public void onClick(View v) {
             resetTextColor();
+            subscribeTv.setVisibility(View.GONE);
             switch (v.getId()) {
                 case R.id.linear_micro_blog:
                     textMicroBlog.setTextColor(select_color);
                     fragmentMicroBlog.setVisibility(View.VISIBLE);
-                    if (listusercommonnoteData.size() < 1) {
-                        dialog.show();
+                    if (userFeedListEntityList.size() < 1) {
+                        dialog.showDialog();
                         getWeiBoData();
                     }
                     break;
@@ -729,21 +1026,42 @@ public class UserDetailNewActivity extends FragmentActivity {
                     textTransaction.setTextColor(select_color);
                     linearTransaction.setVisibility(View.VISIBLE);
                     if ("".equals(mMresstr)) {
-                        dialog.show();
+                        dialog.showDialog();
                         getTransactionData();
+                        // 查询当前用户是否被订阅
+                        getisDesert();
+                    }
+                    subscribeTv.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.linear_my_plan:
+                    textPlan.setTextColor(select_color);
+                    linearPlan.setVisibility(View.VISIBLE);
+                    if ("".equals(resstrPlan)) {
+                        dialog.showDialog();
+                        getPlanData();
                     }
                     break;
-                case R.id.linear_my_stock:
-                    textStock.setTextColor(select_color);
-                    linearStock.setVisibility(View.VISIBLE);
-                    if ("".equals(resstr)) {
-                        dialog.show();
-                        getStockData();
+                case R.id.linear_play_reward:
+                    textPlayReward.setTextColor(select_color);
+                    playRewardList.setVisibility(View.VISIBLE);
+                    if (payFeedListEntityList.size() < 1) {
+                        dialog.showDialog();
+                        getRewardData();
+                    }
+                    break;
+                case R.id.linear_qa:
+                    textQa.setTextColor(select_color);
+                    fragmentQa.setVisibility(View.VISIBLE);
+                    if (listDataAll.size() < 1) {
+                        dialog.showDialog();
+                        getData();
+                        getDataAll();
+                        getDataMy();
                     }
                     break;
             }
             // 关键算法
-            lp.leftMargin = (int) ((int) (mScreen1_4 * index) + (((double) (index + 1) / viewPagerW) * mScreen1_4));
+            lp.leftMargin = (int) ((mScreen1_4 * index) + (((double) (index + 1) / viewPagerW) * mScreen1_4));
             img_line.setLayoutParams(lp);
             // 滚动到顶部
             myScrollView.smoothScrollTo(0, 0);
@@ -756,28 +1074,41 @@ public class UserDetailNewActivity extends FragmentActivity {
     private void resetTextColor() {
         textMicroBlog.setTextColor(unselect_color);
         textTransaction.setTextColor(unselect_color);
-        textStock.setTextColor(unselect_color);
+        textPlan.setTextColor(unselect_color);
+        textPlayReward.setTextColor(unselect_color);
+        textQa.setTextColor(unselect_color);
 
         fragmentMicroBlog.setVisibility(View.GONE);
         linearTransaction.setVisibility(View.GONE);
-        linearStock.setVisibility(View.GONE);
+        linearPlan.setVisibility(View.GONE);
+        playRewardList.setVisibility(View.GONE);
+        fragmentQa.setVisibility(View.GONE);
     }
 
     /**
      * 获取微博页面数据
      */
     private void getWeiBoData() {
-        new SendInfoTasknotereplylistloadmore().execute(new TaskParams(
-                        Constants.Url + "?app=public&mod=FeedListMini&act=loadMore",
-                        new String[]{"type", "myfeed"},
-                        new String[]{"id", Constants.staticmyuidstr},
-                        new String[]{"mid", uidstr}, new String[]{"p", weiboPage + ""}
-                )
-        );
+//        new SendInfoTasknotereplylistloadmore().execute(new TaskParams(
+//                        Constants.subscribeListUrl,
+//                        new String[]{"type", "myfeed"},
+//                        new String[]{"id", Constants.staticmyuidstr},
+//                        new String[]{"mid", uidstr},
+//                        new String[]{"p", weiboPage + ""}
+//                )
+//        );
+        // 获取微博列表
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                feedSpaceStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/feed/getList?type=space&mid=" + Constants.staticmyuidstr + "&uid=" + uidstr + "&p=" + weiboPage);
+                handler.sendEmptyMessage(12);
+            }
+        }).start();
     }
 
     /**
-     * 获取自选股的数据
+     * 获取自选股的条数
      */
     private void getStockData() {
         // 开线程获取用户获取自选股
@@ -785,294 +1116,353 @@ public class UserDetailNewActivity extends FragmentActivity {
             @Override
             public void run() {
                 // 调用接口获取用户获取自选股
-                resstr = HttpUtil.restHttpGet(Constants.moUrl + "/user/getUserOptional&uid=" + uidstr + "&token=" + Constants.apptoken);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl + "/user/getUserOptional&count=1&uid=" + uidstr + "&token=" + Constants.apptoken);
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
+    }
+//     * 获取自选股的数据
+//     */
+//    private void getStockData() {
+//        // 开线程获取用户获取自选股
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 调用接口获取用户获取自选股
+//                resstr = HttpUtil.restHttpGet(Constants.moUrl + "/user/getUserOptional&uid=" + uidstr + "&token=" + Constants.apptoken);
+//                handler.sendEmptyMessage(0);
+//            }
+//        }).start();
+//    }
+
+    /**
+     * 获取投资计划的数据
+     */
+    private void getPlanData() {
+        // 开线程获取用户获取自选股
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 调用接口获取用户获取自选股
+                resstrPlan = HttpUtil.restHttpGet(Constants.moUrl + "/dealplan/index/list?uid=" + uidstr + "&order=time&p=" + planPage);
                 handler.sendEmptyMessage(0);
             }
         }).start();
     }
 
-    private class SendInfoTasknotereplylistloadmore extends
-            AsyncTask<TaskParams, Void, String> {
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
+    /**
+     * 获取打赏文的数据
+     */
+    private void getRewardData() {
 
-        @Override
-        protected void onPostExecute(String result) {
-            String digg_countstr = "";
-            String comment_countstr = "";
-            String repost_countstr = "";
-            String source_user_infostr = "";
-            String source_contentstr = "";
-            String source_feed_idstr = "";
-            String sourceuidstr = "";
-            String sourceunamestr = "";
-            String avatar_middlestr = "";
-            String user_infostr = "";
-            // 获取概要
-            String introduction = "";
-            // 判断是否是微博
-            Object state = null;
-            // 获取水晶币个数
-            String reward = "";
-            List<Map<String, Object>> gbqblists2 = null;
-            String datastr2 = null;
-            List<Map<String, Object>> datastrlists2 = null;
-            if (result == null) {
-                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_SHORT).show();
+        // 获取微博内参列表
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                feedSpacePayStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/feed/getList?type=spacepay&mid=" +  Constants.staticmyuidstr + "&uid=" + uidstr + "&p=" + rewardPage);
+                handler.sendEmptyMessage(13);
+            }
+        }).start();
+    }
+
+//    private class SendInfoTasknotereplylistloadmore extends
+//            AsyncTask<TaskParams, Void, String> {
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (result == null) {
+//                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_SHORT).show();
 //                // 千万别忘了告诉控件刷新完毕了哦！失败
 //                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
-            } else {
-                super.onPostExecute(result);
-//                if ("1".equals(isreferlist)) {
-//                    listusercommonnoteData.clear();
+//                dialog.dismissDlog();
+//                return;
+//            }
+//            String digg_countstr = "";
+//            String comment_countstr = "";
+//            String repost_countstr = "";
+//            String source_user_infostr = "";
+//            String source_contentstr = "";
+//            String source_feed_idstr = "";
+//            String sourceuidstr = "";
+//            String sourceunamestr = "";
+//            String avatar_middlestr = "";
+//            String user_infostr = "";
+//            // 获取概要
+//            String introduction = "";
+//            // 判断是否是微博
+//            Object state = null;
+//            // 获取水晶币个数
+//            String reward = "";
+//            String datastr2 = null;
+//            List<Map<String, Object>> datastrlists2 = null;
+//            super.onPostExecute(result);
+//            try {
+//                JSONObject jsonObject = new JSONObject(result);
+//                // 获取点赞标识的数组
+//                String diggArrstr;
+//                if (jsonObject.getString("diggArr") == null) {
+//                    diggArrstr = "";
+//                } else {
+//                    diggArrstr = jsonObject.getString("diggArr");
 //                }
-                result = result.replace("\n ", "");
-                result = result.replace("\n", "");
-                result = result.replace(" ", "");
-                result = "[" + result + "]";
-                // 解析json字符串获得List<Map<String,Object>>
-                if (gbqblists2 == null) {
-                    gbqblists2 = JsonTools.listKeyMaps(result);
-                }
-                for (Map<String, Object> map : gbqblists2) {
-                    // 获取点赞标识的数组
-                    String diggArrstr;
-                    if (map.get("diggArr") == null) {
-                        diggArrstr = "";
-                    } else {
-                        diggArrstr = map.get("diggArr") + "";
-                    }
-                    if (datastr2 == null) {
-                        datastr2 = map.get("data") + "";
-                        datastrlists2 = JsonTools.listKeyMaps(datastr2);
-                    }
-                    if (datastrlists2 == null) {
-                        datastrlists2 = new ArrayList<Map<String, Object>>();
-                    }
-                    for (Map<String, Object> datastrmap : datastrlists2) {
-                        if (datastrmap.get("feed_id") == null) {
-                            continue;
-                        }
-                        String isdigg = "0";// isdigg为0为未点赞为1为已点赞
-                        String feed_idstr = datastrmap.get("feed_id") + "";
-                        if (diggArrstr.contains(feed_idstr)) {
-                            isdigg = "1";
-                        }
-                        // 微博类型
-                        String typestr = datastrmap.get("type") + "";
-                        // 获取为本类容
-                        String contentstr = "";
-                        introduction = "";
-                        state = datastrmap.get("state");
-                        // 先判断是否是付费文章如果是就获取概要
-                        if (state != null && "1".equals(state.toString())) {
-                            reward = datastrmap.get("reward") + "";
-                            Object introd = datastrmap.get("introduction");
-                            if (introd != null && !"null".equals(introd.toString())) {
-                                introduction = introd + "";
-                            }
-                        }
-                        if (datastrmap.get("body") == null) {
-                            contentstr = "内容无空";
-                        } else {
-                            contentstr = datastrmap.get("body") + "";
-                        }
-                        contentstr = contentstr.replace("【", "<font color=\"#4471BC\" >【");
-                        contentstr = contentstr.replace("】", "】</font>");
-                        // 正则表达式处理 去Html代码
-                        String regex = "\\<[^\\>]+\\>";
-                        /////////////////////////////////////////////////////////////////////
-//                        contentstr = contentstr.replace("ahref", "a  href ");
-                        contentstr = contentstr.replace("atarget", "a ");
-                        contentstr = contentstr.replace("target", "");
-
-                        contentstr = contentstr.replace("</a>", "&nbsp</a>");
-
-                        contentstr = contentstr.replace("&nbsp;", "");
-                        contentstr = contentstr.replace("	", "");
-                        contentstr = contentstr.replace("　　", "");
-                        /////////////////////////////////////////////////////////////////////////////////
-                        contentstr = contentstr.replace("'__THEME__/image/expression/miniblog/", "\"");
-                        contentstr = contentstr.replace(".gif'", "\"");
-                        contentstr = contentstr.replace("imgsrc", "img src");
-                        contentstr = contentstr.replace("'http://www.sjqcj.com/addons/plugin/LongText/editor/kindeditor-4.1.4/plugins/emoticons/images/", "\"");
-                        HashMap<String, String> map2 = new HashMap<String, String>();
-                        map2.put("type", typestr);
-                        if ("repost".equals(typestr)) {
-                            contentstr = contentstr.substring(0, contentstr.indexOf("◆"));
-                            String api_sourcestr = datastrmap.get("api_source") + "";
-                            List<Map<String, Object>> api_sourcestrlists = JsonTools.listKeyMaps("[" + api_sourcestr + "]");
-                            for (Map<String, Object> api_sourcestrmap : api_sourcestrlists) {
-
-                                source_user_infostr = api_sourcestrmap.get("source_user_info") + "";
-                                source_contentstr = api_sourcestrmap.get("source_content") + "";
-                                source_feed_idstr = api_sourcestrmap.get("feed_id") + "";
-                                source_contentstr = source_contentstr.replace("<feed-titlestyle='display:none'>", "fontsing1");
-                                source_contentstr = source_contentstr.replace("<feed-title style='display:none'>", "fontsing1");
-                                source_contentstr = source_contentstr.replace("</feed-title>", "fontsing2");
-                                // 正则表达式处理 去Html代码
-                                String regex2 = "\\<[^\\>]+\\>";
-                                source_contentstr = source_contentstr.replaceAll(regex, "");
-                                source_contentstr = source_contentstr.replace("fontsing1", "<font color=\"#4471BC\" >【");
-                                source_contentstr = source_contentstr.replace("fontsing2", "】</font><Br/>");
-                                source_contentstr = source_contentstr.replace("\t", "");
-                                source_contentstr = source_contentstr.replace("\n", "");
-                                state = api_sourcestrmap.get("state");
-                                // 先判断是否是付费文章如果是就获取概要
-                                if (state != null && "1".equals(state.toString())) {
-                                    if (api_sourcestrmap.get("reward") != null) {
-                                        reward = api_sourcestrmap.get("reward") + "";
-                                    }
-                                    String gaiyao = api_sourcestrmap.get("zy") + "";
-                                    source_contentstr = "<font color=\"#4471BC\" >" + source_contentstr.substring(source_contentstr.indexOf("【"), source_contentstr.indexOf("】") + 1) + "</font><Br/>" + gaiyao;
-                                }
-                                map2.put("source_contentstr", source_contentstr);
-                                map2.put("source_feed_idstr", source_feed_idstr);
-                                List<Map<String, Object>> source_user_infostrlists = JsonTools.listKeyMaps("[" + source_user_infostr + "]");
-                                for (Map<String, Object> source_user_infostrmap : source_user_infostrlists) {
-                                    sourceuidstr = source_user_infostrmap.get("uid") + "";
-                                    sourceunamestr = source_user_infostrmap.get("uname") + "";
-                                    avatar_middlestr = source_user_infostrmap.get("avatar_middle") + "";
-                                    String userGroup = source_user_infostrmap.get("user_group") + "";
-                                    map2.put("isVipSource", userGroup);
-                                    map2.put("sourceuidstr", sourceuidstr);
-                                    map2.put("sourceuname", sourceunamestr);
-                                    map2.put("sourceavatar_middlestr", avatar_middlestr);
-                                }
-                            }
-                        }
-                        String publish_timestr = datastrmap.get("publish_time") + "";
-                        if (datastrmap.get("digg_count") == null) {
-                            digg_countstr = "0";
-                        } else {
-                            digg_countstr = datastrmap.get("digg_count") + "";
-                        }
-                        if (datastrmap.get("comment_count") == null) {
-                            comment_countstr = "0";
-                        } else {
-                            comment_countstr = datastrmap.get("comment_count") + "";
-                        }
-                        if (datastrmap.get("repost_count") == null) {
-                            repost_countstr = "0";
-                        } else {
-                            repost_countstr = datastrmap.get("repost_count") + "";
-                        }
-                        publish_timestr = CalendarUtil.formatDateTime(Utils
-                                .getStringtoDate(publish_timestr));
-                        if (contentstr.contains("feed_img_lists")) {
-                            contentstr = contentstr.substring(0,
-                                    contentstr.indexOf("feed_img_lists"));
-                        }
-                        String attach_urlstr;
-                        if (datastrmap.get("attach_url") == null) {
-                            attach_urlstr = "";
-                        } else {
-                            attach_urlstr = datastrmap.get("attach_url")
-                                    + "";
-                            // 解析短微博图片地址
-                            attach_urlstr = attach_urlstr.substring(1, attach_urlstr.length() - 1);
-                        }
-                        // 不带图的富文本
-                        if ("".equals(contentstr)) {
-                            contentstr = "//";
-                        }
-                        // 如果是付费文章就有概要 显示内容为标题+概要
-                        if (!"".equals(introduction)) {
-                            contentstr = "<font color=\"#4471BC\" >" + contentstr.substring(contentstr.indexOf("【"), contentstr.indexOf("】") + 1) + "</font><Br/>" + introduction;
-                        }
-                        if (state != null) {
-                            map2.put("state", state + "");
-                        }
-                        map2.put("reward", reward);
-                        map2.put("feed_id", feed_idstr);
-                        map2.put("content", contentstr);
-                        map2.put("create", publish_timestr);
-                        map2.put("digg_count", digg_countstr);
-                        map2.put("comment_count", comment_countstr);
-                        map2.put("repost_count", repost_countstr);
-                        map2.put("isdigg", isdigg);
-                        map2.put("attach_url", attach_urlstr);
-                        if (datastrmap.get("user_info") == null) {
-                            user_infostr = "";
-                        } else {
-                            user_infostr = datastrmap.get("user_info")
-                                    + "";
-                        }
-                        List<Map<String, Object>> user_infostrlists = JsonTools
-                                .listKeyMaps("[" + user_infostr + "]");
-                        for (Map<String, Object> user_infostrmap : user_infostrlists) {
-                            String uidstr = user_infostrmap.get("uid") + "";
-                            String unamestr = user_infostrmap.get("uname") + "";
-                            String avatar_middlestr2 = user_infostrmap.get("avatar_middle") + "";
-                            String userGroup = user_infostrmap.get("user_group") + "";
-                            map2.put("isVip", userGroup);
-                            map2.put("uid", uidstr);
-                            map2.put("uname", unamestr);
-                            map2.put("avatar_middle", avatar_middlestr2);
-                        }
-                        listusercommonnoteData.add(map2);
-                    }
-                }
-                usercommonnoteAdapter.setlistData(listusercommonnoteData);
-//                ViewUtil.setListViewHeightBasedOnChildren(commonlistview);
-            }
-            if (fragmentMicroBlog.getVisibility() == View.VISIBLE) {
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-            }
-            dialog.dismiss();
-        }
-    }
+//                if (datastr2 == null) {
+//                    datastr2 = jsonObject.getString("data");
+//                    datastrlists2 = JsonTools.listKeyMaps(datastr2);
+//                }
+//
+//                if (datastrlists2 == null) {
+//                    datastrlists2 = new ArrayList<Map<String, Object>>();
+//                }
+//                for (Map<String, Object> datastrmap : datastrlists2) {
+//                    String isdigg = "0";// isdigg为0为未点赞为1为已点赞
+//                    String feed_idstr = datastrmap.get("feed_id").toString();
+//                    if (diggArrstr.contains(feed_idstr)) {
+//                        isdigg = "1";
+//                    }
+//
+//                    // 微博类型
+//                    String typestr = datastrmap.get("type").toString();
+//                    // 获取为本类容
+//                    String contentstr = "";
+//                    introduction = "";
+//                    state = datastrmap.get("state");
+//                    // 先判断是否是付费文章如果是就获取概要
+//                    if (state != null && "1".equals(state.toString())) {
+//                        reward = datastrmap.get("reward").toString();
+//                        Object introd = datastrmap.get("introduction");
+//                        if (introd != null && !"null".equals(introd.toString())) {
+//                            introduction = introd.toString();
+//                        }
+//                    }
+//                    if (datastrmap.get("body") == null) {
+//                        contentstr = "内容为空";
+//                    } else {
+//                        contentstr = datastrmap.get("body") + "";
+//                    }
+//
+//                    String title = datastrmap.get("title") + "";
+//                    if (!"".equals(title) && !"null".equals(title)) {
+//                        contentstr = "<font color=\"#4471BC\" >" + title + "</font><br/>" + contentstr;
+//                    }
+//                    // 替换表情符的 肯定有问题 要改
+//                    contentstr = contentstr.replace("[", "<img src=\"");
+//                    contentstr = contentstr.replace("]", "\"/>");
+//
+//                    HashMap<String, String> map2 = new HashMap<String, String>();
+//                    map2.put("type", typestr);
+//                    if ("repost".equals(typestr)) {
+//                        String api_sourcestr = datastrmap.get("api_source").toString();
+//                        List<Map<String, Object>> api_sourcestrlists = JsonTools.listKeyMaps("[" + api_sourcestr + "]");
+//                        for (Map<String, Object> api_sourcestrmap : api_sourcestrlists) {
+//
+//                            source_user_infostr = api_sourcestrmap.get("source_user_info") + "";
+//                            source_contentstr = api_sourcestrmap.get("source_content") + "";
+//
+//                            source_feed_idstr = api_sourcestrmap.get("feed_id") + "";
+//
+//                            title = api_sourcestrmap.get("title") + "";
+//                            if (!"".equals(title) && !"null".equals(title)) {
+//                                source_contentstr = "<font color=\"#4471BC\" >" + title + "</font><br/>" + source_contentstr;
+//                            }
+//
+//                            state = api_sourcestrmap.get("state");
+//                            // 先判断是否是付费文章如果是就获取概要
+//                            if (state != null && "1".equals(state.toString())) {
+//                                if (api_sourcestrmap.get("reward") != null) {
+//                                    reward = api_sourcestrmap.get("reward").toString();
+//                                }
+//                                String gaiyao = api_sourcestrmap.get("zy").toString();
+//                                source_contentstr = "<font color=\"#4471BC\" >" + title + "</font><Br/>" + gaiyao;
+//                            }
+//                            map2.put("source_contentstr", source_contentstr);
+//                            map2.put("source_feed_idstr", source_feed_idstr);
+//
+//                            List<Map<String, Object>> source_user_infostrlists = JsonTools.listKeyMaps("[" + source_user_infostr + "]");
+//                            for (Map<String, Object> source_user_infostrmap : source_user_infostrlists) {
+//                                sourceuidstr = source_user_infostrmap.get("uid").toString();
+//                                sourceunamestr = source_user_infostrmap.get("uname").toString();
+//                                avatar_middlestr = source_user_infostrmap.get("avatar_middle").toString();
+//                                String userGroup = source_user_infostrmap.get("user_group").toString();
+//                                map2.put("isVipSource", userGroup);
+//                                map2.put("sourceuidstr", sourceuidstr);
+//                                map2.put("sourceuname", sourceunamestr);
+//                                map2.put("sourceavatar_middlestr", avatar_middlestr);
+//                            }
+//                        }
+//                    }
+//
+//                    String publish_timestr = datastrmap.get("publish_time").toString();
+//                    if (datastrmap.get("digg_count") == null) {
+//                        digg_countstr = "0";
+//                    } else {
+//                        digg_countstr = datastrmap.get("digg_count").toString();
+//                    }
+//                    if (datastrmap.get("comment_count") == null) {
+//                        comment_countstr = "0";
+//                    } else {
+//                        comment_countstr = datastrmap.get("comment_count").toString();
+//                    }
+//                    if (datastrmap.get("repost_count") == null) {
+//                        repost_countstr = "0";
+//                    } else {
+//                        repost_countstr = datastrmap.get("repost_count").toString();
+//                    }
+//                    publish_timestr = CalendarUtil.formatDateTime(Utils
+//                            .getStringtoDate(publish_timestr));
+//                    if (contentstr.contains("feed_img_lists")) {
+//                        contentstr = contentstr.substring(0,
+//                                contentstr.indexOf("feed_img_lists"));
+//                    }
+//                    String attach_urlstr;
+//                    if (datastrmap.get("attach_url") == null) {
+//                        attach_urlstr = "";
+//                    } else {
+//                        attach_urlstr = datastrmap.get("attach_url")
+//                                .toString();
+//                        // 解析短微博图片地址
+//                        attach_urlstr = attach_urlstr.substring(1, attach_urlstr.length() - 1);
+//                    }
+//
+//                    // 不带图的富文本
+//                    if ("".equals(contentstr)) {
+//                        contentstr = "//";
+//                    }
+//                    // 如果是付费文章就有概要 显示内容为标题+概要
+//                    if (!"".equals(introduction)) {
+//                        contentstr = "<font color=\"#4471BC\" >" + title + "</font><Br/>" + introduction;
+//                    }
+//                    if (state != null) {
+//                        map2.put("state", state.toString());
+//                    }
+//                    map2.put("reward", reward);
+//                    map2.put("feed_id", feed_idstr);
+//                    map2.put("content", contentstr);
+//                    map2.put("create", publish_timestr);
+//                    map2.put("digg_count", digg_countstr);
+//                    map2.put("comment_count", comment_countstr);
+//                    map2.put("repost_count", repost_countstr);
+//                    map2.put("isdigg", isdigg);
+//                    map2.put("attach_url", attach_urlstr);
+//                    if (datastrmap.get("user_info") == null) {
+//                        user_infostr = "";
+//                    } else {
+//                        user_infostr = datastrmap.get("user_info")+"";
+//                    }
+//                    List<Map<String, Object>> user_infostrlists = JsonTools
+//                            .listKeyMaps("[" + user_infostr + "]");
+//                    for (Map<String, Object> user_infostrmap : user_infostrlists) {
+//                        String uidstr = user_infostrmap.get("uid").toString();
+//                        String unamestr = user_infostrmap.get("uname").toString();
+//                        String avatar_middlestr2 = user_infostrmap.get("avatar_middle").toString();
+//                        String userGroup = user_infostrmap.get("user_group").toString();
+//                        map2.put("isVip", userGroup);
+//                        map2.put("uid", uidstr);
+//                        map2.put("uname", unamestr);
+//                        map2.put("avatar_middle", avatar_middlestr2);
+//                    }
+//                    listusercommonnoteData.add(map2);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            usercommonnoteAdapter.setlistData(listusercommonnoteData);
+//            // 千万别忘了告诉控件刷新完毕了哦！
+//            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//            dialog.dismissDlog();
+//        }
+//    }
 
     /**
      * 线程更新Ui
      */
     private Handler handler = new Handler() {
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
                     try {
-                        JSONObject jsonObject = new JSONObject(resstr);
+                        JSONObject jsonObject = new JSONObject(resstrPlan);
                         if ("failed".equals(jsonObject.getString("status"))) {
-                            if (linearStock.getVisibility() == View.VISIBLE) {
+                            if (linearPlan.getVisibility() == View.VISIBLE) {
                                 // 千万别忘了告诉控件刷新完毕了哦！
                                 ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             }
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
-                        // 自选股的数据
-                        ArrayList<OptionalEntity> optionalList = (ArrayList<OptionalEntity>) JSON.parseArray(jsonObject.getString("data"), OptionalEntity.class);
-                        getoptionalData(optionalList);
-                        optionalArrayList = optionalList;
-                        // 加载自选股股票信息
-                        stockAdapter.setlistData(optionalList);
+                        ArrayList<PlanEntity> tomliveList = (ArrayList<PlanEntity>) JSON.parseArray(jsonObject.getString("data"), PlanEntity.class);
+                        planEntityArrayList.addAll(tomliveList);
+                        planAdapter.setlistData(planEntityArrayList);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (linearStock.getVisibility() == View.VISIBLE) {
+                    if (linearPlan.getVisibility() == View.VISIBLE) {
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
                 case 1:
-                    // 重新加载自选股列表
-                    for (int i = 0; i < optionalArrayList.size(); i++) {
-                        Map<String, String> mStr = mapZxgStr.get(optionalArrayList.get(i).getStock());
-                        if (mStr != null && mStr.size() > 0) {
-                            optionalArrayList.get(i).setPrice(mStr.get("price"));
-                            optionalArrayList.get(i).setRising(mStr.get("rising"));
-                            optionalArrayList.get(i).setIstype(mStr.get("type"));
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstr);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            return;
                         }
+                        optional_stock_tv.setText(jsonObject.getString("data"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    // 刷新自选股列表
-                    stockAdapter.setlistData(optionalArrayList);
+                    if (linearPlan.getVisibility() == View.VISIBLE) {
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                    dialog.dismissDlog();
                     break;
+//                case 0:
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(resstr);
+//                        if ("failed".equals(jsonObject.getString("status"))) {
+//                            if (linearStock.getVisibility() == View.VISIBLE) {
+//                                // 千万别忘了告诉控件刷新完毕了哦！
+//                                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                            }
+//                            dialog.dismissDlog();
+//                            return;
+//                        }
+//                        // 自选股的数据
+//                        ArrayList<OptionalEntity> optionalList = (ArrayList<OptionalEntity>) JSON.parseArray(jsonObject.getString("data"), OptionalEntity.class);
+//                        getoptionalData(optionalList);
+//                        optionalArrayList = optionalList;
+//                        // 加载自选股股票信息
+//                        stockAdapter.setlistData(optionalList);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (linearStock.getVisibility() == View.VISIBLE) {
+//                        // 千万别忘了告诉控件刷新完毕了哦！
+//                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//                    }
+//                    dialog.dismissDlog();
+//                    break;
+//                case 1:
+//                    // 重新加载自选股列表
+//                    for (int i = 0; i < optionalArrayList.size(); i++) {
+//                        Map<String, String> mStr = mapZxgStr.get(optionalArrayList.get(i).getStock());
+//                        if (mStr != null && mStr.size() > 0) {
+//                            optionalArrayList.get(i).setPrice(mStr.get("price"));
+//                            optionalArrayList.get(i).setRising(mStr.get("rising"));
+//                            optionalArrayList.get(i).setIstype(mStr.get("type"));
+//                        }
+//                    }
+//                    // 刷新自选股列表
+//                    stockAdapter.setlistData(optionalArrayList);
+//                    break;
                 case 2:
                     try {
                         JSONObject jsonObject = new JSONObject(mMresstr);
@@ -1100,7 +1490,7 @@ public class UserDetailNewActivity extends FragmentActivity {
                         // 千万别忘了告诉控件刷新完毕了哦！
                         ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
                 case 3:
                     Double price = 0.0;
@@ -1116,7 +1506,7 @@ public class UserDetailNewActivity extends FragmentActivity {
                         // 成本价
                         costPrice = positionArrayList.get(i).getCost_price();
                         // 收益率
-                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) - Double.valueOf(costPrice)) / Double.valueOf(costPrice) * 100 + "");
+                        profitStr = Utils.getNumberFormat2((Double.valueOf(price) - Double.valueOf(costPrice)) / Math.abs(Double.valueOf(costPrice)) * 100 + "");
                         positionArrayList.get(i).setRatio(profitStr);
                         // 持仓数量
                         int positionValue = Integer.valueOf(positionArrayList.get(i).getPosition_number());
@@ -1137,6 +1527,7 @@ public class UserDetailNewActivity extends FragmentActivity {
                         JSONObject jsonObject = new JSONObject(xxstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
 //                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                            dialog.dismissDlog();
                             return;
                         }
                         JSONObject jsonStr = new JSONObject(jsonObject.getString("data"));
@@ -1173,12 +1564,21 @@ public class UserDetailNewActivity extends FragmentActivity {
                         // 比赛胜率
                         winRate.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate")) + "%");
                         winRate1.setText(Utils.getNumberFormat2(jsonStr.getString("success_rate")) + "%");
+                        String timeStr = jsonStr.getString("time");
                         // 建户时间
-                        time.setText(jsonStr.getString("time").substring(0, 10));
-
+                        if (timeStr.length() > 10) {
+                            time.setText(timeStr.substring(0, 10));
+                        } else {
+                            if("null".equals(timeStr) || "".equals(timeStr)){
+                                time.setText("--");
+                            }else{
+                                time.setText(timeStr);
+                            }
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    dialog.dismissDlog();
                     break;
                 case 5:
                     lineAveData = new ArrayList<SpotEntity>();
@@ -1186,6 +1586,7 @@ public class UserDetailNewActivity extends FragmentActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(chartstr);
                         if ("failed".equals(jsonObject.getString("status"))) {
+                            findViewById(R.id.transaction_chat_ll).setVisibility(View.GONE);
 //                            Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -1212,10 +1613,16 @@ public class UserDetailNewActivity extends FragmentActivity {
                             lineAveData.add(spotEntity);
                             xtitle.add(time);
                         }
-                        initMinuteChart();
+                        if (lineAveData.size() > 1) {
+                            initMinuteChart();
+                            findViewById(R.id.transaction_chat_ll).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.transaction_chat_ll).setVisibility(View.GONE);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    dialog.dismissDlog();
                     break;
                 case 6:
                     try {
@@ -1237,35 +1644,254 @@ public class UserDetailNewActivity extends FragmentActivity {
                         e.printStackTrace();
                     }
                     break;
+                case 7:
+                    try {
+                        JSONObject jsonObject = new JSONObject(tomliveStr);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            tomliveLv.setVisibility(View.GONE);
+                            return;
+                        }
+                        String data = jsonObject.getString("data");
+                        if ("1".equals(data)) {
+                            roomId = jsonObject.getString("room_id");
+                            tomliveLv.setVisibility(View.VISIBLE);
+                        } else {
+                            tomliveLv.setVisibility(View.GONE);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 8:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstrAsk);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            return;
+                        }
+                        sjbCount = jsonObject.getString("data");
+                        if (!sjbCount.equals("0")) {
+                            qaBt.setText("我要提问（" + sjbCount + "水晶币/次）");
+                            qaBt.setBackground(getResources().getDrawable(R.drawable.buttonstyle6));
+                            isRn = true;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismissDlog();
+                    break;
+                case 9:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstrAll);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            return;
+                        }
+                        ArrayList<QuestionAnswerEntity> tomliveList = (ArrayList<QuestionAnswerEntity>) JSON.parseArray(jsonObject.getString("data"), QuestionAnswerEntity.class);
+                        if (allPage == 1) {
+                            listDataAll = tomliveList;
+                        } else {
+                            listDataAll.addAll(tomliveList);
+                        }
+                        adapterAll.setlistData(listDataAll);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    dialog.dismissDlog();
+                    if (allPage == 1) {
+                        // 滚动到顶部
+                        myScrollView.smoothScrollTo(0, 0);
+                    }
+                    break;
+                case 10:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstrMy);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            return;
+                        }
+                        ArrayList<QuestionAnswerEntity> tomliveList = (ArrayList<QuestionAnswerEntity>) JSON.parseArray(jsonObject.getString("data"), QuestionAnswerEntity.class);
+                        if (myPage == 1) {
+                            listDataMy = tomliveList;
+                        } else {
+                            listDataMy.addAll(tomliveList);
+                        }
+                        adapterMy.setlistData(listDataMy);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    break;
+                case 11:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstrAll);
+                        Toast.makeText(UserDetailNewActivity.this, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            dialog.dismissDlog();
+                            return;
+                        }
+                        allPage = 1;
+                        getDataAll();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 12:
+                    dialog.dismissDlog();
+                    // 博主微博列表显示
+                    try {
+                        JSONObject jsonObject = new JSONObject(feedSpaceStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            // 请求失败的情况
+                            CustomToast.makeText(UserDetailNewActivity.this,jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！失败
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            return;
+                        }
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        ArrayList<FeedListEntity> feedListEntitys = (ArrayList<FeedListEntity>) JSON.parseArray(jsonObject.getString("data"), FeedListEntity.class);
+                        if (weiboPage == 1){
+                            userFeedListEntityList = feedListEntitys;
+                        }else{
+                            userFeedListEntityList.addAll(feedListEntitys);
+                        }
+                        userFeedListAdapter.setlistData(userFeedListEntityList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 13:
+                    dialog.dismissDlog();
+                    // 博主内参列表显示
+                    try {
+                        JSONObject jsonObject = new JSONObject(feedSpacePayStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            // 请求失败的情况
+                            CustomToast.makeText(UserDetailNewActivity.this,jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！失败
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            return;
+                        }
+                        // 千万别忘了告诉控件刷新完毕了哦！
+                        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        ArrayList<FeedListEntity> feedListEntitys = (ArrayList<FeedListEntity>) JSON.parseArray(jsonObject.getString("data"), FeedListEntity.class);
+                        if (rewardPage == 1){
+                            payFeedListEntityList = feedListEntitys;
+                        }else{
+                            payFeedListEntityList.addAll(feedListEntitys);
+                        }
+                        payFeedListAdapter.setlistData(payFeedListEntityList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 14:
+                    // 博主的相关信息
+                    try {
+                        JSONObject jsonObject = new JSONObject(userStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            return;
+                        }
+                        UserEntity userEntity = JSON.parseObject(jsonObject.getString("data"),UserEntity.class);
+                        unamestr = userEntity.getUname();
+                        following_count2.setText(userEntity.getFollowing_count());
+                        follower_count2.setText(userEntity.getFollower_count());
+                        if(userEntity.getFollow() != null)
+                        {
+                            followingstr = userEntity.getFollow().getFollowing();
+                            followerstr = userEntity.getFollow().getFollower();// 0是未关注,1是已关注
+                            if ("0".equals(followingstr)) {
+                                followersign1.setText(" + 关注");
+                            } else {
+                                if ("1".equals(followerstr)) {
+                                    followersign1.setText("相互关注");
+                                } else {
+                                    followersign1.setText("取消关注");
+                                }
+                            }
+                        }
+                        String introstr = userEntity.getIntro();
+                        if (introstr == null || "".equals(introstr)) {
+                            introstr = "暂无简介";
+                        }
+                        if ("1".equals(userEntity.getSex())) {
+                            usersex1.setImageResource(R.mipmap.nan);
+                        } else {
+                            usersex1.setImageResource(R.mipmap.nv);
+                        }
+                        username2.setText(unamestr);
+                        userintro1.setText(introstr);
+                        ImageLoader.getInstance().displayImage(userEntity.getAvatar_middle(),
+                                headimg2, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+                        ViewUtil.setUpVipNew(userEntity.getUser_group_icon_url(), vipImg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 15:
+                    // 博主的相关信息
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        CustomToast.makeText(UserDetailNewActivity.this,jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            return;
+                        }
+
+                        if ("0".equals(followingstr)) {
+                            if ("1".equals(followerstr)) {
+                                followersign1.setText("相互关注");
+                            } else {
+                                followersign1.setText("取消关注");
+                            }
+                            followingstr = "1";
+                            int follows = Integer.parseInt((follower_count2.getText()
+                                    .toString()));
+                            follower_count2.setText(String.valueOf((follows + 1)));
+                        } else {
+                            followersign1.setText(" + 关注");
+                            followingstr = "0";
+                            int follows = Integer.parseInt((follower_count2.getText()
+                                    .toString()));
+                            follower_count2.setText(String.valueOf((follows - 1)));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
 
-    /**
-     * 获取自选股股票实时数据进行处理
-     *
-     * @param listOptional
-     */
-    private void getoptionalData(ArrayList<OptionalEntity> listOptional) {
-        String str = "";
-        for (OptionalEntity optionalEntity : listOptional) {
-            if (!"".equals(str)) {
-                str += ",";
-            }
-            str += Utils.judgeSharesCode(optionalEntity.getStock());
-        }
-        // 开线程获股票当前信息
-        final String finalStr = str;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 调用接口获取股票当前行情数据（返回股票代码和最新价格的map）
-                mapZxgStr = sharesUtil.getsharess(finalStr);
-                // 重新加载自选股数据
-                handler.sendEmptyMessage(1);
-            }
-        }).start();
-    }
+//    /**
+//     * 获取自选股股票实时数据进行处理
+//     *
+//     * @param listOptional
+//     */
+//    private void getoptionalData(ArrayList<OptionalEntity> listOptional) {
+//        String str = "";
+//        for (OptionalEntity optionalEntity : listOptional) {
+//            if (!"".equals(str)) {
+//                str += ",";
+//            }
+//            str += Utils.judgeSharesCode(optionalEntity.getStock());
+//        }
+//        // 开线程获股票当前信息
+//        final String finalStr = str;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 调用接口获取股票当前行情数据（返回股票代码和最新价格的map）
+//                mapZxgStr = sharesUtil.getsharess(finalStr);
+//                // 重新加载自选股数据
+//                handler.sendEmptyMessage(1);
+//            }
+//        }).start();
+//    }
 
 
     /**
@@ -1334,11 +1960,6 @@ public class UserDetailNewActivity extends FragmentActivity {
      * 设置分时图的属性
      */
     private void initMinuteChart() {
-
-        // 最大最小
-//        maxY = (float) (maxY + maxY * 0.1);
-//        miniY = (float) (miniY - miniY * 0.1);
-
         List<String> ytitleInner = new ArrayList<String>();
         ytitleInner.add(maxY + "%");
         ytitleInner.add("");
@@ -1401,6 +2022,13 @@ public class UserDetailNewActivity extends FragmentActivity {
      * @param view
      */
     public void subscribeClick(View view) {
+        // menghuan 不用登陆也可以用
+        // 如果未登陆跳转到登陆页面
+        if (!Constants.isLogin){
+            Intent intent = new Intent(this, loginActivity.class);
+            startActivity(intent);
+            return;
+        }
         // 防止多次点击
         if (Utils.isFastDoubleClick3()) {
             return;
@@ -1414,12 +2042,12 @@ public class UserDetailNewActivity extends FragmentActivity {
             startActivity(intent);
         } else {
             // 打开订阅选择页面popup
-            HashMap<String,String> map = new HashMap<String, String>();
-            map.put("name",unamestr);
-            map.put("time",desertTime);
-            map.put("isExtend",desertExtend);
-            map.put("uid",uidstr);
-            map.put("id",desertId);
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("name", unamestr);
+            map.put("time", desertTime);
+            map.put("isExtend", desertExtend);
+            map.put("uid", uidstr);
+            map.put("id", desertId);
             //实例化SelectPicPopupWindow
             SubscribeChoicePopup menuWindow = new SubscribeChoicePopup(UserDetailNewActivity.this, map);
             //显示窗口
@@ -1444,8 +2072,363 @@ public class UserDetailNewActivity extends FragmentActivity {
     }
 
     // 修改订阅文字
-    public void udpateSubscribeTx(){
+    public void udpateSubscribeTx() {
         desertId = "";
         subscribeTv.setText("订阅");
+    }
+
+
+//    private class SendInfoTaskmyattentionweibolist extends AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            //调用共通方法获取网络数据
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (result == null) {
+//                CustomToast.makeText(UserDetailNewActivity.this, "", Toast.LENGTH_SHORT).show();
+//                // 千万别忘了告诉控件刷新完毕了哦！失败
+//                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+//                dialog.dismissDlog();
+//                return;
+//            }
+//            String digg_countstr = "";
+//            String comment_countstr = "";
+//            String repost_countstr = "";
+//            String user_infostr = "";
+//            // 获取概要
+//            String introduction = "";
+//            // 判断是否是微博
+//            Object state = null;
+//            // 获取水晶币个数
+//            String reward = "";
+//            String datastr2 = null;
+//            List<Map<String, Object>> datastrlists2 = null;
+//            super.onPostExecute(result);
+//            try {
+//                JSONObject jsonObject = new JSONObject(result);
+//                // 获取点赞标识的数组
+//                String diggArrstr;
+//                if (jsonObject.getString("diggArr") == null) {
+//                    diggArrstr = "";
+//                } else {
+//                    diggArrstr = jsonObject.getString("diggArr");
+//                }
+//                if (datastr2 == null) {
+//                    datastr2 = jsonObject.getString("data");
+//                    datastrlists2 = JsonTools.listKeyMaps(datastr2);
+//                }
+//
+//                if (datastrlists2 == null) {
+//                    datastrlists2 = new ArrayList<Map<String, Object>>();
+//                }
+//                for (Map<String, Object> datastrmap : datastrlists2) {
+//                    String isdigg = "0";// isdigg为0为未点赞为1为已点赞
+//                    String feed_idstr = datastrmap.get("feed_id").toString();
+//                    if (diggArrstr.contains(feed_idstr)) {
+//                        isdigg = "1";
+//                    }
+//
+//                    // 微博类型
+//                    String typestr = datastrmap.get("type").toString();
+//                    // 获取为本类容
+//                    String contentstr = "";
+//                    introduction = "";
+//                    state = datastrmap.get("state");
+//                    // 先判断是否是付费文章如果是就获取概要
+//                    if (state != null && "1".equals(state.toString())) {
+//                        reward = datastrmap.get("reward").toString();
+//                        Object introd = datastrmap.get("introduction");
+//                        if (introd != null && !"null".equals(introd.toString())) {
+//                            introduction = introd.toString();
+//                        }
+//                    }
+//                    if (datastrmap.get("body") == null) {
+//                        contentstr = "内容为空";
+//                    } else {
+//                        contentstr = datastrmap.get("body") + "";
+//                    }
+//
+//                    String title = datastrmap.get("title") + "";
+//                    if (!"".equals(title) && !"null".equals(title)) {
+//                        contentstr = "<font color=\"#4471BC\" >" + title + "</font><br/>" + contentstr;
+//                    }
+//                    // 替换表情符的 肯定有问题 要改
+//                    contentstr = contentstr.replace("[", "<img src=\"");
+//                    contentstr = contentstr.replace("]", "\"/>");
+//
+//                    HashMap<String, String> map2 = new HashMap<String, String>();
+//                    map2.put("type", typestr);
+//                    String publish_timestr = datastrmap.get("publish_time").toString();
+//                    if (datastrmap.get("digg_count") == null) {
+//                        digg_countstr = "0";
+//                    } else {
+//                        digg_countstr = datastrmap.get("digg_count").toString();
+//                    }
+//                    if (datastrmap.get("comment_count") == null) {
+//                        comment_countstr = "0";
+//                    } else {
+//                        comment_countstr = datastrmap.get("comment_count").toString();
+//                    }
+//                    if (datastrmap.get("repost_count") == null) {
+//                        repost_countstr = "0";
+//                    } else {
+//                        repost_countstr = datastrmap.get("repost_count").toString();
+//                    }
+//                    publish_timestr = CalendarUtil.formatDateTime(Utils
+//                            .getStringtoDate(publish_timestr));
+//                    if (contentstr.contains("feed_img_lists")) {
+//                        contentstr = contentstr.substring(0,
+//                                contentstr.indexOf("feed_img_lists"));
+//                    }
+//                    String attach_urlstr;
+//                    if (datastrmap.get("attach_url") == null) {
+//                        attach_urlstr = "";
+//                    } else {
+//                        attach_urlstr = datastrmap.get("attach_url")
+//                                .toString();
+//                        // 解析短微博图片地址
+//                        attach_urlstr = attach_urlstr.substring(1, attach_urlstr.length() - 1);
+//                    }
+//
+//                    // 不带图的富文本
+//                    if ("".equals(contentstr)) {
+//                        contentstr = "//";
+//                    }
+//                    // 如果是付费文章就有概要 显示内容为标题+概要
+//                    if (!"".equals(introduction)) {
+//                        contentstr = "<font color=\"#4471BC\" >" + title + "</font><Br/>" + introduction;
+//                    }
+//                    if (state != null) {
+//                        map2.put("state", state.toString());
+//                    }
+//                    map2.put("reward", reward);
+//                    map2.put("feed_id", feed_idstr);
+//                    map2.put("content", contentstr);
+//                    map2.put("create", publish_timestr);
+//                    map2.put("digg_count", digg_countstr);
+//                    map2.put("comment_count", comment_countstr);
+//                    map2.put("repost_count", repost_countstr);
+//                    map2.put("isdigg", isdigg);
+//                    map2.put("attach_url", attach_urlstr);
+//                    if (datastrmap.get("user_info") == null) {
+//                        user_infostr = "";
+//                    } else {
+//                        user_infostr = datastrmap.get("user_info")
+//                                .toString();
+//                    }
+//                    List<Map<String, Object>> user_infostrlists = JsonTools
+//                            .listKeyMaps("[" + user_infostr + "]");
+//                    for (Map<String, Object> user_infostrmap : user_infostrlists) {
+//                        String uidstr = user_infostrmap.get("uid").toString();
+//                        String unamestr = user_infostrmap.get("uname").toString();
+//                        String avatar_middlestr2 = user_infostrmap.get("avatar_middle").toString();
+//                        String userGroup = user_infostrmap.get("user_group").toString();
+//                        map2.put("isVip", userGroup);
+//                        map2.put("uid", uidstr);
+//                        map2.put("uname", unamestr);
+//                        map2.put("avatar_middle", avatar_middlestr2);
+//                    }
+//                    listessenceData.add(map2);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            commonnoteAdapter.setlistData(listessenceData);
+//            // 千万别忘了告诉控件刷新完毕了哦！
+//            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+//            dialog.dismissDlog();
+//        }
+//    }
+
+    /**
+     * 跳转到用户资料页面
+     *
+     * @param view
+     */
+    public void UserDataClick(View view) {
+        Intent intent = new Intent(this, UserDataActivity.class);
+        intent.putExtra("name", unamestr);
+        intent.putExtra("uid", uidstr);
+        intent.putExtra("intro", userintro1.getText().toString().trim());
+        startActivity(intent);
+    }
+
+    /**
+     * 问答页面的控件绑定
+     */
+    private void findViewQa() {
+        fragmentQa = (LinearLayout) findViewById(R.id.fragment_qa);
+        text_wd = (TextView) findViewById(R.id.text_wd);
+        text_tw = (TextView) findViewById(R.id.text_tw);
+        ll_wd = (LinearLayout) findViewById(R.id.linear_wd);
+        ll_tw = (LinearLayout) findViewById(R.id.linear_tw);
+        qaBt = (Button) findViewById(R.id.qa_bt);
+        ll_wd.setOnClickListener(new MyOnClickListenserQa(0));
+        ll_tw.setOnClickListener(new MyOnClickListenserQa(1));
+        allQaList = (ListView) findViewById(R.id.all_qa);
+        myQaList = (ListView) findViewById(R.id.my_qa);
+        if (Constants.staticmyuidstr.equals(uidstr)) {
+            text_tw.setText("用户提问");
+            qaBt.setVisibility(View.GONE);
+        } else {
+            qaBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // menghuan 不用登陆也可以用
+                    // 如果未登陆跳转到登陆页面
+                    if (!Constants.isLogin){
+                        Intent intent = new Intent(UserDetailNewActivity.this, loginActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                    if (Utils.isFastDoubleClick3() || !isRn) {
+                        return;
+                    }
+                    // 跳转到提问页面
+                    Intent intent = new Intent(UserDetailNewActivity.this, QuestionAnswerActivity.class);
+                    intent.putExtra("type", "1");
+                    intent.putExtra("id", uidstr);
+                    intent.putExtra("sjbCount", sjbCount);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        listDataMy = new ArrayList<QuestionAnswerEntity>();
+        adapterMy = new QuizMyAdapter(this, uidstr);
+        myQaList.setAdapter(adapterMy);
+
+        listDataAll = new ArrayList<QuestionAnswerEntity>();
+        adapterAll = new QuizAdapter(this, this);
+        allQaList.setAdapter(adapterAll);
+        initLineQa();
+    }
+
+
+    /**
+     * 问答获取水晶币个数
+     */
+    private void getData() {
+        // 获得设置的打赏水晶币个数
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resstrAsk = HttpUtil.restHttpGet(Constants.moUrl + "/ask/index/getPrice&uid=" + uidstr);
+                handler.sendEmptyMessage(8);
+            }
+        }).start();
+    }
+
+    /**
+     * 获取全部问答
+     */
+    private void getDataAll() {
+        // 获取全部提问信息
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resstrAll = HttpUtil.restHttpGet(Constants.moUrl + "/ask&uid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&type=2&p=" + allPage + "&auid=" + uidstr);
+                handler.sendEmptyMessage(9);
+            }
+        }).start();
+    }
+
+    /**
+     * 获取我的问答
+     */
+    private void getDataMy() {
+        // 获取全部我的问答
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                resstrMy = HttpUtil.restHttpGet(Constants.moUrl + "/ask&uid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&type=4&p=" + myPage + "&auid=" + uidstr);
+                handler.sendEmptyMessage(10);
+            }
+        }).start();
+    }
+
+    /**
+     * 初始化line
+     */
+    private void initLineQa() {
+        img_line2 = (ImageView) findViewById(R.id.img_line2);
+        mScreen1_2 = ImageUtil.getScreenWidth(this) / 2;
+        ViewGroup.LayoutParams lp = img_line2.getLayoutParams();
+        lp.width = mScreen1_2;
+        img_line2.setLayoutParams(lp);
+    }
+
+    /**
+     * 回掉付费的接口刷新页面
+     *
+     * @param id
+     */
+    public void Refresh(final String id) {
+        dialog.showDialog();
+        // 调用接口去购买
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List dataList = new ArrayList();
+                dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
+                dataList.add(new BasicNameValuePair("token", Constants.apptoken));
+                dataList.add(new BasicNameValuePair("id", id));
+                resstrAll = HttpUtil.restHttpPost(Constants.moUrl + "/ask/index/watch", dataList);
+                handler.sendEmptyMessage(11);
+            }
+        }).start();
+    }
+
+    /**
+     * 点击文字进行切换
+     *
+     * @author wuxl
+     */
+    public class MyOnClickListenserQa implements View.OnClickListener {
+
+        private int index = 0;
+
+        public MyOnClickListenserQa(int i) {
+            index = i;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.linear_wd:
+                    text_tw.setTextColor(unselect_color);
+                    text_wd.setTextColor(select_color);
+                    allQaList.setVisibility(View.VISIBLE);
+                    myQaList.setVisibility(View.GONE);
+                    break;
+                case R.id.linear_tw:
+                    text_wd.setTextColor(unselect_color);
+                    text_tw.setTextColor(select_color);
+                    allQaList.setVisibility(View.GONE);
+                    myQaList.setVisibility(View.VISIBLE);
+                    break;
+            }
+            LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line2.getLayoutParams();
+            // 关键算法
+            lp.leftMargin = (int) ((mScreen1_2 * index) + (((double) (index + 1) / viewPagerW) * mScreen1_2));
+            img_line2.setLayoutParams(lp);
+            // 滚动到顶部
+            myScrollView.smoothScrollTo(0, 0);
+        }
+    }
+
+    /**
+     * 跳转到自选股页面
+     *
+     * @param view
+     */
+    public void MyStockClick(View view) {
+        Intent intent = new Intent(this, MyStocksActivity.class);
+        intent.putExtra("uid", uidstr);
+        startActivity(intent);
     }
 }

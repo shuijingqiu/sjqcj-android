@@ -1,8 +1,9 @@
 package com.example.sjqcjstock.Activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,37 +16,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
+import com.example.sjqcjstock.constant.ACache;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.UnreadCount;
 import com.example.sjqcjstock.fragment.FragmentForum;
 import com.example.sjqcjstock.fragment.FragmentHome;
 import com.example.sjqcjstock.fragment.FragmentInform;
-import com.example.sjqcjstock.fragment.FragmentMessage;
 import com.example.sjqcjstock.fragment.FragmentMy;
 import com.example.sjqcjstock.fragment.stocks.FragmentAnalogHome;
 import com.example.sjqcjstock.helper.ChangeFragmentHelper;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.view.CustomToast;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * 框架主体显示页面
  */
 public class MainActivity extends FragmentActivity {
 
+    public static MainActivity mainActivity;
     private Fragment currentShowFragment;
     private FragmentHome fragmentHome;
     private FragmentForum fragmentForum;
     private FragmentAnalogHome fragmentAnalogHome;
-    private FragmentMessage fragmentMessage;// 以后不要的
     private FragmentInform fragmentInform;
     private FragmentMy fragmentMy;
     private FragmentManager manager;
@@ -53,7 +60,14 @@ public class MainActivity extends FragmentActivity {
     private RadioGroup main_tabBar;
     // 未读消息条数
     private TextView messageCountTv;
-
+    // 接口返回的消息条数
+    private String resstr;
+    // 是否注册极光推送别名(每次进来只注册一次)
+    private boolean isRn = true;
+    // 登陆接口返回数据
+    private String loginStr;
+    // 消息条数接口返回数据
+    private String messageStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +76,13 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ExitApplication.getInstance().addActivity(this);
         initView();
-        loadData();
-        // 开定时器获取接口
-        obtainToken();
+        // menghuan先不获取token直接进入首页
+        // 用户登陆了再去获取数据
+        if (Constants.isLogin) {
+            // 开定时器获取Token
+            obtainToken();
+        }
+        mainActivity = this;
     }
 
     @Override
@@ -72,19 +90,15 @@ public class MainActivity extends FragmentActivity {
         super.onResume();
         // 以后要要的
         if (Constants.unreadCountInfo != null) {
-//             返回主框架页面重新设置未读消息条数
+            //返回主框架页面重新设置未读消息条数
             int total = Constants.unreadCountInfo.getData().getUnread_total();
             String totalStr = total + "";
-            if (total > 99) {
-                totalStr = "99+";
-            }
-            messageCountTv.setText(totalStr);
-            if (totalStr.equals("0")) {
+            if (totalStr.equals("0") && Constants.unreadCountInfo.getNr_count() == 0 && Constants.unreadCountInfo.getZb_count() == 0) {
                 messageCountTv.setVisibility(View.GONE);
             } else {
                 messageCountTv.setVisibility(View.VISIBLE);
             }
-            if(fragmentMy != null){
+            if (fragmentMy != null) {
                 // 重新设置我的页面的消息条数
                 fragmentMy.setMessageCount();
             }
@@ -106,25 +120,7 @@ public class MainActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
         fragmentTransaction = manager.beginTransaction();
         messageCountTv = (TextView) findViewById(R.id.message_count_tv);
-
-//        if(Constants.intentFlag.equals("1")){
-//        	Constants.intentFlag = "";
-//
-//        	main_tabBar.check(R.id.main_forum);
-//
-//        	defaultShowFragment(new FragmentForum());
-//
-//            main_tabBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(RadioGroup group, int checkedId) {
-//               	 radioGruopClick(group, checkedId);
-//                }
-//            });
-//
-//        } else {
-
         main_tabBar.check(R.id.main_home);
-
         //默认显示首页界面
         defaultShowFragment();
         main_tabBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -133,59 +129,34 @@ public class MainActivity extends FragmentActivity {
                 radioGruopClick(group, checkedId);
             }
         });
-//        }
     }
 
     // 获取全局所用数据
     private void loadData() {
-        // 加载未读消息体的一些信息
-        new UnreadCountData().execute(new TaskParams(Constants.unreadCount + "&uid=" + Constants.staticmyuidstr));
-    }
-
-    // 获取未读消息条数信息
-    private class UnreadCountData extends AsyncTask<TaskParams, Void, String> {
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackgroundGet(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
-            } else {
-                try {
-                    Constants.unreadCountInfo = JSON.parseObject(result, UnreadCount.class);
-                    //以后要要的
-                    int total = Constants.unreadCountInfo.getData().getUnread_total();
-                    String totalStr = total + "";
-                    if (total > 99) {
-                        totalStr = "99+";
-                    }
-                    messageCountTv.setText(totalStr);
-                    if (totalStr.equals("0")) {
-                        messageCountTv.setVisibility(View.GONE);
-                    } else {
-                        messageCountTv.setVisibility(View.VISIBLE);
-                    }
-//                // 以后要替换成下面那个的
-//                if (fragmentMessage != null) {
-//                    // 重新设置我的页面的消息条数
-//                    fragmentMessage.showMessage();
-//                }
-                    if (fragmentMy != null) {
-                        // 重新设置我的页面的消息条数
-                        fragmentMy.setMessageCount();
-                    }
-                }catch (Exception e) {
-                    e.printStackTrace();
+        // menghuan 先不要登陆 不登录也可以看
+        // 用户登陆了再去获取数据
+        if (Constants.isLogin) {
+            // 加载未读消息体的一些信息
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    messageStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/message/unread?token=" + Constants.apptoken + "&mid=" + Constants.staticmyuidstr);
+                    handler.sendEmptyMessage(2);
                 }
-            }
+            }).start();
+
+            // 获取牛人动态未读消息条数
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    resstr = HttpUtil.restHttpGet(Constants.moUrl + "/message/unread&token=" + Constants.apptoken + "&uid=" + Constants.staticmyuidstr);
+                    handler.sendEmptyMessage(0);
+                }
+            }).start();
         }
     }
 
     protected void radioGruopClick(RadioGroup group, int checkedId) {
-        // TODO Auto-generated method stub
         switch (checkedId) {
             case R.id.main_home:
                 if (currentShowFragment != fragmentHome) {
@@ -214,20 +185,6 @@ public class MainActivity extends FragmentActivity {
                 }
                 break;
             case R.id.main_match:
-//                if (currentShowFragment != fragmentMessage) {
-//                    if (fragmentMessage == null) {
-//                        fragmentMessage = new FragmentMessage();
-//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentMessage).commit();
-//                        currentShowFragment = fragmentMessage;
-//                    } else {
-//                        getSupportFragmentManager().beginTransaction().hide(currentShowFragment).show(fragmentMessage).commit();
-//                        currentShowFragment = fragmentMessage;
-//                    }
-//                    // 重新获取消息数进行显示
-//                    loadData();
-//                }
-//                break;
-
                 if (currentShowFragment != fragmentAnalogHome) {
                     if (fragmentAnalogHome == null) {
                         fragmentAnalogHome = new FragmentAnalogHome();
@@ -239,7 +196,6 @@ public class MainActivity extends FragmentActivity {
                     }
                 }
                 break;
-
             case R.id.main_inform:
                 if (currentShowFragment != fragmentInform) {
                     if (fragmentInform == null) {
@@ -256,7 +212,7 @@ public class MainActivity extends FragmentActivity {
             case R.id.main_my:
                 if (currentShowFragment != fragmentMy) {
                     if (fragmentMy == null) {
-                        fragmentMy = new FragmentMy();
+                        fragmentMy = new FragmentMy(messageCountTv);
                         getSupportFragmentManager().beginTransaction().hide(currentShowFragment).add(R.id.main_container, fragmentMy).commit();
                         currentShowFragment = fragmentMy;
                     } else {
@@ -305,9 +261,14 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitBy2Click(); //调用双击退出函数
+//            exitBy2Click(); //调用双击退出函数
+            // 把返回键当HOME键来处理
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            i.addCategory(Intent.CATEGORY_HOME);
+            startActivity(i);
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     /**
@@ -327,7 +288,6 @@ public class MainActivity extends FragmentActivity {
                     isExit = false; // 取消退出
                 }
             }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-
         } else {
             finish();
             ExitApplication.getInstance().exit();
@@ -337,94 +297,175 @@ public class MainActivity extends FragmentActivity {
     /**
      * 调用股票的按钮事件
      */
-    public void clickStocks(){
+    public void clickStocks() {
         main_tabBar.check(R.id.main_match);
-        radioGruopClick(null,R.id.main_match);
+        radioGruopClick(null, R.id.main_match);
     }
 
     /**
      * 定时获取token(根据账号密码or第三方的token)
      */
-    private void obtainToken(){
+    private void obtainToken() {
         // 当前用户类型
-        final String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
+        final String type = Constants.getStaticLoginType();
         final String login_email = getSharedPreferences("userinfo", MODE_PRIVATE).getString("login_email", "");
-        Timer timer = new Timer();
+        Constants.timer = new Timer();
         // 开定时器获取数据
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                String url = "";
-                TaskParams taskParams = null;
-                if ("qq".equals(type)){
-                    taskParams = new TaskParams(
-                            Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
-                            new String[]{"type", "qq"},
-                            new String[]{"tokey", Constants.statictokeystr}
-                    );
-                }else if("weixin".equals(type)){
-                    taskParams = new TaskParams(
-                            Constants.Url + "?app=index&mod=Index&act=app_w3g_no_register_display",
-                            new String[]{"type", "weixin"},
-                            new String[]{"tokey", Constants.statictokeystr}
-                    );
-                }else{
-                    taskParams = new TaskParams(
-                            Constants.Url + "?app=public&mod=Passport&act=AppLogin",
-                            new String[]{"login_email", login_email},
-                            new String[]{"login_password", Constants.staticpasswordstr},
-                            new String[]{"login_remember", "1"}
-                    );
+                // 没有网络就不进行请求
+                if (!HttpUtil.isNetworkAvailable(MainActivity.this)) {
+                    return;
                 }
-                new SendInfoTaskForCommonUserLogin().execute(taskParams);
+                String url = "";
+                if ("qq".equals(type)) {
+                    // 第三方登陆
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            List dataList = new ArrayList();
+                            // 第三分token
+                            dataList.add(new BasicNameValuePair("tokey", Constants.statictokeystr));
+                            // 类型
+                            dataList.add(new BasicNameValuePair("type", "qq"));
+                            loginStr = HttpUtil.restHttpPost(Constants.newUrl + "/api/login/thirdParty", dataList);
+                            handler.sendEmptyMessage(1);
+                        }
+                    }).start();
 
+                } else if ("weixin".equals(type)) {
+                    // 第三方登陆
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            List dataList = new ArrayList();
+                            // 第三分token
+                            dataList.add(new BasicNameValuePair("tokey", Constants.statictokeystr));
+                            // 类型
+                            dataList.add(new BasicNameValuePair("type", "weixin"));
+                            loginStr = HttpUtil.restHttpPost(Constants.newUrl + "/api/login/thirdParty", dataList);
+                            handler.sendEmptyMessage(1);
+                        }
+                    }).start();
+                } else {
+                    //用户登陆
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            List dataList = new ArrayList();
+                            // 用户名
+                            dataList.add(new BasicNameValuePair("uname", login_email));
+                            // 密码
+                            dataList.add(new BasicNameValuePair("password", Constants.staticpasswordstr));
+                            loginStr = HttpUtil.restHttpPost(Constants.newUrl + "/api/login", dataList);
+                            handler.sendEmptyMessage(1);
+                        }
+                    }).start();
+                }
             }
         };
-        timer.schedule(task, 10, 1000*60*30); // 10ms后执行task,经过0.5h再次执行
+        Constants.timer.schedule(task, 1, 1000 * 60 * 30); // 10ms后执行task,经过0.5h再次执行
+//        Constants.timer.schedule(task, 10, 1000*60); // 10ms后执行task,经过0.5h再次执行
 
     }
 
-
-    //普通用户登录
-    private class SendInfoTaskForCommonUserLogin extends AsyncTask<TaskParams, Void, String> {
-
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
         @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(resstr);
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            return;
+                        }
+                        Constants.unreadCountInfo.setNr_count(jsonObject.getInt("data"));
+                        Constants.unreadCountInfo.setZb_count(jsonObject.getInt("live_count"));
+                        int total = Constants.unreadCountInfo.getData().getUnread_total();
+                        String totalStr = total + "";
+                        if (totalStr.equals("0") && Constants.unreadCountInfo.getNr_count() == 0 && Constants.unreadCountInfo.getZb_count() == 0) {
+                            messageCountTv.setVisibility(View.GONE);
+                        } else {
+                            messageCountTv.setVisibility(View.VISIBLE);
+                        }
+                        if (fragmentMy != null) {
+                            // 重新设置我的页面的消息条数
+                            fragmentMy.setMessageCount();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 1:
+                    try {
+                        JSONObject jsonObject = new JSONObject(loginStr);
+                        String code = jsonObject.getString("code");
+                        // 没有登录成功
+                        if (!Constants.successCode.equals(code)) {
+                            // 登录不成功退出程序到登陆页面
+                            Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                            startActivity(intent);
+                            ExitApplication.getInstance().exit();
+                        } else {
+                            JSONObject jsonData = new JSONObject(jsonObject.getString("data"));
+                            String token = jsonData.getString("token");
+                            // 改这个是为了登陆不要token 也可以用
+                            // *--------------------------*
+                            Constants.apptoken = token;
+                            // 登陆成功了然后再去获取消息条数
+                            loadData();
+                            // 获取缓存是否接收推送
+                            String isPush = ACache.get(MainActivity.this).getAsString("isPush");
+                            if (isRn && !"false".equals(isPush)) {
+                                // 登陆后开启推送服务）
+                                JPushInterface.resumePush(MainActivity.this);
+                                // 极光推送为用户添加别名（重复设置为覆盖）Uid作为别名
+                                JPushInterface.setAliasAndTags(MainActivity.this, Constants.staticmyuidstr, null, new TagAliasCallback() {
+                                    @Override
+                                    public void gotResult(int i, String s, Set<String> set) {
+                                        // i=0 为成功
+                                    }
+                                });
+                                isRn = false;
+                            }
+                            // *--------------------------*
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    try {
+                        JSONObject jsonObject = new JSONObject(messageStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            return;
+                        }
+                        UnreadCount unreadCount = JSON.parseObject(messageStr, UnreadCount.class);
+                        Constants.unreadCountInfo.setData(unreadCount.getData());
+                        //以后要要的
+                        int total = Constants.unreadCountInfo.getData().getUnread_total();
+                        String totalStr = total + "";
+                        if (totalStr.equals("0") && Constants.unreadCountInfo.getNr_count() == 0 && Constants.unreadCountInfo.getZb_count() == 0) {
+                            messageCountTv.setVisibility(View.GONE);
+                        } else {
+                            messageCountTv.setVisibility(View.VISIBLE);
+                        }
+                        if (fragmentMy != null) {
+                            // 重新设置我的页面的消息条数
+                            fragmentMy.setMessageCount();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-            } else {
-                try {
-                    String type = getSharedPreferences("loginInfo", MODE_PRIVATE).getString("loginType", "");
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (!"1".equals(jsonObject.getString("status"))) {
-                        // 登录不成功退出程序到登陆页面
-                        Intent intent = new Intent(MainActivity.this, loginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    if ("common".equals(type)) {
-                        Constants.apptoken = jsonObject.getString("token");
-                    } else {
-                        // 第三方的
-                        jsonObject = new JSONObject(jsonObject.getString("data"));
-                        Constants.apptoken = jsonObject.getString("token");
-                    }
-                    if (Constants.apptoken == null || "".equals(Constants.apptoken.trim())) {
-                        // 获取token不成功退出程序到登陆页面
-                        Intent intent = new Intent(MainActivity.this, loginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    break;
             }
         }
-    }
+    };
 }
 

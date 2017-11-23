@@ -6,7 +6,6 @@
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -19,6 +18,7 @@
             android:layout_centerVertical="true" />
 
         <TextView
+            android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -54,6 +54,7 @@
             android:background="@drawable/shape2"
             android:gravity="left"
             android:hint="请输入用户名"
+            android:maxLength="10"
             android:padding="10px"
             android:singleLine="true"
             android:textColorHint="#969696"
@@ -245,6 +246,36 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:background="@color/gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingLeft="25dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/check_box_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/color_text2"
+            android:checked="true"
+            android:drawableLeft="@drawable/check_box_style"
+            android:drawablePadding="3dp"
+            android:button="@null"
+            android:text="同意"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《水晶球用户服务协议》"
+            android:textColor="@color/color_toptitle"
+            android:textSize="13sp"
+            android:clickable="true"
+            android:onClick="serviceClick"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/register1"

@@ -6,30 +6,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sjqcjstock.R;
+import com.example.sjqcjstock.entity.PrivateMessageEntity;
+import com.example.sjqcjstock.netutil.CalendarUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
+import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.ViewUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**
+ *
+ */
 public class peronalnewslistAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, String>> listData;
+    private ArrayList<PrivateMessageEntity> listData;
 
     public peronalnewslistAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, String>> listData) {
+    public void setlistData(ArrayList<PrivateMessageEntity> listData) {
         if (this.listData != null)
             this.listData.clear();
-        this.listData = (ArrayList<HashMap<String, String>>) listData.clone();
+        this.listData = (ArrayList<PrivateMessageEntity>) listData.clone();
         notifyDataSetChanged();
     }
 
@@ -50,61 +56,39 @@ public class peronalnewslistAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         //动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-
-        //convertView=mInflater.inflate(R.layout.list_item_sesence, null);
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_personalnews, null);
+            holder = new ViewHolder();
+            holder.nameTv = (TextView) convertView.findViewById(R.id.username1);
+            holder.image = (ImageView) convertView.findViewById(R.id.user_image1);
+            holder.lastmessage1 = (TextView) convertView.findViewById(R.id.lastmessage1);
+            holder.creatime1 = (TextView) convertView.findViewById(R.id.creatime1);
+            holder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.RelativeLayout);
+            holder.vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        //convertView=mInflater.inflate(R.layout.n, null);
-
-        ImageView image = (ImageView) convertView.findViewById(R.id.user_image1);
-        // image.setBackgroundResource((Integer)listData.get(position).get("friend_image"));
-        ImageLoader.getInstance().displayImage((String) listData.get(position).
-                        get("avatar_middlestr"),
-                image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-//		
-        TextView username1 = (TextView) convertView.findViewById(R.id.username1);
-        username1.setText((String) listData.get(position).get("unamestr"));
-
-        TextView lastmessage1 = (TextView) convertView.findViewById(R.id.lastmessage1);
-        lastmessage1.setText((String) listData.get(position).get("contentstr"));
-//		
-        TextView creatime1 = (TextView) convertView.findViewById(R.id.creatime1);
-        creatime1.setText((String) listData.get(position).get("list_ctimestr"));
-//		
-//		CheckBox check=(CheckBox)convertView.findViewById(R.id.selected);
-
-//		//判断用户是否已被选择，如被选择，则复选框为勾选，如未选择则复选框为可选
-//		if((Boolean) listData.get(position).get("selected")){
-//			state.put(position,true);
-//			
-//		}
-
-//		check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//				// TODO Auto-generated method stub
-//				if(isChecked){
-//					state.put(position,isChecked);
-//				}else {
-//					state.remove(position);
-//				}
-//			}
-//		});
-
-//		check.setChecked((state.get(position)==null?false:true));
-
-        ImageView vipImg = (ImageView) convertView
-                .findViewById(R.id.vip_img);
-        String isVip = listData.get(position).get(
-                "isVip");
-        ViewUtil.setUpVip(isVip, vipImg);
+        PrivateMessageEntity privateMessageEntity = listData.get(position);
+        ImageLoader.getInstance().displayImage(privateMessageEntity.getAvatar_middle(),
+                holder.image, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        holder.nameTv.setText(privateMessageEntity.getUname());
+        holder.lastmessage1.setText(privateMessageEntity.getContent());
+        holder.creatime1.setText(CalendarUtil.formatDateTime(Utils.getStringtoDate(privateMessageEntity.getList_ctime())));
+        ViewUtil.setUpVipNew(privateMessageEntity.getUser_group_icon_url(), holder.vipImg);
         return convertView;
     }
 
+    public static class ViewHolder {
+        TextView nameTv;
+        ImageView image;
+        TextView lastmessage1;
+        TextView creatime1;
+        RelativeLayout relativeLayout;
+        ImageView vipImg;
+    }
 
 }

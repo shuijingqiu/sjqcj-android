@@ -45,15 +45,26 @@
                 android:text="头像："
                 android:textSize="14dp" />
 
-            <ImageView
-                android:id="@+id/imgportrait"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/portrait2" />
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/imgportrait"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/portrait2" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/head_frame" />
+
+            </RelativeLayout>
 
             <Button
                 style="@style/arrow_img"
@@ -139,19 +150,20 @@
             android:layout_height="1dp"
             android:background="@drawable/line" />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/pickpersonalintro1"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/color_ffffff"
-            android:orientation="horizontal" >
+            android:background="@color/color_ffffff">
 
             <TextView
+                android:id="@+id/infor_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:layout_centerVertical="true"
                 android:text="个人简介："
                 android:textSize="14dp" />
 
@@ -160,15 +172,23 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:maxLength="18"
+                android:layout_toLeftOf="@+id/arrow_bt"
+                android:layout_toRightOf="@+id/infor_tv"
+                android:lines="1"
+                android:ellipsize="end"
+                android:layout_centerVertical="true"
+                android:gravity="end"
                 android:textColor="#a5adac"
                 android:layout_marginRight="10dp"/>
 
             <Button
+                android:id="@+id/arrow_bt"
                 style="@style/arrow_img"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="center"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="match_parent"

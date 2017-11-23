@@ -1,8 +1,9 @@
 package com.example.sjqcjstock.fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +12,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.sjqcjstock.Activity.forumnotedetailActivity;
+import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.adapter.essenceAdapter;
 import com.example.sjqcjstock.constant.ACache;
 import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.Article.RaceReportEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.JsonTools;
-import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 焦点的Fragment
@@ -37,7 +37,7 @@ public class FragmentEssenceJd extends Fragment {
     //定义List集合容器
     private essenceAdapter essencelistAdapter;
     //定义于数据库同步的字段集合
-    private ArrayList<HashMap<String, String>> listessenceData;
+    private ArrayList<RaceReportEntity> listessenceData;
     // 上下拉刷新控件
     private PullToRefreshLayout ptrl;
     // 加载的ListView
@@ -46,8 +46,8 @@ public class FragmentEssenceJd extends Fragment {
     private int current = 1;
     // 缓存用的类
     private ACache mCache;
-    // 缓存全部微博信息用
-    private ArrayList<HashMap<String, String>> appindexListJd;
+    // 接口返回数据
+    private String jsonStr;
 
     public FragmentEssenceJd(){}
 
@@ -55,18 +55,8 @@ public class FragmentEssenceJd extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_essence_jd, container, false);
         findView(view);
-        // 自动下拉刷新
-        ptrl.autoRefresh();
+        getData();
         return view;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (appindexListJd != null && appindexListJd.size() > 0) {
-            // 做缓存
-            mCache.put("appindexjd", Utils.getListMapStr(appindexListJd));
-        }
     }
 
     /**
@@ -77,7 +67,6 @@ public class FragmentEssenceJd extends Fragment {
     private void findView(View view) {
         // 缓存类
         mCache = ACache.get(getActivity());
-        listessenceData = new ArrayList<HashMap<String, String>>();
         essencelistAdapter = new essenceAdapter(getActivity());
         listView = (ListView) view.findViewById(
                 R.id.jd_list_view);
@@ -90,18 +79,15 @@ public class FragmentEssenceJd extends Fragment {
                     return;
                 }
                 try {
-                    Intent intent = new Intent(getActivity(), forumnotedetailActivity.class);
-                    intent.putExtra("weibo_id", (String) listessenceData.get(arg2).get("weibo_idstr"));
-                    intent.putExtra("uid", (String) listessenceData.get(arg2).get("uidstr"));
+                    Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
+                    intent.putExtra("weibo_id",listessenceData.get(arg2).getFeed_id());
+//                    intent.putExtra("uid", (String) listessenceData.get(arg2).get("uidstr"));
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        String str = mCache.getAsString("appindexjd");
-        listessenceData = Utils.getListMap(str);
-        essencelistAdapter.setlistData(listessenceData);
 
         ptrl = ((PullToRefreshLayout) view.findViewById(
                 R.id.refresh_view));
@@ -110,8 +96,6 @@ public class FragmentEssenceJd extends Fragment {
             // 下来刷新
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                //清空列表重载数据
-                listessenceData.clear();
                 current = 1;
                 getData();
             }
@@ -123,73 +107,70 @@ public class FragmentEssenceJd extends Fragment {
                 getData();
             }
         });
+        String dataStr = mCache.getAsString("appindexjd");
+        if (dataStr != null && !"".equals(dataStr)){
+            setData(dataStr);
+        }
     }
 
     /**
      * 获取网络数据
      */
     private void getData() {
-        SendInfoTaskloadmore task = new SendInfoTaskloadmore();
-        task.execute(new TaskParams(Constants.Url + "?app=index&mod=Index&act=Appindex",
-                        new String[]{"position", "2"},
-                        new String[]{"p", String.valueOf(current)}
-                )
-        );
+        // 获取焦点数据列表
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/feed/recommend?position=1&p="+current);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
-    private class SendInfoTaskloadmore extends AsyncTask<TaskParams, Void, String> {
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
         @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            if (result == null) {
-                CustomToast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
-            } else {
-                super.onPostExecute(result);
-                result = result.replace("\n ", "");
-                result = result.replace("\n", "");
-                result = result.replace(" ", "");
-                result = "[" + result + "]";
-                //解析json字符串获得List<Map<String,Object>>
-                List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-                for (Map<String, Object> map : lists) {
-                    String statusstr = map.get("data").toString();
-                    List<Map<String, Object>> supermanlists = JsonTools.listKeyMaps(statusstr);
-                    for (Map<String, Object> supermanmap : supermanlists) {
-                        String namestr = supermanmap.get("uname").toString();
-                        String weibo_titlestr = supermanmap.get("weibo_title").toString();
-                        String save_pathstr = supermanmap.get("save_path").toString();
-                        String save_namestr = supermanmap.get("save_name").toString();
-                        String weibo_idstr = supermanmap.get("weibo_id").toString();
-                        String uidstr = supermanmap.get("uid").toString();
-                        String comment_countstr = supermanmap.get("comment_count").toString();
-                        String imageurl = save_pathstr + save_namestr;
-                        HashMap<String, String> map2 = new HashMap<String, String>();
-                        String authentication = supermanmap.get("authentication") + "";
-                        map2.put("isVip", authentication);
-                        map2.put("weibo_titlestr", weibo_titlestr);
-                        map2.put("username", namestr);
-                        map2.put("image_url", "http://www.sjqcj.com/data/upload/" + imageurl);
-                        map2.put("weibo_idstr", weibo_idstr);
-                        map2.put("uidstr", uidstr);
-                        map2.put("comment_countstr", comment_countstr);
-                        listessenceData.add(map2);
-                    }
-                }
-                essencelistAdapter.setlistData(listessenceData);
-                // 千万别忘了告诉控件刷新完毕了哦！
-                ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                if (current == 1) {
-                    appindexListJd = (ArrayList<HashMap<String, String>>) listessenceData.clone();
-                }
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    setData(jsonStr);
+                    break;
             }
         }
-    }
+    };
 
+    /**
+     * 解析绑定数据
+     */
+    private void setData(String data){
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                // 请求失败的情况
+                CustomToast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                // 千万别忘了告诉控件刷新完毕了哦！
+                ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                return;
+            }
+            ArrayList<RaceReportEntity> raceReportEntities = (ArrayList<RaceReportEntity>) JSON.parseArray(jsonObject.getString("data"),RaceReportEntity.class);
+            if (1 == current){
+                listessenceData = raceReportEntities;
+                // 做缓存
+                mCache.put("appindexjd", data);
+            }else{
+                listessenceData.addAll(raceReportEntities);
+            }
+            essencelistAdapter.setlistData(listessenceData);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            // 千万别忘了告诉控件刷新完毕了哦！
+            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+        }
+        // 千万别忘了告诉控件刷新完毕了哦！
+        ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+    }
 }

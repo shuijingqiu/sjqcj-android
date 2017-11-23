@@ -1,6 +1,7 @@
 package com.example.sjqcjstock.adapter.stocks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sjqcjstock.Activity.stocks.SimulationGameActivity;
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.MatchEntity;
@@ -79,7 +81,6 @@ public class SimulationGameAdapter extends BaseAdapter {
             holder.titleImg = (ImageView) convertView.findViewById(R.id.title_img_iv);
             holder.title = (TextView) convertView.findViewById(R.id.title_tv);
             holder.time = (TextView) convertView.findViewById(R.id.time_tv);
-            holder.ranking = (TextView) convertView.findViewById(R.id.ranking_value_tv);
             holder.rankingValue = (TextView) convertView.findViewById(R.id.ranking_value_tv);
             holder.joinTv = (TextView) convertView.findViewById(R.id.join_tv);
             holder.joinBut = (TextView) convertView.findViewById(R.id.join_but);
@@ -93,8 +94,10 @@ public class SimulationGameAdapter extends BaseAdapter {
                 holder.titleImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
         holder.title.setText(matchEntity.getName());
         holder.time.setText(matchEntity.getStart_date()+"至"+matchEntity.getEnd_date());
-        holder.ranking.setText(matchEntity.getRanking());
+        holder.rankingValue.setText(matchEntity.getRanking());
+        holder.joinBut.setVisibility(View.GONE);
         if ("3".equals(matchEntity.getStatus())){
+            holder.joinTv.setVisibility(View.VISIBLE);
             holder.joinTv.setBackgroundResource(R.mipmap.yjs);
             if ("0".equals(matchEntity.getJoined())){
                 holder.rankingLl.setVisibility(View.INVISIBLE);
@@ -120,6 +123,12 @@ public class SimulationGameAdapter extends BaseAdapter {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        // menghuan 不用登陆也可以用
+                        // 如果未登陆跳转到登陆页面
+                        if (!Constants.isLogin){
+                            Intent intent = new Intent(context, loginActivity.class);
+                            context.startActivity(intent);
+                            return;                                        }
                         List dataList = new ArrayList();
                         // 用户ID
                         dataList.add(new BasicNameValuePair("uid", Constants.staticmyuidstr));
@@ -143,8 +152,6 @@ public class SimulationGameAdapter extends BaseAdapter {
         TextView title;
         TextView time;
         // 排名
-        TextView ranking;
-        // 排名字
         TextView rankingValue;
         // 参加
         TextView joinTv;

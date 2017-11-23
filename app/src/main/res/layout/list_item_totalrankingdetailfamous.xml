@@ -20,17 +20,26 @@
        android:orientation="horizontal"
        android:background="@color/color_ffffff"
        >
-    
-       
-   <ImageView
-        android:id="@+id/user_image1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@mipmap/portrait2"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        />
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="10dp"
+           android:layout_marginLeft="10dp">
+
+           <ImageView
+               android:id="@+id/user_image1"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@mipmap/portrait2" />
+
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@mipmap/head_frame" />
+
+       </RelativeLayout>
     
     <LinearLayout
         android:layout_width="wrap_content"
@@ -116,7 +125,7 @@
              android:layout_height="wrap_content"
              style="@style/RedButton"
              android:text="参与周数  "
-             android:textSize="15dp"
+             android:textSize="12dp"
              android:paddingLeft="5dp"
              android:paddingRight="5dp"
              android:layout_marginTop="5dp"
@@ -158,8 +167,8 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              style="@style/RedButton"
-             android:text="总积分榜"
-             android:textSize="15dp"
+             android:text="总收益榜"
+             android:textSize="12dp"
              android:paddingLeft="5dp"
              android:paddingRight="5dp"
              android:layout_marginTop="5dp"

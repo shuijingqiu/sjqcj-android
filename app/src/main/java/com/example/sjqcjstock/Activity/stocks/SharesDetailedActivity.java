@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
@@ -58,6 +58,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mDatas;
     // 控件
+    private TextView titleNameTv;
     private TextView textMinute, textDay, textWeek, textMonth;
     private LinearLayout llMinute, llDay, llWeek, llMonth;
     private ImageView img_line;
@@ -128,7 +129,7 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
     // 是否是已自选股
     private boolean isRn = false;
 //    // 网络请求提示
-//    private ProgressDialog dialog;
+//    private CustomProgress dialog;
     // 自选股的ID
     private String optionalId = "";
     // 可买数量
@@ -162,10 +163,10 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 控件绑定
      */
     private void findView() {
-//        dialog = new ProgressDialog(this);
+//        dialog = new CustomProgress(this);
 //        dialog.setMessage(Constants.loadMessage);
 //        dialog.setCancelable(true);
-//        dialog.show();
+//        dialog.showDialog();
         /**
          * 返回按钮的事件绑定
          */
@@ -177,8 +178,11 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
         });
         // 自选股的列表
         optionalValueTv = (TextView) findViewById(R.id.optional_value_tv);
-        // 股票标题
-        ((TextView) findViewById(R.id.title_name)).setText(titleName + "(" + code + ")");
+        titleNameTv = ((TextView) findViewById(R.id.title_name));
+        if(titleName != null){
+            // 股票标题
+            titleNameTv.setText(titleName + "(" + code + ")");
+        }
         // 当前价格
         price = (TextView) findViewById(R.id.price_tv);
         // 当前涨幅价格
@@ -241,6 +245,9 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 获取整理数据
      */
     private void initData() {
+        if (code.length()>6){
+            code = code.substring(2);
+        }
         // 开线程判断当前古朴是否是自选股
         new Thread(new Runnable() {
             @Override
@@ -258,8 +265,8 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
                 String strData = HttpUtil.getIntentData("http://qt.gtimg.cn/q=" + Utils.judgeSharesCode(code));
                 if (strData.length()<30){
                 // 调用新浪接口
-//                    strData = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + Utils.judgeSharesCode(code));
-//                    processData1(strData);
+                    strData = HttpUtil.getIntentData("http://hq.sinajs.cn/list=" + Utils.judgeSharesCode(code));
+                    processData1(strData);
                 }else{
                     processData(strData);
                 }
@@ -293,17 +300,21 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             switch (msg.what) {
                 case 0:
                     if (stocksInfo == null){
-//                        dialog.dismiss();
+//                        dialog.dismissDlog();
                         return;
                     }
                     setInformation();
                     // 加载K线图
                     initFragment(stocksInfo.getZuoShou());
-//                    dialog.dismiss();
+                    if(titleName != null){
+                        // 股票标题
+                        titleNameTv.setText(titleName + "(" + code + ")");
+                    }
+//                    dialog.dismissDlog();
                     break;
                 case 1:
                     if (stocksInfo == null || timeMap == null){
-//                        dialog.dismiss();
+//                        dialog.dismissDlog();
                         return;
                     }
                     setInformation();
@@ -434,8 +445,9 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             if (sharesMinute.length <3){
                 return;
             }
+            titleName = sharesMinute[1];
             // 股票名称
-            stocksInfo.setName(sharesMinute[1]);
+            stocksInfo.setName(titleName);
             // 股票代码
             stocksInfo.setCode(sharesMinute[2]);
             // 当前价格
@@ -458,6 +470,101 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             stocksInfo.setInvol(sharesMinute[8]);
             // 市盈率
             stocksInfo.setPERatio(sharesMinute[39]);
+            // 最低
+            stocksInfo.setMinimum(sharesMinute[34]);
+            // 外盘
+            stocksInfo.setOuterDisc(sharesMinute[7]);
+            // 振幅
+            stocksInfo.setAmplitude(sharesMinute[43]);
+            // 成交额
+            stocksInfo.setTurnoverVolume(sharesMinute[37]);
+            // 总市值
+            stocksInfo.setTotalMarketValue(sharesMinute[45]);
+            // 流通市值
+            stocksInfo.setCirculationarketValue(sharesMinute[44]);
+            // 拼接要用的价格信息
+            strK = Utils.getNowDate1() + "|" + sharesMinute[5] + "|" + sharesMinute[3] + "|" + sharesMinute[33] + "|" + sharesMinute[34] + "|" + sharesMinute[6] + "|" + sharesMinute[30];
+            strK.replace(";","");
+            buySellMap.put("buy1P", sharesMinute[9]);
+            buySellMap.put("buy1N", sharesMinute[10]);
+            buySellMap.put("buy2P", sharesMinute[11]);
+            buySellMap.put("buy2N", sharesMinute[12]);
+            buySellMap.put("buy3P", sharesMinute[13]);
+            buySellMap.put("buy3N", sharesMinute[14]);
+            buySellMap.put("buy4P", sharesMinute[15]);
+            buySellMap.put("buy4N", sharesMinute[16]);
+            buySellMap.put("buy5P", sharesMinute[17]);
+            buySellMap.put("buy5N", sharesMinute[18]);
+
+            buySellMap.put("sell1P", sharesMinute[19]);
+            buySellMap.put("sell1N", sharesMinute[20]);
+            buySellMap.put("sell2P", sharesMinute[21]);
+            buySellMap.put("sell2N", sharesMinute[22]);
+            buySellMap.put("sell3P", sharesMinute[23]);
+            buySellMap.put("sell3N", sharesMinute[24]);
+            buySellMap.put("sell4P", sharesMinute[25]);
+            buySellMap.put("sell4N", sharesMinute[26]);
+            buySellMap.put("sell5P", sharesMinute[27]);
+            buySellMap.put("sell5N", sharesMinute[28]);
+
+            Double highsLows = Double.valueOf(sharesMinute[31]);
+            if (highsLows > 0) {
+                increaseType = "1";
+            } else {
+                increaseType = "0";
+            }
+            buySellMap.put("increaseType", increaseType);
+        }
+    }
+
+    /**
+     * 根据返回的值进行处理得到想要的数据(新浪的数据解析)
+     *
+     * @param strData
+     */
+    private void processData1(String strData) {
+        buySellMap = new HashMap<String, String>();
+        strData = strData.substring(strData.indexOf("\"")+1);
+        // 每只股票的数据
+        String[] shares = strData.split(";");
+        for (String str : shares) {
+            if ("".equals(str.trim())) {
+                continue;
+            }
+            stocksInfo = new StocksInfo();
+            // 每只股票的详细数据
+            String[] sharesMinute = str.split(",");
+            titleName = sharesMinute[0];
+            // 昨日收盘价格
+            Double priceZ = Double.valueOf(sharesMinute[2]);
+            // 当前价格
+            Double priceD = Double.valueOf(sharesMinute[3]);
+            // 股票名称
+            stocksInfo.setName(titleName);
+            // 股票代码
+            stocksInfo.setCode(code);
+            // 当前价格
+            stocksInfo.setSpotPrice(priceD+"");
+            // 当前价格
+            stocksInfo.setSpotPrice(sharesMinute[3]);
+            // 今开价格
+            stocksInfo.setOpenPrice(sharesMinute[1]);
+            // 涨跌
+            stocksInfo.setHighsLows(Utils.getNumberFormat1(priceD-priceZ+""));
+            // 涨跌百分比
+            stocksInfo.setHighsLowsThan(Utils.getNumberFormat1((priceD-priceZ)/priceZ*100+"")+"%");
+            // 昨收
+            stocksInfo.setZuoShou(priceZ+"");
+            // 成交量
+            stocksInfo.setVolume(Utils.getNumberFormat1(Double.valueOf(sharesMinute[8])/100+""));
+            // 换手率
+            stocksInfo.setTurnover(sharesMinute[38]);
+            // 最高
+            stocksInfo.setHighest(sharesMinute[4]);
+            // 内盘
+            stocksInfo.setInvol(sharesMinute[8]);
+            // 市盈率
+            stocksInfo.setPERatio(sharesMinute[39]+"%");
             // 最低
             stocksInfo.setMinimum(sharesMinute[34]);
             // 外盘
@@ -503,102 +610,6 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
             buySellMap.put("increaseType", increaseType);
         }
     }
-
-//    /**
-//     * 根据返回的值进行处理得到想要的数据(新浪的数据解析)
-//     *
-//     * @param strData
-//     */
-//    private void processData1(String strData) {
-//        buySellMap = new HashMap<String, String>();
-//        strData = strData.substring(strData.indexOf("\"")+1);
-//        // 每只股票的数据
-//        String[] shares = strData.split(";");
-//        for (String str : shares) {
-//            if ("".equals(str.trim())) {
-//                continue;
-//            }
-//
-//
-//            stocksInfo = new StocksInfo();
-//            // 每只股票的详细数据
-//            String[] sharesMinute = str.split(",");
-//
-//            // 昨日收盘价格
-//            Double priceZ = Double.valueOf(sharesMinute[2]);
-//            // 当前价格
-//            Double priceD = Double.valueOf(sharesMinute[3]);
-//            // 股票名称
-//            stocksInfo.setName(sharesMinute[0]);
-//            // 股票代码
-//            stocksInfo.setCode(code);
-//            // 当前价格
-//            stocksInfo.setSpotPrice(priceD+"");
-//            // 当前价格
-//            stocksInfo.setSpotPrice(sharesMinute[3]);
-//            // 今开价格
-//            stocksInfo.setOpenPrice(sharesMinute[1]);
-//            // 涨跌
-//            stocksInfo.setHighsLows(Utils.getNumberFormat1(priceD-priceZ+""));
-//            // 涨跌百分比
-//            stocksInfo.setHighsLowsThan(Utils.getNumberFormat1((priceD-priceZ)/priceZ*100+"%"));
-//            // 昨收
-//            stocksInfo.setZuoShou(priceZ+"");
-//            // 成交量
-//            stocksInfo.setVolume(Utils.getNumberFormat1(Double.valueOf(sharesMinute[8])/100+""));
-//            // 换手率
-//            stocksInfo.setTurnover(sharesMinute[38]);
-//            // 最高
-//            stocksInfo.setHighest(sharesMinute[4]);
-//            // 内盘
-//            stocksInfo.setInvol(sharesMinute[8]);
-//            // 市盈率
-//            stocksInfo.setPERatio(sharesMinute[39]+"%");
-//            // 最低
-//            stocksInfo.setMinimum(sharesMinute[34]);
-//            // 外盘
-//            stocksInfo.setOuterDisc(sharesMinute[7]);
-//            // 振幅
-//            stocksInfo.setAmplitude(sharesMinute[43]);
-//            // 成交额
-//            stocksInfo.setTurnoverVolume(sharesMinute[37]);
-//            // 总市值
-//            stocksInfo.setTotalMarketValue(sharesMinute[45]);
-//            // 流通市值
-//            stocksInfo.setCirculationarketValue(sharesMinute[44]);
-//            // 拼接要用的价格信息
-//            strK = Utils.getNowDate1() + "|" + sharesMinute[5] + "|" + sharesMinute[3] + "|" + sharesMinute[33] + "|" + sharesMinute[34] + "|" + sharesMinute[6] + "|" + sharesMinute[30];
-//            buySellMap.put("buy1P", sharesMinute[9]);
-//            buySellMap.put("buy1N", sharesMinute[10]);
-//            buySellMap.put("buy2P", sharesMinute[11]);
-//            buySellMap.put("buy2N", sharesMinute[12]);
-//            buySellMap.put("buy3P", sharesMinute[13]);
-//            buySellMap.put("buy3N", sharesMinute[14]);
-//            buySellMap.put("buy4P", sharesMinute[15]);
-//            buySellMap.put("buy4N", sharesMinute[16]);
-//            buySellMap.put("buy5P", sharesMinute[17]);
-//            buySellMap.put("buy5N", sharesMinute[18]);
-//
-//            buySellMap.put("sell1P", sharesMinute[19]);
-//            buySellMap.put("sell1N", sharesMinute[20]);
-//            buySellMap.put("sell2P", sharesMinute[21]);
-//            buySellMap.put("sell2N", sharesMinute[22]);
-//            buySellMap.put("sell3P", sharesMinute[23]);
-//            buySellMap.put("sell3N", sharesMinute[24]);
-//            buySellMap.put("sell4P", sharesMinute[25]);
-//            buySellMap.put("sell4N", sharesMinute[26]);
-//            buySellMap.put("sell5P", sharesMinute[27]);
-//            buySellMap.put("sell5N", sharesMinute[28]);
-//
-//            Double highsLows = Double.valueOf(sharesMinute[31]);
-//            if (highsLows > 0) {
-//                increaseType = "1";
-//            } else {
-//                increaseType = "0";
-//            }
-//            buySellMap.put("increaseType", increaseType);
-//        }
-//    }
 
 
     /**
@@ -736,6 +747,13 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 跳转到买入股票
      */
     public void purchaseClick(View view) {
+        // menghuan 不用登陆也可以用
+        // 如果未登陆不能交易
+        if (!Constants.isLogin){
+            Intent intent = new Intent(this, loginActivity.class);
+            startActivity(intent);
+            return;
+        }
         Intent intent = new Intent(this, BusinessActivity.class);
         intent.putExtra("type","1");
         intent.putExtra("code",code);
@@ -747,6 +765,13 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * @param view
      */
     public void sellOutClick(View view){
+        // menghuan 不用登陆也可以用
+        // 如果未登陆不能交易
+        if (!Constants.isLogin){
+            Intent intent = new Intent(this, loginActivity.class);
+            startActivity(intent);
+            return;
+        }
         Intent intent = new Intent(this, BusinessActivity.class);
         intent.putExtra("type","2");
         intent.putExtra("code",code);
@@ -758,6 +783,14 @@ public class SharesDetailedActivity extends FragmentActivity implements ViewPage
      * 加入自选股
      */
     public void optionalClick(View view) {
+        // menghuan 不用登陆也可以用
+        // 如果未登陆不能收藏
+        if (!Constants.isLogin){
+            Intent intent = new Intent(this, loginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         if (Utils.isFastDoubleClick()) {
             return;
         }

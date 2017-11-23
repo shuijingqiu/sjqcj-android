@@ -1,5 +1,6 @@
 package com.example.sjqcjstock.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,18 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 股王争霸
+ * 大师联赛（股王争霸）
  */
 public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
 
-    private LinearLayout goback1;
     // 两个个滑动页面
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mDatas;
     // 控件
+    private TextView text_ls = null;
     private TextView text_bd = null;
     private TextView text_sk = null;
+    private LinearLayout ll_ls = null;
     private LinearLayout ll_bd = null;
     private LinearLayout ll_sk = null;
     // 滑动条颜色
@@ -44,12 +46,14 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
      * 当前视图宽度
      **/
     private Integer viewPagerW = 0;
-    private int mScreen1_4;
+    private int mScreen1_3;
     private ImageView img_line;
+    private FragmentGwzbsList bdList;
+    private FragmentGwzbsList bdList1;
+    private FragmentReport skLIst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.gwzbmatch_list);
@@ -58,11 +62,11 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
         initView();
         initFragment();
         initLine();
+//        getData();
     }
 
     private void initView() {
-        goback1 = (LinearLayout) findViewById(R.id.goback1);
-        goback1.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.goback1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -71,14 +75,17 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
         // 获取颜色
         select_color = getResources().getColor(R.color.color_toptitle);
         unselect_color = getResources().getColor(R.color.color_000000);
+        text_ls = (TextView) findViewById(R.id.text_ls);
         text_bd = (TextView) findViewById(R.id.text_bd);
         text_sk = (TextView) findViewById(R.id.text_sk);
         ll_bd = (LinearLayout) findViewById(R.id.linear_bd);
+        ll_ls = (LinearLayout) findViewById(R.id.linear_ls);
         ll_sk = (LinearLayout) findViewById(R.id.linear_sk);
-        ll_bd.setOnClickListener(new MyOnClickListenser(0));
-        ll_sk.setOnClickListener(new MyOnClickListenser(1));
+        ll_ls.setOnClickListener(new MyOnClickListenser(0));
+        ll_bd.setOnClickListener(new MyOnClickListenser(1));
+        ll_sk.setOnClickListener(new MyOnClickListenser(2));
         mViewPager = (ViewPager) findViewById(R.id.mViewpager);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(3);
         mDatas = new ArrayList<Fragment>();
     }
 
@@ -86,9 +93,11 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
      * 初始化fragment
      */
     private void initFragment() {
-        FragmentGwzbsList bdList = new FragmentGwzbsList();
-        FragmentReport skLIst = new FragmentReport();
+        bdList = new FragmentGwzbsList("0");
+        bdList1 = new FragmentGwzbsList("1");
+        skLIst = new FragmentReport();
         mDatas.add(bdList);
+        mDatas.add(bdList1);
         mDatas.add(skLIst);
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -111,9 +120,9 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
      */
     private void initLine() {
         img_line = (ImageView) findViewById(R.id.img_line);
-        mScreen1_4 = ImageUtil.getScreenWidth(this) / 2;
+        mScreen1_3 = ImageUtil.getScreenWidth(this) / 3;
         ViewGroup.LayoutParams lp = img_line.getLayoutParams();
-        lp.width = mScreen1_4;
+        lp.width = mScreen1_3;
         img_line.setLayoutParams(lp);
     }
 
@@ -122,7 +131,7 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
         viewPagerW = mViewPager.getWidth() + mViewPager.getPageMargin();
         LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) img_line.getLayoutParams();
         // 关键算法
-        lp.leftMargin = (int) ((int) (mScreen1_4 * position) + (((double) positionOffsetPixels / viewPagerW) * mScreen1_4));
+        lp.leftMargin = (int) ((mScreen1_3 * position) + (((double) positionOffsetPixels / viewPagerW) * mScreen1_3));
         img_line.setLayoutParams(lp);
     }
 
@@ -131,10 +140,17 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
         switch (mViewPager.getCurrentItem()) {
             case 0:
                 text_sk.setTextColor(unselect_color);
-                text_bd.setTextColor(select_color);
+                text_ls.setTextColor(select_color);
+                text_bd.setTextColor(unselect_color);
                 break;
             case 1:
+                text_bd.setTextColor(select_color);
+                text_ls.setTextColor(unselect_color);
+                text_sk.setTextColor(unselect_color);
+                break;
+            case 2:
                 text_bd.setTextColor(unselect_color);
+                text_ls.setTextColor(unselect_color);
                 text_sk.setTextColor(select_color);
                 break;
         }
@@ -161,16 +177,35 @@ public class gwzhmatchActivity extends FragmentActivity implements ViewPager.OnP
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.linear_jd:
+                case R.id.linear_ls:
                     text_sk.setTextColor(unselect_color);
+                    text_bd.setTextColor(unselect_color);
+                    text_ls.setTextColor(select_color);
+                    break;
+                case R.id.linear_bd:
+                    text_sk.setTextColor(unselect_color);
+                    text_ls.setTextColor(unselect_color);
                     text_bd.setTextColor(select_color);
                     break;
-                case R.id.linear_dp:
+                case R.id.linear_sk:
                     text_bd.setTextColor(unselect_color);
+                    text_ls.setTextColor(unselect_color);
                     text_sk.setTextColor(select_color);
                     break;
             }
             mViewPager.setCurrentItem(index);
         }
+    }
+
+    /**
+     * 大师联赛及订阅规则
+     *
+     * @param view
+     */
+    public void RuleClick(View view) {
+        // 大师联赛及订阅规则
+        Intent intent = new Intent(this, AgreementActivity.class);
+        intent.putExtra("type", "14");
+        startActivity(intent);
     }
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_customPopupWindow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="更新提示"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_dialogDismiss"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/zaica" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#d5d5d5" />
+
+    <TextView
+        android:id="@+id/version_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/version_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:textSize="12sp"-->
+        <!--android:text="12.2.2"/>-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#d5d5d5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/bt_no"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:padding="5dp"
+            android:background="@color/color_999999"
+            android:textSize="10sp"
+            android:text= "忽略"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:background="@drawable/selector_bt_background"
+            android:layout_centerHorizontal="true"
+            android:text= "更新"
+            android:textColor="@color/white"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/color_ffffff"
     android:orientation="vertical">
 
@@ -25,6 +25,20 @@
             android:gravity="center"
             android:text="股王争霸"
             style="@style/top_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:paddingRight="10dp"
+            android:textSize="14sp"
+            android:text="订阅"
+            android:clickable="true"
+            android:onClick="RuleClick"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -32,50 +46,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:background="@mipmap/gwzbimg5" />-->
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/rankentra2"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="35dp"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<Button-->
-        <!--style="@style/GreyButtonWithBorder"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:text="每日比赛榜单"-->
-        <!--android:textColor="#000000"-->
-        <!--android:textSize="14dp" />-->
-
-        <!--<ImageView-->
-        <!--android:layout_width="1dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginBottom="5dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:background="@drawable/line" />-->
-
-
-        <!--<Button-->
-        <!--android:id="@+id/pickstockmatchreport1"-->
-        <!--style="@style/GreyButtonWithBorder"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:text="赛况报道 	  "-->
-        <!--android:textColor="#000000"-->
-        <!--android:textSize="14dp" />-->
-
-
-        <!--</LinearLayout>-->
-
-        <!--</LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -88,6 +58,28 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/linear_ls"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/text_ls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_toptitle"
+                        android:text="股王争霸"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/gray_line" />
+
+                <LinearLayout
                     android:id="@+id/linear_bd"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -98,8 +90,7 @@
                         android:id="@+id/text_bd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="比赛排行榜"
-                        android:textColor="@color/color_toptitle"
+                        android:text="大师联赛"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -128,7 +119,7 @@
 
             <ImageView
                 android:id="@+id/img_line"
-                android:layout_width="192dp"
+                android:layout_width="128dp"
                 android:layout_height="1dp"
                 android:background="@color/color_toptitle"
                 android:contentDescription="@string/app_name" />

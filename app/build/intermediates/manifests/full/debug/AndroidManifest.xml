@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sjqcjstock"
-    android:versionCode="9"
-    android:versionName="1.9.1" >
-
+    android:versionCode="32"
+    android:versionName="3.2.6" >
+ <!-- android:versionCode="26" -->
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
+
+    <!-- 极光推送 -->
+    <!-- Required -->
+    <permission
+        android:name="com.example.sjqcjstock.permission.JPUSH_MESSAGdingE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.sjqcjstock.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+ <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <!-- MainTab -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -59,12 +73,121 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <!-- 极光推送 -->
     <application
         android:name="com.example.sjqcjstock.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/applogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- 极光推送 -->
+        <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
+                <category android:name="com.example.sjqcjstock" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.sjqcjstock" />
+            </intent-filter>
+        </activity>
+        <!-- Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <!-- Required SDK核心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+
+        <!-- User defined. 用户自定义的广播接收器 -->
+        <receiver
+            android:name="com.example.sjqcjstock.Receiver.JpushReceiver"
+            android:enabled="true" >
+            <intent-filter>
+
+                <!-- Required 用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required 用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required 用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required 用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.example.sjqcjstock" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的APK可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+        <!-- 目前这个渠道统计功能的报表还未开放。 -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <!-- Required. AppKey copied from Portal -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="660f77fbb6f75ebd4120a15d" />
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.example.sjqcjstock" />
+            </intent-filter>
+        </service>
+
+        <!-- 极光推送 -->
+
 
         <!-- android:theme="@android:style/AppTheme    Theme.Translucent" -->
         <activity
@@ -88,7 +211,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.sjqcjstock.Activity.loginActivity"
+            android:name="com.example.sjqcjstock.Activity.user.loginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
@@ -116,7 +239,6 @@
         </activity>
 
         <!-- 微信第三方登录 -->
-
         <activity
             android:name="com.example.sjqcjstock.wxapi.WXEntryActivity"
             android:exported="true"
@@ -129,80 +251,40 @@
             android:name="com.example.sjqcjstock.Activity.MainActivity"
             android:label="主页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.MainTab"
-            android:label="主页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.RegisterActivity"
+            android:name="com.example.sjqcjstock.Activity.user.RegisterActivity"
             android:label="注册页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.EssenceListActivty"
             android:label="精华帖列表页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.hotstocklistActivity"
-            android:label="热门股列表页面" />
-        <activity
             android:name="com.example.sjqcjstock.Activity.supermanlistActivity"
-            android:label="牛人列表页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.topnotelistActivity"
-            android:label="置顶帖列表页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.forumsearchActivity"
-            android:label="股吧搜索页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.addnoteActivity"
-            android:label="发帖页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.personalletterActivity"
-            android:label="发私信页面"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.userinfoeditActivity"
-            android:label="用户信息编辑页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.mynoteslistActivity"
-            android:label="我的微博表页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.selfselectstocklistActivity"
-            android:label="我的自选列表页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.combinationlistActivity"
-            android:label="我的自选列表页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.mycollectActivity"
-            android:label="我的收藏页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.mysubscribeActivity"
-            android:label="我的订阅页面" />
+            android:label="认证牛人列表页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.informdetailActivity"
             android:label="资讯详细页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.usersettingActivity"
+            android:name="com.example.sjqcjstock.Activity.user.usersettingActivity"
             android:label="我的用户设置页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.PushSettingsActivity"
+            android:label="推送设置" />
         <activity
             android:name="com.example.sjqcjstock.Activity.aboutmyActivityNew"
             android:label="关于我们的页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.modifypasswordActivity"
+            android:name="com.example.sjqcjstock.Activity.user.modifypasswordActivity"
             android:label="修改密码的页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.accountboundActivity"
-            android:label="账号绑定的页面" />
         <!-- <activity -->
-        <!-- android:name=".Activity.feedbackActivity" -->
-        <!-- android:label="意见反馈的页面" /> -->
+        <!-- android:name=".Activity.recivecommentActivity" -->
+        <!-- android:label="收到评论的页面" /> -->
         <!-- <activity -->
-        <!-- android:name=".Activity.addfeedbackActivity" -->
-        <!-- android:label="添加意见反馈的页面" /> -->
+        <!-- android:name=".Activity.sendedcommentActivity" -->
+        <!-- android:label="发出的评论页面" /> -->
         <activity
-            android:name="com.example.sjqcjstock.Activity.recivecommentActivity"
-            android:label="收到评论的页面" />
+            android:name="com.example.sjqcjstock.Activity.Article.CommentActivity"
+            android:label="评论页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.sendedcommentActivity"
-            android:label="发出的评论页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.addcommentweiboActivity"
+            android:name="com.example.sjqcjstock.Activity.Article.addcommentweiboActivity"
             android:label="评论微博的页面"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
@@ -212,19 +294,19 @@
             android:name="com.example.sjqcjstock.Activity.personalnewsActivity"
             android:label="我的私信的页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.commentshortweiboActivity"
-            android:label="发长微博的页面"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.commentlongweiboActivity"
+            android:name="com.example.sjqcjstock.Activity.Article.commentshortweiboActivity"
             android:label="发短微博的页面"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.commentrewardweiboActivity"
+            android:name="com.example.sjqcjstock.Activity.Article.commentlongweiboActivity"
+            android:label="发长微博的页面"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Article.commentrewardweiboActivity"
             android:label="发打赏微博的页面"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.addreplycommentweiboActivity"
+            android:name="com.example.sjqcjstock.Activity.Article.addreplycommentweiboActivity"
             android:label="回复评论的页面"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
@@ -232,10 +314,7 @@
             android:label="转发微博的页面"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.myattentionlistActivity"
-            android:label="我关注的用户的页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.myfansActivity"
+            android:name="com.example.sjqcjstock.Activity.user.myfansActivity"
             android:label="粉丝" />
         <activity
             android:name="com.example.sjqcjstock.Activity.selectstockmatchActivity"
@@ -244,81 +323,43 @@
             android:name="com.example.sjqcjstock.Activity.stockmatchreportActivity"
             android:label="赛程报道页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.forumnotedetailActivity"
+            android:name="com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity"
             android:label="正文页" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.essencematchActivity"
-            android:label="精英实时赛况更多页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.famousmatchActivity"
-            android:label="名人实时赛况更多页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.IwillselectstockActivity"
             android:label="我来选股页面" />
         <!-- stateVisible|adjustResize默认弹出键盘 -->
         <activity
-            android:name="com.example.sjqcjstock.Activity.personalnewsdetail"
-            android:label="即时通信页面"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
             android:name="com.example.sjqcjstock.Activity.gwzhmatchActivity"
             android:label="股王争霸页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.atfriendActivity"
-            android:label="检索联系人页面" />
+            android:label="检索联系人页面"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.example.sjqcjstock.Activity.discussareaActivity"
             android:label=" 讨论区界面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.match.totalessencerankinglistActivity"
-            android:label=" 精英总积分榜" />
+            android:name="com.example.sjqcjstock.Activity.user.userinfoeditActivitynew"
+            android:label=" 修改用户头像 性别" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.match.essenceweekrankingActivity"
-            android:label=" 精英周积分榜" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.match.famousweekrankingActivity"
-            android:label=" 名人总积分榜" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.userinfoeditActivitynew"
-            android:label=" 修改用户信息" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.edituser.edituserinfousernameActivity"
+            android:name="com.example.sjqcjstock.Activity.user.edituserinfousernameActivity"
             android:label=" 修改用户昵称" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.edituser.edituserinfouserintroActivity"
+            android:name="com.example.sjqcjstock.Activity.user.edituserinfouserintroActivity"
             android:label=" 修改用户简介" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.todaybullsrankingActivity"
-            android:label=" 当日牛股榜列表" />
-        <activity
             android:name="com.example.sjqcjstock.Activity.weekbullsrankingActivity"
-            android:label=" 当周牛股榜列表" />
+            android:label=" 当周 当日 牛股榜列表" />
         <activity
             android:name="com.example.sjqcjstock.Activity.totalrankingnewActivity"
-            android:label=" 总积分列表新" />
+            android:label=" 总收益列表新" />
         <activity
             android:name="com.example.sjqcjstock.Activity.weekrankingnewActivity"
-            android:label=" 周积分列表新" />
+            android:label=" 周收益列表新" />
         <activity
             android:name="com.example.sjqcjstock.Activity.weekrankingnewdetailActivity"
-            android:label=" 周积分详细列表" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.discussarea.commentlongdiscussareaweiboActivity"
-            android:label="讨论区发短微博"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.discussarea.commentshortdisscussareaweiboActivity"
-            android:label="讨论区发短微博"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.bindingweixinActivity"
-            android:label="绑定微信页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.bindingregistweixinActivity"
-            android:label="绑定注册微信页面" />
-        <activity
-            android:name="com.example.sjqcjstock.Activity.UpdateNicknameActivity"
-            android:label="修改用户名" />
+            android:label=" 周收益详细列表" />
         <activity
             android:name="com.example.sjqcjstock.Activity.systemMessageListActivity"
             android:label="系统消息列表" />
@@ -333,7 +374,7 @@
             android:label="水晶币流动" />
         <activity
             android:name="com.example.sjqcjstock.Activity.AgreementActivity"
-            android:label="兑换协议页面" />
+            android:label="协议页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.advertUrlActivity"
             android:label="滚动图片广告展示页面" />
@@ -341,7 +382,7 @@
             android:name="com.example.sjqcjstock.Activity.RewardListAcitivity"
             android:label="文章打赏水金币列表页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.ForgotPassWordActivity"
+            android:name="com.example.sjqcjstock.Activity.user.ForgotPassWordActivity"
             android:label="找回密码" />
         <activity
             android:name="com.example.sjqcjstock.Activity.RechargeActivity"
@@ -350,7 +391,7 @@
             android:name="com.example.sjqcjstock.Activity.CrystalCoinActivity"
             android:label="水晶币页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.ShowWebImageActivity"
+            android:name="com.example.sjqcjstock.Activity.ShowImageActivity"
             android:label="图片放大的页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.ActivityMessage"
@@ -360,10 +401,21 @@
             android:label="股吧检索页面" >
         </activity>
         <activity
-            android:name="com.example.sjqcjstock.Activity.MyAttentionActivity"
-            android:label="关注微博" >
+            android:name="com.example.sjqcjstock.Activity.Article.ReferenceActivity"
+            android:label="内参精选" >
         </activity>
-
+        <activity
+            android:name="com.example.sjqcjstock.Activity.OnlineServiceActivity"
+            android:label="在线客服页面" >
+        </activity>
+        <activity
+            android:name="com.example.sjqcjstock.Activity.CattleListActivity"
+            android:label="各种牛人榜单" >
+        </activity>
+        <activity
+            android:name="com.example.sjqcjstock.Activity.RealTimeRecordActivity"
+            android:label="实时战绩" >
+        </activity>
         <!-- 模拟炒股相关页面 -->
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.SharesDetailedActivity"
@@ -387,13 +439,16 @@
             android:name="com.example.sjqcjstock.Activity.stocks.HistoryCommissionActivity"
             android:label="历史委托页面" />
         <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.HistoryPositionActivity"
+            android:label="历史持仓页面" />
+        <activity
             android:name="com.example.sjqcjstock.Activity.stocks.MyDealAccountActivity"
             android:label="交易账户页面" />
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.TransactionDetailActivity"
             android:label="当前持仓成交明细页面" />
         <activity
-            android:name="com.example.sjqcjstock.Activity.stocks.ExpertLists"
+            android:name="com.example.sjqcjstock.Activity.stocks.ExpertListsActivity"
             android:label="模拟排行榜" />
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.SimulationGameActivity"
@@ -404,14 +459,136 @@
         <activity
             android:name="com.example.sjqcjstock.Activity.stocks.UserDetailNewActivity"
             android:label="最新的个人中心列表" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.SearchSharesActivity"
+            android:label="股票代码检索页" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.SubscribeConfirmActivity"
+            android:label="订阅确认页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.MyDynamicExpertActivity"
+            android:label="订阅牛人动态信息列表页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.DynamicOrderDetailsActivity"
+            android:label="订阅牛人动态订单详情页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.SubscribeOrderListActivity"
+            android:label="订阅订单列表页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.ExpertSubscriptionActivity"
+            android:label="牛人订阅页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.MoreDynamicExpertActivity"
+            android:label="更多牛人动态页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.MoreDynamicExpertRecommendActivity"
+            android:label="更多牛人动态（推荐的）页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.UserDataActivity"
+            android:label="个人简介页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.stocks.MyStocksActivity"
+            android:label="自选股页面" />
+        <!-- 直播的一些页面 -->
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.DirectBroadcastingRoomActivity"
+            android:label="直播间页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.TomlivePersonnelListActivity"
+            android:label="直播人列表页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.SendTomliveActivity"
+            android:label="发送直播消息页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.CreateLiveActivity"
+            android:label="创建直播间的页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.SubscriptionList"
+            android:label="订阅人列表" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Tomlive.TomliveRenewActivity"
+            android:label="推送的官方消息" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.OfficialNewsActivity"
+            android:label="官方推送消息的显示" />
 
-        <receiver
-            android:name="com.example.sjqcjstock.AppRegister"
-            android:permission="com.tencent.mm.plugin.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </receiver>
+        <!-- 问答相关页面 -->
+        <activity
+            android:name="com.example.sjqcjstock.Activity.qa.AllQuestionAnswerActivity"
+            android:label="问答广场" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.qa.MyQuestionAnswerActivity"
+            android:label="我的问答主页" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.qa.QuestionAnswerActivity"
+            android:label="写提问和回答的页面" />
+
+        <!-- 投资计划页面 -->
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.PlanExhibitionActivity"
+            android:label="计划展示页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.MyPlanActivity"
+            android:label="我的投资计划页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.PlanHallActivity"
+            android:label="投资计划大厅页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.ReleasePlanActivity"
+            android:label="发布计划页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.ReleaseConfirmActivity"
+            android:label="发布计划确认页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.plan.UserPlanActivity"
+            android:label="单个用户投资计划列表" />
+
+        <!-- 实盘比赛 -->
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmHallActivity"
+            android:label="实盘比赛大厅" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmDetailsActivity"
+            android:label="实盘比赛详情" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmDeclarationFormActivity"
+            android:label="实盘报单页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmEndDeclarationFormActivity"
+            android:label="实盘盘中报单页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmSignUpActivity"
+            android:label="实盘报名页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmUserHomePageActivity"
+            android:label="实盘比赛个人用户页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmHistoryPositionActivity"
+            android:label="更多历史持仓的页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmRecollectionsActivity"
+            android:label="更多操作感言的页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.firm.FirmHistoryOperationActivity"
+            android:label="更多历史操作的页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.MyMatchActivity"
+            android:label="我的比赛选择页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.Article.NewsDetailActivity"
+            android:label="资讯详细页面" />
+        <activity
+            android:name="com.example.sjqcjstock.Activity.ranking.RankingListWebActivity"
+            android:label="各种榜单列表页面" />
+
+        <!-- <receiver -->
+        <!-- android:name=".AppRegister" -->
+        <!-- android:permission="com.tencent.mm.plugin.permission.SEND" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
 
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -420,6 +597,17 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <!-- 咨询的sdk配置 -->
+        <meta-data
+            android:name="GIISO_APP_ID"
+            android:value="C0006110001" />
+        <!-- 10030替换为第一步创建应用中获取到的AppID（必需配置） -->
+        <meta-data
+            android:name="GIISO_APP_SECRET"
+            android:value="9597db5e-291f-4392-8b68-250a676c1de0" />
+        <!-- abc替换为第一步创建应用时获取到的AppSecret（必需配置） -->
+
 
         <!-- 分享所需的一些配置 -->
         <activity
@@ -436,12 +624,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- 调用新浪原生SDK，需要注册的回调activity -->
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!-- &lt;!&ndash; 调用新浪原生SDK，需要注册的回调activity &ndash;&gt; -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <!-- 微信分享回调 -->

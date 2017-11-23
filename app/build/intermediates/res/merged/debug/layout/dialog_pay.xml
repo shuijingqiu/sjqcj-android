@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_customPopupWindow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_dialogDismiss"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_cancel_background">
+
+            <ImageView
+                android:id="@+id/iv_dialogDismiss"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/zaica" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="直播付费"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#d5d5d5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_inputCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:text="需要支付：200水晶币"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账户余额："
+            android:textColor="#E75151"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_restCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5F86E9"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 水晶币"
+            android:textColor="#E75151"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="2dp">
+
+        <CheckBox
+            android:id="@+id/sang_agreement_ck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/color_text1"
+            android:checked="true"
+            android:drawableLeft="@drawable/check_box_style"
+            android:drawablePadding="3dp"
+            android:button="@null"
+            android:text="同意"/>
+
+        <TextView
+            android:id="@+id/sang_agreement_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/color_toptitle"
+            android:text="《水晶球直播服务协议》"/>
+
+        </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/selector_bt_background"
+            android:text= " 确认 "
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="140dp"
+            android:textColor="@color/white"  />
+
+        <TextView
+            android:id="@+id/bt_cz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值>>"
+            android:textColor="@color/color_toptitle"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:textSize="16dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="2017-10-01"/>
+
+    <TextView
+        android:id="@+id/recollections_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:text="     操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言操作感言"
+        android:textColor="@color/color_text1"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:paddingRight="15dp"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/account_bt"
+            android:layout_width="55dp"
+            android:layout_height="20dp"
+            android:background="@color/transparent"
+            android:textSize="12dp"
+            android:text="查看账户"
+            android:textColor="@color/color_toptitle" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line" />
+
+</LinearLayout>

@@ -1,6 +1,9 @@
 package com.example.sjqcjstock.netutil;
 
+import android.text.TextUtils;
+
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Md5Util {
     private static MessageDigest md5 = null;
@@ -12,28 +15,55 @@ public class Md5Util {
             System.out.println(e.getMessage());
         }
     }
+//
+//    /**
+//     * 用于获取一个String的md5值
+//     *
+//     * @return
+//     */
+//    public static String getMd5(String str) {
+//        if (str == null || "".equals(str)){
+//            return "";
+//        }
+//        byte[] bs = md5.digest(str.getBytes());
+//        StringBuilder sb = new StringBuilder(40);
+//        for (byte x : bs) {
+//            if ((x & 0xff) >> 4 == 0) {
+//                sb.append("0").append(Integer.toHexString(x & 0xff));
+//            } else {
+//                sb.append(Integer.toHexString(x & 0xff));
+//            }
+//        }
+//        return sb.toString();
+//    }
 
     /**
      * 用于获取一个String的md5值
      *
      * @return
      */
-    public static String getMd5(String str) {
-        if (str == null || "".equals(str)){
+    public static String getMd5(String string) {
+        if (TextUtils.isEmpty(string)) {
             return "";
         }
-        byte[] bs = md5.digest(str.getBytes());
-        StringBuilder sb = new StringBuilder(40);
-        for (byte x : bs) {
-            if ((x & 0xff) >> 4 == 0) {
-                sb.append("0").append(Integer.toHexString(x & 0xff));
-            } else {
-                sb.append(Integer.toHexString(x & 0xff));
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
             }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-        return sb.toString();
+        return "";
     }
-
 
     /**
      * 截取 md5的前6位

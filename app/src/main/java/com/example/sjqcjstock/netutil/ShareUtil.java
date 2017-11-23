@@ -26,7 +26,11 @@ public class ShareUtil {
         if (str.length() > 40) {
             str = str.substring(0, 39);
         }
-        String url = Constants.shareArticle + id;
+        // 如果id长度大于10代表是咨询分享过来的url
+        String url = id;
+        if (id.length()<10){
+            url = Constants.newUrl+"?app=public&mod=Profile&act=sharemeager&feed_id=" + id;
+        }
         ShareSDK.initSDK(context);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权

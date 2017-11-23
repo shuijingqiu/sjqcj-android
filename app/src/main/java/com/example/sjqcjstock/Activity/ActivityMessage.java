@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sjqcjstock.Activity.Article.CommentActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
@@ -48,7 +49,6 @@ public class ActivityMessage extends Activity implements OnClickListener {
                 finish();
             }
         });
-        // TODO Auto-generated method stub
         pickrecivecomment1 = (LinearLayout) findViewById(R.id.pickrecivecomment1);
         picksendcomment1 = (LinearLayout) findViewById(R.id.picksendcomment1);
         pickpersonalnews1 = (LinearLayout) findViewById(R.id.pickpersonalnews1);
@@ -73,7 +73,7 @@ public class ActivityMessage extends Activity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.unreadCountInfo != null && Constants.unreadCountInfo.getStatus().equals("1")) {
+        if (Constants.unreadCountInfo != null) {
             int comment = Constants.unreadCountInfo.getData().getUnread_comment();
             String commentStr = comment + "";
             if (comment > 99) {
@@ -85,14 +85,6 @@ public class ActivityMessage extends Activity implements OnClickListener {
             } else {
                 messageCountTv1.setVisibility(View.VISIBLE);
             }
-            // 发出的评论 没有的
-//			String fc = Constants.unreadCountInfo.getUnreadInfo().getUnread_fc();
-//			messageCountTv2.setText(fc);
-//			if(fc == "0"){
-//				messageCountTv2.setVisibility(View.VISIBLE);
-//			}else{
-//				messageCountTv2.setVisibility(View.GONE);
-//			}
             int atme = Constants.unreadCountInfo.getData().getUnread_atme();
             String atmeStr = atme + "";
             if (atme > 99) {
@@ -160,18 +152,20 @@ public class ActivityMessage extends Activity implements OnClickListener {
                 break;
             case R.id.pickrecivecomment1:
                 // 收到的评论
-                intent = new Intent(this, recivecommentActivity.class);
+                intent = new Intent(this, CommentActivity.class);
+                intent.putExtra("type","receive");
                 Constants.unreadCountInfo.getData().setUnread_total(Constants.unreadCountInfo.getData().getUnread_total() - Constants.unreadCountInfo.getData().getUnread_comment());
                 Constants.unreadCountInfo.getData().setUnread_comment(0);
                 break;
             case R.id.picksendcomment1:
                 //  发出的评论
-                intent = new Intent(this, sendedcommentActivity.class);
+                intent = new Intent(this, CommentActivity.class);
+                intent.putExtra("type","send");
                 break;
             case R.id.reward_message:
                 intent = new Intent(this, rewardMessageActivity.class);
                 Constants.unreadCountInfo.getData().setUnread_total(Constants.unreadCountInfo.getData().getUnread_total() - Integer.valueOf(Constants.unreadCountInfo.getData().getUnread_notify()));
-                Constants.unreadCountInfo.getData().setUnread_notify("0");
+                Constants.unreadCountInfo.getData().setUnread_notify(0);
                 break;
             case R.id.system_message:
                 intent = new Intent(this, systemMessageListActivity.class);

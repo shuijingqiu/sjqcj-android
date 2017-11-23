@@ -1,8 +1,9 @@
 package com.example.sjqcjstock.fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +12,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.sjqcjstock.Activity.forumnotedetailActivity;
+import com.alibaba.fastjson.JSON;
+import com.example.sjqcjstock.Activity.Article.ArticleDetailsActivity;
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.adapter.gwzbmatchreportAdapter;
+import com.example.sjqcjstock.adapter.stockmatchreportAdapter;
 import com.example.sjqcjstock.constant.Constants;
-import com.example.sjqcjstock.netutil.CalendarUtil;
+import com.example.sjqcjstock.entity.Article.RaceReportEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.JsonTools;
-import com.example.sjqcjstock.netutil.TaskParams;
-import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.view.CustomToast;
+import com.example.sjqcjstock.view.PullToRefreshLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 股王争霸赛实况报道页面
@@ -33,11 +33,16 @@ import java.util.Map;
  */
 public class FragmentReport extends Fragment {
     // 定义List集合容器
-    private gwzbmatchreportAdapter gwzbAdapter;
+    private stockmatchreportAdapter adapter;
     // 定义于数据库同步的字段集合
-    private ArrayList<HashMap<String, Object>> listgwzbmatchreportData;
+    private ArrayList<RaceReportEntity> listData;
     // 名人集合
     private ListView gwzbmatchreportlistview;
+    // 上下拉刷新控件
+    private PullToRefreshLayout ptrl;
+    // 接口返回数据
+    private String jsonStr;
+    private int page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,11 +55,9 @@ public class FragmentReport extends Fragment {
     private void findView(View view) {
         /** 股王争霸赛程报道集合 */
         gwzbmatchreportlistview = (ListView) view.findViewById(R.id.gwzbmatchreportlist2);
-        // 存储数据的数组列表
-        listgwzbmatchreportData = new ArrayList<HashMap<String, Object>>(200);
         // 为ListView 添加适配器
-        gwzbAdapter = new gwzbmatchreportAdapter(getActivity());
-        gwzbmatchreportlistview.setAdapter(gwzbAdapter);
+        adapter = new stockmatchreportAdapter(getActivity());
+        gwzbmatchreportlistview.setAdapter(adapter);
         gwzbmatchreportlistview
                 .setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -62,90 +65,83 @@ public class FragmentReport extends Fragment {
                     public void onItemClick(AdapterView<?> arg0, View arg1,
                                             int arg2, long arg3) {
                         try {
-                            Intent intent = new Intent(getActivity(), forumnotedetailActivity.class);
+                            Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
                             intent.putExtra("weibo_id",
-                                    (String) listgwzbmatchreportData.get(arg2)
-                                            .get("starcraft_url"));
+                                    (String) listData.get(arg2)
+                                            .getFeed_id());
                             startActivity(intent);
                         } catch (Exception e) {
-                            // TODO: handle exception
                             e.printStackTrace();
                         }
                     }
 
                 });
-    }
 
-    private class SendInfoTasktodayuprankingloadmore extends
-            AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(getActivity(), "", Toast.LENGTH_LONG)
-                        .show();
-            } else {
-                super.onPostExecute(result);
-                List<Map<String, Object>> lists2 = null;
-                String datastr2 = null;
-                List<Map<String, Object>> datastrlists2 = null;
-                result = result.replace("\n ", "");
-                result = result.replace("\n", "");
-                result = result.replace(" ", "");
-                result = "[" + result + "]";
-                // 解析json字符串获得List<Map<String,Object>>
-                if (lists2 == null) {
-                    lists2 = JsonTools.listKeyMaps(result);
-                }
-                for (Map<String, Object> map : lists2) {
-                    if (datastr2 == null) {
-                        datastr2 = map.get("data").toString();
-                        datastrlists2 = JsonTools.listKeyMaps("[" + datastr2
-                                + "]");
-                    }
-                    for (Map<String, Object> datastrmap : datastrlists2) {
-
-                        String starcraftstr = datastrmap.get("saicheng")
-                                .toString();
-                        List<Map<String, Object>> starcraftstrlists = JsonTools
-                                .listKeyMaps(starcraftstr);
-                        for (Map<String, Object> starcraftstrmap : starcraftstrlists) {
-                            String starcraft_title = starcraftstrmap.get(
-                                    "starcraft_title").toString();
-                            String create_time = starcraftstrmap.get(
-                                    "create_time").toString();
-                            String starcraft_url = starcraftstrmap.get(
-                                    "starcraft_url").toString();
-
-                            starcraft_url = starcraft_url.substring(
-                                    starcraft_url.lastIndexOf("/") + 1,
-                                    starcraft_url.length());
-                            create_time = CalendarUtil.formatDateTime(Utils
-                                    .getStringtoDate(create_time));
-                            HashMap<String, Object> map2 = new HashMap<String, Object>();
-                            map2.put("starcraft_title", starcraft_title);
-                            map2.put("create_time", create_time);
-                            map2.put("starcraft_url", starcraft_url);
-
-                            listgwzbmatchreportData.add(map2);
-                        }
-                    }
-                }
-                gwzbAdapter.setlistData(listgwzbmatchreportData);
+        ptrl = ((PullToRefreshLayout) view.findViewById(
+                R.id.refresh_view));
+        // 添加上下拉刷新事件
+        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            // 下来刷新
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+                page = 1;
+                geneItems();
             }
-        }
+
+            // 下拉加载
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                page++;
+                geneItems();
+            }
+        });
 
     }
 
     private void geneItems() {
-        new SendInfoTasktodayuprankingloadmore().execute(new TaskParams(
-                        Constants.Url + "?app=public&mod=AppFeedList&act=AppStarcraft"
-                )
-        );
+        // 获取股王比赛赛程报道
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/starcraft/news?&p="+page);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
+
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            // 请求失败的情况
+                            CustomToast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.FAIL);
+                            return;
+                        }
+                        ArrayList<RaceReportEntity> lists = (ArrayList<RaceReportEntity>) JSON.parseArray(jsonObject.getString("data"), RaceReportEntity.class);
+                        if (page == 1){
+                            listData  = lists;
+                        }else{
+                            listData.addAll(lists);
+                        }
+                        adapter.setlistData(listData);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    break;
+            }
+        }
+    };
+
 }

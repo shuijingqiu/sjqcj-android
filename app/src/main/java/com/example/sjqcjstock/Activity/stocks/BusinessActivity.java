@@ -2,7 +2,6 @@ package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +21,7 @@ import com.example.sjqcjstock.entity.stocks.StocksInfo;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.sharesUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -88,7 +88,7 @@ public class BusinessActivity extends Activity {
     // 当前可卖买的股票数量
     private String businessNumber = "0";
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 调用买卖接口返回的数据
     private String resstr = "";
     // 确认的弹框
@@ -133,9 +133,8 @@ public class BusinessActivity extends Activity {
      * 页面的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
+        dialog = new CustomProgress(this);
+
         /**
          * 返回按钮的事件绑定
          */
@@ -188,7 +187,6 @@ public class BusinessActivity extends Activity {
         }
 
 //        // 监听股票代码输入状态
-//
         codeEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,7 +217,7 @@ public class BusinessActivity extends Activity {
      * 开线程获取当前股票信息
      */
     private void getData1(){
-        dialog.show();
+        dialog.showDialog();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -489,7 +487,7 @@ public class BusinessActivity extends Activity {
         dialogConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                dialog.showDialog();
                 // 开线程获取股票数据信息
                 new Thread(new Runnable() {
                     @Override
@@ -538,7 +536,7 @@ public class BusinessActivity extends Activity {
 //            code = s.toString();
 //            if (s.toString().length() == 6){
 //                code = Utils.judgeSharesCode(code);
-//                dialog.show();
+//                dialog.showDialog();
 //                // 开线程获取股票数据信息
 //                new Thread(new Runnable() {
 //                    @Override
@@ -618,7 +616,7 @@ public class BusinessActivity extends Activity {
                     }else{
                         clerData();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
                 case 1:
                     if(!"".equals(resstr.trim())){
@@ -626,7 +624,7 @@ public class BusinessActivity extends Activity {
                             JSONObject jsonObject = new JSONObject(resstr);
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             if("success".equals(jsonObject.getString("status"))){
-                                dialog.dismiss();
+                                dialog.dismissDlog();
                                 if(alertDialog !=null )
                                 {
                                     alertDialog.dismiss();
@@ -649,7 +647,7 @@ public class BusinessActivity extends Activity {
                     {
                         alertDialog.dismiss();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
                 case 2:
                     try {

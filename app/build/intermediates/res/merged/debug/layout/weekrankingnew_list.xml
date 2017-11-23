@@ -25,13 +25,13 @@
                 android:layout_centerVertical="true" />
 
             <TextView
+                style="@style/top_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="周积分榜"
-                style="@style/top_title" />
+                android:text="周收益榜" />
 
         </RelativeLayout>
 

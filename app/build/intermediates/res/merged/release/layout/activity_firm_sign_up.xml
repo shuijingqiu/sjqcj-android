@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_toptitle">
+
+        <include
+            layout="@layout/head_back_reuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/top_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="报名信息提交" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_rl">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="@color/red"
+                    android:text="*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="参赛资产：" />
+
+                <EditText
+                    android:id="@+id/money_et"
+                    android:layout_width="190dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shape"
+                    android:hint="请输入参赛金额"
+                    android:inputType="numberDecimal"
+                    android:padding="10px"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/code_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:id="@+id/xing_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/red"
+                    android:text="*" />
+
+                <TextView
+                    android:id="@+id/hold_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/xing_tv"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="当前持有：" />
+
+                <LinearLayout
+                    android:id="@+id/code_ll"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/hold_tv"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/code_et1"
+                        style="@style/firm_code_et" />
+
+                    <EditText
+                        android:id="@+id/code_et2"
+                        style="@style/firm_code_et" />
+
+                    <EditText
+                        android:id="@+id/code_et3"
+                        style="@style/firm_code_et" />
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/add_tv_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/null_code_cb"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/code_ll"
+                    android:clickable="true"
+                    android:onClick="AddEtClick"
+                    android:src="@mipmap/more_image" />
+
+                <CheckBox
+                    android:id="@+id/null_code_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/code_ll"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/hold_tv"
+                    android:clickable="true"
+                    android:onClick="ShortPositionsClick"
+                    android:text="空仓"
+                    android:textColor="@color/color_text2" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="@color/red"
+                    android:text="*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="账户截图：" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="ScreenshotClick"
+                    android:src="@mipmap/more_image" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
+
+                <GridView
+                    android:id="@+id/screenshot_gv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="4" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/check_box_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_text2"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/check_box_style"
+                    android:drawablePadding="3dp"
+                    android:button="@null"
+                    android:text="同意"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="《实盘比赛协议》"
+                    android:textColor="@color/color_toptitle"
+                    android:textSize="13sp"
+                    android:clickable="true"
+                    android:onClick="ServiceClick"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_bt"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/buttonstyle7"
+                android:onClick="SubmitData"
+                android:text="提交"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/screenshot_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_ededed"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:background="@drawable/whitelinearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="相机"
+                android:textSize="20dp"
+                android:clickable="true"
+                android:onClick="CameraClick" />
+
+            <TextView
+                android:background="@drawable/whitelinearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="相册"
+                android:textSize="20dp"
+                android:clickable="true"
+                android:onClick="AlbumClick"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

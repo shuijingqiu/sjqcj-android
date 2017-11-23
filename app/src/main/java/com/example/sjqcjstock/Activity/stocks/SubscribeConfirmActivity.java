@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +17,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -34,7 +34,7 @@ import java.util.List;
 public class SubscribeConfirmActivity extends Activity{
 
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     private TextView nameTv;
     private TextView timeTv;
     // 接口返回的数据
@@ -73,9 +73,7 @@ public class SubscribeConfirmActivity extends Activity{
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
+        dialog = new CustomProgress(this);
         findViewById(R.id.goback1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +91,7 @@ public class SubscribeConfirmActivity extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     }
 
@@ -101,15 +99,9 @@ public class SubscribeConfirmActivity extends Activity{
      *  阅读协议的单机事件
      */
     public void serviceClick(View view){
-        // 跳转到协议页面
-        findViewById(R.id.service_agreement).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SubscribeConfirmActivity.this, AgreementActivity.class);
-                intent.putExtra("type", "12");
-                startActivity(intent);
-            }
-        });
+        Intent intent = new Intent(SubscribeConfirmActivity.this, AgreementActivity.class);
+        intent.putExtra("type", "12");
+        startActivity(intent);
     }
 
     /**
@@ -120,10 +112,10 @@ public class SubscribeConfirmActivity extends Activity{
             return;
         }
         if (!((CheckBox) findViewById(R.id.check_box_protocol)).isChecked()) {
-            CustomToast.makeText(getApplicationContext(), "请阅读订阅服务协议", Toast.LENGTH_LONG).show();
+            CustomToast.makeText(getApplicationContext(), "请阅读《水晶球牛人动态订阅服务协议》", Toast.LENGTH_SHORT).show();
             return;
         }
-        dialog.show();
+        dialog.showDialog();
         // 确认订阅的接口
         new Thread(new Runnable() {
             @Override
@@ -153,12 +145,12 @@ public class SubscribeConfirmActivity extends Activity{
                         JSONObject jsonObject = new JSONObject(rest);
                         if ("failed".equals(jsonObject.getString("status"))){
                             Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         Constants.isDynamic = true;
                         Toast.makeText(getApplicationContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        dialog.dismissDlog();
                         finish();
                     } catch (JSONException e) {
                         e.printStackTrace();

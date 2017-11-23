@@ -39,23 +39,31 @@
                 android:id="@+id/mail_text_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
-
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/headimg1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:src="@mipmap/portrait2" />
+                        android:layout_margin="10dp">
 
+                        <ImageView
+                            android:id="@+id/headimg1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@mipmap/portrait2" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@mipmap/head_frame" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/pickuserinfo2"
@@ -77,6 +85,7 @@
 
                             <ImageView
                                 android:id="@+id/vip_img"
+                                android:visibility="gone"
                                 style="@style/vip_img_style" />
 
                         </LinearLayout>
@@ -111,8 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/color_1E6BCF"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/coment"
@@ -455,32 +463,6 @@
         </ScrollView>
     </LinearLayout>
 
-    <!--回到顶端或回到地步的空间-->
-    <!--<LinearLayout-->
-    <!--android:id="@+id/show_more"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginTop="3dip" >-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/spread"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:background="@drawable/ic_details_more"-->
-    <!--android:visibility="gone" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/shrink_up"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:background="@drawable/ic_shrink_up"-->
-    <!--android:visibility="gone" />-->
-    <!--</LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/naviga1"
         android:layout_width="match_parent"
@@ -604,39 +586,6 @@
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/transpondedit1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_above="@id/naviga1"-->
-    <!--android:background="@color/color_ededed"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:visibility="gone" >-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/factimgs"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:src="@drawable/weixiao" />-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/addtranspondcomment1"-->
-    <!--style="@style/EditText"-->
-    <!--android:layout_width="40dp"-->
-    <!--android:layout_height="40dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@drawable/rounded_edittext"-->
-    <!--android:hint="我也说两句" >-->
-    <!--</EditText>-->
-
-    <!--<Button-->
-    <!--android:id="@+id/submittranspond1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="转" />-->
-    <!--</LinearLayout>-->
 
     <RelativeLayout
         android:id="@+id/pickcommentoptions1"

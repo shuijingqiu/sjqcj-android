@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="精英组周积分榜"
+            android:text="精英组周收益榜"
             style="@style/top_title"
             />
         

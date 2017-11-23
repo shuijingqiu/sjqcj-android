@@ -2,11 +2,11 @@ package com.example.sjqcjstock.wxapi;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +15,7 @@ import com.example.sjqcjstock.Activity.RechargeActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.CustomToast;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -24,8 +24,12 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
@@ -33,7 +37,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private TextView resultTv;
     private TextView resultCount;
     // 弹出加载窗体
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
+    // 订单返回数据
+    private String orderStr;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +57,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             }
         });
 
-        dialog = new ProgressDialog(this);
+        dialog = new CustomProgress(this);
         // dialog.setTitle("提示信息");
-        dialog.setMessage("正在查询支付结果");
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog.setMessageDialog("正在查询支付结果");
+        dialog.showDialog();
     }
 
     @Override
@@ -95,35 +101,97 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
      * 查询订单是否成功
      */
     private void selectOrder() {
-        new SelectOrder()
-                .execute(new TaskParams(Constants.queryOrder + "&uid=" + Constants.staticmyuidstr + "&out_trade_no=" + Constants.orderNumber
-                ));
+//        new SelectOrder()
+//                .execute(new TaskParams(Constants.queryOrder + "&uid=" + Constants.staticmyuidstr + "&out_trade_no=" + Constants.orderNumber
+//                ));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List dataList = new ArrayList();
+                // 微博id
+                dataList.add(new BasicNameValuePair("mid", Constants.staticmyuidstr));
+                dataList.add(new BasicNameValuePair("token", Constants.apptoken));
+                dataList.add(new BasicNameValuePair("out_trade_no", Constants.orderNumber));
+                orderStr = HttpUtil.restHttpPost(Constants.newUrl + "/api/pay/wxQuery", dataList);
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
+
     }
 
-    private class SelectOrder extends AsyncTask<TaskParams, Void, String> {
+//    private class SelectOrder extends AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (result == null) {
+//                CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_SHORT)
+//                        .show();
+//                resultTv.setText("对不起你购买水晶币失败！");
+//            } else {
+//                try {
+//                    JSONObject json = new JSONObject(result);
+//                    String status = json.getString("status");
+//                    String info = json.getString("info");
+//                    String data = json.getString("data");
+//                    if ("1".equals(status)) {
+//                        resultTv.setText("恭喜你购买水晶币成功！");
+//                        resultCount.setText("当前水晶币个数为" + data + "个");
+//                        resultCount.setVisibility(View.VISIBLE);
+//                        Constants.shuijinbiCount = data;
+//                        // 保存订单状态订单号(用于控制)
+//                        SharedPreferences.Editor editorIsLogin = getSharedPreferences("Recharge", MODE_PRIVATE).edit();
+//                        // 订单状态1为未处理0为处理
+//                        editorIsLogin.putString("order_type", "0");
+//                        editorIsLogin.commit();
+//                        if (RechargeActivity.instance != null) {
+//                            // 打开微信支付成功后关闭支付页面
+//                            RechargeActivity.instance.finish();
+//                        }
+//                    } else {
+//                        CustomToast.makeText(getApplicationContext(), info, Toast.LENGTH_SHORT)
+//                                .show();
+//                        resultTv.setText("对不起你购买水晶币失败！");
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    resultTv.setText("对不起你购买水晶币失败！");
+//                    CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//            }
+//            dialog.dismissDlog();
+//        }
+//    }
 
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
         @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_LONG)
-                        .show();
-                resultTv.setText("对不起你购买水晶币失败！");
-            } else {
-                try {
-                    JSONObject json = new JSONObject(result);
-                    String status = json.getString("status");
-                    String info = json.getString("info");
-                    String data = json.getString("data");
-                    if ("1".equals(status)) {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    // 微信支付订单查询
+                    try {
+                        JSONObject jsonObject = new JSONObject(orderStr);
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_SHORT)
+                                    .show();
+                            resultTv.setText("对不起你购买水晶币失败！");
+                            dialog.dismissDlog();
+                            return;
+                        }
+                        String shuijingbi = jsonObject.getString("data");
                         resultTv.setText("恭喜你购买水晶币成功！");
-                        resultCount.setText("当前水晶币个数为" + data + "个");
+                        resultCount.setText("当前水晶币个数为" + shuijingbi + "个");
                         resultCount.setVisibility(View.VISIBLE);
-                        Constants.shuijinbiCount = data;
+                        Constants.shuijinbiCount = shuijingbi;
                         // 保存订单状态订单号(用于控制)
                         SharedPreferences.Editor editorIsLogin = getSharedPreferences("Recharge", MODE_PRIVATE).edit();
                         // 订单状态1为未处理0为处理
@@ -133,19 +201,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                             // 打开微信支付成功后关闭支付页面
                             RechargeActivity.instance.finish();
                         }
-                    } else {
-                        CustomToast.makeText(getApplicationContext(), info, Toast.LENGTH_LONG)
-                                .show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                         resultTv.setText("对不起你购买水晶币失败！");
+                        CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_SHORT)
+                                .show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    resultTv.setText("对不起你购买水晶币失败！");
-                    CustomToast.makeText(getApplicationContext(), "支付失败！", Toast.LENGTH_LONG)
-                            .show();
-                }
+                    dialog.dismissDlog();
+                    break;
             }
-            dialog.dismiss();
         }
-    }
+    };
+
 }

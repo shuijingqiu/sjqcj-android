@@ -28,15 +28,18 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/my_match_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:layout_marginLeft="7dp"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/head_img_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="2dp"
             android:src="@drawable/ic_error2"/>
 
@@ -48,11 +51,11 @@
 
         <TextView
             android:id="@+id/my_profit_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/red"
-            android:text="9.92%"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/red"
-            android:text="1923"/>
+            android:text=""/>
 
     </LinearLayout>
 

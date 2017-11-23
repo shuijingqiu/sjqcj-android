@@ -3,7 +3,7 @@
 
     <string name="app_name">水晶球财经</string>
     <string name="action_settings">Settings</string>
-
+    <!--自定义控件的属性-->
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color" />
         <attr name="pstsUnderlineColor" format="color" />
@@ -17,6 +17,13 @@
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
         <attr name="selectedTabTextColor" format="color" />
+    </declare-styleable>
+    <!--自定义控件的属性-->
+    <declare-styleable name="MarqueeViewStyle">
+        <attr name="mvInterval" format="integer|reference" />
+        <attr name="mvAnimDuration" format="integer|reference" />
+        <attr name="mvTextSize" format="dimension|reference" />
+        <attr name="mvTextColor" format="color|reference" />
     </declare-styleable>
 
     <!-- 内存管理 -->
@@ -57,4 +64,10 @@
 
     <string name="subscribe_str">订阅后你将即时收到“Ta”的交易动态消息，让你不错过任何赚钱机会。（投资有风险，此项业务发送的消息不构成投资建议）</string>
 
+    <string name="plan_explain">计划发布后下个交易日开盘价作为起算价，并开始判断是否达标</string>
+
+    <string-array name="turn_type">
+        <item>银行转证券</item>
+        <item>证券转银行</item>
+    </string-array>
 </resources>

@@ -21,7 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.sjqcjstock.Activity.commentrewardweiboActivity;
+import com.example.sjqcjstock.Activity.Article.commentrewardweiboActivity;
 import com.example.sjqcjstock.R;
 
 import java.lang.reflect.Field;
@@ -53,11 +53,11 @@ public class RichTextEditor extends ScrollView {
      * 传入Activity
      */
 
-    private com.example.sjqcjstock.Activity.commentlongweiboActivity commentlongweiboActivity;
+    private com.example.sjqcjstock.Activity.Article.commentlongweiboActivity commentlongweiboActivity;
 
     private commentrewardweiboActivity commentlongdiscussareaweiboActivity;
 
-    public void sendActivity(com.example.sjqcjstock.Activity.commentlongweiboActivity commentlongweiboActivity) {
+    public void sendActivity(com.example.sjqcjstock.Activity.Article.commentlongweiboActivity commentlongweiboActivity) {
         // TODO Auto-generated method stub
         this.commentlongweiboActivity = commentlongweiboActivity;
 
@@ -358,16 +358,8 @@ public class RichTextEditor extends ScrollView {
         int lastindex = allLayout.getChildCount() - 1;
         lastFocusEdit = (EditText) allLayout.getChildAt(lastindex);
         lastFocusEdit.requestFocus();
-        lastFocusEdit.setSelection(editStr1.length(), editStr1.length());
+//        lastFocusEdit.setSelection(editStr1.length(), editStr1.length());
         hideKeyBoard();
-
-        if (commentlongweiboActivity != null) {
-            commentlongweiboActivity.editortotop();
-        }
-
-        if (commentlongdiscussareaweiboActivity != null) {
-            commentlongdiscussareaweiboActivity.editortotop();
-        }
     }
 
     /**
@@ -406,13 +398,6 @@ public class RichTextEditor extends ScrollView {
         allLayout.addView(editText2, index);
         allLayout.setLayoutTransition(mTransitioner); // remove之后恢复transition动画
 
-        if (commentlongweiboActivity != null) {
-            commentlongweiboActivity.editortotop();
-        }
-
-        if (commentlongdiscussareaweiboActivity != null) {
-            commentlongdiscussareaweiboActivity.editortotop();
-        }
 
     }
 
@@ -442,18 +427,12 @@ public class RichTextEditor extends ScrollView {
         for (int i = 0; i < allLayout.getChildCount(); i++) {
             if (allLayout.getChildAt(i) instanceof EditText) {
                 EditText editer = (EditText) allLayout.getChildAt(i);
-
                 if (editer.isFocused()) {
-
-
                     return true;
                 }
-
             }
-
         }
         return false;
-
     }
 
 
@@ -464,8 +443,6 @@ public class RichTextEditor extends ScrollView {
         // TODO Auto-generated method stub
         int j = 0;
         for (int i = 0; i < allLayout.getChildCount(); i++) {
-
-
             if (allLayout.getChildAt(i) instanceof EditText) {
                 EditText editer = (EditText) allLayout.getChildAt(i);
                 j++;
@@ -509,23 +486,6 @@ public class RichTextEditor extends ScrollView {
             }
 
         }
-        if (commentlongweiboActivity != null) {
-            commentlongweiboActivity.editortotop();
-
-        } else if (commentlongdiscussareaweiboActivity != null) {
-            commentlongdiscussareaweiboActivity.editortotop();
-        }
-
-//		EditText editer=(EditText)allLayout.getChildAt(allLayout.getChildCount()-1);
-//		
-//		//在光标处添加
-//	    int index = editer.getSelectionStart();  
-//	    Editable editable = editer.getText();  
-//	    editable.insert(index, atinfo);  
-
-        //String restr=editer.getText().toString();
-        //editer.setText(restr+atinfo);
-
     }
 
 
@@ -619,7 +579,6 @@ public class RichTextEditor extends ScrollView {
             } else {
                 mergeText = str1;
             }
-
             allLayout.setLayoutTransition(null);
             allLayout.removeView(nextEdit);
             preEdit.setText(mergeText);
@@ -651,12 +610,15 @@ public class RichTextEditor extends ScrollView {
             EditData itemData = new EditData();
             if (itemView instanceof EditText) {
                 EditText item = (EditText) itemView;
-                itemData.inputStr = item.getText().toString();
+                itemData.setInputStr(item.getText().toString());
+//                itemData.inputStr = ;
             } else if (itemView instanceof RelativeLayout) {
                 DataImageView item = (DataImageView) itemView
                         .findViewById(R.id.edit_imageView);
-                itemData.imagePath = item.getAbsolutePath();
-                itemData.bitmap = item.getBitmap();
+                itemData.setImagePath(item.getAbsolutePath());
+                itemData.setBitmap(item.getBitmap());
+//                itemData.imagePath = ;
+//                itemData.bitmap = item.getBitmap();
             }
             dataList.add(itemData);
         }
@@ -667,6 +629,30 @@ public class RichTextEditor extends ScrollView {
     public class EditData {
         public String inputStr;
         public String imagePath;
-        Bitmap bitmap;
+        public Bitmap bitmap;
+
+        public String getInputStr() {
+            return inputStr;
+        }
+
+        public void setInputStr(String inputStr) {
+            this.inputStr = inputStr;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public Bitmap getBitmap() {
+            return bitmap;
+        }
+
+        public void setBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
+        }
     }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_toptitle" >
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            layout="@layout/head_back_reuse" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="提问"
+            style="@style/top_title" />
+
+        <TextView
+            android:id="@+id/submit_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            android:text="提交"
+            android:clickable="true"
+            android:onClick="SubmitClick"
+            style="@style/top_title" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/summary_rel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/content_edi"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_ffffff"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:gravity="top"
+            android:hint="输入你要提的问题(博主如在二十四小时内没回答将退还全额水晶币)"
+            android:lines="10" />
+
+        <TextView
+            android:id="@+id/input_number_words"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/content_edi"
+            android:text="你可以输入200字"
+            android:textColor="@color/color_999999"
+            android:layout_marginRight="5dp"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -259,6 +259,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:text="温馨提示："/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        android:text="充值后不可提现，请谨慎操作"/>
+
     <Button
         android:id="@+id/ok_recharge"
         android:layout_width="match_parent"

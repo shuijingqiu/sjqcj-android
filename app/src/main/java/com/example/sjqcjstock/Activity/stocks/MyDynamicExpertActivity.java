@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +17,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -39,7 +39,7 @@ public class MyDynamicExpertActivity extends Activity{
     // 返回接口的数据
     private String resstr;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 页数
     private int page = 0;
     // 需要查询人动态
@@ -62,7 +62,7 @@ public class MyDynamicExpertActivity extends Activity{
     public void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            dialog.dismissDlog();
         }
     }
 
@@ -78,10 +78,8 @@ public class MyDynamicExpertActivity extends Activity{
                 finish();
             }
         });
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(this);
+        dialog.showDialog();
         listView = (ListView) findViewById(R.id.list_view);
         listAdapter = new DynamicExpertAdapter(this);
         listView.setAdapter(listAdapter);
@@ -149,7 +147,7 @@ public class MyDynamicExpertActivity extends Activity{
                         if ("failed".equals(jsonObject.getString("status"))){
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         geniusList = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
@@ -161,7 +159,7 @@ public class MyDynamicExpertActivity extends Activity{
                     }
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     break;
             }
         }

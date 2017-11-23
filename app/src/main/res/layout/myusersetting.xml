@@ -100,36 +100,132 @@
                 android:textSize="16dp" />
 
             <Button
-                style="@style/GreenButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/gracearrow1"
-                android:visibility="gone" />
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/pickfeedback1"
+        <!--<LinearLayout-->
+            <!--android:id="@+id/pickfeedback1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:background="@color/color_ffffff"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:visibility="gone" >-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="意见反馈：" />-->
+
+            <!--<Button-->
+                <!--style="@style/arrow_img"-->
+                <!--android:layout_gravity="center"/>-->
+
+        <!--</LinearLayout>-->
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/color_ffffff"
+            android:layout_height="1px"
+            android:background="@color/gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone" >
+            android:clickable="true"
+            android:onClick="FoundTomlive">
+
+            <TextView
+                android:id="@+id/tomlive_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="直播设置"
+                android:textColor="#444444"
+                android:textSize="16dp" />
+
+            <Button
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:onClick="pushSettings">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="意见反馈：" />
+                android:text="推送设置"
+                android:textColor="#444444"
+                android:textSize="16dp" />
 
             <Button
-                style="@style/GreenButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                style="@style/arrow_img"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="NewVersion"
+            android:clickable="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/version_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/gracearrow1" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="5dp"
+                android:text="当前版本"
+                android:textColor="#444444"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/version_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:visibility="gone"
+                android:src="@mipmap/icon_rank_new"/>
+
+            <TextView
+                android:id="@+id/version_code_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/color_text2"
+                android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -154,45 +250,12 @@
                 android:textColor="#444444"
                 android:textSize="16dp" />
 
-            <Button
-                style="@style/GreenButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/gracearrow1"
-                android:visibility="gone" />
-
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/gray_line" />
-
-        <LinearLayout
-            android:id="@+id/picktemporaryexitapp1"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/color_ffffff"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="暂时退出：" />
-
-            <Button
-                style="@style/GreenButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/gracearrow1" />
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pickaboutmy"

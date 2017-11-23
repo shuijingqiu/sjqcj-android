@@ -7,13 +7,20 @@ package com.example.sjqcjstock.entity;
 public class UnreadCount {
 
     // 返回成功与否
-    private String status;
+    private String code;
+    //
+    private String msg;
     // 消息主体
     private UnreadInfo data = new UnreadInfo();
+    // 牛人订阅消息条数
+    private int nr_count = 0;
+    // 直播订阅消息条数
+    private int zb_count = 0;
 
     public class UnreadInfo {
+
         // 打赏的消息条数
-        private String unread_notify = "0";
+        private int unread_notify = 0;
         // @我的条数
         private int unread_atme = 0;
         // 未读评论数目
@@ -27,14 +34,14 @@ public class UnreadCount {
         // 系统消息消息条数
         private int sys_message = 0;
 
-        public String getUnread_notify() {
+
+        public int getUnread_notify() {
             return unread_notify;
         }
 
-        public void setUnread_notify(String unread_notify) {
+        public void setUnread_notify(int unread_notify) {
             this.unread_notify = unread_notify;
         }
-
         public int getUnread_atme() {
             return unread_atme;
         }
@@ -84,12 +91,20 @@ public class UnreadCount {
         }
     }
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public UnreadInfo getData() {
@@ -98,5 +113,21 @@ public class UnreadCount {
 
     public void setData(UnreadInfo data) {
         this.data = data;
+    }
+
+    public int getNr_count() {
+        return nr_count;
+    }
+
+    public void setNr_count(int nr_count) {
+        this.nr_count = nr_count;
+    }
+
+    public int getZb_count() {
+        return zb_count;
+    }
+
+    public void setZb_count(int zb_count) {
+        this.zb_count = zb_count;
     }
 }

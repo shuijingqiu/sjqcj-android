@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sjqcjstock.R;
-import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.LineEntity;
 import com.example.sjqcjstock.entity.stocks.ListStickEntity;
 import com.example.sjqcjstock.entity.stocks.OHLCEntity;
@@ -22,6 +20,7 @@ import com.example.sjqcjstock.entity.stocks.StickEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.Utils;
 import com.example.sjqcjstock.netutil.stocks.CountUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.stocks.MACandleStickChart;
 import com.example.sjqcjstock.view.stocks.StickChart;
 
@@ -72,7 +71,7 @@ public class FragmentDayMap extends Fragment {
     // 当前年份
     private String year = "";
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 判断是否可以获取网络数据
     private boolean isGetDate = true;
     // 当前年份的数据条数
@@ -82,19 +81,7 @@ public class FragmentDayMap extends Fragment {
     // 当前的最新数据
     private String strKmap = "";
 
-    public FragmentDayMap() {
-
-    }
-//    public static final FragmentDayMap newInstance(int code, String strKmap)
-//    {
-//        FragmentDayMap fragment = new FragmentDayMap();
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("pid",pid);
-//        bundle.putString("message", message);
-//        fragment.setArguments(bundle);
-//
-//        return fragment ;
-//    }
+    public FragmentDayMap() {}
 
     /**
      * （这种写法转屏的时候会出现问题：最后要改）
@@ -104,6 +91,7 @@ public class FragmentDayMap extends Fragment {
     public FragmentDayMap(String code, String strKmap) {
         this.code = code;
         this.strKmap = strKmap;
+        Log.e("mh123-",strKmap);
     }
 
     @Override
@@ -118,8 +106,7 @@ public class FragmentDayMap extends Fragment {
      * 控件绑定
      */
     private void findView(View view) {
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage(Constants.loadMessage);
+        dialog = new CustomProgress(getActivity());
         dialog.setCancelable(false);
         Calendar calendar = Calendar.getInstance();
         year = (calendar.get(Calendar.YEAR) + "").substring(2);
@@ -191,7 +178,7 @@ public class FragmentDayMap extends Fragment {
             // 柱状图数据加载
             initStickChart();
             if (dialog != null) {
-                dialog.dismiss();
+                dialog.dismissDlog();
             }
         }
     };
@@ -370,7 +357,7 @@ public class FragmentDayMap extends Fragment {
 
         if (!"".equals(strKmap)) {
             strS = strKmap.split("\\|");
-            if (Utils.isTimeOne(strS[6])) {
+//            if (Utils.isTimeOne(strS[6])) {
                 valueK = Float.valueOf(strS[1]);
                 valueS = Float.valueOf(strS[2]);
                 // K线图数据的添加
@@ -383,7 +370,7 @@ public class FragmentDayMap extends Fragment {
                 volume = Float.valueOf(Utils.getNumberFormatW(strS[5]));
                 // 柱状图数据的添加
                 volAll.add(new StickEntity(volume, type, strS[0]));
-            }
+//            }
             strKmap = "";
         }
 
@@ -432,7 +419,7 @@ public class FragmentDayMap extends Fragment {
             if (open == 0) {
                 // 重新加载上一年的数据
                 year = Utils.getYearFormat(year);
-                dialog.show();
+                dialog.showDialog();
                 initData();
                 return;
             }
@@ -575,8 +562,17 @@ public class FragmentDayMap extends Fragment {
     }
 
     private float calcDistance(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
+        float x = 0;
+        float y = 0;
+        try {
+//        float x = event.getX(0) - event.getX(1);
+//        float y = event.getY(0) - event.getY(1);
+            x = event.getX(0) - event.getX(1);
+            y = event.getY(0) - event.getY(1);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return (float) Math.sqrt(x * x + y * y);
     }
 

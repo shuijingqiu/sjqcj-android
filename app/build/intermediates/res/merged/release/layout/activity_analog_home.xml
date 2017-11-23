@@ -25,11 +25,21 @@
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="13dp"
+            android:layout_marginLeft="13dp"
             android:src="@mipmap/select3" />
+
+        <TextView
+            android:id="@+id/rule_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="13dp"
+            android:textColor="@color/white"
+            android:text="规则"/>
 
     </RelativeLayout>
 
@@ -56,10 +66,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/fragment_picture_imgs"
-                android:layout_width="match_parent"
-                android:layout_height="115dp" />
+            <!--暂时不要的-->
+            <!--<FrameLayout-->
+                <!--android:id="@+id/fragment_picture_imgs"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="115dp" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -71,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -91,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="常胜牛人" />
+                        android:text="稳赚牛人" />
 
                 </LinearLayout>
 
@@ -144,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -164,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="选股牛人" />
+                        android:text="常胜牛人" />
 
                 </LinearLayout>
 
@@ -216,7 +227,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/gray_line" />
 
             <LinearLayout
@@ -232,7 +243,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="牛人动态"
+                    android:text="牛人交易"
                     android:textColor="@color/color_text1"
                     android:textSize="14dp"
                     android:textStyle="bold" />

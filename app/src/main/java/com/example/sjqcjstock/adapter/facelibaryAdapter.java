@@ -29,7 +29,7 @@ public class facelibaryAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // return imagesUrl.length;
-        return listData.size();
+        return listData == null ? 0 : listData.size();
     }
 
     @Override

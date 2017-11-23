@@ -6,8 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
@@ -35,16 +36,17 @@ import com.example.sjqcjstock.adapter.facelibaryAdapter;
 import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.netutil.HttpUtil;
-import com.example.sjqcjstock.netutil.JsonTools;
-import com.example.sjqcjstock.netutil.TaskParams;
 import com.example.sjqcjstock.view.CustomToast;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 转发微博页面
@@ -136,8 +138,6 @@ public class transpondweiboActivity extends Activity {
     //评论编辑框
     private EditText editcommentforweibo1;
 
-    private LinearLayout LinearLayoutgetimg;
-
     //表情包
     private ImageView facelibrary1;
 
@@ -175,35 +175,29 @@ public class transpondweiboActivity extends Activity {
     // 是否同时评论
     private String iscommentstr = "0";
 
+    // 转发返回数据
+    private String forwardStr = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 4表示禁言用户不能转发微博
-        if (Constants.userType.equals("4")) {
-            finish();
-        }
+//        // 4表示禁言用户不能转发微博
+//        if (Constants.userType.equals("4")) {
+//            finish();
+//        }
         setContentView(R.layout.transpondweibo);
-
         // 将Activity反复链表
         ExitApplication.getInstance().addActivity(this);
-
         initView();
-
     }
 
     private void initView() {
-        // TODO Auto-generated method stub
         // 获取intent的数据
         Intent intent = getIntent();
         feedidstr = intent.getStringExtra("feed_id");
-//		feeduidstr = intent.getStringExtra("feeduid");
-//		content = intent.getCharSequenceExtra("content");
-//		uname = intent.getStringExtra("uname");
         LinearLayout01 = (RelativeLayout) findViewById(R.id.LinearLayout01);
         editcommentforweibo1 = (EditText) findViewById(R.id.editcommentforweibo1);
-        LinearLayoutgetimg = (LinearLayout) findViewById(R.id.LinearLayoutgetimg);
         addtranspond1 = (LinearLayout) findViewById(R.id.addtranspond1);
         facelibrary1 = (ImageView) findViewById(R.id.facelibrary1);
         goback1 = (LinearLayout) findViewById(R.id.goback1);
@@ -249,18 +243,12 @@ public class transpondweiboActivity extends Activity {
         });
     }
 
-    public static String FilterHtml(String str) {
-        str = str.replaceAll("<(?!br|img)[^>]+>", "").trim();
-        return str;
-    }
-
     class addtranspond1_listener implements OnClickListener {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             if (editcommentforweibo1.getText().toString().length() > 140) {
-                CustomToast.makeText(getApplicationContext(), "评论超长了", Toast.LENGTH_LONG).show();
+                CustomToast.makeText(getApplicationContext(), "评论超长了", Toast.LENGTH_SHORT).show();
                 return;
             }
             //是否同时评论
@@ -270,95 +258,71 @@ public class transpondweiboActivity extends Activity {
 
             String bodystr;
             //没有内容，默认为“//”。
-            if ("".equals(editcommentforweibo1.getText().toString())) {
-//				try{
-//					if(content.equals("") || content == null){
-                bodystr = "//";
-//					} else {
-//						bodystr = "//" + "@" + uname + ":" + content;
-//					}
-//				}catch(Exception e){
-//					bodystr = "//";
-//				}
-            } else {
+            if (!"".equals(editcommentforweibo1.getText() + "")) {
                 bodystr = "//" + editcommentforweibo1.getText() + "";
-//				try{
-//					if(content.equals("") || content == null){
-//						bodystr = editcommentforweibo1.getText()+"";
-//					} else {
-//						bodystr = editcommentforweibo1.getText().toString() + "//" + "@" + uname + ":" + content;
-//					}
-//				}catch(Exception e){
-//					bodystr = editcommentforweibo1.getText()+"";
-//				}
+            } else {
+                bodystr = "//";
             }
 
-//			// 评论这条微博
-//			if ("1".equals(iscommentstr)) {
-//				new SendInfoTaskaddcommentweibo().execute(new TaskParams(Constants.Url+"?app=public&mod=AppFeedList&act=Appaddcomment",
-//								new String[] { "mid", Constants.staticmyuidstr },
-//								new String[] { "login_password",Constants.staticpasswordstr },
-//								new String[] { "app_name", "public" },
-//								new String[] { "table_name", "feed" },
-//								new String[] { "app_uid", feeduidstr },
-//								new String[] { "ifShareFeed", "0" },
-//								new String[] { "content", bodystr },
-//								new String[] { "row_id", feedidstr }
-//						));
-//			}
-            //转发微博，自己观点
-            new SendInfoTasktranspond().execute(new TaskParams(Constants.Url + "?app=public&mod=AppFeedList&act=AppForward",
-                    new String[]{"mid", Constants.staticmyuidstr},
-                    new String[]{"feed_id", feedidstr},
-                    new String[]{"login_password", Constants.staticpasswordstr},
-                    new String[]{"tokey", Constants.statictokeystr},
-                    new String[]{"comment", iscommentstr},
-                    new String[]{"body", bodystr}
-            ));
+//            //转发微博，自己观点
+//            new SendInfoTasktranspond().execute(new TaskParams(Constants.Url + "?app=public&mod=AppFeedList&act=AppForward",
+//                    new String[]{"mid", Constants.staticmyuidstr},
+//                    new String[]{"feed_id", feedidstr},
+//                    new String[]{"login_password", Constants.staticpasswordstr},
+//                    new String[]{"tokey", Constants.statictokeystr},
+//                    new String[]{"comment", iscommentstr},
+//                    new String[]{"body", bodystr}
+//            ));
+
+            // 转发微博
+            final String finalBodystr = bodystr;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List dataList = new ArrayList();
+                    // 微博id
+                    dataList.add(new BasicNameValuePair("feed_id", feedidstr));
+                    dataList.add(new BasicNameValuePair("mid", Constants.staticmyuidstr));
+                    dataList.add(new BasicNameValuePair("token", Constants.apptoken));
+                    dataList.add(new BasicNameValuePair("body", finalBodystr));
+                    dataList.add(new BasicNameValuePair("comment", iscommentstr));
+                    forwardStr = HttpUtil.restHttpPost(Constants.newUrl + "/api/feed/forward", dataList);
+                    handler.sendEmptyMessage(0);
+                }
+            }).start();
 
         }
     }
 
     class goback1_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             finish();
         }
-
     }
 
     class atsbicon1_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             Intent intent = new Intent(transpondweiboActivity.this,
                     atfriendActivity.class);
-            // startActivity(intent);
             startActivityForResult(intent, REQUEST_CODE_UNAME);
         }
-
     }
 
     class getimgtoalbum1_listener implements OnClickListener {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             // 从相册获取图片
             getImageFromAlbum();
-
         }
-
     }
 
     class facelibrary1_listener implements OnClickListener {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             if ("0".equals(isdisplayfacelibrary)) {
                 facegridView1.setVisibility(View.VISIBLE);
                 isdisplayfacelibrary = "1";
@@ -366,9 +330,7 @@ public class transpondweiboActivity extends Activity {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(
                         editcommentforweibo1.getWindowToken(), 0);
-
             } else {
-
                 facegridView1.setVisibility(View.GONE);
                 isdisplayfacelibrary = "0";
             }
@@ -379,23 +341,16 @@ public class transpondweiboActivity extends Activity {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             LinearLayout01.setVisibility(View.VISIBLE);
             facegridView1.setVisibility(View.GONE);
         }
     }
 
     class LinearLayout01_listener implements OnClickListener {
-
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            // CustomToast.makeText(getApplicationContext(), "hahaha", 1)
-            // .show();
             LinearLayout01.setVisibility(View.VISIBLE);
-
         }
-
     }
 
     protected void getImageFromAlbum() {
@@ -537,74 +492,74 @@ public class transpondweiboActivity extends Activity {
         return false;
     }
 
-    private class SendInfoTaskaddcommentweibo extends
-            AsyncTask<TaskParams, Void, String> {
+//    private class SendInfoTaskaddcommentweibo extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//            result = result.replace("\n ", "");
+//            result = result.replace("\n", "");
+//            result = result.replace(" ", "");
+//            result = "[" + result + "]";
+//            // 解析json字符串获得List<Map<String,Object>>
+//            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
+//            for (Map<String, Object> map : lists) {
+//                String statusstr = map.get("status") + "";
+//
+//                if ("1".equals(statusstr)) {
+//                    CustomToast.makeText(getApplicationContext(), "发评论成功",
+//                            Toast.LENGTH_SHORT).show();
+//                } else {
+//                    CustomToast.makeText(getApplicationContext(), "发评论失败,请重试",
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            // CustomToast.makeText(supermanlistActivity.this, result, 1).show();
-
-            result = result.replace("\n ", "");
-            result = result.replace("\n", "");
-            result = result.replace(" ", "");
-            result = "[" + result + "]";
-            // 解析json字符串获得List<Map<String,Object>>
-            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-            for (Map<String, Object> map : lists) {
-                String statusstr = map.get("status") + "";
-
-                if ("1".equals(statusstr)) {
-                    CustomToast.makeText(getApplicationContext(), "发评论成功",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    CustomToast.makeText(getApplicationContext(), "发评论失败,请重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-    private class SendInfoTasktranspond extends
-            AsyncTask<TaskParams, Void, String> {
-
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            // CustomToast.makeText(supermanlistActivity.this, result, 1).show();
-            super.onPostExecute(result);
-            // CustomToast.makeText(supermanlistActivity.this, result, 1).show();
-            result = result.replace("\n ", "");
-            result = result.replace("\n", "");
-            result = result.replace(" ", "");
-            result = "[" + result + "]";
-            // 解析json字符串获得List<Map<String,Object>>
-            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-            for (Map<String, Object> map : lists) {
-                String statusstr = map.get("status") + "";
-                if ("1".equals(statusstr)) {
-                    CustomToast.makeText(getApplicationContext(), "转发成功", Toast.LENGTH_LONG).show();
-                    // 返回股吧页面刷新
-                    Constants.isreferforumlist = "0";
-                    finish();
-                } else {
-                    CustomToast.makeText(getApplicationContext(), "转发失败,请重试", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
+//    private class SendInfoTasktranspond extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//            super.onPostExecute(result);
+//            if(result == null || "".equals(result) || "null".equals(result)){
+//                CustomToast.makeText(getApplicationContext(), "转发失败,请重试", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            result = result.replace("\n ", "");
+//            result = result.replace("\n", "");
+//            result = result.replace(" ", "");
+//            result = "[" + result + "]";
+//            // 解析json字符串获得List<Map<String,Object>>
+//            List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
+//            for (Map<String, Object> map : lists) {
+//                String statusstr = map.get("status") + "";
+//                if ("1".equals(statusstr)) {
+//                    CustomToast.makeText(getApplicationContext(), "转发成功", Toast.LENGTH_SHORT).show();
+//                    // 返回股吧页面刷新
+//                    Constants.isreferforumlist = "0";
+//                    finish();
+//                } else {
+//                    CustomToast.makeText(getApplicationContext(), "转发失败,请重试", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 绑定摘要输入字数事件
@@ -634,8 +589,35 @@ public class transpondweiboActivity extends Activity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
 
+        }
+    };
+
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(forwardStr);
+                        // 请求失败的情况
+                        CustomToast.makeText(transpondweiboActivity.this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        if (Constants.successCode.equals(jsonObject.getString("code"))) {
+                            // 成功
+                            // 返回股吧页面刷新
+                            Constants.isreferforumlist = "0";
+                            finish();
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
         }
     };
 

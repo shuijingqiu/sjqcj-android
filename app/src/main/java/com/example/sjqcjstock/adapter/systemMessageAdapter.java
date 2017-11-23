@@ -49,8 +49,22 @@ public class systemMessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        //动态加载布局
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_system_meaage, null);
+            holder = new ViewHolder();
+            holder.messageTv = (TextView) convertView.findViewById(R.id.message_tv);
+            holder.messageTimeTv = (TextView) convertView.findViewById(R.id.message_time_tv);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
         SystemMessage.datas data = systemMessage.getData().get(position);
-        return makeItemView(data);
+        holder.messageTv.setText(data.getBody());
+        holder.messageTimeTv.setText(Utils.getStringtoDate1(data.getCtime()));
+        return convertView;
     }
 
     // 追加数据
@@ -59,19 +73,9 @@ public class systemMessageAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    // 绘制Item的函数
-    public View makeItemView(SystemMessage.datas data) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        // 使用View的对象itemView与R.layout.item关联
-        View itemView = inflater
-                .inflate(R.layout.list_item_system_meaage, null);
-        TextView message = (TextView) itemView.findViewById(R.id.message_tv);
-        TextView messageTime = (TextView) itemView.findViewById(R.id.message_time_tv);
-        TextView feedid = (TextView) itemView.findViewById(R.id.feed_id_tv);
-        message.setText(data.getBody());
-        messageTime.setText(Utils.getStringtoDate1(data.getCtime()));
-        feedid.setText(data.getFeed_id());
-        return itemView;
+    public static class ViewHolder {
+        TextView messageTv;
+        TextView messageTimeTv;
     }
+
 }

@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +16,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.Order;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -39,7 +39,7 @@ public class DayCommissionActivity extends Activity {
     // 需要加载的数据
     private ArrayList<Order> orderArrayList;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 调用买卖接口返回的数据
     private String resstr = "";
     // 分页
@@ -52,7 +52,7 @@ public class DayCommissionActivity extends Activity {
         setContentView(R.layout.activity_day_commission);
         ExitApplication.getInstance().addActivity(this);
         findView();
-        dialog.show();
+        dialog.showDialog();
         getData();
     }
 
@@ -60,9 +60,7 @@ public class DayCommissionActivity extends Activity {
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
+        dialog = new CustomProgress(this);
         /**
          * 返回按钮的事件绑定
          */
@@ -133,7 +131,7 @@ public class DayCommissionActivity extends Activity {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
 //                            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             if(page == 1){
                                 orderArrayList = new ArrayList<Order>();
                                 commissionAdapter.setlistData(orderArrayList);
@@ -152,7 +150,7 @@ public class DayCommissionActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    dialog.dismissDlog();
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                     break;

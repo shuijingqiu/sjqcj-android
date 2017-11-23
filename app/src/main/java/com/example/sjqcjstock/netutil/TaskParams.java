@@ -1,5 +1,7 @@
 package com.example.sjqcjstock.netutil;
 
+import com.example.sjqcjstock.constant.Constants;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -42,15 +44,17 @@ public class TaskParams {
     public TaskParams(String url, String[]... para) {
         params = new HashMap<String, String>();
         // 加sjc 是为了防止攻击加的验证
-        long sjc = System.currentTimeMillis();
-        int numcode = (int) ((Math.random() * 9 + 1) * 100000);
-        this.url = url + "&sjc=1" + sjc + numcode;
+//        long sjc = System.currentTimeMillis();
+//        int numcode = (int) ((Math.random() * 9 + 1) * 100000);
+
+        this.url = url + getSign();
         if (para != null) {
             for (int i = 0; i < para.length; i++) {
                 String[] p = para[i];
                 if (p.length != 2) {
                     continue;
                 }
+//                Log.e("mh-para:-", "+" + p[0]+  "--"+p[1]+"-*");
                 this.params.put(p[0], p[1]);
             }
         }
@@ -114,5 +118,16 @@ public class TaskParams {
         public ParamsInvaliedException(String s) {
             super(s);
         }
+    }
+    /**
+     * 获取验证的签名+当前时间戳（网站内部自己的严重）
+     * sign  =  md5(md5(app_key)+md5(time)) time为当前时间的时间戳
+     * @return
+     */
+    private String getSign(){
+        // 时间戳 去掉毫秒
+        String time = System.currentTimeMillis()/1000+"";
+        String sign = Md5Util.getMd5(Md5Util.getMd5(Constants.app_key)+Md5Util.getMd5(time));
+        return "&s_sign="+sign+"&s_time="+time;
     }
 }

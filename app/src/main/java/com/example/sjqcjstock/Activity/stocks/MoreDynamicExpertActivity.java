@@ -1,7 +1,6 @@
 package com.example.sjqcjstock.Activity.stocks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +17,7 @@ import com.example.sjqcjstock.app.ExitApplication;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.GeniusEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
 import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
@@ -41,7 +41,7 @@ public class MoreDynamicExpertActivity extends Activity{
     // 需要加载的牛人动态数据
     private ArrayList<GeniusEntity> geniusList;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     // 调用牛人动态接口返回的数据
     private String resstr = "";
     // 分页
@@ -54,7 +54,7 @@ public class MoreDynamicExpertActivity extends Activity{
         setContentView(R.layout.activity_more_dynamic_expert);
         ExitApplication.getInstance().addActivity(this);
         findView();
-        dialog.show();
+        dialog.showDialog();
         getData();
     }
 
@@ -62,9 +62,7 @@ public class MoreDynamicExpertActivity extends Activity{
      * 控件的绑定
      */
     private void findView() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
+        dialog = new CustomProgress(this);
         /**
          * 返回按钮的事件绑定
          */
@@ -111,14 +109,14 @@ public class MoreDynamicExpertActivity extends Activity{
     }
 
     /**
-     * 获取当日委托交易信息
+     * 更多牛人动态信息
      */
     private void getData(){
         // 开线程获牛人买卖动态信息
         new Thread(new Runnable() {
             @Override
             public void run() {
-                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders&token="+Constants.apptoken+"&uid="+Constants.staticmyuidstr+"&p="+page);
+                resstr = HttpUtil.restHttpGet(Constants.moUrl+"/orders&p="+page);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -136,12 +134,12 @@ public class MoreDynamicExpertActivity extends Activity{
                     try {
                         JSONObject jsonObject = new JSONObject(resstr);
                         if ("failed".equals(jsonObject.getString("status"))){
-//                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
+//                            CustomToast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                             geniusList = new  ArrayList<GeniusEntity>();
                             listAdapter.setlistData(geniusList);
                             // 千万别忘了告诉控件刷新完毕了哦！
                             ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                            dialog.dismiss();
+                            dialog.dismissDlog();
                             return;
                         }
                         ArrayList<GeniusEntity> list = (ArrayList<GeniusEntity>) JSON.parseArray(jsonObject.getString("data"),GeniusEntity.class);
@@ -156,7 +154,7 @@ public class MoreDynamicExpertActivity extends Activity{
                     }
                     // 千万别忘了告诉控件刷新完毕了哦！
                     ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    dialog.dismiss();
+                    dialog.dismissDlog();
             }
         }
     };

@@ -1,6 +1,5 @@
 package com.example.sjqcjstock.fragment.stocks;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +18,8 @@ import com.example.sjqcjstock.adapter.stocks.DynamicOredrAdapter;
 import com.example.sjqcjstock.constant.Constants;
 import com.example.sjqcjstock.entity.stocks.DesertEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
+import com.example.sjqcjstock.view.CustomProgress;
+import com.example.sjqcjstock.view.PullToRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +32,12 @@ import java.util.ArrayList;
  */
 public class FragmentDynamicOrder extends Fragment {
 
+    // 上下拉刷新控件
+    private PullToRefreshLayout ptrl;
+    // 页数
+    private int page = 1;
     // 网络请求提示
-    private ProgressDialog dialog;
+    private CustomProgress dialog;
     private ListView dynamicOrderList;
     private DynamicOredrAdapter adapter;
     // 数据集
@@ -40,7 +45,8 @@ public class FragmentDynamicOrder extends Fragment {
     // 接口返回的数据
     private String rest;
 
-    public FragmentDynamicOrder(){}
+    public FragmentDynamicOrder() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,16 +60,20 @@ public class FragmentDynamicOrder extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (Constants.isDynamic){
+        if (Constants.isDynamic) {
             getData();
+            page = 1;
+            if (desertList != null) {
+                desertList.clear();
+            }
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (dialog != null){
-            dialog.dismiss();
+        if (dialog != null) {
+            dialog.dismissDlog();
         }
     }
 
@@ -71,22 +81,42 @@ public class FragmentDynamicOrder extends Fragment {
      * 页面控件的绑定
      */
     private void findView(View view) {
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage(Constants.loadMessage);
-        dialog.setCancelable(true);
-        dialog.show();
+        dialog = new CustomProgress(getActivity());
+        dialog.showDialog();
         /**
          * 返回按钮的事件绑定
          */
         dynamicOrderList = (ListView) view.findViewById(R.id.dynamic_order_list);
-        adapter = new DynamicOredrAdapter(getActivity(),this);
+        adapter = new DynamicOredrAdapter(getActivity(), this);
         dynamicOrderList.setAdapter(adapter);
         dynamicOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), MyDynamicExpertActivity.class);
-                intent.putExtra("price_uid",desertList.get(position).getPrice_uid());
+                intent.putExtra("price_uid", desertList.get(position).getPrice_uid());
                 startActivity(intent);
+            }
+        });
+
+        ptrl = ((PullToRefreshLayout) view.findViewById(
+                R.id.refresh_view));
+        // 添加上下拉刷新事件
+        ptrl.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            // 下来刷新
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+                page = 1;
+                if (desertList != null) {
+                    desertList.clear();
+                }
+                getData();
+            }
+
+            // 上拉加载
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                page += 1;
+                getData();
             }
         });
     }
@@ -94,12 +124,12 @@ public class FragmentDynamicOrder extends Fragment {
     /**
      * 数据的加载
      */
-    public void getData(){
+    public void getData() {
         // 开线程获取订阅牛人列表
         new Thread(new Runnable() {
             @Override
             public void run() {
-                rest = HttpUtil.restHttpGet(Constants.moUrl+"/desert/getDesertList&uid="+Constants.staticmyuidstr+"&token="+Constants.apptoken);
+                rest = HttpUtil.restHttpGet(Constants.moUrl + "/desert/getDesertList&uid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&p=" + page);
                 handler.sendEmptyMessage(0);
             }
         }).start();
@@ -114,23 +144,28 @@ public class FragmentDynamicOrder extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                        try {
+                    try {
                         JSONObject jsonObject = new JSONObject(rest);
-                        if ("failed".equals(jsonObject.getString("status"))){
-                            desertList = new ArrayList<DesertEntity>();
-                            adapter.setlistData(desertList);
-                            dialog.dismiss();
+                        if ("failed".equals(jsonObject.getString("status"))) {
+                            dialog.dismissDlog();
+                            // 千万别忘了告诉控件刷新完毕了哦！
+                            ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
                             return;
                         }
-                        desertList = (ArrayList<DesertEntity>) JSON.parseArray(jsonObject.getString("data"),DesertEntity.class);
-                        if (desertList == null || desertList.size()<1){
-                            desertList = new ArrayList<DesertEntity>();
+                        ArrayList<DesertEntity> list = (ArrayList<DesertEntity>) JSON.parseArray(jsonObject.getString("data"), DesertEntity.class);
+                        if (desertList != null && desertList.size() > 0) {
+                            desertList.addAll(list);
+                        } else {
+                            desertList = list;
                         }
                         adapter.setlistData(desertList);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    dialog.dismiss();
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    ptrl.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    dialog.dismissDlog();
                     break;
             }
         }

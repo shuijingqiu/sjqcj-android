@@ -10,7 +10,7 @@ public class CalendarUtil {
     /**
      * 格式化时间
      *
-     * @param time
+     * @param time 日期 yyyy-MM-dd HH:mm:ss
      * @return
      */
     public static String formatDateTime(String time) {
@@ -56,4 +56,5 @@ public class CalendarUtil {
             return time.substring(index, time.length());
         }
     }
+
 }

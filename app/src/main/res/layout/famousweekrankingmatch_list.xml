@@ -26,9 +26,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="名人组周积分榜"
-            style="@style/top_title"
-            />
+            android:text="名人组周收益榜"
+            style="@style/top_title"/>
         
     </RelativeLayout>
     

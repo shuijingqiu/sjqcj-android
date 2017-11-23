@@ -8,7 +8,6 @@
         android:id="@+id/name_code_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="万马股份 002276"
         android:textSize="16sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
@@ -24,14 +23,16 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="2">
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/present_price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
                 android:text="现        价"/>
 
             <TextView
@@ -41,15 +42,19 @@
                 android:layout_toRightOf="@id/present_price_tv"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="18.91"/>
+                android:textColor="@color/red"
+                android:textSize="13sp"
+                android:text="0.00"/>
 
             <TextView
                 android:id="@+id/latest_market_price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
                 android:layout_below="@+id/present_price_tv"
-                android:text="最新市价"/>
+                android:text="最新市值"/>
 
             <TextView
                 android:id="@+id/latest_market_price_value_tv"
@@ -59,7 +64,8 @@
                 android:layout_below="@+id/present_price_tv"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
-                android:text="288654.12"/>
+                android:textSize="13sp"
+                android:text="0"/>
 
             <TextView
                 android:id="@+id/position_number_tv"
@@ -67,6 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/latest_market_price_tv"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
                 android:text="持仓数量"/>
 
             <TextView
@@ -75,23 +83,26 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/latest_market_price_tv"
                 android:layout_below="@+id/latest_market_price_value_tv"
+                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="15500"/>
+                android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/profit_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="收        益"/>
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
+                android:text="收  益  率"/>
 
             <TextView
                 android:id="@+id/profit_value_tv"
@@ -100,7 +111,9 @@
                 android:layout_toRightOf="@id/profit_tv"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="-0.61%"/>
+                android:textColor="@color/red"
+                android:textSize="13sp"
+                android:text="0.00%"/>
 
             <TextView
                 android:id="@+id/average_cost_tv"
@@ -108,6 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/profit_tv"
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
                 android:text="平均成本"/>
 
             <TextView
@@ -116,9 +131,9 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/average_cost_tv"
                 android:layout_below="@+id/profit_value_tv"
+                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="288654.12"/>
+                android:layout_marginLeft="10dp"/>
 
             <TextView
                 android:id="@+id/can_buy_quantity_tv"
@@ -126,6 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/average_cost_tv"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/color_text2"
+                android:textSize="13sp"
                 android:text="可卖数量"/>
 
             <TextView
@@ -134,9 +151,9 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/can_buy_quantity_tv"
                 android:layout_below="@+id/average_cost_value_tv"
+                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:text="15500"/>
+                android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
 
@@ -148,43 +165,50 @@
         android:background="@drawable/line"/>
 
     <LinearLayout
+        android:id="@+id/operation_column_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/transaction_detail_tv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/color_text2"
             android:layout_weight="1"
             android:text="成交明细"/>
 
         <View
             android:layout_width="1dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:background="@drawable/line"/>
 
         <TextView
+
             android:id="@+id/purchase_tv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:gravity="center"
             android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/color_text2"
             android:text="买入"/>
 
         <View
             android:layout_width="1dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:background="@drawable/line"/>
 
         <TextView
             android:id="@+id/sell_out_tv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:gravity="center"
             android:layout_weight="1"
+            android:textSize="15sp"
+            android:textColor="@color/color_text2"
             android:text="卖出"/>
 
     </LinearLayout>
@@ -192,6 +216,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/line"/>
+        android:background="@color/gray_line"/>
 
 </LinearLayout>

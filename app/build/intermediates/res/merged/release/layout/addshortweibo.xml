@@ -6,6 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/top_linearlayout"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -60,20 +61,40 @@
             android:layout_height="1dp"
             android:background="@color/gray_line" />
 
-        <EditText
-            android:id="@+id/editcommentforweibo1"
-            style="@style/EditText"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/color_ffffff"
-            android:gravity="top"
-            android:hint="正文"
-            android:lineSpacingMultiplier="1.2"
-            android:maxLength="20000"
-            android:paddingLeft="5dp"
-            android:textColorHint="@color/color_999999"
-            android:textCursorDrawable="@drawable/color_cursor" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editcommentforweibo1"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/input_number_words"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_ffffff"
+                android:gravity="top"
+                android:hint="正文"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLength="20000"
+                android:paddingLeft="5dp"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+            <TextView
+                android:id="@+id/input_number_words"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/summary_edi"
+                android:text="@string/input_number_words"
+                android:textColor="@color/color_999999"
+                android:layout_marginRight="5dp"
+                android:layout_margin="10dp"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/editcommentforweibo2"
@@ -84,16 +105,10 @@
             android:textColorHint="@color/color_999999"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/hideweiboimaid1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/top_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -101,8 +116,10 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/img_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical" >
 
             <!-- 此控件与Callery会经常用到 -->

@@ -105,7 +105,8 @@
                     android:id="@+id/text_nc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="内参" />
+                    android:text="早参" />
+
             </LinearLayout>
 
             <LinearLayout

@@ -2,8 +2,10 @@ package com.example.sjqcjstock.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,30 +14,43 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sjqcjstock.Activity.user.loginActivity;
 import com.example.sjqcjstock.R;
 import com.example.sjqcjstock.constant.Constants;
+import com.example.sjqcjstock.entity.Article.UserEntity;
 import com.example.sjqcjstock.netutil.HttpUtil;
 import com.example.sjqcjstock.netutil.ImageUtil;
-import com.example.sjqcjstock.netutil.TaskParams;
+import com.example.sjqcjstock.netutil.Utils;
+import com.example.sjqcjstock.netutil.ViewUtil;
+import com.example.sjqcjstock.view.CustomToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class supermanActivityAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HashMap<String, String>> listData;
+    private ArrayList<UserEntity> listData;
+    // 点赞类型
+    private String type;
+    // 操作返回数据
+    private String jsonStr;
+    // 操作的数组下表
+    private int count;
 
     public supermanActivityAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setlistData(ArrayList<HashMap<String, String>> listData) {
+    public void setlistData(ArrayList<UserEntity> listData) {
         if (listData != null) {
-            this.listData = (ArrayList<HashMap<String, String>>) listData.clone();
+            this.listData = (ArrayList<UserEntity>) listData.clone();
             notifyDataSetChanged();
         }
     }
@@ -58,181 +73,209 @@ public class supermanActivityAdapter extends BaseAdapter {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        // 获取精华网络数据
 
         // 动态加载布局
         LayoutInflater mInflater = LayoutInflater.from(context);
-        // if(convertView==null){
-        convertView = mInflater.inflate(R.layout.list_item_superman, null);
-        // }
-
-        ImageView image = (ImageView) convertView.findViewById(R.id.user_image);
-        // image.setBackgroundResource((Integer)listData.get(position).get("user_image"));
-        ImageLoader.getInstance().displayImage(
-                listData.get(position).get("image_url"), image,
-                ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-
-        //
-        TextView username = (TextView) convertView.findViewById(R.id.username);
-        username.setText(listData.get(position).get("username"));
-        //
-        TextView detailcomment = (TextView) convertView
-                .findViewById(R.id.detailcomment);
-        detailcomment.setText(listData.get(position).get("intro"));
-
-        final Button friend_image = (Button) convertView
-                .findViewById(R.id.attentionuser1);
-        final Button attentionuser1 = (Button) convertView
-                .findViewById(R.id.attentionuser1);
-
-        String following = listData.get(position).get("following").toString();
-        String follower = listData.get(position).get("follower").toString();
-        if ("1".equals(following)) {
-            attentionuser1.setText("已关注");
-            attentionuser1.setTextColor(attentionuser1.getResources().getColor(R.color.color_toptitle));
-            friend_image.setBackground(friend_image.getResources().getDrawable(R.drawable.buttonstyle5));
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_superman, null);
+            holder = new ViewHolder();
+            holder.head = (ImageView) convertView.findViewById(R.id.user_image);
+            holder.name = (TextView) convertView.findViewById(R.id.username);
+            holder.detailcomment = (TextView) convertView.findViewById(R.id.detailcomment);
+            holder.attentionuser1 = (Button) convertView.findViewById(R.id.attentionuser1);
+            holder.vipIv = (ImageView) convertView.findViewById(R.id.vip_img);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        if ("1".equals(following)
-                && "1".equals(follower)) {
-            attentionuser1.setText("相互关注");
-            attentionuser1.setTextColor(attentionuser1.getResources().getColor(R.color.color_toptitle));
-            friend_image.setBackground(friend_image.getResources().getDrawable(R.drawable.buttonstyle5));
 
+        final UserEntity userEntity = listData.get(position);
+        ImageLoader.getInstance().displayImage(
+                userEntity.getAvatar_middle(), holder.head,
+                ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        holder.name.setText(userEntity.getUname());
+        holder.detailcomment.setText(userEntity.getIntro());
+
+        String following = userEntity.getFollow().getFollowing();
+        String follower = userEntity.getFollow().getFollower();
+        if ("1".equals(following)) {
+            holder.attentionuser1.setText("已关注");
+            holder.attentionuser1.setTextColor(holder.attentionuser1.getResources().getColor(R.color.color_toptitle));
+            holder.attentionuser1.setBackground(holder.attentionuser1.getResources().getDrawable(R.drawable.buttonstyle5));
+            if ("1".equals(follower)) {
+                holder.attentionuser1.setText("相互关注");
+                holder.attentionuser1.setTextColor(holder.attentionuser1.getResources().getColor(R.color.color_toptitle));
+                holder.attentionuser1.setBackground(holder.attentionuser1.getResources().getDrawable(R.drawable.buttonstyle5));
+
+            }
+        } else {
+            holder.attentionuser1.setText("+ 关注");
+            holder.attentionuser1.setTextColor(holder.attentionuser1.getResources().getColor(R.color.color_text2));
+            holder.attentionuser1.setBackground(holder.attentionuser1.getResources().getDrawable(R.drawable.buttonstyle4));
         }
 
         //关注按钮的点击事件
-        friend_image.setOnClickListener(new OnClickListener() {
+        holder.attentionuser1.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                if (Utils.isFastDoubleClick()) {
+                    return;
+                }
 
+                // menghuan 不用登陆也可以用
+                // 如果未登陆跳转到登陆页面
+                if (!Constants.isLogin) {
+                    Intent intent = new Intent(context, loginActivity.class);
+                    context.startActivity(intent);
+                    return;
+                }
+                count = position;
                 //点击关注
-                if ("0".equals(listData.get(position).get("following"))) {
-                    if (Constants.staticLoginType.equals("qq") || Constants.staticLoginType.equals("weixin")) {
-                        //三方用户
-                        new SendInfoTaskfollowsb().execute(new TaskParams(
-                                Constants.Url + "?app=public&mod=AppFeedList&act=AddFollow",
-                                new String[]{"mid", Constants.staticmyuidstr},
-                                //new String[] { "login_password",Constants.staticpasswordstr },
-                                new String[]{"tokey", Constants.statictokeystr},
-                                new String[]{"fid", listData.get(position).get("uid")},
-                                new String[]{"type", Constants.staticLoginType}
-                        ));
-                    } else {
-                        //普通用户
-                        new SendInfoTaskfollowsb().execute(new TaskParams(
-                                Constants.Url + "?app=public&mod=AppFeedList&act=AddFollow",
-                                new String[]{"mid", Constants.staticmyuidstr},
-                                new String[]{"login_password", Constants.staticpasswordstr},
-                                new String[]{"tokey", Constants.statictokeystr},
-                                new String[]{"fid", (String) listData.get(position).get("uid")}
-
-                        ));
-                    }
-                    attentionuser1.setText("已关注");
-
-                    listData.get(position).put("following", "1");
-                    notifyDataSetChanged();
+                if ("0".equals(userEntity.getFollow().getFollowing())) {
+                    type = "add";
+//                    if (Constants.staticLoginType.equals("qq") || Constants.staticLoginType.equals("weixin")) {
+//                        //三方用户
+//                        new SendInfoTaskfollowsb().execute(new TaskParams(
+//                                Constants.Url + "?app=public&mod=AppFeedList&act=AddFollow",
+//                                new String[]{"mid", Constants.staticmyuidstr},
+//                                //new String[] { "login_password",Constants.staticpasswordstr },
+//                                new String[]{"tokey", Constants.statictokeystr},
+//                                new String[]{"fid", listData.get(position).get("uid")},
+//                                new String[]{"type", Constants.staticLoginType}
+//                        ));
+//                    } else {
+//                        //普通用户
+//                        new SendInfoTaskfollowsb().execute(new TaskParams(
+//                                Constants.Url + "?app=public&mod=AppFeedList&act=AddFollow",
+//                                new String[]{"mid", Constants.staticmyuidstr},
+//                                new String[]{"login_password", Constants.staticpasswordstr},
+//                                new String[]{"tokey", Constants.statictokeystr},
+//                                new String[]{"fid", (String) listData.get(position).get("uid")}
+//
+//                        ));
+//                    }
+//                    holder.attentionuser1.setText("已关注");
+//                    listData.get(position).put("following", "1");
+//                    holder.attentionuser1.setTextColor(holder.attentionuser1.getResources().getColor(R.color.color_toptitle));
+//                    holder.attentionuser1.setBackground(holder.attentionuser1.getResources().getDrawable(R.drawable.buttonstyle5));
                 } else {
                     //取消关注
-                    if (Constants.staticLoginType.equals("qq") || Constants.staticLoginType.equals("weixin")) {
-                        //三方用户
-                        new SendInfoTaskfollowcancelsb().execute(new TaskParams(
-                                Constants.Url + "?app=public&mod=AppFeedList&act=DelFollow",
-                                new String[]{"mid", Constants.staticmyuidstr},
-                                //new String[] { "login_password",Constants.staticpasswordstr },
-                                new String[]{"tokey", Constants.statictokeystr},
-                                new String[]{"fid", listData.get(position).get("uid")},
-                                new String[]{"type", Constants.staticLoginType}
-                        ));
-                    } else {
-                        //普通用户
-                        new SendInfoTaskfollowcancelsb().execute(new TaskParams(
-                                Constants.Url + "?app=public&mod=AppFeedList&act=DelFollow",
-                                new String[]{"mid", Constants.staticmyuidstr},
-                                new String[]{"login_password", Constants.staticpasswordstr},
-                                new String[]{"tokey", Constants.statictokeystr},
-                                new String[]{"fid", listData.get(position).get("uid")}
-                        ));
-                    }
-                    attentionuser1.setText("+ 关注");
-                    listData.get(position).put("following", "0");
-                    notifyDataSetChanged();
+                    type = "cancel";
+//                    if (Constants.staticLoginType.equals("qq") || Constants.staticLoginType.equals("weixin")) {
+//                        //三方用户
+//                        new SendInfoTaskfollowcancelsb().execute(new TaskParams(
+//                                Constants.Url + "?app=public&mod=AppFeedList&act=DelFollow",
+//                                new String[]{"mid", Constants.staticmyuidstr},
+//                                //new String[] { "login_password",Constants.staticpasswordstr },
+//                                new String[]{"tokey", Constants.statictokeystr},
+//                                new String[]{"fid", listData.get(position).get("uid")},
+//                                new String[]{"type", Constants.staticLoginType}
+//                        ));
+//                    } else {
+//                        //普通用户
+//                        new SendInfoTaskfollowcancelsb().execute(new TaskParams(
+//                                Constants.Url + "?app=public&mod=AppFeedList&act=DelFollow",
+//                                new String[]{"mid", Constants.staticmyuidstr},
+//                                new String[]{"login_password", Constants.staticpasswordstr},
+//                                new String[]{"tokey", Constants.statictokeystr},
+//                                new String[]{"fid", listData.get(position).get("uid")}
+//                        ));
+//                    }
+//                    holder.attentionuser1.setText("+ 关注");
+//                    listData.get(position).put("following", "0");
+//                    holder.attentionuser1.setTextColor(holder.attentionuser1.getResources().getColor(R.color.color_text2));
+//                    holder.attentionuser1.setBackground(holder.attentionuser1.getResources().getDrawable(R.drawable.buttonstyle4));
                 }
+                // 关注 取消关注
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        jsonStr = HttpUtil.restHttpGet(Constants.newUrl + "/api/user/follow?mid=" + Constants.staticmyuidstr + "&token=" + Constants.apptoken + "&uid=" + userEntity.getUid()+"&type="+type);
+                        handler.sendEmptyMessage(0);
+                    }
+                }).start();
             }
         });
+        ViewUtil.setUpVipNew(userEntity.getUser_group_icon_url(), holder.vipIv);
 
-        String isVip = listData.get(position).get(
-                "isVip") + "";
-        ImageView vipImg = (ImageView) convertView.findViewById(R.id.vip_img);
-        // 这里是个坑  如果返回为1就代表是加V用户
-        if ("1".equals(isVip))
-        {
-            ImageLoader.getInstance().displayImage("http://www.sjqcj.com/addons/theme/stv1/_static/image/usergroup/v_07.png",
-                    vipImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-            vipImg.setVisibility(View.VISIBLE);
-        }else{
-            vipImg.setVisibility(View.GONE);
-        }
         return convertView;
     }
 
-    //关注
-    private class SendInfoTaskfollowsb extends AsyncTask<TaskParams, Void, String> {
+//    //关注
+//    private class SendInfoTaskfollowsb extends AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//        }
+//    }
+//
+//    //取消关注
+//    private class SendInfoTaskfollowcancelsb extends
+//            AsyncTask<TaskParams, Void, String> {
+//
+//        @Override
+//        protected String doInBackground(TaskParams... params) {
+//            return HttpUtil.doInBackground(params);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//        }
+//    }
 
-        @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            // CustomToast.makeText(supermanlistActivity.this, result, 1).show();
-
-//			result = result.replace("\n ", "");
-//			result = result.replace("\n", "");
-//			result = result.replace(" ", "");
-//			result = "[" + result + "]";
-//			// 解析json字符串获得List<Map<String,Object>> mh逻辑有问题
-//			List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-//			for (Map<String, Object> map : lists) {
-//				String statusstr = map.get("status").toString();
-//				String infostr = map.get("info").toString();
-//				String datastr = map.get("data").toString();
-//			}
-        }
+    static class ViewHolder {
+        // 头像
+        ImageView head;
+        // 名称
+        TextView name;
+        // 简介
+        TextView detailcomment;
+        // 关注按钮
+        Button attentionuser1;
+        // 是否加V
+        ImageView vipIv;
     }
 
-    //取消关注
-    private class SendInfoTaskfollowcancelsb extends
-            AsyncTask<TaskParams, Void, String> {
-
+    /**
+     * 线程更新Ui
+     */
+    private Handler handler = new Handler() {
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
-        protected String doInBackground(TaskParams... params) {
-            return HttpUtil.doInBackground(params);
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonStr);
+                        CustomToast.makeText(context,jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        if (!Constants.successCode.equals(jsonObject.getString("code"))) {
+                            return;
+                        }
+                        //点击关注
+                        if ("0".equals(listData.get(count).getFollow().getFollowing())) {
+                            listData.get(count).getFollow().setFollowing("1");
+                        } else {
+                            listData.get(count).getFollow().setFollowing("0");
+                        }
+                        notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
         }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-//			result = result.replace("\n ", "");
-//			result = result.replace("\n", "");
-//			result = result.replace(" ", "");
-//			result = "[" + result + "]";
-            // 解析json字符串获得List<Map<String,Object>> mh逻辑有问题
-//			List<Map<String, Object>> lists = JsonTools.listKeyMaps(result);
-//			for (Map<String, Object> map : lists) {
-//				String statusstr = map.get("status").toString();
-//				String infostr = map.get("info").toString();
-//				String datastr = map.get("data").toString();
-//			}
-
-        }
-
-    }
+    };
 
 }

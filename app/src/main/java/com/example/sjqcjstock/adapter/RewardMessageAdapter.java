@@ -51,8 +51,28 @@ public class RewardMessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        //动态加载布局
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_reward_meaage, null);
+            holder = new ViewHolder();
+            holder.headImg = (ImageView) convertView.findViewById(R.id.user_head_img);
+            holder.name = (TextView) convertView.findViewById(R.id.user_name_tv);
+            holder.rewardNumber = (TextView) convertView.findViewById(R.id.reward_number_tv);
+            holder.uid = (TextView) convertView.findViewById(R.id.user_id_tv);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
         RewardMessage.datas data = rewardMessage.getData().get(position);
-        return makeItemView(data);
+        ImageLoader.getInstance().displayImage(data.getAvatar_tiny(),
+                holder.headImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
+        holder.name.setText(data.getUname());
+        holder.rewardNumber.setText(data.getAmount());
+        holder.uid.setText(data.getUid());
+        return convertView;
     }
 
     // 追加数据
@@ -61,25 +81,11 @@ public class RewardMessageAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    // 绘制Item的函数
-    public View makeItemView(RewardMessage.datas data) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        // 使用View的对象itemView与R.layout.item关联
-        View itemView = inflater
-                .inflate(R.layout.list_item_reward_meaage, null);
-        ImageView headImg = (ImageView) itemView.findViewById(R.id.user_head_img);
-        TextView name = (TextView) itemView.findViewById(R.id.user_name_tv);
-        TextView rewardNumber = (TextView) itemView.findViewById(R.id.reward_number_tv);
-        TextView uid = (TextView) itemView.findViewById(R.id.user_id_tv);
-
-        ImageLoader.getInstance().displayImage(data.getAvatar_tiny(),
-                headImg, ImageUtil.getOption(), ImageUtil.getAnimateFirstDisplayListener());
-
-        name.setText(data.getUname());
-        rewardNumber.setText(data.getAmount());
-        uid.setText(data.getUid());
-
-        return itemView;
+    public static class ViewHolder {
+        TextView name;
+        ImageView headImg;
+        TextView rewardNumber;
+        TextView uid;
     }
+
 }

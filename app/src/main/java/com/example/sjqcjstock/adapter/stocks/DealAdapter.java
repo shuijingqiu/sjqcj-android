@@ -87,14 +87,19 @@ public class DealAdapter extends BaseAdapter {
         holder.time.setText(order.getDeal_time());
         holder.money.setText(Utils.getNumberFormat2(Double.valueOf(priceStr)*Double.valueOf(numberStr)+""));
         holder.cost.setText(Utils.getNumberFormat2(order.getFee()));
-        // 1代表买入2代表卖出
-        if("1".equals(listData.get(position).getType())){
-             holder.type.setText("买");
+        String type = order.getType();
+        // 1代表买入2代表卖出 3 送转
+        if("3".equals(type)){
+            holder.type.setText("送转");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
-        }else{
+        }else if ("2".equals(type)){
             holder.type.setText("卖");
             holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_1bc07d));
+        }else{
+            holder.type.setText("买");
+            holder.type.setBackgroundColor(holder.type.getResources().getColor(R.color.color_ef3e3e));
         }
+
         holder.nameCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

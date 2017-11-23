@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="turn_type">
+        <item>银行转证券</item>
+        <item>证券转银行</item>
+    </string-array>
     <attr format="boolean" name="centered_"/>
     <attr format="color" name="selectedColor_"/>
     <attr format="dimension" name="strokeWidth_"/>
     <attr format="color" name="unselectedColor_"/>
+    <color name="background_tab_pressed">#6633B5E5</color>
     <color name="color_000000">#000000</color>
     <color name="color_157efb">#157efb</color>
     <color name="color_1E6BCF">#1E6BCF</color>
@@ -25,6 +30,7 @@
     <color name="color_ef3e3e">#ef3e3e</color>
     <color name="color_efefef">#efefef</color>
     <color name="color_fafafa">#fafafa</color>
+    <color name="color_fec84a">#FEC84A</color>
     <color name="color_ffffff">#ffffff</color>
     <color name="color_text1">#333333</color>
     <color name="color_text2">#969696</color>
@@ -49,6 +55,7 @@
     <declare-styleable name="Gallery"><attr name="android:galleryItemBackground"/></declare-styleable>
     <declare-styleable name="LinePageIndicator"><attr name="centered_"/><attr name="unselectedColor_"/><attr name="selectedColor_"/><attr format="dimension" name="lineWidth"/><attr name="strokeWidth_"/><attr format="dimension" name="gapWidth"/><attr name="android:background"/></declare-styleable>
     <declare-styleable name="LoadingImageView"><attr format="enum" name="imageAspectRatioAdjust"><enum name="none" value="0"/><enum name="adjust_width" value="1"/><enum name="adjust_height" value="2"/></attr><attr format="float" name="imageAspectRatio"/><attr format="boolean" name="circleCrop"/></declare-styleable>
+    <declare-styleable name="MarqueeViewStyle"><attr format="integer|reference" name="mvInterval"/><attr format="integer|reference" name="mvAnimDuration"/><attr format="dimension|reference" name="mvTextSize"/><attr format="color|reference" name="mvTextColor"/></declare-styleable>
     <declare-styleable name="PagerSlidingTabStrip"><attr format="color" name="pstsIndicatorColor"/><attr format="color" name="pstsUnderlineColor"/><attr format="color" name="pstsDividerColor"/><attr format="dimension" name="pstsIndicatorHeight"/><attr format="dimension" name="pstsUnderlineHeight"/><attr format="dimension" name="pstsDividerPadding"/><attr format="dimension" name="pstsTabPaddingLeftRight"/><attr format="dimension" name="pstsScrollOffset"/><attr format="reference" name="pstsTabBackground"/><attr format="boolean" name="pstsShouldExpand"/><attr format="boolean" name="pstsTextAllCaps"/><attr format="color" name="selectedTabTextColor"/></declare-styleable>
     <declare-styleable name="PullLayout"><attr format="dimension" name="pull_limit"/><attr format="boolean" name="support_over"/><attr name="hold_adjust_type"><flag name="not_adjust" value="0"/><flag name="adjust_content" value="1"/><flag name="elasticity_adjust" value="2"/></attr></declare-styleable>
     <declare-styleable name="RoundImageView"><attr format="dimension" name="border_thickness"/><attr format="color" name="border_inside_color"/><attr format="color" name="border_outside_color"/></declare-styleable>
@@ -127,6 +134,7 @@
     <string name="menu_item_clear_disc_cache">Clear disc cache</string>
     <string name="menu_item_clear_memory_cache">Clear memory cache</string>
     <string name="more">更多>></string>
+    <string name="plan_explain">计划发布后下个交易日开盘价作为起算价，并开始判断是否达标</string>
     <string name="pull_to_refresh">下拉刷新</string>
     <string name="pullup_to_load">上拉加载更多</string>
     <string name="recharge_sjb_sm">水晶币可用于订阅和打赏博文</string>
@@ -315,6 +323,15 @@ function login(form){
         <!--<item name="android:windowBackground">@drawable/ic_launcher</item>-->
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="Custom_Progress" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
     <style name="EditText">
         <item name="android:textColor">@color/color_333333</item>
         <item name="android:textColorHint">@color/color_999999</item>
@@ -334,6 +351,16 @@ function login(form){
         <item name="android:textColor">@color/color_ffffff</item>
         <item name="android:textSize">@dimen/font_size_30</item>
     </style>
+    <style name="MyDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
     <style name="RedButton">
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/selector_bg_f8356e_c_a</item>
@@ -352,9 +379,6 @@ function login(form){
     <style name="article_list_text">
         <item name="android:ellipsize">end</item>
         <item name="android:lineSpacingMultiplier">1.2</item>
-        <item name="android:maxLength">160</item>
-        <item name="android:maxLines">7</item>
-        <item name="android:singleLine">false</item>
         <item name="android:textColor">@color/color_article</item>
         <item name="android:textSize">16sp</item>
     </style>
@@ -364,7 +388,7 @@ function login(form){
         <item name="android:layout_marginBottom">3dp</item>
     </style>
     <style name="business_tv">
-        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">20dp</item>
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:textColor">@color/white</item>
@@ -382,15 +406,42 @@ function login(form){
 	</style>
     <style name="chat_text_date_style">
 	    <item name="android:padding">2dp</item>    
-		<item name="android:textColor">#ffffff</item>   
+		<item name="android:textColor">@color/color_dddddd</item>
 		<item name="android:textSize">12sp</item>      
-		<item name="android:background">#bfbfbf</item> 
 	</style>
     <style name="chat_text_name_style">  
 		<item name="android:textColor">#818181</item>   
 		<item name="android:textSize">15sp</item>      
 		<item name="android:gravity">center</item> 
 	</style>
+    <style name="firm_code_et">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@drawable/shape</item>
+        <item name="android:padding">10px</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:hint">请输入股票代码</item>
+    </style>
+    <style name="home_icon_img">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="home_icon_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/color_text1</item>
+    </style>
     <style name="item_name">
         <item name="android:textColor">@color/color_text1</item>
         <item name="android:textSize">14sp</item>
@@ -411,7 +462,7 @@ function login(form){
     </style>
     <style name="top_title">
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="vip_img_style">
         <item name="android:layout_width">16dp</item>
